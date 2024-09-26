@@ -1,19 +1,24 @@
-import admin from "firebase-admin"
-import serviceAccount from "../config/duane-semijoias-firebase-adminsdk.json" assert { type: 'json' }
+import admin from "firebase-admin";
+import serviceAccount from "./firebasekey.json" assert { type: 'json' };
+
+const bucketName = "teste-firebase-b05a9.appspot.com";
 
 admin.initializeApp({
-  credential: admin.credential.cert(serviceAccount)
+  credential: admin.credential.cert(serviceAccount),
+  storageBucket: bucketName
 });
 
 const bucket = admin.storage().bucket();
 
 const uploadImage = async (imagem,id_img) => {
-  console.log("AQUI")
-  console.log(imagem)
+  // console.log("AQUI")
+  // console.log(imagem)
+  // if (!req.file) return next();
+  // const imagem = req.file;
+  // console.log(Date.now() );
+  // console.log(imagem.originalname.split("."));
   const nomeArquivo = id_img;
-  console.log(nomeArquivo)
   const file = bucket.file(nomeArquivo);
-  console.log(file)
   const stream = file.createWriteStream({
     metadata: {
       contentType: imagem.mimetype,
@@ -23,7 +28,6 @@ const uploadImage = async (imagem,id_img) => {
   stream.on("error", (e) => {
     console.error(e);
   });
-  
   stream.on("finish", async () => {
     await file.makePublic();
     imagem.firebaseUrl = `https://storage.googleapis.com/${bucketName}/${nomeArquivo}`;
