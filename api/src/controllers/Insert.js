@@ -9,7 +9,6 @@ import Login from "../model/Login.js";
 import Pagamento from "../model/Pagamento.js";
 import Pedido from "../model/Pedido.js";
 import Perfil from "../model/Perfil.js";
-// import Pessoa from "../model/Pessoa.js";
 import Pessoa from "../model/Pessoa.js"
 import Preco from "../model/Preco.js";
 import Produto from "../model/Produto.js";
@@ -21,7 +20,6 @@ import Telefone from "../model/Telefone.js";
  const InsertController = {
     CadastroPessoa: async (req, res) => {
         try {
-            console.log('oi');
             console.log(req.body);
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
@@ -34,7 +32,7 @@ import Telefone from "../model/Telefone.js";
                 });
             }
             //Chamar o crud
-            const pessoa = await Pessoa.CadastrarPessoa(cPessoa);
+            const insertPessoa = await cPessoa.CadastrarPessoa(cPessoa)
             //if verificar
             // if () {
                 
