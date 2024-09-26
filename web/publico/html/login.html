@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Rubik&family=Secular+One&display=swap"
+        rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Petit+Formal+Script&display=swap');
+    </style>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Parisienne&family=Petit+Formal+Script&display=swap');
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <link rel="stylesheet" href="../css/login.css">
+    <title>login</title>
+</head>
+
+<body>
+    <header></header>
+
+    <main class="container" id="container">
+
+        <div class="form-container sign-up">
+            <form>
+                <h1>Faça o seu cadastro </h1>
+                <div class="social-icons">
+                    <a href="#" class="icon">
+                        <i class="fa-brands fa-google-plus-g"></i>
+                    </a>
+                    <a href="#" class="icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="icon">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+                <span>ou use email e cpf para se cadastrar </span>
+                <input type="text" placeholder="Name">
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Password">
+                <button>Cadastrar</button>
+            </form>
+        </div>
+
+        <div class="form-container sign-in">
+            <form>
+                <h1>Faça o login</h1>
+                <div class="social-icons">
+                    <a href="#" class="icon">
+                        <i class="fa-brands fa-google-plus-g"></i>
+                    </a>
+                    <a href="#" class="icon">
+                        <i class="fa-brands fa-facebook-f"></i>
+                    </a>
+                    <a href="#" class="icon">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+                <span>ou use seu email e senha</span>
+                <input type="email" placeholder="Email">
+                <input type="password" placeholder="Senha">
+                <a href="#">Esqueceu sua senha?</a>
+                <button>Acessar</button>
+            </form>
+        </div>
+        <div class="toggle-container">
+            <div class="toggle">
+                <div class="toggle-panel toggle-left">
+                    <h1>Seja Bem Vindo de volta!</h1>
+                    <p>Já é cadastrada? clique no botão abaixo para entrar com seu email e senha</p>
+                    <button class="hidden" id="login">
+                        Acessar
+                    </button>
+                </div>
+                <div class="toggle-panel toggle-right">
+                    <h1>Seja bem-vinda!</h1>
+                    <p>Ainda não é cadastrada? clique no botão abaixo para realizar seu cadastro</p>
+                    <button class="hidden" id="register">
+                        Cadastrar
+                    </button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        // fetch('./header.html')
+        //     .then(response => response.text())
+        //     .then(html => {
+        //         const header = document.createElement('header');
+        //         header.innerHTML = html;
+        //         document.head.appendChild(header); 
+        //     });
+
+        const container = document.getElementById('container');
+        const registerBtn = document.getElementById('register');
+        const loginBtn = document.getElementById('login');
+
+
+        registerBtn.addEventListener('click', () => {
+            container.classList.add("active");
+        });
+
+        loginBtn.addEventListener('click', () => {
+            container.classList.remove("active");
+        });
+    </script>
+</body>
+
+</html>
