@@ -1,0 +1,17 @@
+{
+    "Nome": "Rafael Barros",
+    "Data_Nasc": "1990-05-15",
+    "CPF": "12345678900",
+    "Genero": "Masculino",
+    "Usuario": "rafael_barros@gmail.com",
+    "Senha": "senha123",
+    "Telefones": [
+      {
+        "Numero": "11999999999"
+      },
+      {
+        "Numero": "11988888888"
+      }
+    ]
+  }
+  

@@ -16,3 +16,5 @@ class Login {
         this.ID_Pessoa = ID_Pessoa
     }
 }
+
+export default Login

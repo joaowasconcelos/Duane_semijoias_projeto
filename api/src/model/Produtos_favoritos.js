@@ -8,3 +8,5 @@ class Produto_Fav {
         this.ID_Pessoa = ID_Pessoa
     }
 }
+
+export default Produto_Fav

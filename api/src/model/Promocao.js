@@ -12,3 +12,5 @@ class Promocao {
         this.ID_Produto = ID_Produto
     }
 }
+
+export default Promocao
