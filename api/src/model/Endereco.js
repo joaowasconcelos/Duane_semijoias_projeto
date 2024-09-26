@@ -21,3 +21,5 @@ class Endereco {
     get Id () { return this.Id }
     set Id (value) {this.Id = value}
 }
+
+export default Endereco

@@ -10,3 +10,5 @@ class Pagamento {
         this.ID_Pedido = ID_Pedido
     }
 }
+
+export default Pagamento

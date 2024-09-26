@@ -1,7 +1,7 @@
-import express from "express"
+import express from "express";
 const routerUser = express.Router();
 
-import { uploadImage } from "../config/firebaseStorage";
+import { uploadImage } from "../config/firebaseStorage.js";
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -17,4 +17,9 @@ const Multer = multer({
 
 routerUser.post('/postagens', Multer.single('imagem'), uploadImage);
 
+import InsertController from "../controllers/Insert.js";
+
+routerUser.post("/CreateUser", InsertController.CadastroPessoa);
+
 export default routerUser;  
+

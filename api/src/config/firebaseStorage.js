@@ -1,5 +1,6 @@
 import admin from "firebase-admin";
-import serviceAccount from "./firebasekey.json" assert { type: 'json' };
+// import serviceAccount from "./firebasekey.json" assert { type: 'json' };
+import serviceAccount from "./firebase.js";
 
 const bucketName = "teste-firebase-b05a9.appspot.com";
 

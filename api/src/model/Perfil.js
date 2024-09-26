@@ -6,3 +6,5 @@ class Perfil {
         this.Tipo = Tipo
     }
 }
+
+export default Perfil

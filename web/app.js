@@ -5,7 +5,7 @@ const app = express();
 app.use(express.static(`${__dirname}/publico`))
 
 app.get(`/`, function (req,res) {
-    res.sendFile(`${__dirname}/publico/html/header.html`)
+    res.sendFile(`${__dirname}/publico/html/admInicio.html`)
 });
 
 app.listen(4000, () => {

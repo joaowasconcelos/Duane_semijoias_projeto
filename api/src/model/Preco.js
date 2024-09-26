@@ -10,3 +10,5 @@ class Preco {
         this.ID_Produto = ID_Produto
     }
 }
+
+export default Preco

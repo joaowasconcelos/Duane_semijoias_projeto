@@ -14,3 +14,5 @@ class Itens {
         this.ID_Preço = ID_Preço
     }
 }
+
+export default Itens
