@@ -12,3 +12,5 @@ class Produto {
         this.Data_Cad = Data_Cad
     }
 }
+
+export default Produto

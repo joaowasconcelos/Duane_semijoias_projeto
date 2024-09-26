@@ -5,9 +5,21 @@ class Categoria {
         this.Id = Id;
         this.Tipo = Tipo;
     }
-    get Id () { return this.Id}
-    set Id (value) { this.Id = value}
+    
+     get id() {
+        return this.Id;
+    }
 
-    get Tipo () {return this.Tipo}
-    set Tipo (value) { this.Tipo = value}
+    set id(value) {
+        this.Id = value;
+    }
+    get tipo() {
+        return this.Tipo;
+    }
+
+    set tipo(value) {
+        this.Tipo = value;
+    }
+
 }
+export default Categoria 

@@ -14,3 +14,5 @@ class Pedido {
         this.ID_Cupom = ID_Cupom;
     }
 }
+
+export default Pedido

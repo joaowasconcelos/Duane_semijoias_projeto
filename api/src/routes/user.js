@@ -1,9 +1,8 @@
-import express from "express"
+import express from "express";
 const routerUser = express.Router();
 
-import user from "../controllers/user.js"
-import pessoa from "../controllers/user.js";
+import InsertController from "../controllers/Insert.js";
 
-routerUser.get("/testebanco",pessoa.selectPessoa)
+routerUser.post("/CreateUser", InsertController.CadastroPessoa);
 
 export default routerUser;

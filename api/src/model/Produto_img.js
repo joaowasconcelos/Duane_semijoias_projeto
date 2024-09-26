@@ -8,3 +8,5 @@ class Produto_Img {
         this.ID_Produto = ID_Produto
     }
 }
+
+export default Produto_Img
