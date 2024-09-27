@@ -6,6 +6,22 @@ export default class Telefone {
         this.Numero = Numero
     }
 
+    get Id() {
+        return this.id;
+    }
+
+    get Numero() {
+        return this.numero;
+    }
+
+    set Id(value) {
+        this.id = value;
+    }
+
+    set Numero(value) {
+        this.numero = value;
+    }
+
     async CadastrarTelefone(telefone,pessoaId) {
         console.log(telefone)
         const bd = await obterConexaoDoPool();
@@ -32,6 +48,5 @@ export default class Telefone {
             bd.release();
         }
     }
-
 }
 
