@@ -100,22 +100,22 @@ export default class Pessoa {
             }
         }
 
-    async CadastrarPessoa(pessoa) {
-            console.log(pessoa)
-            const bd = await obterConexaoDoPool();
-            try {
-                const pessoaResult = await bd.query('INSERT INTO pessoa (nome,data_nasc,cpf,genero,data_cad) VALUES (?, ?, ?,?,CURRENT_TIMESTAMP)',
-                    [pessoa.Nome, pessoa.Data_nasc, pessoa.CPF, pessoa.Data_nasc, pessoa.Genero]);
-                const pessoaId = pessoaResult[0].insertId;
-                console.log(pessoaResult);
-                console.log('ID da Pessoa:', pessoaId);
-            }
-            catch (error) {
-                console.log('Erro na transação:', error);
-                return { error: 'Falha na transação', details: error };
-            } finally {
-                bd.release();
-            }
+
+    async DeletarPessoa(pessoa) {
+        console.log(pessoa)
+        const bd = await obterConexaoDoPool();
+        try {
+            const pessoaResult = await bd.query('DELETE FROM pessoa WHERE id = ? VALUES (?)',
+                [pessoa.id]);
+            const pessoaId = pessoaResult[0].insertId;
+            console.log(pessoaResult);
+            console.log('ID da Pessoa:', pessoaId);
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
 
         }
     }
