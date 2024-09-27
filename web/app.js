@@ -8,6 +8,10 @@ app.get(`/`, function (req,res) {
     res.sendFile(`${__dirname}/publico/html/header.html`)
 });
 
+app.get(`/home`, function (req,res) {
+    res.sendFile(`${__dirname}/publico/html/home.html`)
+});
+
 app.listen(4000, () => {
     console.log('Servidor rodando na porta 4000');
 });
