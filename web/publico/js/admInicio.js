@@ -11,12 +11,12 @@ fetch('./html/partials/headerAdm.html')
 
 // trazer o footer
 
-fetch('./html/partials/footer.html')
-    .then(response => response.text())
-    .then(html => {
-        const header = document.createElement('footer');
-        header.innerHTML = html;
-        document.body.appendChild(header);
-    });
+// fetch('./html/partials/footer.html')
+//     .then(response => response.text())
+//     .then(html => {
+//         const header = document.createElement('footer');
+//         header.innerHTML = html;
+//         document.body.appendChild(header);
+//     });
 
     

@@ -4,18 +4,61 @@
     box-sizing: border-box;
 }
 
+main {
+    width: 95%;
+    margin: 0 auto;
+}
+
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 
-aside {
+/* bem vinda + nome */
+
+#bemVinda {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+    margin-top: 230px; 
+}
+
+#bemVindaText {
+    padding-top: 6px;
+    font-weight: bold;
+    font-size: 25px;
+}
+
+/* Toda estilização dentro do menu do adm */
+#menuAdm {
     display: flex;
     flex-direction: column;
+    padding-left: 25px;
+    height: 587px;
+    width: 353px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
 }
 
 #menuText {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
+    
+    padding-bottom: 25px;
+
 }
+
+#MENU {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 32px;
+    text-align: center;
+    color: #633636;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+
+/* navegadores */
 
 .navAdm {
     font-family: "Roboto Mono", monospace;
@@ -24,4 +67,29 @@ aside {
     text-decoration: none;
     color: #9B5377;
     padding-bottom: 25px;
+    text-align: justify;
+    font-size: 20px;
+}
+
+/*  */
+
+#icon {
+    color: #9b5377;
+    font-size: 34px;
+}
+
+
+/* footer */
+
+footer {
+    width: 100%;
+}
+
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    /* position: absolute; */
 }
