@@ -103,4 +103,21 @@ export default class Pessoa {
             }
         }
 
+    async DeletarPessoa(pessoa) {
+        console.log(pessoa)
+        const bd = await obterConexaoDoPool();
+        try {
+            const pessoaResult = await bd.query('DELETE FROM pessoa WHERE id = ? VALUES (?)',
+                [pessoa.id]);
+            const pessoaId = pessoaResult[0].insertId;
+            console.log(pessoaResult);
+            console.log('ID da Pessoa:', pessoaId);
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+
+        }
     }

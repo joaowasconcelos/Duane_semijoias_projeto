@@ -35,6 +35,7 @@ import Telefone from "../model/Telefone.js";
             //Chamar o crud
             const insertPessoa = await cPessoa.CadastrarPessoa(cPessoa)
             console.log("aqui",insertPessoa)
+          
             //if verificar se inseriu a pessoa
             if (insertPessoa > 0) {
                 // verificar o obj
@@ -54,63 +55,7 @@ import Telefone from "../model/Telefone.js";
             console.error(error); // Para debugar o erro
             res.status(500).json({ error: "Erro ao cadastrar o usuário" });
         }
-    },
-    CadastroEndereco: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
-    CadastroLogin: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
-    CadastroPerfil: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
-    CadastroFeedback: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
-    CadastroTelefone: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
-    CadastroProduto: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
-    CadastroProdutoImg: async (req, res) => {
-        try {
-             
-
-        } catch (error) {
-            res.status(500).json({ error: "Erro ao cadastrar uma Consulta" });
-        }
-    },
+    }
 
 };
 
