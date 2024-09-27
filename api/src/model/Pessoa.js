@@ -64,18 +64,15 @@ export default class Pessoa {
         this.data_cad = value;
 
     }
-    async CadastrarPessoa(pessoa) {
-            console.log(pessoa)
+    async CadastrarPessoa() {
             const bd = await obterConexaoDoPool();
             try {
                 const pessoaResult = await bd.query('INSERT INTO pessoa (nome,data_nasc,cpf,genero,data_cad) VALUES (?, ?, ?,?,CURRENT_TIMESTAMP)',
-                    [pessoa.Nome, pessoa.Data_nasc, pessoa.CPF, pessoa.Data_nasc, pessoa.Genero]);
+                    [this.Nome, this.Data_nasc, this.CPF, this.Data_nasc, this.Genero]);
                 const pessoaId = pessoaResult[0].insertId;
                 console.log(pessoaResult);
                 console.log('ID da Pessoa:', pessoaId);
                 return pessoaId;
-               
-               
             }
             catch (error) {
                 console.log('Erro na transação:', error);

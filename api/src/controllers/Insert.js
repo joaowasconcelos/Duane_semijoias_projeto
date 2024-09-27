@@ -27,11 +27,11 @@ const InsertController = {
             console.log(req.body);
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
             console.log(Telefones)
-            console.log(Numero)
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
             const cLogin = new Login(null, Usuario, Senha);
             //Chamar o crud 
             const insertPessoa = await cPessoa.CadastrarPessoa()
+            console.log(insertPessoa)
             if (insertPessoa > 0) {
                 if (Telefones.length > 0) {
                     Telefones.forEach(numeroTelefone => {
@@ -40,6 +40,9 @@ const InsertController = {
                     });
                 }
                 res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
+            }else{
+                const deletar = cPessoa.DeletarPessoa()
+                res.status(400).json({ message: "Erro ao cadastrar usuário!" });
             }
 
         } catch (error) {
