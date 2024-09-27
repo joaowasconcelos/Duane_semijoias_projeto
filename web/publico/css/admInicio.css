@@ -17,7 +17,7 @@ main {
     display: flex;
     flex-direction: row;
     gap: 15px;
-    margin-top: 230px; 
+    margin-top: 230px;
 }
 
 #bemVindaText {
@@ -42,12 +42,11 @@ main {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
-    
     padding-bottom: 25px;
 
 }
 
-#MENU {
+#titulo {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
@@ -71,13 +70,40 @@ main {
     font-size: 20px;
 }
 
-/*  */
-
 #icon {
     color: #9b5377;
     font-size: 34px;
 }
 
+/* container da tabela */
+
+#titulo2 {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 32px;
+    text-align: justify;
+    color: #633636;
+    padding-bottom: 25px;
+    padding-top: 25px;
+    padding-left: 25px;
+}
+
+.container {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+}
+
+#table {
+    display: flex;
+    flex-direction: column;
+    height: 587px;
+    width: 1253px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+}
 
 /* footer */
 
