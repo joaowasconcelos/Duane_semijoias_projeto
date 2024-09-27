@@ -51,6 +51,97 @@
     font-family: "Cormorant Upright", serif;
     font-weight: 600;
     font-style: normal;
-    padding: 20px;
+    padding: 10px;
     color: black;
+    font-family: "Cormorant Upright", serif;
+    font-weight: 300;
+    font-style: normal;
+    margin: 20px;
+    font-size: 20px;
+}
+
+/* From Uiverse.io by alexruix */
+.card {
+    width: 165px;
+    height: 280px;
+    padding: .8em;
+    background: #fff;
+    position: relative;
+    overflow: visible;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    justify-content: center;
+    align-items: center;
+}
+
+.card-img {
+    background-color: #AE4B67;
+    height: 40%;
+    width: 100%;
+    border-radius: .5rem;
+    transition: .3s ease;
+}
+
+.card-info {
+    padding-top: 10%;
+}
+
+svg {
+    width: 20px;
+    height: 20px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-footer {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 10px;
+    border-top: 1px solid #ddd;
+}
+
+/*Text*/
+.text-title {
+    font-weight: 900;
+    font-size: 1.2em;
+    line-height: 1.5;
+}
+
+.text-body {
+    font-size: .9em;
+    padding-bottom: 10px;
+}
+
+/*Button*/
+.card-button {
+    display: flex;
+    padding: 3px;
+    cursor: pointer;
+    border-radius: 50px;
+    transition: .3s ease-in-out;
+    justify-content: center;
+    align-items: center;
+}
+
+/*Hover*/
+.card-img:hover {
+    transform: translateY(-25%);
+    box-shadow: #AE4B67 0px 13px 47px -5px, #F784B9 0px 8px 16px -8px;
+    justify-content: center;
+    align-items: center;
+}
+
+.card-button:hover {
+    border: 1px solid #F784B9;
+    background-color: #F784B9;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
 }
