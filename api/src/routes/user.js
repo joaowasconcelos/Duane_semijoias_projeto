@@ -1,7 +1,7 @@
 import express from "express";
 const routerUser = express.Router();
 
-import { uploadImage } from "../config/firebaseStorage.js";
+// import { uploadImage } from "../config/firebaseStorage.js";
 
 import path from 'path';
 import { fileURLToPath } from 'url';
@@ -15,7 +15,7 @@ const Multer = multer({
   limits: { fileSize: 1024 * 1024 }  // Limite de 1MB
 });
 
-routerUser.post('/postagens', Multer.single('imagem'), uploadImage);
+// routerUser.post('/postagens', Multer.single('imagem'), uploadImage);
 
 import InsertController from "../controllers/Insert.js";
 

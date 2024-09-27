@@ -73,6 +73,9 @@ export default class Pessoa {
                 const pessoaId = pessoaResult[0].insertId;
                 console.log(pessoaResult);
                 console.log('ID da Pessoa:', pessoaId);
+                return pessoaId;
+               
+               
             }
             catch (error) {
                 console.log('Erro na transação:', error);
@@ -99,7 +102,6 @@ export default class Pessoa {
                 bd.release();
             }
         }
-
 
     async DeletarPessoa(pessoa) {
         console.log(pessoa)
