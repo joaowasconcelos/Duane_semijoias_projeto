@@ -33,6 +33,7 @@ import Telefone from "../model/Telefone.js";
             }
             //Chamar o crud
             const insertPessoa = await cPessoa.CadastrarPessoa(cPessoa)
+            console.log("aqui",insertPessoa)
             //if verificar
             // if () {
                 
