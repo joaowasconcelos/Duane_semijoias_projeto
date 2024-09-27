@@ -1,3 +1,5 @@
+import obterConexaoDoPool from "../config/mysql.js"
+
 export default class Telefone {
     Id
     Numero
@@ -32,17 +34,20 @@ export default class Telefone {
         this.id = value;
     }
 
+    
+
     async CadastrarTelefone() {
+console.log(this.Numero)
+
         const bd = await obterConexaoDoPool();
         try {
-                const telefoneResult = await bd.query('INSERT INTO telefone (numero) VALUES (?)', [tel]);
+                const telefoneResult = await bd.query('INSERT INTO telefone (numero) VALUES (?)', [this.Numero]);
                 const tel = (telefoneResult[0].insertId);
                 console.log('ID do Telefone:', tel);
 
                 const telefoneHasPessoaResult = await bd.query("INSERT INTO telefone_has_pessoa (telefone_id,pessoa_id) VALUES (?,?)",
-                    [pessoaId, id]);
-                const telPessoa = (telefoneHasPessoaResult[0].insertId)
-                console.log("Inseriu Pessoa e Telefone", telPessoa)
+                    [tel,this.ID_pessoa]);
+                console.log("Inseriu Pessoa e Telefone")
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -55,7 +60,7 @@ export default class Telefone {
     async ModificaTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this.Numero])
+            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this.Numero,])
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
