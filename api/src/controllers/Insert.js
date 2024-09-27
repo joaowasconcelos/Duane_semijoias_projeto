@@ -18,6 +18,7 @@ import Promocao from "../model/Promocao.js";
 import Telefone from "../model/Telefone.js";
 
  const InsertController = {
+    //Cadastrar a pessoa (Perfil)
     CadastroPessoa: async (req, res) => {
         try {
             console.log(req.body);
@@ -33,10 +34,20 @@ import Telefone from "../model/Telefone.js";
             }
             //Chamar o crud
             const insertPessoa = await cPessoa.CadastrarPessoa(cPessoa)
-            //if verificar
-            // if () {
-                
-            // }
+            console.log("aqui",insertPessoa)
+            //if verificar se inseriu a pessoa
+            if (insertPessoa > 0) {
+                // verificar o obj
+                // if (objTelefone.length > 0) {
+                //     const promises = objTelefone.map(async telefone => {
+                //         telefone.idPessoa = insertPessoa; // Associa o ID da pessoa ao telefone
+                //         await telefone.CadastrarTelefone(telefone); // Insere cada telefone no banco
+                //     });
+    
+                    // Aguarda a inserção de todos os telefones
+                    // const insertTelefone = await Promise.all(promises);
+                    const insertTele = await novoTelefone.slgo(objTelefone)
+            }
             res.status(201).json({ message: "Usuário cadastrado com sucesso!"});
 
         } catch (error) {
