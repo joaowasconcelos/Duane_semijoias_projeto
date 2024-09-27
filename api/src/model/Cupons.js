@@ -32,3 +32,4 @@ class Cupons {
     get Status() { return this.Status }
     set Status(value) { this.Status = value }
 }
+export default Cupons

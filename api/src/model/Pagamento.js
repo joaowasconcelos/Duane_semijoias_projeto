@@ -9,4 +9,39 @@ class Pagamento {
         this.ID_Pagamento = ID_Pagamento
         this.ID_Pedido = ID_Pedido
     }
+    getId() {
+        return this.Id;
+    }
+
+    getStatus() {
+        return this.Status;
+    }
+
+    getID_Pagamento() {
+        return this.ID_Pagamento;
+    }
+
+    getID_Pedido() {
+        return this.ID_Pedido;
+    }
+
+
+    setId(value) {
+        this.Id = value;
+    }
+
+    setStatus(value) {
+        this.Status = value;
+    }
+
+    setID_Pagamento(value) {
+        this.ID_Pagamento = value;
+    }
+
+    setID_Pedido(value) {
+        this.ID_Pedido = value;
+    }
 }
+
+
+export default Pagamento

@@ -1,11 +1,25 @@
-import express from "express"
+import express from "express";
 const routerUser = express.Router();
 
+// import { uploadImage } from "../config/firebaseStorage.js";
 
-import user from "../controllers/user.js"
-import pessoa from "../controllers/user.js";
+import path from 'path';
+import { fileURLToPath } from 'url';
+import multer from 'multer';
 
-routerUser.get("/testebanco",pessoa.selectPessoa)
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
 
+const Multer = multer({
+  storage: multer.memoryStorage(),
+  limits: { fileSize: 1024 * 1024 }  // Limite de 1MB
+});
 
-export default routerUser;
+// routerUser.post('/postagens', Multer.single('imagem'), uploadImage);
+
+import InsertController from "../controllers/Insert.js";
+
+routerUser.post("/CreateUser", InsertController.CadastroPessoa);
+
+export default routerUser;  
+
