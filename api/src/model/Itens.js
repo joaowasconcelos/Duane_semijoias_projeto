@@ -1,3 +1,5 @@
+import obterConexaoDoPool from "../config/mysql.js"
+
 class Itens {
     Id
     Valor

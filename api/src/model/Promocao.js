@@ -1,55 +1,106 @@
-class Promocao {
-    Id
-    Categoria_Produto
-    Valor
-    ID_Categoria
-    ID_Produto
-    constructor(Id,Categoria_Produto,Valor,ID_Categoria,ID_Produto) {
-        this.Id = Id
-        this.Categoria_Produto = Categoria_Produto
-        this.Valor = Valor
-        this.ID_Categoria = ID_Categoria
-        this.ID_Produto = ID_Produto
+import obterConexaoDoPool from "../config/mysql.js"
+
+export default class Promocao {
+    constructor(Id, Categoria_Produto, Valor, ID_Categoria, ID_Produto) {
+        this._id = Id; 
+        this._categoria_produto = Categoria_Produto;
+        this._valor = Valor;
+        this._id_categoria = ID_Categoria;
+        this._id_produto = ID_Produto;
     }
+
     get Id() {
-        return this.id;
+        return this._id;
     }
 
     get Categoria_Produto() {
-        return this.categoria_produto;
+        return this._categoria_produto;
     }
 
     get Valor() {
-        return this.valor;
+        return this._valor;
     }
 
     get ID_Categoria() {
-        return this.id_categoria;
+        return this._id_categoria;
     }
 
     get ID_Produto() {
-        return this.id_produto;
+        return this._id_produto;
     }
 
     set Id(value) {
-        this.id = value;
+        this._id = value;
     }
 
     set Categoria_Produto(value) {
-        this.categoria_produto = value;
+        this._categoria_produto = value;
     }
 
     set Valor(value) {
-        this.valor = value;
+        this._valor = value;
     }
 
     set ID_Categoria(value) {
-        this.id_categoria = value;
+        this._id_categoria = value;
     }
 
     set ID_Produto(value) {
-        this.id_produto = value;
+        this._id_produto = value;
+    }
+
+    async CadastraPromocao() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const promocaoResult = await bd.query(`INSERT INTO promocao(categoria_produto,valor,categoria_id,produto_id) VALUES (?,?,?,?);`,
+                [this._categoria_produto,this._valor,this._id_categoria,this._id_produto]);
+            const promocaoId = promocaoResult[0].insertId;
+            console.log('ID do protudo:', promocaoId);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async ModificaPromocao() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const promocaoResult = await bd.query(`UPDATE promocao SET categoria_produto = ?, valor =?, categoria_id=?, produto_id=? WHERE id = ?;`,
+                [this._categoria_produto,this._valor,this._id_categoria,this._id_produto,this._id]);
+            console.log(promocaoResult);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async DeletePromocao() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`DELETE FROM promocao WHERE id = ?;`[this._id]);
+            console.log(produtoResult);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async SelecionaPromocao() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`SELECT * FROM promocao;`);
+            console.log(produtoResult);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
     }
 }
-
-export default Promocao

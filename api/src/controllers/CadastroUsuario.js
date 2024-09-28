@@ -11,12 +11,23 @@ const CadastroUsuario = {
         try {
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
+            console.log(cPessoa)
+
+            
+
+            // const verificaCPF = cPessoa.validaCpf()
+            // console.log(verificaCPF)
+            // fazer a verificação do CPF :) se retornar False é cpf invaliado
+
+            // const conversaoData = cPessoa.DataConvert()
+            // console.log(conversaoData)
+
+
             //Chamar o crud 
             const insertPessoa = await cPessoa.CadastrarPessoa();
             let insertTele;
             if (!insertPessoa.error) {
                 const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
-                console.log(cLogin)
                 const insertLogin = await cLogin.CadastrarLogin();
 
                 if (!insertLogin.error) {
@@ -27,18 +38,18 @@ const CadastroUsuario = {
                             if (insertTele.error) {
                                 const deleteLogin = cLogin.DeletarLogin();
                                 const deletarPessoa = cPessoa.DeletarPessoa();
-                                res.status(400).json({ message: "Erro ao cadastrar Numero!" });
-                                return
+                                return res.status(400).json({ message: "Erro ao cadastrar Numero!" });
+                                
                             }
                         };
                     }
                 } else {
                     const deletarPessoa = cPessoa.DeletarPessoa()
-                    res.status(400).json({ message: "Erro ao cadastrar Login!" });
+                    return res.status(400).json({ message: "Erro ao cadastrar Login!" });
                 }
-                res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
+                return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
             } else {
-                res.status(400).json({ message: "Erro ao cadastrar usuário!" });
+                return res.status(400).json({ message: "Erro ao cadastrar usuário!" });
             }
 
 

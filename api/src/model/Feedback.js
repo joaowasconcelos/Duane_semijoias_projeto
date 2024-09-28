@@ -1,3 +1,5 @@
+import obterConexaoDoPool from "../config/mysql.js"
+
 class Feedback {
     Id
     Avaliação

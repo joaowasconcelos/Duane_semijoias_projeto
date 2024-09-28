@@ -1,3 +1,5 @@
+import obterConexaoDoPool from "../config/mysql.js"
+
 class Frete {
     Id
     ID_Peido

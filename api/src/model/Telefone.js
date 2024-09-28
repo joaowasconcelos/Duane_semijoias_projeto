@@ -1,46 +1,46 @@
 import obterConexaoDoPool from "../config/mysql.js"
 
 export default class Telefone {
-    constructor(Id, Numero, ID_pessoa) {
-        this.id = Id;
-        this.numero = Numero;
-        this.id_pessoa = ID_pessoa;
+    constructor(id, numero, idPessoa) {
+        this._id = id;
+        this._numero = numero;
+        this._idPessoa = idPessoa;
     }
 
-    get Id() {
-        return this.id;
+    get id() {
+        return this._id;
     }
 
-    get Numero() {
-        return this.numero;
+    get numero() {
+        return this._numero;
     }
 
-    get ID_pessoa() {
-        return this.id_pessoa;
+    get idPessoa() {
+        return this._idPessoa;
     }
 
-    set Id(value) {
-        this.id = value;
+    set id(value) {
+        this._id = value;
     }
 
-    set Numero(value) {
-        this.numero = value;
+    set numero(value) {
+        this._numero = value;
     }
 
-    set ID_pessoa(value) {
-        this.id_pessoa = value;
+    set idPessoa(value) {
+        this._idPessoa = value;
     }
 
     async CadastrarTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-                const telefoneResult = await bd.query('INSERT INTO telefone (numero) VALUES (?)', [this.Numero.Numero]);
+                const telefoneResult = await bd.query(`INSERT INTO telefone (numero) VALUES (?)`, [this._numero.Numero]);
                 const tel = (telefoneResult[0].insertId);
                 console.log('ID do Telefone:', tel);
                 
 
-                const telefoneHasPessoaResult = await bd.query("INSERT INTO telefone_has_pessoa (telefone_id,pessoa_id) VALUES (?,?)",
-                    [tel,this.ID_pessoa]);
+                const telefoneHasPessoaResult = await bd.query(`INSERT INTO telefone_has_pessoa (telefone_id,pessoa_id) VALUES (?,?)`,
+                    [tel,this._idPessoa]);
                 console.log("Inseriu Pessoa e Telefone")
                 return tel
         }
@@ -55,7 +55,7 @@ export default class Telefone {
     async ModificaTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this.Numero.Numero,this.ID_pessoa])
+            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this._numero.Numero,this._idPessoa])
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -67,7 +67,7 @@ export default class Telefone {
 
     async DeletaTelefone() {
         try {
-            const telefoneResult = await bd.query(`delete from telefone where numero = ?`,[this.Numero.Numero])
+            const telefoneResult = await bd.query(`delete from telefone where numero = ?`,[this._numero.Numero])
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
