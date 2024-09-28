@@ -1,22 +1,18 @@
-class Login {
-    Id
-    Usuario
-    Senha
-    P_Log
-    Ativo
-    ID_Perfil
-    ID_Pessoa
-    constructor(Id,Usuario,Senha,P_Log,Ativo,ID_Perfil,ID_Pessoa) {
-        this.Id = Id
-        this.Usuario = Usuario
-        this.Senha = Senha
-        this.P_Log = P_Log
-        this.Ativo = Ativo
-        this.ID_Perfil = ID_Perfil
-        this.ID_Pessoa = ID_Pessoa
+import obterConexaoDoPool from "../config/mysql.js"
+import bcrypt from "bcrypt"
+
+export default class Login {
+    constructor(Id, Usuario, Senha, P_Log, Ativo, ID_Perfil, ID_Pessoa) {
+        this.id = Id;
+        this.usuario = Usuario;
+        this.senha = Senha;
+        this.p_log = P_Log;
+        this.ativo = Ativo;
+        this.id_perfil = ID_Perfil;
+        this.id_pessoa = ID_Pessoa;
     }
 
-       get Usuario() {
+    get Usuario() {
         return this.usuario;
     }
 
@@ -67,6 +63,43 @@ class Login {
     set ID_Pessoa(value) {
         this.id_pessoa = value;
     }
+
+    async CadastrarLogin() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const salt = await bcrypt.genSalt(12);
+            const passwordHash = await bcrypt.hash(this.senha, salt);
+            console.log(passwordHash)
+
+            const loginResul = await bd.query('INSERT INTO login (pessoa_id,usuario,senha,perfis_id,ativo,primeiro_login) VALUES (?,?,?,?,?,?)',
+                [this.id_pessoa, this.usuario, this.senha, this.id_perfil, this.ativo, this.p_log]);
+            const loginId = loginResul[0].insertId;
+            console.log(pessoaResult);
+            console.log('ID login:', loginId);
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async ModificaLogin() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query('UPDATE login set usuario = ?) VALUES (?)',[this.usuario]);
+            const loginId = loginResul[0].insertId;
+            console.log(pessoaResult);
+            console.log('ID login:', loginId);
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
 }
 
-export default Login
+
