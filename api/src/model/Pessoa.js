@@ -7,13 +7,12 @@ export default class Pessoa {
     CPF
     Genero
     Data_Cad
-    constructor(Id, Nome, Data_nasc, CPF, Genero, Data_Cad) {
+    constructor(Id, Nome, Data_nasc, CPF, Genero) {
         this.Id = Id
         this.Nome = Nome
         this.Data_nasc = Data_nasc
         this.CPF = CPF
         this.Genero = Genero
-        this.Data_Cad = Data_Cad
     }
 
     get Id() {
@@ -35,11 +34,6 @@ export default class Pessoa {
     get Genero() {
         return this.genero;
     }
-
-    get Data_Cad() {
-        return this.data_cad;
-    }
-
     set Id(value) {
         this.id = value;
     }
@@ -60,15 +54,11 @@ export default class Pessoa {
         this.genero = value;
     }
 
-    set Data_Cad(value) {
-        this.data_cad = value;
-
-    }
     async CadastrarPessoa() {
             const bd = await obterConexaoDoPool();
             try {
                 const pessoaResult = await bd.query('INSERT INTO pessoa (nome,data_nasc,cpf,genero,data_cad) VALUES (?, ?, ?,?,CURRENT_TIMESTAMP)',
-                    [this.Nome, this.Data_nasc, this.CPF, this.Data_nasc, this.Genero]);
+                    [this.nome, this.data_nasc, this.cpf, this.genero]);
                 const pessoaId = pessoaResult[0].insertId;
                 console.log(pessoaResult);
                 console.log('ID da Pessoa:', pessoaId);
@@ -87,7 +77,7 @@ export default class Pessoa {
             const bd = await obterConexaoDoPool();
             try {
                 const pessoaResult = await bd.query(`update pessoa set nome = ?,data_nasc = ?,cpf = ?, genero = ?, where id =?;`,
-                    [pessoa.Nome, pessoa.Data_nasc, pessoa.CPF, pessoa.Data_nasc, pessoa.Genero]);
+                    [this.nome, this.data_nasc, this.cpf, this.genero, this.id]);
                 const pessoaId = pessoaResult[0].insertId;
                 console.log(pessoaResult);
                 console.log('ID da Pessoa:', pessoaId);

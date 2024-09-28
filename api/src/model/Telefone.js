@@ -1,13 +1,10 @@
 import obterConexaoDoPool from "../config/mysql.js"
 
 export default class Telefone {
-    Id
-    Numero
-    ID_pessoa
-    constructor(Id, Numero,ID_pessoa) {
-        this.Id = Id
-        this.Numero = Numero
-        this.ID_pessoa = ID_pessoa
+    constructor(Id, Numero, ID_pessoa) {
+        this.id = Id;
+        this.numero = Numero;
+        this.id_pessoa = ID_pessoa;
     }
 
     get Id() {
@@ -31,17 +28,13 @@ export default class Telefone {
     }
 
     set ID_pessoa(value) {
-        this.id = value;
+        this.id_pessoa = value;
     }
 
-    
-
     async CadastrarTelefone() {
-console.log(this.Numero)
-
         const bd = await obterConexaoDoPool();
         try {
-                const telefoneResult = await bd.query('INSERT INTO telefone (numero) VALUES (?)', [this.Numero]);
+                const telefoneResult = await bd.query('INSERT INTO telefone (numero) VALUES (?)', [this.Numero.Numero]);
                 const tel = (telefoneResult[0].insertId);
                 console.log('ID do Telefone:', tel);
                 
@@ -62,7 +55,7 @@ console.log(this.Numero)
     async ModificaTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this.Numero,])
+            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this.Numero.Numero,this.ID_pessoa])
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -74,7 +67,7 @@ console.log(this.Numero)
 
     async DeletaTelefone() {
         try {
-            const telefoneResult = await bd.query(`delete from telefone where id = ?`,[this.ID_pessoa])
+            const telefoneResult = await bd.query(`delete from telefone where numero = ?`,[this.Numero.Numero])
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -86,8 +79,8 @@ console.log(this.Numero)
 
     async SelecionaTelefone() {
         try {
-
-
+            const telefoneResult = await bd.query(`select * from telefone`)
+            console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
