@@ -10,6 +10,31 @@ main {
 }
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Average&display=swap');
+
+#container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 180px;
+}
+
+/* voltar ao inicio */
+
+#voltar {
+    display: flex;
+    flex-direction: row;
+    width: 76%;
+}
+
+#back {
+    font-family: "Average", serif;
+    font-weight: 400;
+    padding-top: 15px;
+    font-style: normal;
+    color: #9B5377;
+    font-size: 19px;
+}
 
 /* bem vinda + nome */
 
@@ -17,13 +42,12 @@ main {
     display: flex;
     flex-direction: row;
     gap: 15px;
-    margin-top: 230px;
 }
 
 #bemVindaText {
-    padding-top: 6px;
+    padding-top: 15px;
     font-weight: bold;
-    font-size: 25px;
+    font-size: 19px;
 }
 
 /* Toda estilização dentro do menu do adm */
@@ -50,7 +74,7 @@ main {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
-    font-size: 32px;
+    font-size: 20px;
     text-align: center;
     color: #633636;
     padding-bottom: 25px;
@@ -63,16 +87,17 @@ main {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
+    font-weight: bold;
     text-decoration: none;
     color: #9B5377;
     padding-bottom: 25px;
     text-align: justify;
-    font-size: 20px;
+    font-size: 15px;
 }
 
 #icon {
     color: #9b5377;
-    font-size: 34px;
+    font-size: 25px;
 }
 
 /* container da tabela */
@@ -81,28 +106,104 @@ main {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
-    font-size: 32px;
+    font-size: 20px;
     text-align: justify;
     color: #633636;
-    padding-bottom: 25px;
     padding-top: 25px;
-    padding-left: 25px;
+    padding-left: 14px;
+    margin-right: 25px;
+    border-bottom: 2px solid #AE4B67;
 }
 
-.container {
+#linha {
+    border: none;
+    height: 2px;
+    background-color: #AE4B67;
+    box-shadow: 0 1px 3px 0px #AE4B67;
+    z-index: 3;
+    width: 100%;
+    position: absolute;
+    top: 180px;
+    left: 0;
+}
+
+.container2 {
     display: flex;
     flex-direction: row;
     gap: 40px;
+    width: 100%;
 }
 
 #table {
     display: flex;
     flex-direction: column;
     height: 587px;
-    width: 1253px;
+    width: 1453px;
     margin-top: 30px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
+    padding-left: 25px;
+}
+
+/* css da tabela */
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+thead {
+    color: #9B5377;
+}
+
+thead tr th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+thead th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+tbody tr th,
+tbody tr td {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+tbody tr th,
+tbody tr td {
+    padding: 12px;
+}
+
+tbody tr th {
+    font-weight: normal;
+    color: #333;
+}
+
+#dados {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#link {
+    color: black;
+}
+
+thead th:last-child,
+tbody td:last-child,
+tbody th:last-child {
+    border-right: none;
 }
 
 /* footer */
@@ -110,7 +211,6 @@ main {
 footer {
     width: 100%;
 }
-
 
 #ondasFooter {
     width: 100%;
