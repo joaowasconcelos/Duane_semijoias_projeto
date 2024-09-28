@@ -14,17 +14,26 @@
 
     <main>
 
-        <div id="bemVinda">
-            <span id="icon" class="fas fa-user fa"></span>
-            <p id="bemVindaText">Bem vinda!</p>
+        <div id="container1">
+
+            <div id="bemVinda">
+                <span id="icon" class="fas fa-user fa"></span>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+    
+            <div id="voltar"></div>
+                <p id="back">Voltar ao inicio!</p>
+                <span id="icon" class="fas fa-home fa"></span>
+            </div>
+
         </div>
 
-        <div class="container">
+        <div class="container2">
 
             <div id="menuAdm">
 
                 <p id="titulo">MENU</p>
-    
+
                 <a href="#" id="menuText" class="navAdm">Histórico de pedidos</a>
                 <a href="#" id="menuText" class="navAdm">Relatório de vendas</a>
                 <a href="#" id="menuText" class="navAdm">Cadastro de produtos</a>
@@ -35,7 +44,7 @@
                 <a href="#" id="menuText" class="navAdm">Clientes</a>
                 <a href="#" id="menuText" class="navAdm">Meus dados</a>
                 <a href="#" id="menuText" class="navAdm">Categorias de produto</a>
-    
+
             </div>
 
             <div id="table">
@@ -43,26 +52,26 @@
                 <p id="titulo2">Últimos pedidos:</p>
 
                 <table>
-
                     <thead>
-                        <tr>Código</tr>
-                        <tr>Data de compra</tr>
-                        <tr>Informações do pedido</tr>
-                        <tr>Status</tr>
+                        <tr>
+                            <th>Código</th>
+                            <th>Data de compra</th>
+                            <th>Informações do pedido</th>
+                            <th>Status</th>
+                        </tr>
                     </thead>
 
                     <tbody>
                         <tr>
-                            <th>Ped00003</th>
-                            <td>11/09/2024</td>
-                            <td>Ver mais detalhes...</td>
-                            <td>Em separação</td>
-                          </tr>
+                            <th id="dados">Ped00003</th>
+                            <td id="dados">11/09/2024</td>
+                            <td id="dados"><a href="#" id="link">Ver mais detalhes...</a></td>
+                            <td id="dados">Em separação</td>
+                        </tr>
                     </tbody>
-
                 </table>
 
-                
+
 
 
             </div>
@@ -70,7 +79,7 @@
         </div>
 
 
-        
+
 
 
     </main>
