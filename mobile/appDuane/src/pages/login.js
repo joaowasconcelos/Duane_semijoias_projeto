@@ -40,21 +40,26 @@ export default function Login(){
                     <View style={{flex:1,}}>
                         <View style={{alignItems: "center", margin: 50}}>
                             <Image source={require("../../assets/Duane.png")} style={{width: 120, height: 120}}/>
-                            <Text style={{fontFamily: 'EBGaramond_800ExtraBold', fontSize: 32, color: '#C4914D', opacity: 0.7}}>Seja Bem-vinda!</Text>
+                            <Text style={{fontFamily: 'EBGaramond_800ExtraBold', fontSize: 32, color: '#C4914D'}}>Seja Bem-vinda!</Text>
                         </View>
 
                         <View>
-                            <Text style={{fontFamily: 'EBGaramond_800ExtraBold', fontSize: 22, color: '#765555'}}>Realize o login com as suas credencias</Text>
+                            <Text style={{fontFamily: 'EBGaramond_800ExtraBold', fontSize: 22, color: '#765555', opacity: 0.7}}>Realize o login com as suas credencias</Text>
                             <View>
-                                <Text>Email:</Text>
+                                <Text style={styles.textInputs}>Email:</Text>
                                 <TextInput></TextInput>
                             </View>
                             <View>
-                                <Text>Senha:</Text>
+                                <Text style={styles.textInputs}>Senha:</Text>
                                 <TextInput secureTextEntry={true}></TextInput>
-                                <Text style={{textAlign: 'center'}} onPress={()=>{}}>Esqueceu sua senha?</Text>
+                                <Text style={{textAlign: 'center', fontFamily: 'EBGaramond_600SemiBold', fontSize: 15, textDecorationLine: 'underline', color: 'opacity: 0.7'}} onPress={()=>{}}>Esqueceu sua senha?</Text>
                             </View>
                             
+                            <TouchableOpacity>
+                                <Text>
+                                    Entrar
+                                </Text>
+                            </TouchableOpacity>
                                 
                         </View>
                             
@@ -82,5 +87,10 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: "center",
         alignItems: "center"
+    },
+    textInputs:{
+        fontSize: 19,
+        color: '#AE4B67',
+        opacity: 0.5
     }
 })
