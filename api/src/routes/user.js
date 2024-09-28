@@ -17,9 +17,9 @@ const Multer = multer({
 
 // routerUser.post('/postagens', Multer.single('imagem'), uploadImage);
 
-import InsertController from "../controllers/Insert.js";
+import CadastroUsuario from "../controllers/CadastroUsuario.js";
 
-routerUser.post("/CreateUser", InsertController.CadastroPessoa);
+routerUser.post("/CreateUser", CadastroUsuario.CadastroPessoa);
 
 export default routerUser;  
 

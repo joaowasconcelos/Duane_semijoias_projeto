@@ -37,10 +37,12 @@ export default class Telefone {
                 const telefoneResult = await bd.query('INSERT INTO telefone (numero) VALUES (?)', [this.Numero.Numero]);
                 const tel = (telefoneResult[0].insertId);
                 console.log('ID do Telefone:', tel);
+                
 
                 const telefoneHasPessoaResult = await bd.query("INSERT INTO telefone_has_pessoa (telefone_id,pessoa_id) VALUES (?,?)",
                     [tel,this.ID_pessoa]);
                 console.log("Inseriu Pessoa e Telefone")
+                return tel
         }
         catch (error) {
             console.log('Erro na transação:', error);

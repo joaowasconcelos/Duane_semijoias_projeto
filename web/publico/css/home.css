@@ -15,7 +15,8 @@
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    font-size: 25px;
+    font-size: 20px;
+    margin-top: 100px;
 }
 
 
@@ -33,7 +34,7 @@
     border-color: #f5e9ec;
     color: #633636;
     border: 1px;
-
+    font-size: 20px;
 }
 
 .input {
@@ -95,10 +96,11 @@ svg {
 .card-footer {
     width: 100%;
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
     align-items: center;
     padding-top: 10px;
     border-top: 1px solid #ddd;
+    padding-inline: 50px;
 }
 
 /*Text*/
@@ -106,6 +108,7 @@ svg {
     font-weight: 900;
     font-size: 1.2em;
     line-height: 1.5;
+    padding-right: 10px;
 }
 
 .text-body {
@@ -116,12 +119,12 @@ svg {
 /*Button*/
 .card-button {
     display: flex;
-    padding: 3px;
+    justify-content: center;
+    align-items: center;
+    padding: 8px;
     cursor: pointer;
     border-radius: 50px;
     transition: .3s ease-in-out;
-    justify-content: center;
-    align-items: center;
 }
 
 /*Hover*/
@@ -130,18 +133,19 @@ svg {
     box-shadow: #AE4B67 0px 13px 47px -5px, #F784B9 0px 8px 16px -8px;
     justify-content: center;
     align-items: center;
+    text-align: center;
 }
 
 .card-button:hover {
     border: 1px solid #F784B9;
     background-color: #F784B9;
-    justify-content: center;
-    align-items: center;
 }
 
 
 .container2 {
     display: flex;
     flex-direction: row;
-    justify-content: space-evenly;
+    /* justify-content: space-evenly; */
+    gap: 45px;
+
 }
