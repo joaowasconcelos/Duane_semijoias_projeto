@@ -36,7 +36,7 @@ export default class Produto_Fav {
         try {
             const produtoFavResult = await bd.query(`INSERT INTO produto_favoritos(produto_id,pessoa_id) VALUES (?,?);`,[this._id_produto,this._id_produto]);
             const produtoFavId = produtoFavResult[0].insertId;
-            console.log('ID do protudo:', produtoFavId);
+            console.log('ID do produto_favorito:', produtoFavId);
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

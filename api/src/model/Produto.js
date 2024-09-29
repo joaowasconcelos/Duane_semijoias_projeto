@@ -67,6 +67,7 @@ export default class Produto {
         const bd = await obterConexaoDoPool();
         try {
             const produtoResult = await bd.query(`UPDATE categoria SET nome_produto = ?, descricao = ?, status = ?;`,[this._nomeProduto, this._descricao, this._status]);
+            console.log(produtoResult)
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

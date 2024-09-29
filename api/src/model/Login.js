@@ -81,20 +81,21 @@ export default class Login {
     set ID_Pessoa(value) {
         this._id_pessoa = value;
     }
-    
+
     set Nova_Senha(value) {
         this._nova_senha = value;
     }
+
     async CadastrarLogin() {
         const bd = await obterConexaoDoPool();
         try {
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._senha, salt);
-            
+
             const loginResul = await bd.query('INSERT INTO login (pessoa_id,usuario,senha,perfis_id,ativo,primeiro_login) VALUES (?,?,?,?,?,?)',
                 [this._id_pessoa, this._usuario, passwordHash, this._id_perfil, this._ativo, this._p_log]);
             const loginId = loginResul[0].insertId;
-           return loginId
+            return loginId
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -107,7 +108,7 @@ export default class Login {
     async ModificaLogin() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query('UPDATE login SET usuario = ? WHERE pessoa_id',[this._usuario,this._id_pessoa]);
+            const loginResul = await bd.query(`UPDATE login SET usuario = ? WHERE pessoa_id`, [this._usuario, this._id_pessoa]);
             const loginId = loginResul[0].insertId;
             console.log(pessoaResult);
             console.log('ID login:', loginId);
@@ -120,24 +121,21 @@ export default class Login {
         }
     }
 
-    
     async AlterarSenha() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`SELECT senha FROM login WHERE pessoa_id = ?`,[this._id_pessoa]);
+            const loginResul = await bd.query(`SELECT senha FROM login WHERE pessoa_id = ?`, [this._id_pessoa]);
             const senhaResult = loginResul[0][0].senha;
-            const compare = await bcrypt.compare(this._senha,senhaResult)
-    
-            if(compare === true){
+            const compare = await bcrypt.compare(this._senha, senhaResult)
+
+            if (!compare) {
                 return "senha já cadastrada"
             }
-
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._senha, salt);
-            const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE pessoa_id = ?`, [passwordHash,this._id_pessoa])
+            const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE pessoa_id = ?`, [passwordHash, this._id_pessoa])
             console.log(modificaSenha)
             return "senha modificada com sucesso"
-        
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -147,31 +145,86 @@ export default class Login {
         }
     }
 
+    async EsqueciSenha() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario=? = ?`, [this._usuario]);
+            const idResult = loginResul[0][0].id;
+
+            const salt = await bcrypt.genSalt(12);
+            const passwordHash = await bcrypt.hash(this._nova_senha, salt);
+
+            const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE id= ?`, [passwordHash, idResult])
+            console.log(modificaSenha)
+            return "senha alterada com sucesso"
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
 
     async VerificaLogin() {
-        // const bd = await obterConexaoDoPool();
-        // try {
-        //     const loginResul = await bd.query(`SELECT senha FROM login WHERE pessoa_id = ?`,[this._id_pessoa]);
-        //     const senhaResult = loginResul[0][0].senha;
-        //     const compare = await bcrypt.compare(this._senha,senhaResult)
-    
-        //     if(compare === true){
-        //         return "senha já cadastrada"
-        //     }
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query(`SELECT usuario,senha FROM login WHERE usuario=?;`, [this._usuario]);
+            const senhaResult = loginResul[0][0].senha;
+            const compare = await bcrypt.compare(this._senha, senhaResult)
 
-        //     const salt = await bcrypt.genSalt(12);
-        //     const passwordHash = await bcrypt.hash(this._senha, salt);
-        //     const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE pessoa_id = ?`, [passwordHash,this._id_pessoa])
-        //     console.log(modificaSenha)
-        //     return "senha modificada com sucesso"
-        
-        // }
-        // catch (error) {
-        //     console.log('Erro na transação:', error);
-        //     return { error: 'Falha na transação', details: error };
-        // } finally {
-        //     bd.release();
-        // }
+            if (!compare) {
+                return "Senha ou usuário incorretos"
+            }
+
+            if(loginResul[0][0].ativo === 0){
+                return "Usuario Inativo"
+            }
+            return loginResul
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    //QUANDO O CLIENTE ESTIVER FAZENDO SEU CADASTRO ESSE FUNÇÃO IRÁ VERIFICAR 
+    //SE AQUELE E-MAIL QUE INFORMOU JÁ NÃO POSSUI CADASTRO EM NOSSA BASE DE DADOS
+    async VerificaUsuario() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query(`SELECT usuario FROM login WHERE usuario=?;`, [this._usuario]);
+            const usuarioResult = loginResul[0][0].usuario;
+
+            if (usuarioResult === this._usuario) {
+                return "Usuario já cadastrado no sistema"
+            }
+            return "Primeiro cadastro"
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    //ESSA FUNÇÃO SERVE PARA INATIVAR UM USUARIO
+    async InativaUsuario() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query(`UPDATE login SET ativo = ? WHERE pessoa_id = ?;`, [this._ativo, this._id_pessoa]);
+            console.log(loginResul)
+            return "Usuario Inativado"
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
     }
 }
 

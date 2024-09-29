@@ -55,7 +55,7 @@ export default class Promocao {
             const promocaoResult = await bd.query(`INSERT INTO promocao(categoria_produto,valor,categoria_id,produto_id) VALUES (?,?,?,?);`,
                 [this._categoria_produto,this._valor,this._id_categoria,this._id_produto]);
             const promocaoId = promocaoResult[0].insertId;
-            console.log('ID do protudo:', promocaoId);
+            console.log('ID da promoção:', promocaoId);
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -81,8 +81,8 @@ export default class Promocao {
     async DeletePromocao() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoResult = await bd.query(`DELETE FROM promocao WHERE id = ?;`[this._id]);
-            console.log(produtoResult);
+            const promocaoResult = await bd.query(`DELETE FROM promocao WHERE id = ?;`[this._id]);
+            console.log(promocaoResult);
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -94,8 +94,8 @@ export default class Promocao {
     async SelecionaPromocao() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoResult = await bd.query(`SELECT * FROM promocao;`);
-            console.log(produtoResult);
+            const promocaoResult = await bd.query(`SELECT * FROM promocao;`);
+            console.log(promocaoResult);
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
