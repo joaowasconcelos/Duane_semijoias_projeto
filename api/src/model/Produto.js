@@ -1,54 +1,105 @@
-class Produto {
-    Id
-    Descrição
-    Status
-    Nome_Produto
-    Data_Cad
-    constructor(Id,Descrição,Status,Nome_Produto,Data_Cad) {
-        this.Id = Id
-        this.Descrição = Descrição
-        this.Status = Status
-        this.Nome_Produto = Nome_Produto
-        this.Data_Cad = Data_Cad
-    }
-    get Id() {
-        return this.id;
+import obterConexaoDoPool from "../config/mysql.js"
+
+export default class Produto {
+    constructor(id, descricao, status, nomeProduto, ID_categoria) {
+        this._id = id;
+        this._descricao = descricao;
+        this._status = status;
+        this._nomeProduto = nomeProduto;
+        this._id_categoria = ID_categoria
     }
 
-    get Descrição() {
-        return this.descricao;
+    get id() {
+        return this._id;
     }
 
-    get Status() {
-        return this.status;
+    get descricao() {
+        return this._descricao;
     }
 
-    get Nome_Produto() {
-        return this.nome_produto;
+    get status() {
+        return this._status;
     }
 
-    get Data_Cad() {
-        return this.data_cad;
-    }
-    set Id(value) {
-        this.id = value;
+    get ID_categoria() {
+        return this._id_categoria;
     }
 
-    set Descrição(value) {
-        this.descricao = value;
+    get nomeProduto() {
+        return this._nomeProduto;
+    }
+    set id(value) {
+        this._id = value;
     }
 
-    set Status(value) {
-        this.status = value;
+    set descricao(value) {
+        this._descricao = value;
     }
 
-    set Nome_Produto(value) {
-        this.nome_produto = value;
+    set status(value) {
+        this._status = value;
     }
 
-    set Data_Cad(value) {
-        this.data_cad = value;
+    set nomeProduto(value) {
+        this._nomeProduto = value;
+    }
+
+    set ID_categoria(value) {
+        this._id_categoria = value;
+    }
+
+    async CadastraProduto() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`INSERT INTO produto (nome_produto, descricao, status, data_cad,categoria_id) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP,?);`,
+                [this._nomeProduto, this._descricao, this._status,this._id_categoria]);
+            const produtoId = produtoResult[0].insertId;
+            console.log('ID do protudo:', produtoId);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async ModificaProduto() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`UPDATE categoria SET nome_produto = ?, descricao = ?, status = ?;`,[this._nomeProduto, this._descricao, this._status]);
+            console.log(produtoResult)
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async DeletaProduto() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`DELETE FROM produto WHERE id = ?;`,[this._id]);
+            console.log(produtoResult)
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async SelectProduto() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`SELECT * FROM produtos`);
+            console.log(produtoResult)
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
     }
 }
 
-export default Produto
