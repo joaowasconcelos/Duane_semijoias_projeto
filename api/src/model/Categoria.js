@@ -28,6 +28,7 @@ export default class Categoria {
             const categoriaResult = await bd.query(`INSERT INTO categoria (tipo) VALUES (?)`,[this._tipo]);
             const categoriaId = categoriaResult[0].insertId;
             console.log('ID da categoria:', categoriaId);
+            return categoriaId
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -54,6 +55,7 @@ export default class Categoria {
         try {
             const categoriaResult = await bd.query(`DELETE FROM categoria WHERE id = ?`,[this._id]);
             console.log(categoriaResult);
+            return categoriaResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -66,12 +68,20 @@ export default class Categoria {
         const bd = await obterConexaoDoPool();
         try {
             const categoriaResult = await bd.query(`SELECT * FROM categoria`);
-            console.log(categoriaResult);
+            return categoriaResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
         } finally {
             bd.release();
         }
+    }
+
+    validaCampos() {
+        console.log(this._tipo)
+        if (!this._tipo) {
+            return false
+        }
+        return true 
     }
 }
