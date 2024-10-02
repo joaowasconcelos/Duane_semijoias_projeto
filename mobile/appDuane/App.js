@@ -12,7 +12,7 @@ import CadastroFuncionario from './src/pages/cadastroFuncionario'
 // import DetalhesCupom from './src/pages/detalhesCupom';
 // import DetalhesPromocao from './src/pages/detalhesPromocao';
 // import GerarPromocao from './src/pages/gerarPromocao';
-// import Home from './src/pages/home';
+import Home from './src/pages/home';
 import Login from './src/pages/login';
 import Pedidos from './src/pages/pedidos';
 import Promocoes from './src/pages/promocoes';
@@ -27,6 +27,7 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen name='Login' component={Login} options={{headerShown: false}}/>
+          <Stack.Screen name='Home' component={Home} options={{headerShown: false}}/>
         </Stack.Navigator>
       </NavigationContainer>
     </SafeAreaProvider>
