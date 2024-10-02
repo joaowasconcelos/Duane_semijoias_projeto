@@ -48,8 +48,7 @@ const CategoriaController = {
     },
     Seleciona: async (req, res) => {
         try {
-            const cCategoria = new Categoria();
-            const selecionaCategoria = await cCategoria.SelecionarCategorias()
+            const selecionaCategoria = await Categoria.SelecionarCategorias()
             return res.json(selecionaCategoria);
         } catch (error) {
             console.error(error);

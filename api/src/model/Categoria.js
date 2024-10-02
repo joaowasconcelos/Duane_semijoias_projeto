@@ -64,7 +64,7 @@ export default class Categoria {
         }
     }
     
-    async SelecionarCategorias() {
+   static async SelecionarCategorias() {
         const bd = await obterConexaoDoPool();
         try {
             const categoriaResult = await bd.query(`SELECT * FROM categoria`);
@@ -78,7 +78,6 @@ export default class Categoria {
     }
 
     validaCampos() {
-        console.log(this._tipo)
         if (!this._tipo) {
             return false
         }

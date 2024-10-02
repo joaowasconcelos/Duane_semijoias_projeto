@@ -13,8 +13,6 @@ const CadastroUsuario = {
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
             console.log(cPessoa)
 
-            
-
             // const verificaCPF = cPessoa.validaCpf()
             // console.log(verificaCPF)
             // fazer a verificação do CPF :) se retornar False é cpf invaliado
