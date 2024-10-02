@@ -9,31 +9,19 @@
 </head>
 
 <body>
-
     <header></header>
-
     <main>
-
         <div id="container1">
-
-            <div id="bemVinda">
-                <span id="icon" class="fas fa-user fa"></span>
+            <div id="bemVinda"> <span id="icon" class="fas fa-user fa"></span>
                 <p id="bemVindaText">Bem vinda!</p>
             </div>
-    
             <div id="voltar"></div>
-                <p id="back">Voltar ao inicio!</p>
-                <span id="icon" class="fas fa-home fa"></span>
-            </div>
-
+            <p id="back">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span>
         </div>
-
+        </div>
         <div class="container2">
-
             <div id="menuAdm">
-
                 <p id="titulo">MENU</p>
-
                 <a href="#" id="menuText" class="navAdm">Histórico de pedidos</a>
                 <a href="#" id="menuText" class="navAdm">Relatório de vendas</a>
                 <a href="#" id="menuText" class="navAdm">Cadastro de produtos</a>
@@ -43,13 +31,16 @@
                 <a href="#" id="menuText" class="navAdm">Cadastrar administrador</a>
                 <a href="#" id="menuText" class="navAdm">Clientes</a>
                 <a href="#" id="menuText" class="navAdm">Meus dados</a>
-                <a href="#" id="menuText" class="navAdm">Categorias de produto</a>
-
+                <a id="menuText" class="navAdm" onclick="">Categorias
+                    de produto</a>
             </div>
+
 
             <div id="table">
 
                 <p id="titulo2">Últimos pedidos:</p>
+
+
 
                 <table>
                     <thead>
@@ -60,16 +51,20 @@
                             <th>Status</th>
                         </tr>
                     </thead>
-
                     <tbody>
                         <tr>
-                            <th id="dados">Ped00003</th>
-                            <td id="dados">11/09/2024</td>
+                            <th id="dados"></th>
+                            <td id="dados"></td>
                             <td id="dados"><a href="#" id="link">Ver mais detalhes...</a></td>
-                            <td id="dados">Em separação</td>
+                            <td id="dados"></td>
                         </tr>
                     </tbody>
                 </table>
+
+
+
+
+
 
 
 
@@ -78,17 +73,59 @@
 
         </div>
 
+        <dialog id="dialog-box">
 
+            <span id="iconClose" class="fas fa-times" onclick="document.getElementById('dialog-box').close()"></span>
 
+            <p id="titleCategorias">CATEGORIAS DE PRODUTOS</p>
 
+            <div id="boxCategorias">
+
+                <p id="titleCadastradas">Categorias ja cadastradas</p>
+
+                <table>
+                    <tbody>
+                        <tr>
+                            <th class="categoria" id="dados3">Brincos</th>
+                            <td class="categoria" id="dados2"><span id="iconTable" class="fas fa-edit" onclick="document.getElementById('edit-box').showModal()"></span></td>
+                            <td class="categoria" id="dados2"><span id="iconTable" class="fas fa-trash"></span> </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div id="boxCadastrarCategorias">
+
+                <p id="titleCadastradas">Cadastrar nova categoria</p>
+                <p id="subtitleCadastradas">Qual a nova categoria de produtos?</p>
+                <input type="text" name="categoria" id="categoria">
+
+                <div id="btnsCadastrar">
+                    <button id="btn1" onclick="limparCampo()">Cancelar</button>
+                    <button id="btn1" onclick="cadastrarNovaCategoria()">Cadastrar</button>
+                </div>
+
+            </div>
+
+        </dialog>
 
     </main>
 
-    <footer>
-        <img id="ondasFooter" src="../img/ondas-footer.png" alt="">
-    </footer>
+    <!-- <dialog id="edit-box">
+
+        <p>modal de edição da categoria</p>
+        
+        <div id="btnsModal">
+            <button id="btn3" onclick="document.getElementById('edit-box').close()">Cancelar</button>
+            <button id="btn3">Salvar</button>
+        </div>
+
+    </dialog> -->
+
+    <footer> <img id="ondasFooter" src="../img/ondas-footer.png" alt=""> </footer>
 
     <script src="../js/admInicio.js"></script>
+
 </body>
 
 </html>
