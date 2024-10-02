@@ -55,7 +55,7 @@ export default class Promocao {
             const promocaoResult = await bd.query(`INSERT INTO promocao(categoria_produto,valor,categoria_id,produto_id) VALUES (?,?,?,?);`,
                 [this._categoria_produto,this._valor,this._id_categoria,this._id_produto]);
             const promocaoId = promocaoResult[0].insertId;
-            console.log('ID da promoção:', promocaoId);
+            return promocaoId
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -70,6 +70,7 @@ export default class Promocao {
             const promocaoResult = await bd.query(`UPDATE promocao SET categoria_produto = ?, valor =?, categoria_id=?, produto_id=? WHERE id = ?;`,
                 [this._categoria_produto,this._valor,this._id_categoria,this._id_produto,this._id]);
             console.log(promocaoResult);
+            return promocaoResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -80,9 +81,10 @@ export default class Promocao {
 
     async DeletePromocao() {
         const bd = await obterConexaoDoPool();
+        console.log(this._id)
         try {
-            const promocaoResult = await bd.query(`DELETE FROM promocao WHERE id = ?;`[this._id]);
-            console.log(promocaoResult);
+            const promocaoResult = await bd.query(`DELETE FROM promocao WHERE id = ?;`,[this._id]);
+            return promocaoResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -91,16 +93,24 @@ export default class Promocao {
         }
     }
 
-    async SelecionaPromocao() {
+    static async SelecionaPromocao() {
         const bd = await obterConexaoDoPool();
         try {
             const promocaoResult = await bd.query(`SELECT * FROM promocao;`);
             console.log(promocaoResult);
+            return promocaoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
         } finally {
             bd.release();
         }
+    }
+
+    validaCampos() {
+        if (!this._categoria_produto || !this._id_categoria || !this._valor || !this._id_produto) {
+            return false
+        }
+        return true 
     }
 }

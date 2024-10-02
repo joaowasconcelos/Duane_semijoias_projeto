@@ -16,13 +16,27 @@ const routerUser = express.Router();
 
 import CadastroUsuario from "../controllers/CadastroUsuario.js";
 import CategoriaController from "../controllers/Categoria.js";
+import PromocaoController from "../controllers/Promocao.js";
+import PedidoController from "../controllers/Pedido.js";
 
+//Insert
 routerUser.post("/CreateUser", CadastroUsuario.CadastroPessoa);
+routerUser.post("/CreateCategoria",CategoriaController.Cadastro);
+routerUser.post("/CreatePromocao",PromocaoController.Cadastro);
+routerUser.post("/CreatePedido",PedidoController.Cadastro);
 
-routerUser.post("/CreateCategoria",CategoriaController.Cadastro)
-routerUser.delete("/DeleteCategoria/:id",CategoriaController.Deletar)
-routerUser.put("/ModificaCategoria/:id",CategoriaController.Modifica)
-routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona)
+//Delete
+routerUser.delete("/DeleteCategoria/:id",CategoriaController.Deletar);
+routerUser.delete("/DeletePromocao/:id",PromocaoController.Deletar);
+
+//Update
+routerUser.put("/ModificaCategoria/:id",CategoriaController.Modifica);
+routerUser.put("/ModificaPromocao/:id",PromocaoController.Modifica);
+
+//Select
+routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
+routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
+routerUser.get("/SelecionaPedido",PedidoController.Seleciona);
 
 export default routerUser;  
 
