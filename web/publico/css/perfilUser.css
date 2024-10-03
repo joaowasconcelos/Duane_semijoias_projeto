@@ -1,0 +1,37 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Cormorant Garamond";
+    font-weight: 700;
+    font-style: normal;
+}
+
+#ondasFooter {
+    width: 100%;
+    height: 50px;
+    bottom: 0;
+    display: block;
+    position: absolute;
+}
+
+h2{
+    
+    color: #633636;
+}
+
+.userText{
+    display: flex;
+    flex-direction: row;
+    position: absolute;
+    margin-top: 11%;
+    margin-left: 8%;
+    gap: 10px;
+    width: 50%;
+    height: 20px;
+}
+
+#icon{
+    width: 20px;
+    height: 20px;
+}
