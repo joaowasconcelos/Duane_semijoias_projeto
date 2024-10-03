@@ -148,7 +148,8 @@ const styles = StyleSheet.create({
         width: '100%', 
         height: 210, 
         position: 'absolute', 
-        bottom: 0
+        bottom: 0,
+        height: '7%',
     },
     textElement:{
         fontFamily: 'EBGaramond_800ExtraBold', 

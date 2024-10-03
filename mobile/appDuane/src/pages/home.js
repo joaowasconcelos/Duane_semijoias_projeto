@@ -48,20 +48,20 @@ export default function Home(){
                         </View>
                         
                         <ScrollView>
-                        <View style={styles.containerElements}>
-                            
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                            
+                            <View style={styles.containerElements}>
                                 
-                        </View>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                
+                                    
+                            </View>
                         </ScrollView>
                             
                     </View>
@@ -88,7 +88,8 @@ const styles = StyleSheet.create({
         justifyContent: "center",
         alignItems: "center",
         backgroundColor: "#FFDEE7",
-        width: '100%'
+        width: '100%',
+        height: '100%'
     },
     textInputs:{
         fontSize: 19,
@@ -123,13 +124,14 @@ const styles = StyleSheet.create({
         width: '100%', 
         height: 200, 
         position: 'absolute',
-        top:0
+        top:0,
     },
     imgFooter:{
         width: '100%', 
-        height: 210, 
+        height: '6.5%', 
         position: 'absolute', 
-        bottom: 0
+        bottom: 0,
+  
     },
     textElement:{
         fontFamily: 'EBGaramond_400Regular', 
