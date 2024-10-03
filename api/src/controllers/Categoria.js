@@ -11,6 +11,12 @@ const CategoriaController = {
             }
             const insertCategoria = await cCategoria.CadastraCategoria()
             console.log(insertCategoria)
+            if (insertCategoria.error) {
+                return res.status(500).json({
+                    message: "Erro ao cadastrar uma categoria",
+                    details: returnProduto.details
+                });
+            }
             return res.status(201).json({ message: "Categoria cadastrada com sucesso!" });
         } catch (error) {
             console.error(error);
@@ -28,10 +34,13 @@ const CategoriaController = {
             }
             const modificaCategoria = await cCategoria.modificaCategoria()
             console.log(modificaCategoria)
+            if (modificaCategoria.error) {
+                return res.status(500).json({message: "Erro ao modificar uma categoria"});
+            }
             return res.status(201).json({ message: "Categoria modificada com sucesso!" });
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "Erro ao cadastrar uma categoria" });
+            res.status(500).json({ error: "Erro ao modificar uma categoria" });
         }
     },
     Deletar: async (req, res) => {
