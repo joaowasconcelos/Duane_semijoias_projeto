@@ -10,6 +10,10 @@ const PromocaoController = {
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const insertPromocao = await cPromocao.CadastraPromocao()
+            if (insertPromocao.error) {
+                return res.status(500).json({
+                    message: "Erro ao cadastrar prmoção!"});
+            }
             console.log(insertPromocao)
             return res.status(201).json({ message: "Promoção cadastrada com sucesso!" });
         }catch (error) {
@@ -27,6 +31,10 @@ const PromocaoController = {
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const modificaPromocao = await cPromocao.ModificaPromocao()
+            if (modificaPromocao.error) {
+                return res.status(500).json({
+                    message: "Erro ao modificar prmoção!"});
+            }
             return res.status(201).json({ message: "Promoção modificada com sucesso!" });
         }catch (error) {
             console.error(error);
@@ -39,6 +47,10 @@ const PromocaoController = {
             const cPromocao = new Promocao(id);
             const DeletaPromocao = await cPromocao.DeletePromocao()
             console.log(DeletaPromocao)
+            if (DeletaPromocao.error) {
+                return res.status(500).json({
+                    message: "Erro ao deletar prmoção!"});
+            }
             return res.status(201).json({ message: "Promoção deletada com sucesso!" });
         }catch (error) {
             console.error(error);
@@ -48,10 +60,14 @@ const PromocaoController = {
     Seleciona: async (req, res) => {
         try {
             const selecionaPromocao = await Promocao.SelecionaPromocao()
+            if (selecionaPromocao.error) {
+                return res.status(500).json({
+                    message: "Erro ao selecionar prmoção!"});
+            }
             return res.json(selecionaPromocao);
         } catch (error) {
             console.error(error);
-            res.status(500).json({ error: "Erro ao cadastrar uma categoria" });
+            res.status(500).json({ error: "Erro ao selecionar uma promoção" });
         }
     }
 }

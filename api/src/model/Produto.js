@@ -51,10 +51,11 @@ export default class Produto {
     async CadastraProduto() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoResult = await bd.query(`INSERT INTO produto (nome_produto, descricao, status, data_cad,categoria_id) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP,?);`,
+            const produtoResult = await bd.query(`INSERT INTO produto (nome_produto, descricao, status, data_cad,categoria_id) VALUES (?, ?, ?, CURRENT_TIMESTAMP,?);`,
                 [this._nomeProduto, this._descricao, this._status,this._id_categoria]);
             const produtoId = produtoResult[0].insertId;
             console.log('ID do protudo:', produtoId);
+            return produtoId;
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -66,8 +67,9 @@ export default class Produto {
     async ModificaProduto() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoResult = await bd.query(`UPDATE categoria SET nome_produto = ?, descricao = ?, status = ?;`,[this._nomeProduto, this._descricao, this._status]);
+            const produtoResult = await bd.query(`UPDATE produto SET nome_produto = ?, descricao = ?, status = ? where id = ?;`,[this._nomeProduto, this._descricao, this._status,this._id]);
             console.log(produtoResult)
+            return produtoResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -102,4 +104,3 @@ export default class Produto {
         }
     }
 }
-
