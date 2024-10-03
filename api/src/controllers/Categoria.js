@@ -5,7 +5,7 @@ const CategoriaController = {
         try {
             const { tipo } = req.body;
             const cCategoria = new Categoria(null, tipo);
-            const validaCampos = cCategoria.validaCampos(tipo)
+            const validaCampos = cCategoria.validaCampos()
             if(!validaCampos){
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
