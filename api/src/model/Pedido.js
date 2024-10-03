@@ -46,7 +46,7 @@ export default class Pedido {
             const pedidoResult = await bd.query(`INSERT INTO pedidos (pessoa_id,status,valor_total,data_cad) VALUES (?, ?, ?,CURRENT_TIMESTAMP);`,
                 [this._id_pessoa,this._status,this._valor_total]);
             const pedidoId = pedidoResult[0].insertId;
-            console.log('ID do protudo:', pedidoId);
+            console.log('ID do pedido:', pedidoId);
             return pedidoId
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -62,6 +62,22 @@ export default class Pedido {
             const pedidoResult = await bd.query(`UPDATE pedidos SET status =? WHERE id = ?;`,
                 [this._status, this._id]);
             console.log(pedidoResult);
+            return pedidoResult
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async DeletaPedido() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const pedidoResult = await bd.query(`DELETE FROM pedidos WHERE id = ?;`,
+                [this._id]);
+            console.log(pedidoResult);
+            return pedidoResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -98,7 +114,7 @@ export default class Pedido {
     }
 
     validaCampos() {
-        if (!this._status || !this._valor || !this._id_pessoa ) {
+        if (!this._status || !this._valor_total || !this._id_pessoa ) {
             return false
         }
         return true 
