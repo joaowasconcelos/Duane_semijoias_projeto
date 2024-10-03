@@ -19,6 +19,8 @@ import CategoriaController from "../controllers/Categoria.js";
 import PromocaoController from "../controllers/Promocao.js";
 import PedidoController from "../controllers/Pedido.js";
 import ProdutoFavController from "../controllers/Produto_fav.js";
+import ProdutoController from "../controllers/Produto.js"
+
 
 //Insert
 routerUser.post("/CreateUser", CadastroUsuario.CadastroPessoa);
@@ -26,6 +28,8 @@ routerUser.post("/CreateCategoria",CategoriaController.Cadastro);
 routerUser.post("/CreatePromocao",PromocaoController.Cadastro);
 routerUser.post("/CreatePedido/:id",PedidoController.Cadastro);
 routerUser.post("/CreatePedidoFav/:id",ProdutoFavController.Cadastro);
+routerUser.post("/CreatePedido",PedidoController.Cadastro);
+routerUser.post("/CreateProduto",ProdutoController.cadastro)
 
 //Delete
 routerUser.delete("/DeleteCategoria/:id",CategoriaController.Deletar);
@@ -37,6 +41,8 @@ routerUser.delete("/DeleteProdutoFav/:id",ProdutoFavController.Delete);
 routerUser.put("/ModificaCategoria/:id",CategoriaController.Modifica);
 routerUser.put("/ModificaPromocao/:id",PromocaoController.Modifica);
 routerUser.put("/ModificaPedido/:id",PedidoController.Modifica);
+routerUser.put("/ModificarProduto/:id",ProdutoController.editar)
+routerUser.put("/ModificarPessoa/:id",CadastroUsuario.EditarPessoa)
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
