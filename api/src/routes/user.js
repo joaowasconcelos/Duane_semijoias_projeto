@@ -21,6 +21,8 @@ import PedidoController from "../controllers/Pedido.js";
 import ProdutoFavController from "../controllers/Produto_fav.js";
 import ProdutoController from "../controllers/Produto.js";
 import LoginController from "../controllers/Login.js";
+import ProdutoController from "../controllers/Produto.js"
+
 
 //Insert
 routerUser.post("/CreateUser", CadastroUsuario.CadastroPessoa);
