@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Administrador - Catálogo de Produtos</title>
+    <link rel="stylesheet" href="../css/admCatalogoProdutos.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <header></header>
+
+    <main>
+
+        <div id="container1">
+            <div id="bemVinda"> <span id="icon" class="fas fa-user fa"></span>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+            <div id="voltar"></div>
+            <p id="back">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span>
+        </div>
+
+
+        <div id="container2">
+
+            <p id="titulo2">Catálogo de produtos</p>
+
+            <div id="groupSearch">
+                <input type="text" name="pesquisa" id="pesquisa" placeholder="Pesquise por produto ou categoria ...">
+                <span class="icon fas fa-search"></span>
+            </div>
+
+            <p id="cadastrarNovo">Cadastrar novo produto <span class="fas fa-plus fa"></span></p>
+
+        </div>
+
+        <div id="table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th id="qtdeCat">Quantidade</th>
+                        <th id="qtdeCat">Categoria</th>
+                        <th>Produto</th>
+                        <th id="preco">Preço</th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th id="dados"></th>
+                        <td id="dados"></td>
+                        <td id="dados"></td>
+                        <td id="dados"></td>
+                        <td id="iconsTable"></td>
+                        <td id="iconsTable"></td>
+                        <td id="iconsTable"><span id="iconTable" class="fas fa-edit"></span></td>
+                        <td id="iconsTable"><span id="iconTable" class="fas fa-trash"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+
+    <footer> <img id="ondasFooter" src="../img/ondas-footer.png"> </footer>
+
+    <script src="../js/admCatalogoProdutos.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+</body>
+
+</html>
