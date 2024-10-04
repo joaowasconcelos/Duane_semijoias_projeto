@@ -168,7 +168,7 @@ export default class Pessoa {
 
 
     DataConvert() {
-        let [dia, mes, ano] = this.Data_nasc.split('/');
+        let [dia, mes, ano] = this._data_nasc.split('/');
         let dataFormatada = `${ano}-${mes}-${dia}`;
         this.Data_nasc = new Date(dataFormatada);
         return this.Data_nasc
@@ -185,7 +185,7 @@ export default class Pessoa {
 
     validaCpf() {
         // Remover caracteres especiais do CPF
-        let value = this.CPF.replace(/[.-]/g, '');
+        let value = this._cpf.replace(/[.-]/g, '');
 
         // Verificar se o CPF tem 11 dígitos, caso negativo, retorna false
         if (value.length !== 11) {
@@ -227,5 +227,18 @@ export default class Pessoa {
         this.Cpf = value;
         // CPF válido
         return true;
+    }
+    async verificaCpf() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const resultado = await bd.query(`SELECT COUNT(cpf) AS total FROM pessoa WHERE cpf = ?;`, [this._cpf]);
+            const totalCPFs = resultado[0][0].total;
+            return totalCPFs > 0;
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
     }
 }

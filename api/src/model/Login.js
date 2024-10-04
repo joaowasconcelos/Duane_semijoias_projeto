@@ -172,9 +172,8 @@ export default class Login {
             const loginResul = await bd.query(`SELECT usuario,senha FROM login WHERE usuario=?;`, [this._usuario]);
             const senhaResult = loginResul[0][0].senha;
             const compare = await bcrypt.compare(this._senha, senhaResult)
-
             if (!compare) {
-                return "Senha ou usuário incorretos"
+                return false
             }
 
             if(loginResul[0][0].ativo === 0){
