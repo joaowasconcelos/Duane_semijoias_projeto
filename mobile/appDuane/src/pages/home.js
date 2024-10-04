@@ -3,6 +3,7 @@ import { StatusBar } from "expo-status-bar";
 import { View, Text, StyleSheet, TouchableOpacity, Image, Platform, ScrollView, TextInput } from "react-native";
 import {useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 
 import AppLoading from 'expo-app-loading';
 import {
@@ -50,15 +51,45 @@ export default function Home(){
                         <ScrollView>
                             <View style={styles.containerElements}>
                                 
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
-                                <TouchableOpacity style={styles.btn}></TouchableOpacity>
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text style={styles.textBtn}>Cadastro de Produtos</Text>
+                                    <FontAwesome6 name="circle-plus" color="#ae4b67" size={26}/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text style={styles.textBtn}>Catálago de Produtos</Text>
+                                    <FontAwesome6 name="dropbox" color="#ae4b67" size={26}/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text style={styles.textBtn}>Cadastro de Funcionários</Text>
+                                    <FontAwesome6 name="user-plus" color="#ae4b67" size={26}/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text style={styles.textBtn}>Consulta/Edição de Funcionários</Text>
+                                    <FontAwesome6 name="user-plus" color="#ae4b67" size={25}/>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text>Pedidos</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text>Clientes</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text>Cupons</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text>Relatórios de Vendas</Text>
+                                </TouchableOpacity>
+
+                                <TouchableOpacity style={styles.btn}>
+                                    <Text>Promoções</Text>
+                                </TouchableOpacity>
                                 
                                     
                             </View>
@@ -101,7 +132,7 @@ const styles = StyleSheet.create({
         justifyContent: 'center',
         alignItems: 'center',
         width: '100%',
-        marginBottom: 50
+        marginBottom: 60
     },
     btn:{
         width: '80%',
@@ -112,23 +143,26 @@ const styles = StyleSheet.create({
         marginTop: 20,
         borderRadius: 10,
         borderColor: '#9B5377',
-        borderWidth: 1
+        borderWidth: 1,
+        flexDirection: 'row'
     },
     textBtn:{
         fontFamily: 'EBGaramond_800ExtraBold', 
-        fontSize: 24, 
+        fontSize: 18, 
         color: '#633636', 
-        opacity: 0.7
+        opacity: 0.7,
+        margin: 10,
+        paddingRight: 5
     },
     imgHeader:{
         width: '100%', 
-        height: 200, 
+        height: '7%', 
         position: 'absolute',
         top:0,
     },
     imgFooter:{
         width: '100%', 
-        height: '6.5%', 
+        height: '7%', 
         position: 'absolute', 
         bottom: 0,
   

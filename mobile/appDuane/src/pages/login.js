@@ -140,13 +140,12 @@ const styles = StyleSheet.create({
     },
     imgHeader:{
         width: '100%', 
-        height: 200, 
+        height: '7%',
         position: 'absolute',
         top:0
     },
     imgFooter:{
-        width: '100%', 
-        height: 210, 
+        width: '100%',  
         position: 'absolute', 
         bottom: 0,
         height: '7%',
