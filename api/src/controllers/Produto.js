@@ -7,10 +7,7 @@ const ProdutoController = {
             const Cproduto = new Produto(null, Descricao, Status, NomeProduto, ID_categoria)
             const returnProduto = await Cproduto.CadastraProduto()
             if (returnProduto.error) {
-                return res.status(500).json({
-                    message: "Erro ao cadastrar produto!",
-                    details: returnProduto.details
-                });
+                return res.status(500).json({message: "Erro ao cadastrar produto!"});
             }
             res.status(201).json({ message: "Produto cadastrado com sucesso!", returnProduto })
         } catch (error) {

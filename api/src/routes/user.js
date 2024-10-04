@@ -19,6 +19,8 @@ import CategoriaController from "../controllers/Categoria.js";
 import PromocaoController from "../controllers/Promocao.js";
 import PedidoController from "../controllers/Pedido.js";
 import ProdutoFavController from "../controllers/Produto_fav.js";
+import ProdutoController from "../controllers/Produto.js";
+import LoginController from "../controllers/Login.js";
 import ProdutoController from "../controllers/Produto.js"
 
 
@@ -50,6 +52,8 @@ routerUser.put("/ModificarPessoa/:id",CadastroUsuario.EditarPessoa)
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
 routerUser.get("/SelecionaPedido",PedidoController.Seleciona);
+routerUser.get("/SelecionaProdutoFav/:id",ProdutoFavController.Seleciona);
+routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
 
 export default routerUser;  
 

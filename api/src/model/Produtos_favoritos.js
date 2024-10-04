@@ -49,7 +49,8 @@ export default class Produto_Fav {
     async DeleteProdutoFav() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoFavResult = await bd.query(`DELETE FROM produtos_favoritos WHERE produto_id =? AND pessoa_id = ?;`[this._id_produto,this._id_pessoa]);
+            console.log(this._id_produto,this._id_pessoa)
+            const produtoFavResult = await bd.query(`DELETE FROM produtos_favoritos WHERE produto_id =? AND pessoa_id = ?;`,[this._id_produto,this._id_pessoa]);
             console.log(produtoFavResult);
             return produtoFavResult
         } catch (error) {
@@ -64,7 +65,7 @@ export default class Produto_Fav {
         const bd = await obterConexaoDoPool();
         try {
             const produtoFavResult = await bd.query(`SELECT * FROM produtos_favoritos WHERE pessoa_id = ?;`,[this._id_pessoa]);
-            console.log(produtoFavResult);
+            return produtoFavResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
