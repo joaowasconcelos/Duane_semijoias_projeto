@@ -55,7 +55,7 @@ export default class Telefone {
     async ModificaTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-            const telefoneResult = await bd.query(`update telefone set numero = ? where id = ?`,[this._numero.Numero,this._idPessoa])
+            const telefoneResult = await bd.query(`UPDATE telefone SET numero = ? WHERE id = ?`, [this._numero, this._id]);
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -76,6 +76,25 @@ export default class Telefone {
             bd.release();
         }
     }
+    async SelecionaTelefonesPorPessoa() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const telefoneResult = await bd.query(`
+            SELECT t.* 
+            FROM telefone t
+            JOIN telefone_has_pessoa thp ON t.id = thp.telefone_id
+            WHERE thp.pessoa_id = ?`, [this._idPessoa]);
+            console.log('TELEFONE')
+            console.log(telefoneResult[0])
+            return telefoneResult[0]; 
+        } catch (error) {
+            console.log('Erro ao buscar telefones:', error);
+            return { error: 'Falha ao buscar telefones', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+    
 
     async SelecionaTelefone() {
         try {

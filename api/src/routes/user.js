@@ -36,6 +36,7 @@ routerUser.delete("/DeleteCategoria/:id",CategoriaController.Deletar);
 routerUser.delete("/DeletePromocao/:id",PromocaoController.Deletar);
 routerUser.delete("/DeletePedido/:id",PedidoController.Deletar);
 routerUser.delete("/DeleteProdutoFav/:id",ProdutoFavController.Delete);
+routerUser.delete("/DeleteUser/:id",CadastroUsuario.ExcluirPessoa)
 
 //Update
 routerUser.put("/ModificaCategoria/:id",CategoriaController.Modifica);
@@ -43,6 +44,7 @@ routerUser.put("/ModificaPromocao/:id",PromocaoController.Modifica);
 routerUser.put("/ModificaPedido/:id",PedidoController.Modifica);
 routerUser.put("/ModificarProduto/:id",ProdutoController.editar)
 routerUser.put("/ModificarPessoa/:id",CadastroUsuario.EditarPessoa)
+
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
