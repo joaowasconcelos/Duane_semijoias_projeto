@@ -44,6 +44,7 @@ export default function Home(){
                     <View style={{flex:1, width: '100%'}}>
                         <View style={styles.containerLogoTitle}>
                             <Image source={require("../../assets/Duane.png")} style={styles.logoImg}/>
+                            <FontAwesome6 name="circle-arrow-left" color="#ae4b67" size={24}/>
                             <Text style={styles.textTitle}>Seja Bem-vindo(a)!</Text>
                             <Text style={styles.textElement}>O que deseja fazer?</Text>
                         </View>
@@ -62,33 +63,38 @@ export default function Home(){
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text style={styles.textBtn}>Cadastro de Funcionários</Text>
+                                    <Text style={styles.textBtn}>Cadastro/Edição de Funcionários</Text>
                                     <FontAwesome6 name="user-plus" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text style={styles.textBtn}>Consulta/Edição de Funcionários</Text>
-                                    <FontAwesome6 name="user-plus" color="#ae4b67" size={25}/>
+                                    <Text style={styles.textBtn}>Consulta de Funcionários</Text>
+                                    <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text>Pedidos</Text>
+                                    <Text style={styles.textBtn}>Pedidos</Text>
+                                    <FontAwesome6 name="box-archive" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text>Clientes</Text>
+                                    <Text style={styles.textBtn}>Clientes</Text>
+                                    <FontAwesome6 name="users" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text>Cupons</Text>
+                                    <Text style={styles.textBtn}>Cupons</Text>
+                                    <FontAwesome6 name="gift" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text>Relatórios de Vendas</Text>
+                                    <Text style={styles.textBtn}>Relatórios de Vendas</Text>
+                                    <FontAwesome6 name="coins" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
 
                                 <TouchableOpacity style={styles.btn}>
-                                    <Text>Promoções</Text>
+                                    <Text style={styles.textBtn}>Promoções</Text>
+                                    <FontAwesome6 name="gifts" color="#ae4b67" size={26}/>
                                 </TouchableOpacity>
                                 
                                     
@@ -122,12 +128,6 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%'
     },
-    textInputs:{
-        fontSize: 19,
-        color: '#AE4B67',
-        opacity: 0.5,
-        textAlign: 'left'
-    },
     containerElements:{
         justifyContent: 'center',
         alignItems: 'center',
@@ -135,7 +135,7 @@ const styles = StyleSheet.create({
         marginBottom: 60
     },
     btn:{
-        width: '80%',
+        width: '85%',
         backgroundColor: '#FFFFFF',
         height: 50,
         justifyContent: 'center',
