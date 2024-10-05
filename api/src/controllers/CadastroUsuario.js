@@ -69,7 +69,7 @@ const CadastroUsuario = {
         }
     },
     EditarPessoa: async (req, res) => {
-  
+
         try {
             const { id } = req.params; // ID da pessoa
             const { Nome, Data_Nasc, CPF, Usuario, Telefones } = req.body;

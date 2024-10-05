@@ -169,7 +169,10 @@ export default class Login {
     async VerificaLogin() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`SELECT usuario,senha FROM login WHERE usuario=?;`, [this._usuario]);
+            const loginResul = await bd.query(`SELECT usuario,senha,pessoa_id,perfis_id FROM login WHERE usuario=?;`, [this._usuario]);
+            if(loginResul[0]== ""){
+                return false
+            }
             const senhaResult = loginResul[0][0].senha;
             const compare = await bcrypt.compare(this._senha, senhaResult)
             if (!compare) {
@@ -179,7 +182,7 @@ export default class Login {
             if(loginResul[0][0].ativo === 0){
                 return "Usuario Inativo"
             }
-            return loginResul
+            return loginResul[0]
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -224,6 +227,13 @@ export default class Login {
         } finally {
             bd.release();
         }
+    }
+
+    verificaCampos() {
+        if(this._usuario.length>100 || this._senha.length>50){
+            return false
+        }
+        return true
     }
 }
 
