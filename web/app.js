@@ -5,7 +5,23 @@ const app = express();
 app.use(express.static(`${__dirname}/publico`))
 
 app.get(`/`, function (req,res) {
-    res.sendFile(`${__dirname}/publico/html/admCatalogoProdutos.html`)
+    res.sendFile(`${__dirname}/publico/html/cadastrarNovoProduto.html`)
+    
+});
+
+// app.get(`/`, function (req,res) {
+//     res.sendFile(`${__dirname}/publico/html/admCatalogoProdutos.html`)
+    
+// });
+
+// app.get(`/`, function (req,res) {
+//     res.sendFile(`${__dirname}/publico/html/admInicio.html`)
+    
+// });
+
+
+app.get(`/home`, function (req,res) {
+    res.sendFile(`${__dirname}/publico/html/home.html`)
 });
 
 app.get(`/home`, function (req,res) {
