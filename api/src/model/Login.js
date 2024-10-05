@@ -199,9 +199,9 @@ export default class Login {
             const usuarioResult = loginResul[0][0].usuario;
 
             if (usuarioResult === this._usuario) {
-                return "Usuario já cadastrado no sistema"
+                return false
             }
-            return "Primeiro cadastro"
+            return true
         }
         catch (error) {
             console.log('Erro na transação:', error);
