@@ -96,8 +96,18 @@ tbody th:last-child {
 }
 
 #preco {
-
+    width: 120px;
+    text-align: center;
 }
+
+.iconeT {
+    padding-left: 40px;
+}
+
+.centralizar {
+    text-align: center;
+}
+
 /* Parte de cima */
 
 #container1 {

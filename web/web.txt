@@ -1,11 +1,13 @@
 Paginas a fazer para essa Sprint (web)
 
--Home
--Login/Cadastro
--Usuário inicio
+-Home ok
+-Login/Cadastro ok
+-Catalogo de produtos ok
+-Adm Inicio ok
+-Footer/Header ok
+
+-Cadastro de produto 
+-Usuário inicio 
 -Usuario editar dados
--Cadastro de produto
+
 -Gerenciamento de cupons
--Catalogo de produtos
--Adm Inicio
--Footer/Header

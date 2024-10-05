@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cadastro de Produto</title>
+    <link rel="stylesheet" href="../css/cadastrarNovoProduto.css">
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <header></header>
+
+    <main>
+
+        <div id="container1">
+            <div id="bemVinda"> <span id="icon" class="fas fa-user fa"></span>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+            <div id="voltar"></div>
+            <p id="back">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span>
+        </div>
+
+
+        <div id="container2">
+
+            <p id="titulo2">Cadastrar novo produto</p>
+
+        </div>
+
+        <div id="table">
+
+            <div id="form">
+
+                <div id="dados">
+
+                    <label for="categoria">Categoria: *</label>
+                    <select class="form-control form-control-sm">
+                        <option>Selecione...</option>
+                        <option>Brinco</option>
+                        <option>Colar</option>
+                        <option>Anéis</option>
+                    </select>
+
+                    <label for="produto">Produto: *</label>
+                    <input type="text" name="produto" id="produto">
+
+                    <label for="descricao">Descrição: *</label>
+                    <input type="text" name="descricao" id="descricao">
+
+                    <label for="preco">Preço: *</label>
+                    <input type="text" id="preco" name="preco">
+
+                    <label for="quantidade">Quantidade: *</label>
+                    <input type="number" name="quantidade" id="quantidade">
+                </div>
+
+                <div id="addFotos">
+
+                    <label for="imagem">Foto do produto: *</label>
+                    <p>Obrigatório carregar ao menos 1 foto do produto*</p>
+                    <p>Adicione no maximo 5 fotos*</p>
+                    <input type="file" name="imagem[]" id="imagem" multiple="multiple">
+
+                    
+
+                </div>
+
+            </div>
+
+            <div id="btns">
+
+            </div>
+
+        </div>
+
+    </main>
+
+    <footer> <img id="ondasFooter" src="../img/ondas-footer.png"> </footer>
+
+    <script src="../js/cadastrarNovoProduto.js"></script>
+    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
+
+</body>
+
+</html>
