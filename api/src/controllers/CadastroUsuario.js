@@ -38,6 +38,13 @@ const CadastroUsuario = {
             let insertTele;
             if (!insertPessoa.error) {
                 const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
+
+                const verificaEmail = cLogin.VerificaUsuario()
+
+                if (!verificaEmail) {
+                    return res.status(400).json({ message: "Erro Usuario ja cadastrado" });
+                }
+
                 const insertLogin = await cLogin.CadastrarLogin();
 
                 if (!insertLogin.error) {
