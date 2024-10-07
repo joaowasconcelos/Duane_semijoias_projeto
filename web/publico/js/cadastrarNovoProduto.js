@@ -10,3 +10,4 @@ fetch('./html/partials/headerAdm.html')
 $('#myModal').on('shown.bs.modal', function () {
     $('#myInput').trigger('focus')
 })
+

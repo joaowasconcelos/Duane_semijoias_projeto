@@ -46,28 +46,32 @@
                     </select>
 
                     <label for="produto">Produto: *</label>
-                    <input type="text" name="produto" id="produto">
+                    <input class="input" type="text" name="produto" id="produto">
 
                     <label for="descricao">Descrição: *</label>
-                    <input type="text" name="descricao" id="descricao">
+                    <input class="input" type="text" name="descricao" id="descricao">
 
                     <label for="preco">Preço: *</label>
-                    <input type="text" id="preco" name="preco">
+                    <input class="input" type="text" id="preco" name="preco">
 
                     <label for="quantidade">Quantidade: *</label>
-                    <input type="number" name="quantidade" id="quantidade">
+                    <input class="input" type="number" name="quantidade" id="quantidade">
                 </div>
 
                 <div id="addFotos">
 
-                    <label for="imagem">Foto do produto: *</label>
+                    <label class="picture" for="imagem">Foto do produto: *</label>
                     <p>Obrigatório carregar ao menos 1 foto do produto*</p>
                     <p>Adicione no maximo 5 fotos*</p>
-                    <input type="file" name="imagem[]" id="imagem" multiple="multiple">
+                    <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple" maxlength="5">
+                    <span class="picture__image"></span>
 
+                    
                     
 
                 </div>
+
+
 
             </div>
 
