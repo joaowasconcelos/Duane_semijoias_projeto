@@ -201,6 +201,7 @@ export default class Login {
             const usuarioResult = loginResul[0][0].usuario;
 
             if (usuarioResult === this._usuario) {
+                console.log("Entrei")
                 return false
             }
             return true
@@ -217,9 +218,24 @@ export default class Login {
     async InativaUsuario() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`UPDATE login SET ativo = ? WHERE pessoa_id = ?;`, [this._ativo, this._id_pessoa]);
+            const loginResul = await bd.query(`UPDATE login SET ativo = ? WHERE pessoa_id = ?;`, [0, this._id_pessoa]);
             console.log(loginResul)
             return "Usuario Inativado"
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async ativaUsuario() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query(`UPDATE login SET ativo = ? WHERE pessoa_id = ?;`, [1, this._id_pessoa]);
+            console.log(loginResul)
+            return "Usuario Ativado"
         }
         catch (error) {
             console.log('Erro na transação:', error);
