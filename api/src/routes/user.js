@@ -22,8 +22,9 @@ import PedidoController from "../controllers/Pedido.js";
 import ProdutoFavController from "../controllers/Produto_fav.js";
 import ProdutoController from "../controllers/Produto.js";
 import LoginController from "../controllers/Login.js";
+import CadastroADM from "../controllers/CadastroADM.js"
 import CuponsController from "../controllers/Cupons.js";
-    
+
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);
@@ -31,23 +32,27 @@ routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoCon
 routerUser.post("/CreatePedido/:id",authenticateJWT,PedidoController.Cadastro);//trocar para o JWT
 routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//trocar para o JWT
 routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)
+routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)
 
 //Delete
-routerUser.delete("/DeleteCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Deletar);
-routerUser.delete("/DeletePromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Deletar);
-routerUser.delete("/DeletePedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Deletar);
+// routerUser.delete("/DeleteCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Deletar);
+// routerUser.delete("/DeletePromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Deletar);
+// routerUser.delete("/DeletePedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Deletar);
 routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
+routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroADM.ExcluirPessoa)// ADM
 routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroUsuario.ExcluirPessoa);
-
 
 //Update
 routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);
 routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);
 routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);
-routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar);
-routerUser.put("/ModificarPessoa/:id",authenticateJWT,CadastroUsuario.EditarPessoa);
+routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)
+routerUser.put("/ModificarPessoa/:id",authenticateJWT,CadastroUsuario.EditarPessoa)
+routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)
+routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);
+
 
 //Select
 routerUser.get("/SelecionaCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Seleciona);

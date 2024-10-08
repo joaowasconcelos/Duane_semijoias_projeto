@@ -82,6 +82,7 @@ export default class Pessoa {
     async DeletarPessoa() {
         const bd = await obterConexaoDoPool();
         try {
+            console.log("oi")
             const pessoaResult = await bd.query('DELETE FROM pessoa WHERE id = ?',
                 [this._id]);
             return { success: true }; 

@@ -31,7 +31,29 @@ const LoginController = {
         } catch (error) {
             res.status(500).json({ message: "Erro ao cadastrar produto!" })
         }
-    }
+    },
+    Inativar: async (req,res) => {
+       try {
+        const id = req.id
+        const cLogin = new Login(null,null,null,null,null,null,id)
+        const inativar = await cLogin.InativaUsuario()
+        if(inativar.error) return res.status(500).json({ message: "Erro ao inativar usuário!" })
+        return res.json({message:"Usuário inativado com sucesso!"})
+       } catch (error) {
+        return res.status(500).json({ message: "Erro ao inativar usuário!" })
+       }
+    },
+    Ativar: async (req,res) => {
+        try {
+         const id = req.id
+         const cLogin = new Login(null,null,null,null,null,null,id)
+         const inativar = await cLogin.InativaUsuario()
+         if(inativar.error) return res.status(500).json({ message: "Erro ao ativar usuário!" })
+         return res.json({message:"Usuário ativo com sucesso!"})
+        } catch (error) {
+         return res.status(500).json({ message: "Erro ao ativar usuário!" })
+        }
+     }
 }
 
 export default LoginController
