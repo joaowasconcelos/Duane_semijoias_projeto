@@ -59,7 +59,7 @@ export default function Login(){
                                 <Text style={styles.textForgotPass} onPress={()=>{}}>Esqueceu sua senha?</Text>
                             </View>
                             
-                            <TouchableOpacity style={styles.btn} onPress={navigateHome()}>
+                            <TouchableOpacity style={styles.btn} onPress={navigateHome}>
                                 <Text style={styles.textBtn}>
                                     Entrar
                                 </Text>

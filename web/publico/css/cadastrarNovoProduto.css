@@ -1,0 +1,189 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Average&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 95%;
+    margin: 0 auto;
+}
+
+/* footer */
+footer {
+    width: 100%;
+}
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    /* position: absolute; */
+}
+
+/* Parte de cima */
+
+#container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 180px;
+}
+
+#voltar {
+    display: flex;
+    flex-direction: row;
+    width: 76%;
+}
+
+#back {
+    font-family: "Average", serif;
+    font-weight: 400;
+    padding-top: 15px;
+    font-style: normal;
+    color: #9B5377;
+    font-size: 19px;
+}
+
+/* container da tabela */
+
+#container2 {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+#titulo2 {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: justify;
+    color: #633636;
+    padding-top: 10px;
+    margin-right: 25px;
+}
+
+/* */
+
+#table {
+    display: flex;
+    flex-direction: column;
+    height: 587px;
+    width: 1453px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+    padding-left: 40px;
+    padding-top: 40px;
+}
+
+/* bem vinda + nome */
+
+#bemVinda {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+#bemVindaText {
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+/* Formulário */
+
+#form {
+    display: flex;
+    flex-direction: row;
+}
+
+#dados {
+    display: flex;
+    flex-direction: column;
+    width: 50%;
+}
+
+#addFotos {
+    width: 50%;
+}
+
+.form-control {
+    background-color: #f5e9ec !important;
+    border-color: #e6c7d0 !important;
+}
+
+.form-control:focus {
+    background-color: #f5e9ec !important;
+    box-shadow: 0 0 0 0.2rem rgba(174, 75, 103, 0.446) !important;
+    border-color: #e6c7d0 !important;
+}
+
+/* textos */
+
+label {
+    font-family: Arial, sans-serif;
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+    color: #9B5377;
+    padding-top: 15px;
+}
+
+input {
+    background-color: #f6f4f1;
+    border: #e6c7d0 2px solid;
+    width: 500px;
+    height: 31px;
+    padding-left: 15px;
+}
+
+p {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+}
+
+.escolha {
+    padding-left: 0;
+}
+
+input:focus {
+    border: 4px solid;
+    border-color:  #b0979f;
+    outline: none;
+}
+
+.form-control {
+    max-width: 300px;
+}
+
+.form-control::-ms-expand {
+    background-color: #fff;
+    /* change background color of dropdown arrow */
+    color: #333;
+    /* change text color of dropdown arrow */
+}
+
+select {
+    width: 400px;
+}
+
+#addFotos {
+    margin-left: 40px;
+}
+
+#imagem {
+    width: 500px;
+    height: 50px;
+    background-color: #fff;
+    border: none;
+}
