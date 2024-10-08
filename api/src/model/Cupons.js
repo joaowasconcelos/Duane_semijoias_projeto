@@ -1,14 +1,13 @@
 import obterConexaoDoPool from "../config/mysql.js"
 
 export default class Cupons {
-    constructor(id, codigo, descricao, quantidade, valor, status, ID_pedido) {
+    constructor(id, codigo, descricao, quantidade, valor, status) {
         this._id = id;
         this._codigo = codigo;
         this._descricao = descricao;
         this._quantidade = quantidade;
         this._valor = valor;
         this._status = status;
-        this._id_pedido = ID_pedido;
     }
 
     get id() { return this._id; }
@@ -29,65 +28,59 @@ export default class Cupons {
     get status() { return this._status; }
     set status(value) { this._status = value; }
 
-    get ID_pedido() { return this._id_pedido; }
-    set ID_pedido(value) { this._id_pedido = value; }
+    async CadastraCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`INSERT INTO cupons (descricao,codigo,quantidade,valor,status) VALUES(?,?,?,?,?);`,
+                [this._descricao,this._codigo,this._quantidade,this._valor,this._status]);
+            const cupomId = cupomResult[0].insertId;
+           return cupomId
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
 
-    //VERIFICAR O BANCO POIS ACHO QUE ESTÁ ERRADO QUANDO CADASTRAMOS UM CUPOM NÃO TEMOS QUE ASSOCIAR UM PEDIDO 
-    //ACHO QUE PRECISARÁ DE UMA 3° TABELA VINCULANDO OS PEDIDOS E OS CUPONS 
+    async ModificaCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`UPDATE cupons SET descricao=?, codigo=?, quantidade=?, valor=?, status=? WHERE id=?;`,
+                [this._descricao,this._codigo,this._quantidade,this._valor,this._status,this._id]);
+           return cupomResult
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
 
-    // async CadastraCupom() {
-    //     const bd = await obterConexaoDoPool();
-    //     try {
-    //         const cupomResult = await bd.query(`INSERT INTO cupons (descricao,codigo,quantidade,valor,status,pedido_id) VALUES(?,?,?,?,?,?);`,
-    //             [this._descricao,this._codigo,this._quantidade,this._valor,this._status,this._id_pedido]);
-    //         const cupomId = cupomResult[0].insertId;
-    //         console.log('ID do cupom:', cupomId);
-    //     } catch (error) {
-    //         console.log('Erro na transação:', error);
-    //         return { error: 'Falha na transação', details: error };
-    //     } finally {
-    //         bd.release();
-    //     }
-    // }
+    async SelecionaCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`SELECT * FROM cupons;`)
+            console.log(cupomResult);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
 
-    // async ModificaCupom() {
-    //     const bd = await obterConexaoDoPool();
-    //     try {
-    //         const cupomResult = await bd.query(`UPDATE cupons SET descricao=?, codigo=?, quantidade=?, valor=?, status=?, pedidos_id = ?;`,
-    //             [this._descricao,this._codigo,this._quantidade,this._valor,this._status,this._id_pedido]);
-    //         const cupomId = cupomResult[0].insertId;
-    //         console.log('ID do cupom:', cupomId);
-    //     } catch (error) {
-    //         console.log('Erro na transação:', error);
-    //         return { error: 'Falha na transação', details: error };
-    //     } finally {
-    //         bd.release();
-    //     }
-    // }
+    validaCampos() {
+        if (!this._codigo || !this._descricao || !this._quantidade|| !this._status|| !this._valor ) {
+            return false
+        }
+        return true 
+    }
 
-    //  async DeletaCupom() {
-    //     const bd = await obterConexaoDoPool();
-    //     try {
-    //         const cupomResult = await bd.query(`DELETE FROM cupons WHERE id = ?;`,[this._id]);
-    //         console.log(cupomResult);
-    //     } catch (error) {
-    //         console.log('Erro na transação:', error);
-    //         return { error: 'Falha na transação', details: error };
-    //     } finally {
-    //         bd.release();
-    //     }
-    // }
-
-    // async SelecionaCupom() {
-    //     const bd = await obterConexaoDoPool();
-    //     try {
-    //         const cupomResult = await bd.query(`SELECT * FROM cupons;`)
-    //         console.log(cupomResult);
-    //     } catch (error) {
-    //         console.log('Erro na transação:', error);
-    //         return { error: 'Falha na transação', details: error };
-    //     } finally {
-    //         bd.release();
-    //     }
-    // }
+    verificaCampos(){
+        if(this._codigo.length>100 || this._descricao.length>150|| this._valor.length>30|| this._quantidade.length>100|| this._status.length>50){
+            return false
+        }
+        return true 
+    }
 }

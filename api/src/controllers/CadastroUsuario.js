@@ -37,7 +37,7 @@ const CadastroUsuario = {
             const insertPessoa = await cPessoa.CadastrarPessoa();
             let insertTele;
             if (!insertPessoa.error) {
-                const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
+                const cLogin = new Login(null, Usuario, Senha, 0, 1,2, insertPessoa);
                 const insertLogin = await cLogin.CadastrarLogin();
 
                 if (!insertLogin.error) {
