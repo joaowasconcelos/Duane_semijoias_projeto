@@ -1,12 +1,12 @@
 // trazer o header
 
-fetch('./html/partials/headerUser.html')
-    .then(response => response.text())
-    .then(html => {
-        const header = document.createElement('header');
-        header.innerHTML = html;
-        document.body.appendChild(header);
-    });
+// fetch('../html/partials/headerUser.html')
+//     .then(response => response.text())
+//     .then(html => {
+//         const header = document.getElementById('header');
+//         header.innerHTML = html;
+//         document.body.appendChild(header);
+//     });
 
     const modal = document.getElementById('modal');
     const btnAbrirModal = document.getElementById('btn-abrir-modal');
