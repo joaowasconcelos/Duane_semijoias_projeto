@@ -7,14 +7,6 @@
     font-style: normal;
 }
 
-/* #ondasFooter {
-    width: 100%;
-    height: 50px;
-    bottom: 0;
-    display: block;
-    position: absolute;
-} */
-
 h2 {
     color: #633636;
 }
@@ -47,7 +39,8 @@ h2 {
 }
 
 #icon {
-    font-size: 25px;
+    font-size: 30px;
+    margin-top: 12px;
 }
 
 .menu {
@@ -217,25 +210,28 @@ main {
 #container1 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-top: 180px;
+    margin-top: 190px;
+    width: 100%;
+    height: 60px;
 }
 
 /* voltar ao inicio */
 
 #voltar {
-    display: flex;
-    flex-direction: row;
-    width: 76%;
+    margin-left:75%;
+    align-items: center;
 }
 
 #back {
     font-family: "Average", serif;
     font-weight: 400;
-    padding-top: 15px;
     font-style: normal;
     color: #9B5377;
     font-size: 19px;
+    width: 130px;
+    height: 30%;
+    display: flex;
+    flex-direction: row;
 }
 
 /* bem vinda + nome */
@@ -243,13 +239,14 @@ main {
 #bemVinda {
     display: flex;
     flex-direction: row;
-    gap: 15px;
+    gap: 19px;
 }
 
 #bemVindaText {
-    padding-top: 15px;
     font-weight: bold;
     font-size: 19px;
+    width: 150px;
+    height: 30px;
 }
 
 /* Toda estilização dentro do menu do adm */
@@ -299,7 +296,9 @@ main {
 
 #icon {
     color: #9b5377;
-    font-size: 25px;
+     font-size: 19px;
+   /* width: 20%;
+    height: 20%; */
 }
 
 /* container da tabela */
@@ -424,5 +423,6 @@ footer {
     bottom: 0;
     display: block;
     height: 90px;
-    /* position: absolute; */
+    left: 0;
+    padding: 0;
 }
