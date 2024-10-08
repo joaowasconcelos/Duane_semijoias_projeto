@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import { Picker } from '@react-native-picker/picker';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -48,7 +49,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%" }}>
+          <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -74,8 +75,56 @@ export default function Home() {
               />
 
               <Text style={styles.textTitle}>Cadastro de Produtos</Text>
-
               
+            </View>
+
+            <View style={styles.containerElements}>
+                <View style={{justifyContent: 'center', alignItems: 'flex-start', width: '100%', height: 50}}>
+                  <Text style={styles.textElement}>Categoria:</Text>
+                  <Picker
+                      // selectedValue={}
+                      style={styles.Inputs}
+                      onValueChange={(itemValue) => setCate(itemValue)}
+                  >
+                      <Picker.Item label="Selecione a Categoria" value=""/>
+                      <Picker.Item label="Brinco" value="Brinco"/>
+                      <Picker.Item label="Colar" value="Colar"/>
+                      <Picker.Item label="Pulseira" value=""/>
+                      <Picker.Item label="Anel" value="Anel"/>
+                      <Picker.Item label="Conjunto" value="Conjunto"/>
+                  </Picker>
+                </View>
+                <View>
+                  <Text style={styles.textElement}>Produto:</Text>
+                  <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira o nome de um produto"></TextInput>
+                </View>
+                <View>
+                  <Text style={styles.textElement}>Descrição:</Text>
+                  <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira a descrição"></TextInput>
+                </View>
+                <View>
+                  <Text style={styles.textElement}>Preço:</Text>
+                  <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira o preço"></TextInput>
+                </View>
+                <View>
+                  <Text style={styles.textElement}>Quantidade:</Text>
+                  <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira a quantidade"></TextInput>
+                </View>
+                <View>
+                  <Text style={styles.textElement}>Imagem:</Text>
+                  <Text>Obrigatório carregar ao menos 1 foto do produto*</Text>
+                  <Text>Adicione no máximo 5 fotos*</Text>
+                  <FontAwesome6 name="file-image" color="#ae4b67" size={36}/>
+                </View>
+
+                <View style={{width: '100%', justifyContent: 'space-betwen', alignItems: 'center', flexDirection: 'row'}}>
+                  <TouchableOpacity style={styles.btn}>
+                    <Text style={styles.textBtn}>Cancelar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.btn}>
+                    <Text style={styles.textBtn}>Salvar</Text>
+                  </TouchableOpacity>
+                </View>
             </View>
 
             
@@ -109,12 +158,15 @@ const styles = StyleSheet.create({
   containerElements: {
     justifyContent: "center",
     alignItems: "center",
-    width: "100%",
-    marginBottom: 60,
+    width: "95%",
+    backgroundColor: '#FFFFFF',
+    borderWidth: 2,
+    borderColor: '#FAADD1',
+    borderRadius: 10
   },
   btn: {
-    width: "85%",
-    backgroundColor: "#FFFFFF",
+    width: "30%",
+    backgroundColor: "#E5969C",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
@@ -122,12 +174,11 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#9B5377",
     borderWidth: 1,
-    flexDirection: "row",
   },
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
     fontSize: 18,
-    color: "#ae4b67",
+    color: "#FFFFFF",
     opacity: 0.8,
     margin: 10,
     paddingRight: 5,
@@ -146,9 +197,9 @@ const styles = StyleSheet.create({
   },
   textElement: {
     fontFamily: "EBGaramond_400Regular",
-    fontSize: 26,
+    fontSize: 22,
     color: "#AE4B67",
-    textAlign: "center",
+    textAlign: "left",
   },
   textTitle: {
     fontFamily: "EBGaramond_800ExtraBold",
@@ -169,5 +220,14 @@ const styles = StyleSheet.create({
     position: "absolute",
     alignSelf: "flex-start",
     marginTop: 50,
+  },
+  Inputs:{
+    width: '100%',
+    height: 40,
+    fontSize: 22,
+    fontFamily: 'EBGaramond_400Regular',
+    borderRadius: 5,
+    backgroundColor: '#FFFF',
+    padding: 5,
   },
 });

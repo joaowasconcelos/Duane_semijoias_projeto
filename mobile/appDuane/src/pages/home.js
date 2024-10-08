@@ -43,10 +43,6 @@ export default function Home() {
     navigation.navigate('CadastroFuncionario')
   }
 
-  const navegaCadastroNovoCupom = () =>{
-    navigation.navigate('CadastroNovoCupom')
-  }
-
   const navegaCadastroProduto = () =>{
     navigation.navigate('CadastroProdutos')
   }
@@ -67,16 +63,12 @@ export default function Home() {
     navigation.navigate('Cupons')
   }
 
+  const navegaCadastroNovoCupom = () =>{
+    navigation.navigate('CadastroNovoCupom')
+  }
+
   const navegaDetalhesCupom = () =>{
     navigation.navigate('DetalhesCupom')
-  }
-
-  const navegaDetalhesPromocao = () =>{
-    navigation.navigate('DetalhesPromocao')
-  }
-
-  const navegaGeraPromocao = () =>{
-    navigation.navigate('GeraPromocao')
   }
 
   const navegaPedidos = () =>{
@@ -85,6 +77,14 @@ export default function Home() {
 
   const navegaPromocoes = () =>{
     navigation.navigate('Promocoes')
+  }
+
+  const navegaDetalhesPromocao = () =>{
+    navigation.navigate('DetalhesPromocao')
+  }
+
+  const navegaGerarPromocao = () =>{
+    navigation.navigate('GerarPromocao')
   }
 
   const navegaRelatoriosVendas = () =>{
