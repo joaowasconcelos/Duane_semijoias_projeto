@@ -230,6 +230,7 @@ export default class Login {
         }
     }
 
+
     async ativaUsuario() {
         const bd = await obterConexaoDoPool();
         try {
@@ -244,6 +245,7 @@ export default class Login {
             bd.release();
         }
     }
+
 
     verificaCampos() {
         if(this._usuario.length>100 || this._senha.length>50){
