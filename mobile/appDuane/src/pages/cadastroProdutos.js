@@ -79,12 +79,12 @@ export default function Home() {
             </View>
 
             <View style={styles.containerElements}>
-                <View style={{justifyContent: 'center', alignItems: 'flex-start', width: '100%', height: 50}}>
+                <View style={{width: '100%', padding: 5}}>
                   <Text style={styles.textElement}>Categoria:</Text>
                   <Picker
                       // selectedValue={}
-                      style={styles.Inputs}
-                      onValueChange={(itemValue) => setCate(itemValue)}
+                      style={{height: 35, backgroundColor: '#AE4B67' }}
+                      // onValueChange={(itemValue) => setCate(itemValue)}
                   >
                       <Picker.Item label="Selecione a Categoria" value=""/>
                       <Picker.Item label="Brinco" value="Brinco"/>
@@ -94,30 +94,30 @@ export default function Home() {
                       <Picker.Item label="Conjunto" value="Conjunto"/>
                   </Picker>
                 </View>
-                <View>
+                <View style={{width: '100%', padding: 3}}>
                   <Text style={styles.textElement}>Produto:</Text>
                   <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira o nome de um produto"></TextInput>
                 </View>
-                <View>
+                <View style={{width: '100%', padding: 3}}>
                   <Text style={styles.textElement}>Descrição:</Text>
                   <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira a descrição"></TextInput>
                 </View>
-                <View>
+                <View style={{width: '100%', padding: 3}}>
                   <Text style={styles.textElement}>Preço:</Text>
                   <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira o preço"></TextInput>
                 </View>
-                <View>
+                <View style={{width: '100%', padding: 3}}>
                   <Text style={styles.textElement}>Quantidade:</Text>
                   <TextInput style={styles.Inputs} onChangeText={()=>{}} placeholder="Insira a quantidade"></TextInput>
                 </View>
-                <View>
+                <View style={{width: '100%', padding: 3}}>
                   <Text style={styles.textElement}>Imagem:</Text>
                   <Text>Obrigatório carregar ao menos 1 foto do produto*</Text>
                   <Text>Adicione no máximo 5 fotos*</Text>
-                  <FontAwesome6 name="file-image" color="#ae4b67" size={36}/>
+                  <FontAwesome6 name="file-image" color="#ae4b67" size={46}/>
                 </View>
 
-                <View style={{width: '100%', justifyContent: 'space-betwen', alignItems: 'center', flexDirection: 'row'}}>
+                <View style={{width: '100%', justifyContent: "space-evenly", alignItems: 'center', flexDirection: 'row', marginBottom: 5}}>
                   <TouchableOpacity style={styles.btn}>
                     <Text style={styles.textBtn}>Cancelar</Text>
                   </TouchableOpacity>
@@ -197,7 +197,7 @@ const styles = StyleSheet.create({
   },
   textElement: {
     fontFamily: "EBGaramond_400Regular",
-    fontSize: 22,
+    fontSize: 18,
     color: "#AE4B67",
     textAlign: "left",
   },
@@ -223,11 +223,12 @@ const styles = StyleSheet.create({
   },
   Inputs:{
     width: '100%',
-    height: 40,
-    fontSize: 22,
+    height: 35,
+    fontSize: 18,
     fontFamily: 'EBGaramond_400Regular',
     borderRadius: 5,
-    backgroundColor: '#FFFF',
+    backgroundColor: '#AE4B67',
     padding: 5,
+    opacity: 0.4
   },
 });
