@@ -229,6 +229,8 @@ export default class Login {
         }
     }
 
+    // validaCampos
+
     verificaCampos() {
         if(this._usuario.length>100 || this._senha.length>50){
             return false
