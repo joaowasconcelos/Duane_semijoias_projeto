@@ -47,6 +47,10 @@ export default function Home() {
     navigation.navigate('CadastroProdutos')
   }
 
+  const navegaCategorias = () =>{
+    navigation.navigate('Categorias')
+  }
+
   const navegaCatalagoProdutos = () =>{
     navigation.navigate('CatalagoProdutos')
   }
@@ -181,6 +185,11 @@ export default function Home() {
                 <TouchableOpacity style={styles.btn} onPress={navegaPromocoes}>
                   <Text style={styles.textBtn}>Promoções</Text>
                   <FontAwesome6 name="gifts" color="#ae4b67" size={26} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.btn} onPress={navegaCategorias}>
+                  <Text style={styles.textBtn}>Categorias</Text>
+                  <FontAwesome6 name="layer-group" color="#ae4b67" size={26} />
                 </TouchableOpacity>
               </View>
             </ScrollView>
