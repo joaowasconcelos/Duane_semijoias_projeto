@@ -297,8 +297,6 @@ main {
 #icon {
     color: #9b5377;
      font-size: 19px;
-   /* width: 20%;
-    height: 20%; */
 }
 
 /* container da tabela */
@@ -336,11 +334,6 @@ main {
     gap: 40px;
     width: 100%;
 }
-
-/* 
-.container3 {
-    margin-left: 40%;
-} */
 
 #table {
     display: flex;
