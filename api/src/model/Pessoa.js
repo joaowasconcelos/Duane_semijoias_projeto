@@ -1,4 +1,6 @@
-import obterConexaoDoPool from "../config/mysql.js";
+import obterConexaoDoPool from "../config/mysql.js"
+import Login from "./Login.js"
+import Telefone from "./Telefone.js"
 
 export default class Pessoa {
     constructor(Id, Nome, Data_nasc, CPF, Genero) {
@@ -56,7 +58,7 @@ export default class Pessoa {
                 [this._nome, this._data_nasc, this._cpf, this._genero]);
             const pessoaId = pessoaResult[0].insertId;
             console.log('ID da Pessoa:', pessoaId);
-            this._id = pessoaId; 
+            this._id = pessoaId;
             return pessoaId;
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -66,16 +68,17 @@ export default class Pessoa {
         }
     }
 
-    async ModificaPessoa() {
-        const bd = await obterConexaoDoPool();
+    async ModificaPessoa(conn) {
+
         try {
-            const pessoaResult = await bd.query(`UPDATE pessoa SET nome = ?, data_nasc = ?, cpf = ?, genero = ? WHERE id = ?;`,
-                [this._nome, this._data_nasc, this._cpf, this._genero, this._id]); 
+
+            const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ?, cpf = ?, genero = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._cpf, this._genero, this._id]);
+
+            return { message: pessoaResult }
+
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
-        } finally {
-            bd.release();
         }
     }
 
@@ -85,7 +88,7 @@ export default class Pessoa {
             console.log("oi")
             const pessoaResult = await bd.query('DELETE FROM pessoa WHERE id = ?',
                 [this._id]);
-            return { success: true }; 
+            return { success: true };
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -118,7 +121,7 @@ export default class Pessoa {
             telefone t ON t.id = tp.telefone_id 
         GROUP BY 
             p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
-        LIMIT 0, 1000;`); 
+        LIMIT 0, 1000;`);
             return pessoaResult
 
         } catch (error) {
@@ -129,7 +132,7 @@ export default class Pessoa {
         }
     }
 
-    
+
     async SelecionaUsuariosAdm() {
         const bd = await obterConexaoDoPool();
         try {
@@ -158,7 +161,7 @@ export default class Pessoa {
             p.id, p.nome, pf.tipo, p.data_nasc, p.cpf, l.usuario
         LIMIT 0, 1000;`)
             return pessoaResult
-            
+
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -174,13 +177,13 @@ export default class Pessoa {
         this.Data_nasc = new Date(dataFormatada);
         return this.Data_nasc
     }
-    
+
     validaCampos() {
         return (
             this._nome &&
             this._data_nasc &&
             this._cpf &&
-            this._genero 
+            this._genero
         )
     }
 

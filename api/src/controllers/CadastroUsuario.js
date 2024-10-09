@@ -1,3 +1,4 @@
+import obterConexaoDoPool from "../config/mysql.js"
 import Login from "../model/Login.js";
 import Pessoa from "../model/Pessoa.js"
 import Telefone from "../model/Telefone.js";
@@ -77,43 +78,32 @@ const CadastroUsuario = {
         }
     },
     EditarPessoa: async (req, res) => {
-
+        const conn = await obterConexaoDoPool();
         try {
+            await conn.beginTransaction();
             const { id } = req.params; // ID da pessoa
-            const { Nome, Data_Nasc, CPF, Usuario, Telefones } = req.body;
-            
-            const telefoneExistente = new Telefone(null, null, id);
-            const telefonesBanco = await telefoneExistente.SelecionaTelefonesPorPessoa();
-    
-            // Telefones que vieram do front
-            const numeroFront1 = Telefones[0].Numero;
-            const numeroFront2 = Telefones[1].Numero;
-    
-            // Telefones do banco de dados
-            const numeroBanco1 = telefonesBanco[0].numero;
-            const numeroBanco2 = telefonesBanco[1].numero;
-    
-                
-            if (numeroFront1 !== numeroBanco1) {
-                const telefoneParaAtualizar = new Telefone(telefonesBanco[0].id, numeroFront1, id);
-                await telefoneParaAtualizar.ModificaTelefone();
+            const { Nome, Data_Nasc, CPF, Genero, Usuario, Telefones } = req.body;
+            // console.log(tele)
+            const cLogin = new Login(null, Usuario, null, null, null, null, id);
+            //await cLogin.ModificaLogin();
+            const cPessoa = new Pessoa(id, Nome, Data_Nasc, CPF, Genero);
+            const modificaPessoa = await cPessoa.ModificaPessoa(conn);
+            const modificaLogin = await cLogin.ModificaLogin(conn);
+           
+            for (const item of Telefones) {
+                const cTelefone = new Telefone(item.id, item.Numero);
+                const modificaTelefone = await cTelefone.ModificaTelefone(conn);
+                if (modificaPessoa.error || modificaLogin.error || modificaTelefone.error) {
+                    await conn.rollback();
+                    return res.status(500).json({ message: 'Erro ao editar dados' })
+                }
             }
-            if (numeroFront2 !== numeroBanco2) {
-                const telefoneParaAtualizar = new Telefone(telefonesBanco[1].id, numeroFront2, id);
-                await telefoneParaAtualizar.ModificaTelefone();
-            }
-            //Voltar para fazer a porra do rollback
 
-            const cPessoa = new Pessoa(id, Nome, Data_Nasc, CPF);
-            await cPessoa.ModificaPessoa();
-
-            const cLogin = new Login(null, Usuario,null,null,null,null,id);
-            await cLogin.ModificaLogin();
-    
+            await conn.commit()
             return res.status(200).json({ message: 'Dados atualizados com sucesso!' });
         } catch (error) {
-            console.error(error);
-            return res.status(500).json({message: 'Erro ao editar dados'})
+            await conn.rollback();
+            return res.status(500).json({ message: 'Erro ao editar dados' })
         }
     }
 }
