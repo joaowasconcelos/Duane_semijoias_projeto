@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador</title>
     <link rel="stylesheet" href="../css/admInicio.css">
-
+    <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
 
-    <header></header>
+    <header id="header"></header>
 
     <main>
 
@@ -138,7 +140,11 @@
     <footer> <img id="ondasFooter" src="../img/ondas-footer.png" alt=""> </footer>
 
     <script src="../js/admInicio.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script defer>
+        $(function () {
+            $('#header').load("./partials/headerAdm.html");
+        });
+    </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
