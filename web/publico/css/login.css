@@ -227,3 +227,36 @@ body {
 .container.active .toggle-right {
     transform: translateX(200%);
 }
+
+#ondas-rosa {
+    z-index: 1;
+    top: 0;
+    left: 0;
+    position: absolute;
+}
+
+#logo {
+    position: absolute;
+    top: 60px;
+    left: 40px;
+    right: auto;
+    z-index: 2;
+}
+
+#ondasFooter {
+    width: 100%;
+    height: 30px;
+    bottom: 0;
+    display: block;
+    position: absolute;
+}
+
+.bot:hover {
+    transform: translateY(-10%);
+    box-shadow: #AE4B67 0px 13px 47px -5px, #F784B9 0px 8px 16px -8px;
+    background-color: #F784B9;
+}
+
+.container button.bot2:hover{
+    background-color: #F784B9;
+}

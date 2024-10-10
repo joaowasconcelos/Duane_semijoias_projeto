@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Rubik&family=Secular+One&display=swap"
         rel="stylesheet">
@@ -21,7 +22,10 @@
 </head>
 
 <body>
-    <header></header>
+  
+    <img id="ondas-rosa" src="../img/ondas-rosa.png" width="100%" height="10%">
+
+    <a href="/web/publico/html/home.html"><div id="logo"><img src="../img/Duane.png" alt="DuaneSemijoias" width="110" height="110"></div></a>
 
     <main class="container" id="container">
 
@@ -43,7 +47,7 @@
                 <input type="text" placeholder="Name">
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Password">
-                <button>Cadastrar</button>
+                <button class="bot">Cadastrar</button>
             </form>
         </div>
 
@@ -65,7 +69,8 @@
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Senha">
                 <a href="#">Esqueceu sua senha?</a>
-                <button>Acessar</button>
+                <div class="g-recaptcha" data-sitekey="SUA_SITE_KEY"></div>
+                <button class="bot">Acessar</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -73,30 +78,25 @@
                 <div class="toggle-panel toggle-left">
                     <h1>Seja Bem Vindo de volta!</h1>
                     <p>Já é cadastrada? clique no botão abaixo para entrar com seu email e senha</p>
-                    <button class="hidden" id="login">
+                    <button class="hidden bot2" id="login">
                         Acessar
                     </button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>Seja bem-vinda!</h1>
                     <p>Ainda não é cadastrada? clique no botão abaixo para realizar seu cadastro</p>
-                    <button class="hidden" id="register">
+                    <button class="hidden bot2" id="register">
                         Cadastrar
                     </button>
                 </div>
             </div>
         </div>
+
+
     </main>
+    <img id="ondasFooter" src="../img/ondas-footer.png" alt="">
 
     <script>
-        // fetch('./header.html')
-        //     .then(response => response.text())
-        //     .then(html => {
-        //         const header = document.createElement('header');
-        //         header.innerHTML = html;
-        //         document.head.appendChild(header); 
-        //     });
-
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
@@ -110,6 +110,7 @@
             container.classList.remove("active");
         });
     </script>
+
 </body>
 
 </html>

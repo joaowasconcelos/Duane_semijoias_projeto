@@ -132,17 +132,18 @@ export default class Endereco {
             bd.release();
         }
     }
+    validaCampos() {
+        if (!this._cep &&
+            !this._cidade &&
+            !this._estado &&
+            !this._bairro &&
+            !this._logradouro &&
+            !this._numero )  {
+            return false
+        }
+        return true 
+    }
 
-    // async VerificaCep() {
-    //     try {
-           
-    //     }
-    //     catch (error) {
-    //         console.log('Erro na transação:', error);
-    //         return { error: 'Falha na transação', details: error };
-    //     } finally {
-    //         bd.release();
-    //     }
-    // }
+ 
 }
 

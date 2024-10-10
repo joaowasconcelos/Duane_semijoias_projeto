@@ -34,9 +34,10 @@ export default class Produto_Fav {
     async CadastraProduto_Fav() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoFavResult = await bd.query(`INSERT INTO produto_favoritos(produto_id,pessoa_id) VALUES (?,?);`,[this._id_produto,this._id_produto]);
+            const produtoFavResult = await bd.query(`INSERT INTO produtos_favoritos(produto_id,pessoa_id) VALUES (?,?);`,[this._id_produto,this._id_produto]);
             const produtoFavId = produtoFavResult[0].insertId;
             console.log('ID do produto_favorito:', produtoFavId);
+            return produtoFavId
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -48,8 +49,10 @@ export default class Produto_Fav {
     async DeleteProdutoFav() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoFavResult = await bd.query(`DELETE FROM produto_favorito WHERE pessoa_id = ?;`[this._id_pessoa]);
+            console.log(this._id_produto,this._id_pessoa)
+            const produtoFavResult = await bd.query(`DELETE FROM produtos_favoritos WHERE produto_id =? AND pessoa_id = ?;`,[this._id_produto,this._id_pessoa]);
             console.log(produtoFavResult);
+            return produtoFavResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -61,13 +64,19 @@ export default class Produto_Fav {
     async SelecionaProdutoFav() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoFavResult = await bd.query(`SELECT * FROM produto_favorito WHERE pessoa_id = ?;`,[this._id_pessoa]);
-            console.log(produtoFavResult);
+            const produtoFavResult = await bd.query(`SELECT * FROM produtos_favoritos WHERE pessoa_id = ?;`,[this._id_pessoa]);
+            return produtoFavResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
         } finally {
             bd.release();
         }
+    }
+    validaCampos() {
+        if (!this._id_pessoa|| !this._id_produto) {
+            return false
+        }
+        return true 
     }
 }

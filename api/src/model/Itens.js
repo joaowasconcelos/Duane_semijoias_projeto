@@ -1,9 +1,8 @@
 import obterConexaoDoPool from "../config/mysql.js";
 
 export default class Itens {
-    constructor(Id, Valor, Quantidade, ID_Produto, ID_Pedido, ID_Preço) {
+    constructor(Id,Quantidade, ID_Produto, ID_Pedido, ID_Preço) {
         this._Id = Id;
-        this._Valor = Valor;
         this._Quantidade = Quantidade;
         this._ID_Produto = ID_Produto;
         this._ID_Pedido = ID_Pedido;
@@ -12,10 +11,6 @@ export default class Itens {
 
     get Id() {
         return this._Id;
-    }
-
-    get Valor() {
-        return this._Valor;
     }
 
     get Quantidade() {
@@ -36,10 +31,6 @@ export default class Itens {
 
     set Id(value) {
         this._Id = value;
-    }
-
-    set Valor(value) {
-        this._Valor = value;
     }
 
     set Quantidade(value) {
@@ -64,8 +55,8 @@ export default class Itens {
             const itensResult = await bd.query(`INSERT INTO itens (produto_id,quantidade,pedidos_id,preco_id) VALUES (?,?,?,?);`,
                 [this._ID_Produto,this._Quantidade,this._ID_Pedido,this._ID_Preço]);
             const itemId = itensResult[0].insertId;
-            console.log(pessoaResult);
             console.log('ID do Item:', itemId);
+            return itemId
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -73,6 +64,13 @@ export default class Itens {
         } finally {
             bd.release();
         }
+    }
+
+    validaCampos() {
+        if (!this._ID_Pedido || !this._ID_Preço || !this._ID_Produto||!this._Quantidade ) {
+            return false
+        }
+        return true 
     }
 }
 

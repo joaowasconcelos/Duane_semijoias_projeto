@@ -1,22 +1,8 @@
-// trazer o header
+function changeSubtitle() {
+    document.getElementById('subtitleCadastradas').textContent = 'Qual o novo nome da categoria?';
+    document.getElementById('titleCadastradas2').textContent = 'Edite a categoria escolhida';
+}
 
-fetch('./html/partials/headerAdm.html')
-    .then(response => response.text())
-    .then(html => {
-        const header = document.createElement('header');
-        header.innerHTML = html;
-        document.body.appendChild(header);
-    });
-
-
-// trazer o footer
-
-// fetch('./html/partials/footer.html')
-//     .then(response => response.text())
-//     .then(html => {
-//         const header = document.createElement('footer');
-//         header.innerHTML = html;
-//         document.body.appendChild(header);
-//     });
-
-    
+function salvar(){
+    window.location.reload(true);
+}

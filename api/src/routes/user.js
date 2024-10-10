@@ -13,16 +13,60 @@ const routerUser = express.Router();
 //   limits: { fileSize: 1024 * 1024 }  // Limite de 1MB
 // });
 
-
+import authenticateJWT from "../middleware/authenticateJWT.js";
+import authenticatePerfil from "../middleware/authenticatePerfil.js";
 import CadastroUsuario from "../controllers/CadastroUsuario.js";
 import CategoriaController from "../controllers/Categoria.js";
+import PromocaoController from "../controllers/Promocao.js";
+import PedidoController from "../controllers/Pedido.js";
+import ProdutoFavController from "../controllers/Produto_fav.js";
+import LoginController from "../controllers/Login.js";
+import CadastroADM from "../controllers/CadastroADM.js"
+import CuponsController from "../controllers/Cupons.js";
+import ProdutoController from "../controllers/Produto.js";
 
-routerUser.post("/CreateUser", CadastroUsuario.CadastroPessoa);
+//Insert
+routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);
+routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);
+routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);
+routerUser.post("/CreatePedido/:id",authenticateJWT,PedidoController.Cadastro);//trocar para o JWT
+routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//trocar para o JWT
+routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);
+routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)
+routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)
 
-routerUser.post("/CreateCategoria",CategoriaController.Cadastro)
-routerUser.delete("/DeleteCategoria/:id",CategoriaController.Deletar)
-routerUser.put("/ModificaCategoria/:id",CategoriaController.Modifica)
-routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona)
+//Delete
+// routerUser.delete("/DeleteCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Deletar);
+// routerUser.delete("/DeletePromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Deletar);
+// routerUser.delete("/DeletePedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Deletar);
+// routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
+// routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroADM.ExcluirPessoa)// ADM
+// routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroUsuario.ExcluirPessoa);
+// Por enquanto o administrador não poderá excluir um usuario pois isso altera algumas informações em nosso banco
+routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
+
+
+//Update
+routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);
+routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);
+routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);
+routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)
+routerUser.put("/ModificarPessoa/:id",CadastroUsuario.EditarPessoa)
+routerUser.put("/ModificarPessoaADM/:id",CadastroADM.EditarPessoaADM)
+routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)
+routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)
+routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);
+
+//Select
+routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
+routerUser.get("/SelecionaPedido",authenticateJWT,authenticatePerfil,PedidoController.Seleciona);
+routerUser.get("/SelecionaProdutoFav/:id",authenticateJWT,ProdutoFavController.Seleciona);
+routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
+routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
+routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
+
+//Filtros
+routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
 
 export default routerUser;  
 
