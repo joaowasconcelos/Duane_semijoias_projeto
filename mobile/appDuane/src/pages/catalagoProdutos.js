@@ -48,7 +48,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%" }}>
+          <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -60,7 +60,7 @@ export default function Home() {
                   // Remove hover effect here, e.g. reset the button's background color
                   styles.btnLogOut.backgroundColor = "#fff";
                 }}
-                onPress={()=>{}}
+                onPress={() => navigation.goBack()}
               >
                 <FontAwesome6
                   name="circle-arrow-left"
@@ -74,9 +74,38 @@ export default function Home() {
               />
 
               <Text style={styles.textTitle}>Catálago de Produtos</Text>
-
-              
             </View>
+
+            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
+              </TextInput>
+              <TouchableOpacity style={{margin: 5}}>
+                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
+              </TouchableOpacity>
+            </View>
+
+            <ScrollView>
+              <View style={styles.containerElements}>
+                <View style={styles.btn}>
+                  <View>
+                    <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 50, height: 50}}/>
+                  </View>
+                    
+                  <View>
+                    <Text style={styles.textBtn}>Cadastro de Produtos</Text>
+
+                  </View>
+
+                  
+                  <TouchableOpacity>
+                    <FontAwesome6 name="file-circle-plus" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                  
+                </View>
+
+                
+              </View>
+            </ScrollView>
 
             
           </View>
@@ -113,9 +142,9 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   btn: {
-    width: "85%",
+    width: "100%",
     backgroundColor: "#FFFFFF",
-    height: 50,
+    height: 80,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
@@ -170,4 +199,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
+  Inputs:{
+    width: '80%',
+    height: 30,
+    fontSize: 18,
+    fontFamily: 'EBGaramond_400Regular',
+    borderRadius: 5,
+    backgroundColor: '#FFF6F2',
+    padding: 5,
+    color: '#000000',
+    fontWeight: 'bold',
+    borderWidth: 1,
+    borderColor: '#CF90A2',
+    margin: 5,
+  }
 });
