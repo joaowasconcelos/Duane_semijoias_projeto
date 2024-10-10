@@ -194,9 +194,9 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT usuario FROM login WHERE usuario=?;`, [this._usuario]);
             const usuarioResult = loginResul[0][0].usuario;
+            console.log(usuarioResult)
 
             if (usuarioResult === this._usuario) {
-                console.log("Entrei")
                 return false
             }
             return true
