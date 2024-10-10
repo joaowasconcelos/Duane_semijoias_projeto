@@ -81,6 +81,17 @@ export default class Pessoa {
             return { error: 'Falha na transação', details: error };
         }
     }
+    async ModificaPessoaADM(conn) {
+
+        try {
+            const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._id]);
+            return { message: pessoaResult }
+
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        }
+    }
 
     async DeletarPessoa() {
         const bd = await obterConexaoDoPool();
