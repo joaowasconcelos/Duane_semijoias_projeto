@@ -105,20 +105,15 @@ export default class Login {
         }
     }
 
-    async ModificaLogin() {
-        const bd = await obterConexaoDoPool();
+    async ModificaLogin(conn) {
         try {
-            const loginResul = await bd.query(`UPDATE login SET usuario = ? WHERE pessoa_id`, [this._usuario, this._id_pessoa]);
-            const loginId = loginResul[0].insertId;
-            console.log(pessoaResult);
-            console.log('ID login:', loginId);
+            const loginResul = await conn.query(`UPDATE login SET usuario = ? WHERE pessoa_id = ?`,
+                [this._usuario, this._id]);
         }
         catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
-        } finally {
-            bd.release();
-        }
+        } 
     }
 
     async AlterarSenha() {
@@ -170,7 +165,7 @@ export default class Login {
         const bd = await obterConexaoDoPool();
         try {
             const loginResul = await bd.query(`SELECT usuario,senha,pessoa_id,perfis_id FROM login WHERE usuario=?;`, [this._usuario]);
-            if(loginResul[0]== ""){
+            if (loginResul[0] == "") {
                 return false
             }
             const senhaResult = loginResul[0][0].senha;
@@ -179,7 +174,7 @@ export default class Login {
                 return false
             }
 
-            if(loginResul[0][0].ativo === 0){
+            if (loginResul[0][0].ativo === 0) {
                 return "Usuario Inativo"
             }
             return loginResul[0]
@@ -248,7 +243,7 @@ export default class Login {
 
 
     verificaCampos() {
-        if(this._usuario.length>100 || this._senha.length>50){
+        if (this._usuario.length > 100 || this._senha.length > 50) {
             return false
         }
         return true

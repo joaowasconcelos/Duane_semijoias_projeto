@@ -52,17 +52,16 @@ export default class Telefone {
         }
     }
 
-    async ModificaTelefone() {
-        const bd = await obterConexaoDoPool();
+    async ModificaTelefone(conn) {
+        
         try {
-            const telefoneResult = await bd.query(`UPDATE telefone SET numero = ? WHERE id = ?`, [this._numero, this._id]);
-            console.log(telefoneResult)
+            // console.log(tel,id)
+            const telefoneResult = await conn.query(`UPDATE telefone SET numero = ? WHERE id = ?`, [this._numero, this._id]);
+            // console.log(telefoneResult)
         } catch (error) {
-            console.log('Erro na transação:', error);
-            return { error: 'Falha na transação', details: error };
-        } finally {
-            bd.release();
-        }
+
+            return error
+        } 
     }
 
     async DeletaTelefone() {
