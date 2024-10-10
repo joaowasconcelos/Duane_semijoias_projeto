@@ -43,12 +43,12 @@ export default function Home() {
     navigation.navigate('CadastroFuncionario')
   }
 
-  const navegaCadastroNovoCupom = () =>{
-    navigation.navigate('CadastroNovoCupom')
-  }
-
   const navegaCadastroProduto = () =>{
     navigation.navigate('CadastroProdutos')
+  }
+
+  const navegaCategorias = () =>{
+    navigation.navigate('Categorias')
   }
 
   const navegaCatalagoProdutos = () =>{
@@ -67,16 +67,12 @@ export default function Home() {
     navigation.navigate('Cupons')
   }
 
+  const navegaCadastroNovoCupom = () =>{
+    navigation.navigate('CadastroNovoCupom')
+  }
+
   const navegaDetalhesCupom = () =>{
     navigation.navigate('DetalhesCupom')
-  }
-
-  const navegaDetalhesPromocao = () =>{
-    navigation.navigate('DetalhesPromocao')
-  }
-
-  const navegaGeraPromocao = () =>{
-    navigation.navigate('GeraPromocao')
   }
 
   const navegaPedidos = () =>{
@@ -85,6 +81,14 @@ export default function Home() {
 
   const navegaPromocoes = () =>{
     navigation.navigate('Promocoes')
+  }
+
+  const navegaDetalhesPromocao = () =>{
+    navigation.navigate('DetalhesPromocao')
+  }
+
+  const navegaGerarPromocao = () =>{
+    navigation.navigate('GerarPromocao')
   }
 
   const navegaRelatoriosVendas = () =>{
@@ -181,6 +185,11 @@ export default function Home() {
                 <TouchableOpacity style={styles.btn} onPress={navegaPromocoes}>
                   <Text style={styles.textBtn}>Promoções</Text>
                   <FontAwesome6 name="gifts" color="#ae4b67" size={26} />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.btn} onPress={navegaCategorias}>
+                  <Text style={styles.textBtn}>Categorias</Text>
+                  <FontAwesome6 name="layer-group" color="#ae4b67" size={26} />
                 </TouchableOpacity>
               </View>
             </ScrollView>

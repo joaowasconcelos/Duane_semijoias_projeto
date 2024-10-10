@@ -1,22 +1,22 @@
-// trazer o header
-
-fetch('./html/partials/header.html')
-    .then(response => response.text())
-    .then(html => {
-        const header = document.createElement('header');
-        header.innerHTML = html;
-        document.body.appendChild(header);
+document.addEventListener("DOMContentLoaded", function () {
+    var btn = document.querySelector('[data-bs-toggle="offcanvas"]');
+    btn.addEventListener("click", function () {
+      var offcanvasScrolling = new bootstrap.Offcanvas('#offcanvasScrolling');
+      offcanvasScrolling.show();
     });
-
-
-// trazer o footer
-
-fetch('./html/partials/footer.html')
-    .then(response => response.text())
-    .then(html => {
-        const header = document.createElement('footer');
-        header.innerHTML = html;
-        document.body.appendChild(header);
-    });
-
+  });
     
+
+  async function dados() {
+    try {
+        // Fazendo a requisição com axios.get
+        const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
+        console.log(response);
+        console.log(response.data);
+        
+    } catch (error) {
+        console.error('Erro ao buscar dados da API:', error);
+    }
+}
+
+dados();

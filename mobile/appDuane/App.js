@@ -18,6 +18,7 @@ import Pedidos from './src/pages/pedidos';
 import Promocoes from './src/pages/promocoes';
 import RelatorioVendas from './src/pages/relatorioVendas';
 import Clientes from './src/pages/clientes';
+import Categorias from './src/pages/categorias';
 
 const Stack = createNativeStackNavigator();
 
@@ -41,6 +42,7 @@ export default function App() {
           <Stack.Screen name='Promocoes' component={Promocoes} options={{headerShown: false}}/>
           <Stack.Screen name='RelatorioVendas' component={RelatorioVendas} options={{headerShown: false}}/>
           <Stack.Screen name='Clientes' component={Clientes} options={{headerShown: false}}/>
+          <Stack.Screen name='Categorias' component={Categorias} options={{headerShown: false}}/>
 
           
           
