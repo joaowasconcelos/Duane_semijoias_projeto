@@ -44,18 +44,35 @@ export default class Preco {
         try {
             const precoSelect = await bd.query(`SELECT * FROM preco WHERE produto_id = ? ORDER BY id DESC LIMIT 1;`,[this._id_produto])
             const preco = precoSelect[0].Id
-
-            const precoModifica = await bd.query(`UPDATE preco SET status = ? WHERE id = ?;`,[this._status,preco])
-            console.log(precoModifica)
-
+            console.log(precoSelect)
+            if(!preco == 0){
+                const precoModifica = await bd.query(`UPDATE preco SET status = ? WHERE id = ?;`,[this._status,preco])
+                console.log(precoModifica)
+                return precoModifica
+            }
             const precoResult = await bd.query(`INSERT INTO preco (preco,status,produto_id,data_cad) VALUES (?,?,?,CURRENT_TIMESTAMP);`,[this._preco,this._status,this._id_produto]);
             const precoId = precoResult[0].insertId;
             console.log('ID do preco:', precoId);
+            return precoId
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
         } finally {
             bd.release();
         }
+    }
+
+    verificaCampos(){
+        if(this._preco.length>100 || this._status.length>20|| this._id_produto.length>20){
+            return false
+        }
+        return true
+    }
+
+    validaCampos() {
+        if (!this._id_produto || !this._preco || !this._status) {
+            return false
+        }
+        return true 
     }
 }
