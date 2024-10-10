@@ -46,3 +46,51 @@ function somenteNumeros(e) {
         return false;
     }
 }
+
+//limpar input 
+
+function limparInput() {
+    document.getElementById('produto').value = '';
+    document.getElementById('categoria').value = '';
+    document.getElementById('descricao').value = '';
+    document.getElementById('preco').value = '';
+    document.getElementById('quantidade').value = '';
+    document.getElementById('imagem').value = '';
+    window.location.reload(true);
+}
+
+//salvar formulario *sim, eu sei, não ta finalizada, MEIO OBVIO NE*
+
+function salvar() {
+    limparInput()
+    window.location.reload(true);
+}
+
+//puxando tabela de categorias do banco
+
+async function dados() {
+    try {
+        // Fazendo a requisição com axios.get
+        const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
+        console.log(response.data)
+        criaDrop(response.data)
+
+    } catch (error) {
+        console.error('Erro ao buscar dados da API:', error);
+    }
+}
+
+
+//adicionando categorias ao dropdown 
+
+function criaDrop(data) {
+    const selecionaElemento = document.getElementById('categoria');
+    data.forEach((item) => {
+        const opcao = document.createElement('option');
+        opcao.value = item.name;
+        selecionaElemento.appendChild(opcao);
+    })
+}
+
+dados();
+

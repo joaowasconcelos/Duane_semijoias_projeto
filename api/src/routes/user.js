@@ -48,8 +48,9 @@ routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,Pro
 routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);
 routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);
 routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);
-routerUser.put("/ModificaProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)
-routerUser.put("/ModificarPessoa/:id",authenticateJWT,CadastroUsuario.EditarPessoa)
+routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)
+routerUser.put("/ModificarPessoa/:id",CadastroUsuario.EditarPessoa)
+routerUser.put("/ModificarPessoaADM/:id",CadastroADM.EditarPessoaADM)
 routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);

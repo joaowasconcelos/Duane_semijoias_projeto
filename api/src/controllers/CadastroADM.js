@@ -71,7 +71,7 @@ const CadastroUsuario = {
             res.status(500).json({ error: "Erro ao cadastrar o usuário" });
         }
     },
-    ExcluirPessoa: async (req, res) => {
+    ExcluirPessoaADM: async (req, res) => {
         try {
             const id = req.params
             const cPessoa = new Pessoa(id);
@@ -82,6 +82,31 @@ const CadastroUsuario = {
             return res.status(500).json({message: 'Erro ao excluir pessoa'})
         }
     },
+    EditarPessoaADM: async (req, res) => {
+        const conn = await obterConexaoDoPool();
+        try {
+            await conn.beginTransaction();
+            const { id } = req.params; // ID da pessoa
+            const { Nome, Data_Nasc, Usuario, Telefones } = req.body;
+            const cLogin = new Login(null, Usuario, null, null, null, null, id);
+            const cPessoa = new Pessoa(id, Nome, Data_Nasc);
+            const modificaPessoa = await cPessoa.ModificaPessoaADM(conn);
+            const modificaLogin = await cLogin.ModificaLogin(conn);
+            for (const item of Telefones) {
+                const cTelefone = new Telefone(item.id, item.Numero);
+                const modificaTelefone = await cTelefone.ModificaTelefone(conn);
+                if (modificaPessoa.error || modificaLogin.error || modificaTelefone.error) {
+                    await conn.rollback();
+                    return res.status(500).json({ message: 'Erro ao editar dados' })
+                }
+            }
+            await conn.commit()
+            return res.status(200).json({ message: 'Dados atualizados com sucesso!' });
+        } catch (error) {
+            await conn.rollback();
+            return res.status(500).json({ message: 'Erro ao editar dados' })
+        }
+    }
 }
 
 
