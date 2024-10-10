@@ -10,9 +10,12 @@
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    
 </head>
 
 <body>
+
 
     <header id="headerAdm"></header>
 
@@ -30,8 +33,8 @@
 
             <div id="voltar"></div>
             <p id="back">Voltar ao inicio!</p>
-            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor" class="bi home bi-house-fill"
-                viewBox="0 0 16 16">
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
                     d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
                 <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
@@ -47,51 +50,51 @@
 
         <div id="table">
 
-            <div id="form">
+            <form action="">
 
-                <div id="dados">
+                <div id="form">
 
-                    <label for="categoria">Categoria: *</label>
-                    <select class="form-control form-control-sm">
-                        <option>Selecione...</option>
-                        <option>Brinco</option>
-                        <option>Colar</option>
-                        <option>Anéis</option>
-                    </select>
+                    <div id="dados">
 
-                    <label for="produto">Produto: *</label>
-                    <input class="input" type="text" name="produto" id="produto">
+                        <label for="categoria">Categoria: *</label>
+                        <select class="form-control form-control-sm" id="categoria"></select>
 
-                    <label for="descricao">Descrição: *</label>
-                    <input class="input" type="text" name="descricao" id="descricao">
+                        <label for="produto">Produto: *</label>
+                        <input class="input" type="text" name="produto" id="produto">
 
-                    <label for="preco">Preço: *</label>
-                    <input class="input" type="text" id="preco" name="preco" onInput="mascaraMoeda(event);" onkeydown="return somenteNumeros(event)">
+                        <label for="descricao">Descrição: *</label>
+                        <input class="input" type="text" name="descricao" id="descricao">
 
-                    <label for="quantidade">Quantidade: *</label>
-                    <input class="input" type="number" name="quantidade" id="quantidade">
+                        <label for="preco">Preço: *</label>
+                        <input class="input" type="text" id="preco" name="preco" onInput="mascaraMoeda(event);"
+                            onkeydown="return somenteNumeros(event)">
 
+                        <label for="quantidade">Quantidade: *</label>
+                        <input class="input" type="number" name="quantidade" id="quantidade">
+
+                    </div>
+
+                    <div id="addFotos">
+
+                        <label class="picture" for="imagem">Foto do produto: *</label>
+                        <p>Obrigatório carregar ao menos 1 foto do produto*</p>
+                        <p>Adicione no maximo 5 fotos*</p>
+                        <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple"
+                            maxlength="5">
+                        <span class="picture__image"></span>
+
+                    </div>
+
+                </div>
+
+                <div id="btns">
+
+                    <button type="button" class="btn btn-primary save-changes" onclick="limparInput()">Cancelar</button>
                     <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
 
-
                 </div>
 
-                <div id="addFotos">
-
-                    <label class="picture" for="imagem">Foto do produto: *</label>
-                    <p>Obrigatório carregar ao menos 1 foto do produto*</p>
-                    <p>Adicione no maximo 5 fotos*</p>
-                    <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple" maxlength="5">
-                    <span class="picture__image"></span>
-
-                </div>
-
-
-            </div>
-
-            <div id="btns">
-
-            </div>
+            </form>
 
         </div>
 
@@ -100,14 +103,13 @@
     <footer> <img id="ondasFooter" src="../img/ondas-footer.png"> </footer>
 
     <script src="../js/cadastrarNovoProduto.js"></script>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>   <!-- script para numeral -->
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
+    <!-- script para numeral -->
     <script defer>
         $(function () {
             $('#headerAdm').load("./partials/headerAdm.html");
         });
     </script>
-    <!-- <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> -->
 
 </body>
 

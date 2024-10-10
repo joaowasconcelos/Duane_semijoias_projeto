@@ -60,12 +60,13 @@ export default function Home() {
                   // Remove hover effect here, e.g. reset the button's background color
                   styles.btnLogOut.backgroundColor = "#fff";
                 }}
-                onPress={()=>{}}
+                onPress={() => navigation.goBack()}
               >
                 <FontAwesome6
                   name="circle-arrow-left"
                   color="#ae4b67"
                   size={35}
+                  
                 />
               </TouchableOpacity>
               <Image
