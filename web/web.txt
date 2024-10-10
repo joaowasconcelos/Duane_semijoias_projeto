@@ -1,1 +1,13 @@
-subindo no git 
+Paginas a fazer para essa Sprint (web)
+
+-Home ok
+-Login/Cadastro ok
+-Catalogo de produtos ok
+-Adm Inicio ok
+-Footer/Header ok
+
+-Cadastro de produto 
+-Usuário inicio 
+-Usuario editar dados
+
+-Gerenciamento de cupons

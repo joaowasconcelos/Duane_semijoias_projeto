@@ -1,34 +1,86 @@
-class Cupons {
-    Id
-    Codigo
-    Descrição
-    Quantidade
-    Valor
-    Status
-    constructor(Id,Codigo,Descrição,Quantidade,Valor,Status) {
-        this.Id = Id
-        this.Codigo = Codigo;
-        this.Descrição = Descrição;
-        this.Quantidade = Quantidade
-        this.Valor = Valor
-        this.Status = Status
+import obterConexaoDoPool from "../config/mysql.js"
+
+export default class Cupons {
+    constructor(id, codigo, descricao, quantidade, valor, status) {
+        this._id = id;
+        this._codigo = codigo;
+        this._descricao = descricao;
+        this._quantidade = quantidade;
+        this._valor = valor;
+        this._status = status;
     }
 
-    get Id () { return this.Id }
-    set Id (value) { this.Id = value }
+    get id() { return this._id; }
+    set id(value) { this._id = value; }
 
-    get Codigo () { return this.Codigo }
-    set Codigo (value) { this.Codigo = value }
+    get codigo() { return this._codigo; }
+    set codigo(value) { this._codigo = value; }
 
-    get Descrição() { return this.Quantidade }
-    set Descrição(value) { this.Descrição = value }
+    get descricao() { return this._descricao; }
+    set descricao(value) { this._descricao = value; }
 
-    get Quantidade() { return this.Quantidade }
-    set Quantidade(value) { this.Quantidade = value }
+    get quantidade() { return this._quantidade; }
+    set quantidade(value) { this._quantidade = value; }
 
-    get Valor() { return this.Valor }
-    set Valor(value) { this.Valor = value }
+    get valor() { return this._valor; }
+    set valor(value) { this._valor = value; }
 
-    get Status() { return this.Status }
-    set Status(value) { this.Status = value }
+    get status() { return this._status; }
+    set status(value) { this._status = value; }
+
+    async CadastraCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`INSERT INTO cupons (descricao,codigo,quantidade,valor,status) VALUES(?,?,?,?,?);`,
+                [this._descricao,this._codigo,this._quantidade,this._valor,this._status]);
+            const cupomId = cupomResult[0].insertId;
+           return cupomId
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async ModificaCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`UPDATE cupons SET descricao=?, codigo=?, quantidade=?, valor=?, status=? WHERE id=?;`,
+                [this._descricao,this._codigo,this._quantidade,this._valor,this._status,this._id]);
+           return cupomResult
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async SelecionaCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`SELECT * FROM cupons;`)
+            console.log(cupomResult);
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    validaCampos() {
+        if (!this._codigo || !this._descricao || !this._quantidade|| !this._status|| !this._valor ) {
+            return false
+        }
+        return true 
+    }
+
+    verificaCampos(){
+        if(this._codigo.length>100 || this._descricao.length>150|| this._valor.length>30|| this._quantidade.length>100|| this._status.length>50){
+            return false
+        }
+        return true 
+    }
 }
