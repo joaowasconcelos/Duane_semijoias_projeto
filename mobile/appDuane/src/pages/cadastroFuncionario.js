@@ -48,7 +48,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%" }}>
+          <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -75,9 +75,32 @@ export default function Home() {
               />
 
               <Text style={styles.textTitle}>Cadastro Funcionário</Text>
-
-              
             </View>
+
+            
+            <ScrollView style={{width: '100%', marginBottom: 60}}>
+              <View style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+                  <TextInput placeholder="Nome Completo" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Data de nascimento" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="E-mail" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="C.P.F" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Gênero" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="CEP" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Logradouro" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Bairro" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Estado" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Cidade" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Complemento" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Telefone 1" style={styles.Inputs}></TextInput>
+                  <TextInput placeholder="Telefone 2 (opcional)" style={styles.Inputs}></TextInput>
+                  <TouchableOpacity style={styles.btn}>
+                    <Text style={styles.textBtn}>Cadastrar/Editar</Text>
+                  </TouchableOpacity>
+              </View>
+              
+            </ScrollView>
+
+            
 
             
           </View>
@@ -114,12 +137,12 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   btn: {
-    width: "85%",
+    width: "70%",
     backgroundColor: "#FFFFFF",
     height: 50,
     justifyContent: "center",
     alignItems: "center",
-    marginTop: 20,
+    marginTop: 10,
     borderRadius: 10,
     borderColor: "#9B5377",
     borderWidth: 1,
@@ -128,8 +151,8 @@ const styles = StyleSheet.create({
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
     fontSize: 18,
-    color: "#ae4b67",
-    opacity: 0.8,
+    color: '#633636', 
+    opacity: 0.7,
     margin: 10,
     paddingRight: 5,
   },
@@ -171,4 +194,17 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
+  Inputs:{
+    width: '85%',
+    height: 35,
+    fontSize: 18,
+    fontFamily: 'EBGaramond_600SemiBold',
+    borderRadius: 5,
+    backgroundColor: '#FFFF',
+    padding: 5,
+    margin: 5,
+    borderWidth: 1,
+    borderColor: '#FAADD1',
+    textAlign: 'center'
+  }
 });
