@@ -1,22 +1,5 @@
 //dinheiro
 
-// const mascaraMoeda = (event) => {
-//     const onlyDigits = event.target.value
-//         .split("")
-//         .filter(s => /\d/.test(s))
-//         .join("")
-//         .padStart(3, "0")
-//     const digitsFloat = onlyDigits.slice(0, -2) + "." + onlyDigits.slice(-2)
-//     event.target.value = maskCurrency(digitsFloat)
-// }
-
-// const maskCurrency = (valor, locale = 'pt-BR', currency = 'BRL') => {
-//     return new Intl.NumberFormat(locale, {
-//         style: 'currency',
-//         currency
-//     }).format(valor)
-// }
-
 const mascaraMoeda = (event) => {
     const valor = event.target.value.replace(",", ".");
     const onlyDigits = valor
@@ -86,8 +69,10 @@ async function dados() {
 function criaDrop(data) {
     const selecionaElemento = document.getElementById('categoria');
     data.forEach((item) => {
+        console.log(item)
         const opcao = document.createElement('option');
-        opcao.value = item.name;
+        opcao.value = item.id;
+        opcao.text = item.tipo;
         selecionaElemento.appendChild(opcao);
     })
 }

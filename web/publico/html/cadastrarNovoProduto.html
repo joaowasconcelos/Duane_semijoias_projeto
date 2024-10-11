@@ -32,7 +32,7 @@
             </div>
 
             <div id="voltar"></div>
-            <p id="back">Voltar ao inicio!</p>
+            <a href="../html/admInicio.html" style="text-decoration: none;"> <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span></a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                 class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
@@ -57,7 +57,9 @@
                     <div id="dados">
 
                         <label for="categoria">Categoria: *</label>
-                        <select class="form-control form-control-sm" id="categoria"></select>
+                        <select class="form-control form-control-sm" id="categoria">
+                            <option></option>
+                        </select>
 
                         <label for="produto">Produto: *</label>
                         <input class="input" type="text" name="produto" id="produto">

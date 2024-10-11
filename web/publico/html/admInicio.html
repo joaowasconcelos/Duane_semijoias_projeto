@@ -8,8 +8,9 @@
     <link rel="stylesheet" href="../css/admInicio.css">
     <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-
-    <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -19,11 +20,13 @@
     <main>
 
         <div id="container1">
-            <div id="bemVinda"> <span id="icon" class="fas fa-user fa"></span>
+            <div id="bemVinda">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px;" width="26" height="26"
+                    fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
                 <p id="bemVindaText">Bem vinda!</p>
             </div>
-            <div id="voltar"></div>
-            <p id="back">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span>
         </div>
 
         <!-- Menu -->
@@ -33,8 +36,8 @@
                 <p id="titulo">MENU</p>
                 <a href="#" id="menuText" class="navAdm">Histórico de pedidos</a>
                 <a href="#" id="menuText" class="navAdm">Relatório de vendas</a>
-                <a href="#" id="menuText" class="navAdm">Cadastro de produtos</a>
-                <a href="#" id="menuText" class="navAdm">Catálogo de produtos</a>
+                <a href="../html/cadastrarNovoProduto.html" id="menuText" class="navAdm">Cadastro de produtos</a>
+                <a href="../html/admCatalogoProdutos.html" id="menuText" class="navAdm">Catálogo de produtos</a>
                 <a href="#" id="menuText" class="navAdm">Promoção</a>
                 <a href="#" id="menuText" class="navAdm">Gerenciamento de cupons</a>
                 <a href="#" id="menuText" class="navAdm">Cadastrar administrador</a>
@@ -98,18 +101,31 @@
 
                             <p id="titleCadastradas">Categorias ja cadastradas</p>
 
-                            <table>
+                            <table id="categorias" >
+
                                 <tbody>
-                                    <tr>
-                                        <th class="categoria" id="dados3">Brincos</th>
-                                        <td class="categoria" id="dados2"><span id="iconTable" class="fas fa-edit"
-                                                data-toggle="modal" data-target="#meuModal"
-                                                onclick="changeSubtitle()"></span></td>
-                                        <td class="categoria" id="dados2"><span id="iconTable"
-                                                class="fas fa-trash"></span> </td>
-                                    </tr>
+
+                                    
+
+                                    <!-- <tr id="categoria">
+                                        
+                                        <th class="categoria" id="categoria"></th>
+
+                                        <td class="categoria" id="dados2">
+                                            <span id="iconTable" class="fas fa-edit" data-toggle="modal"
+                                                data-target="#meuModal" onclick="changeSubtitle()"></span>
+                                        </td>
+
+                                        <td class="categoria" id="dados2">
+                                            <span id="iconTable" class="fas fa-trash"></span>
+                                        </td>
+
+                                    </tr> -->
+
                                 </tbody>
+
                             </table>
+
                         </div>
 
                         <div id="boxCadastrarCategorias">
