@@ -1,0 +1,12 @@
+[
+    {
+        "status": "Entregue",
+        "valor_total": "1500,00",
+        "quantidade": "1",
+        "id_produto": "1",
+        "id_preco": "1"
+    },
+    {
+        "status": "Concluido"
+    }
+]

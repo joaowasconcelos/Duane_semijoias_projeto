@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Catálogo de Produtos</title>
+    <link rel="stylesheet" href="../css/admCatalogoProdutos.css">
+    <link rel="stylesheet" href="../css/partials/headerAdm.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <header id="headerAdm"></header>
+
+    <main>
+
+        <div id="container1">
+            <div id="bemVinda"> <span id="icon" class="fas fa-user fa"></span>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+            <div id="voltar"></div>
+            <p id="back">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span>
+        </div>
+
+
+        <div id="container2">
+
+            <p id="titulo2">Catálogo de produtos</p>
+
+            <div id="groupSearch">
+                <input type="text" name="pesquisa" id="pesquisa" placeholder="Pesquise por produto ou categoria ...">
+                <span class="icon fas fa-search"></span>
+            </div>
+
+            <p id="cadastrarNovo">Cadastrar novo produto <span class="fas fa-plus fa"></span></p>
+
+        </div>
+
+        <div id="table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th id="qtdeCat">Quantidade</th>
+                        <th id="qtdeCat">Categoria</th>
+                        <th>Produto</th>
+                        <th id="preco">Preço</th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th id="dados" class="centralizar"></th>
+                        <td id="dados"class="centralizar"></td>
+                        <td id="dados"></td>
+                        <td id="dados"class="centralizar"></td>
+                        <td id="iconsTable"><span id="iconTable" class="iconeT fas fa-plus"></span></td>
+                        <td id="iconsTable"><span id="iconTable" class="iconeT fas fa-minus"></span></td>
+                        <td id="iconsTable"><span id="iconTable" class="iconeT fas fa-edit"></span></td>
+                        <td id="iconsTable"><span id="iconTable" class="iconeT fas fa-trash"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+
+    <footer> <img id="ondasFooter" src="../img/ondas-footer.png"> </footer>
+
+    <script src="../js/admCatalogoProdutos.js"></script>
+    <script defer>
+        $(function () {
+            $('#headerAdm').load("./partials/headerAdm.html");
+        });
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
