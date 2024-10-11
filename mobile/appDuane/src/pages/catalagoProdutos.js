@@ -31,6 +31,11 @@ import {
 export default function Home() {
   const navigation = useNavigation();
 
+
+  const navegaCadastroProduto = () =>{
+    navigation.navigate('CadastroProdutos')
+  }
+
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
     EBGaramond_500Medium,
@@ -79,7 +84,7 @@ export default function Home() {
             <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
               <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
               </TextInput>
-              <TouchableOpacity style={{margin: 5}}>
+              <TouchableOpacity style={{margin: 5}} onPress={navegaCadastroProduto}>
                 <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
               </TouchableOpacity>
             </View>
@@ -117,6 +122,7 @@ export default function Home() {
                   </TouchableOpacity>
                   
                 </View>
+
                 <View style={styles.btn}>
                   <View style={{}}>
                     <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
@@ -148,6 +154,7 @@ export default function Home() {
                   </TouchableOpacity>
                   
                 </View>
+
                 <View style={styles.btn}>
                   <View style={{}}>
                     <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
