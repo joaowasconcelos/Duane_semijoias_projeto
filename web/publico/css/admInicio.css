@@ -107,6 +107,18 @@ main {
     font-size: 25px;
 }
 
+/* lupa */
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.bi-search {
+    margin-left: 10px;
+    z-index: 100;
+}
+
 /* container da tabela */
 
 #titulo2 {
@@ -215,7 +227,7 @@ tbody th:last-child {
 
 /* modal */
 
-.modal-content { 
+.modal-content {
     background-color: #F2E9E7;
     border-radius: 5px;
     border-color: #633636;
