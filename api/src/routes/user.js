@@ -26,12 +26,13 @@ import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
 
 //Insert
-routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);
-routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);
-routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);
-routerUser.post("/CreatePedido/:id",authenticateJWT,PedidoController.Cadastro);//trocar para o JWT
+routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//ESSA ROTA O PRÓPRIO USUÁRIO INSERE SEUS DADOS E SE CADASTRA
+routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);//ESSA ROTA O ADM CADASTRA UM USUARIO 
+routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ESSA ROTA CADASTRA CATEGORIAS
+routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ESSA ROTA O ADM CADASTRA UMA PROMOÇÃO 
+routerUser.post("/CreatePedido",authenticateJWT,PedidoController.Cadastro);//trocar para o JWT
 routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//trocar para o JWT
-routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);
+
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)
 routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)
 
@@ -57,7 +58,7 @@ routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsCon
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
-routerUser.get("/SelecionaPedido",authenticateJWT,authenticatePerfil,PedidoController.Seleciona);
+routerUser.get("/SelecionaPedido",PedidoController.Seleciona);
 routerUser.get("/SelecionaProdutoFav/:id",authenticateJWT,ProdutoFavController.Seleciona);
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);

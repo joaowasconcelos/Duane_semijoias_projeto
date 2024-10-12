@@ -12,16 +12,13 @@ const CadastroUsuario = {
         try {
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
-            console.log(cPessoa)
 
             const verificaCPF = cPessoa.validaCpf()
             if (!verificaCPF) {
                 return res.status(400).json({ message: "Erro CPF invalido" });
             }
-
             const conversaoData = cPessoa.DataConvert()
-
-
+            
             if (conversaoData == "Invalid Date") {
                 return res.status(400).json({ message: "Erro Data invalida" });
             }

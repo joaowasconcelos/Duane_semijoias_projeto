@@ -93,21 +93,6 @@ export default class Pessoa {
         }
     }
 
-    async DeletarPessoa() {
-        const bd = await obterConexaoDoPool();
-        try {
-            console.log("oi")
-            const pessoaResult = await bd.query('DELETE FROM pessoa WHERE id = ?',
-                [this._id]);
-            return { success: true };
-        } catch (error) {
-            console.log('Erro na transação:', error);
-            return { error: 'Falha na transação', details: error };
-        } finally {
-            bd.release();
-        }
-    }
-
     async SelecionaUsuarios() {
         const bd = await obterConexaoDoPool();
         try {
