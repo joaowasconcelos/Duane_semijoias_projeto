@@ -4,7 +4,7 @@ const ProdutoFavController ={
     Cadastro:async(req,res)=>{
         try {
             const {id_produto} = req.body
-            const {id} = req.params
+            const id = req.id
             const cProduto = new Produto_Fav(null,id_produto,id)
             const validaCampos = cProduto.validaCampos()
             if(!validaCampos){
@@ -42,7 +42,7 @@ const ProdutoFavController ={
     },
     Seleciona:async(req,res)=>{
         try {
-            const {id} = req.params
+            const id = req.id
             if(id == 0){
                 return res.status(500).json({message: "Selecione uma pessoa"})
             }

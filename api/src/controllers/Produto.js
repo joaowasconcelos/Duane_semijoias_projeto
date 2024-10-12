@@ -3,13 +3,13 @@ import Produto from "../model/Produto.js";
 const ProdutoController = {
     cadastro: async (req, res) => {
         try {
-            const { Descricao, Status, NomeProduto, ID_categoria } = req.body;
-            const Cproduto = new Produto(null, Descricao, Status, NomeProduto, ID_categoria)
+            const { Descricao, NomeProduto, ID_categoria } = req.body;
+            const Cproduto = new Produto(null, Descricao, 1, NomeProduto, ID_categoria)
             const returnProduto = await Cproduto.CadastraProduto()
             if (returnProduto.error) {
                 return res.status(500).json({message: "Erro ao cadastrar produto!"});
             }
-            res.status(201).json({ message: "Produto cadastrado com sucesso!", returnProduto })
+            res.status(201).json({ message: "Produto cadastrado com sucesso!"})
         } catch (error) {
             res.status(500).json({ message: "Erro ao cadastrar produto!" })
         }

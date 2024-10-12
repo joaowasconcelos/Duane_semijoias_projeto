@@ -24,11 +24,11 @@ import ProdutoController from "../controllers/Produto.js";
 import LoginController from "../controllers/Login.js";
     
 //Insert
-routerUser.post("/CreateUser", authenticateJWT,CadastroUsuario.CadastroPessoa);
+routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);
-routerUser.post("/CreatePedido/:id",authenticateJWT,PedidoController.Cadastro);//trocar para o JWT
-routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//trocar para o JWT
+routerUser.post("/CreatePedido",authenticateJWT,PedidoController.Cadastro);
+routerUser.post("/CreateProdutoFav",authenticateJWT,ProdutoFavController.Cadastro);
 routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)
 
 //Delete
@@ -49,7 +49,7 @@ routerUser.put("/ModificarPessoa/:id",authenticateJWT,CadastroUsuario.EditarPess
 routerUser.get("/SelecionaCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Seleciona);
 routerUser.get("/SelecionaPromocao",authenticateJWT,PromocaoController.Seleciona);
 routerUser.get("/SelecionaPedido",authenticateJWT,authenticatePerfil,PedidoController.Seleciona);
-routerUser.get("/SelecionaProdutoFav/:id",authenticateJWT,ProdutoFavController.Seleciona);
+routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
 
 //Filtros

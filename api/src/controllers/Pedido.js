@@ -5,8 +5,12 @@ const PedidoController = {
     Cadastro: async (req,res) =>{
         try {
             const {status,valor_total,quantidade,id_produto,id_preco} = req.body;
-            const {id} =req.params
+            const id = req.id
             const cPedido = new Pedido(null,status,valor_total,id);
+            const verificaCampos = cPedido.verificaCampos()
+            if(!verificaCampos){
+                return res.status(500).json({ message: "Numero máximo de caracteres "})
+            }
             const validaCampos = cPedido.validaCampos()
             if(!validaCampos){
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
@@ -18,6 +22,7 @@ const PedidoController = {
             if(!validaCamposItem){
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
+            
             const insertItem = await cItem.CadastraItens()
             return res.status(201).json({ message: "Pedido cadastrado com sucesso!" });
         }catch (error) {

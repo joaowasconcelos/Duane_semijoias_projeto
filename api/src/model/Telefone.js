@@ -107,5 +107,19 @@ export default class Telefone {
             bd.release();
         }
     }
+
+    validaCampos() {
+        if (!this._numero || !this._idPessoa ) {
+            return false
+        }
+        return true 
+    }
+
+    verificaCampos() {
+        if(this._numero.length>20 || this._idPessoa != 0){
+            return false
+        }
+        return true
+    }
 }
 
