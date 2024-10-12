@@ -24,8 +24,6 @@ async function dados() {
 
 dados();
 
-//adicionando categorias a tabela do modal
-
 // function catDrop(data) {
 //     const selecionaElemento = document.getElementById('categorias');
 
@@ -50,37 +48,47 @@ dados();
 //     });
 // }
 
-function catDrop(data) {
-    // Seleciona o tbody da tabela onde as categorias serão inseridas
-    const selecionaElemento = document.querySelector('#categorias tbody'); 
+// function catDrop(data) {
+//     // Seleciona o tbody da tabela onde as categorias serão inseridas
+//     const selecionaElemento = document.querySelector('#categorias tbody'); 
 
-    // Limpa o conteúdo anterior da tabela, caso esteja atualizando
-    selecionaElemento.innerHTML = '';
+//     // Limpa o conteúdo anterior da tabela, caso esteja atualizando
+//     selecionaElemento.innerHTML = '';
 
-    data.forEach((item) => {
-        // Cria uma nova linha para a tabela
-        const row = document.createElement('tr'); 
+//     data.forEach((item) => {
+//         // Cria uma nova linha para a tabela
+//         const row = document.createElement('tr'); 
 
-        // Cria a célula da categoria
-        const tipoCat = document.createElement('th');
-        tipoCat.className = 'categoria';
-        tipoCat.id = `categoria-${item.id};` // Define o ID da categoria
-        tipoCat.textContent = item.tipo; // Define o tipo da categoria como texto
+//         // Cria a célula da categoria
+//         const tipoCat = document.createElement('th');
+//         tipoCat.className = 'categoria';
+//         tipoCat.id = `categoria-${item.id};` // Define o ID da categoria
+//         tipoCat.textContent = item.tipo; // Define o tipo da categoria como texto
 
-        // Cria a célula para editar
-        const editar = document.createElement('td');
-        editar.innerHTML = `<span id="iconTable" class="fas fa-edit" data-toggle="modal" data-target="#meuModal" onclick="changeSubtitle(${item.id})"></span>;`
+//         // Cria a célula para editar
+//         const editar = document.createElement('td');
+//         editar.innerHTML = `<span id="iconTable" class="fas fa-edit" data-toggle="modal" data-target="#meuModal" onclick="changeSubtitle(${item.id})"></span>;`
 
-        // Cria a célula para excluir
-        const excluir = document.createElement('td');
-        excluir.innerHTML = `<span id="iconTable" class="fas fa-trash" onclick="excluirCategoria(${item.id})"></span>;`
+//         // Cria a célula para excluir
+//         const excluir = document.createElement('td');
+//         excluir.innerHTML = `<span id="iconTable" class="fas fa-trash" onclick="excluirCategoria(${item.id})"></span>;`
 
-        // Adiciona as células à linha
-        row.appendChild(tipoCat);
-        row.appendChild(editar);
-        row.appendChild(excluir);
+//         // Adiciona as células à linha
+//         row.appendChild(tipoCat);
+//         row.appendChild(editar);
+//         row.appendChild(excluir);
 
-        // Adiciona a linha ao tbody da tabela
-        selecionaElemento.appendChild(row);
-    });
+//         // Adiciona a linha ao tbody da tabela
+//         selecionaElemento.appendChild(row);
+//     });
+// }
+
+tipoCategorias = function () {
+    var $linhas = $("#categorias > tr");
+    $linhas.each( function() {
+        var cat = $(".categoria", this). html();
+        console.log($(".categoria", this).html());
+
+        myJS
+    })
 }

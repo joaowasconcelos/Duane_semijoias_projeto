@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Todos os clientes</title>
+    <link rel="stylesheet" href="../css/todosClientes.css">
+    <link rel="stylesheet" href="../css/partials/headerAdm.css">
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+</head>
+
+<body>
+
+    <header id="headerAdm"></header>
+
+    <main>
+
+        <div id="container1">
+            <div id="bemVinda">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px;" width="26" height="26"
+                    fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+            <div id="voltar"></div>
+
+            <a href="../html/admInicio.html" style="text-decoration: none; display: flex; flex-direction: row;">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p><svg xmlns="http://www.w3.org/2000/svg"
+                    width="26" height="26" style="margin-top: 14px; color: #9B5377; margin-left: 13px;"
+                    fill="currentColor" class="bi home bi-house-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+                </svg>
+            </a>
+
+        </div>
+
+
+        <div id="container2">
+
+            <p id="titulo2">Todos os clientes</p>
+
+            <div id="groupSearch">
+                <div class="search-container">
+                    <input type="text" name="pesquisa" id="pesquisa"
+                        placeholder="Pesquise por produto ou categoria ...">
+                    <!-- <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor"
+                        class="bi bi-search" viewBox="0 0 16 16">
+                        <path
+                            d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001q.044.06.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1 1 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0" />
+                    </svg> -->
+                </div>
+            </div>
+
+        </div>
+
+        <div id="table">
+
+            <table>
+                <thead>
+                    <tr>
+                        <th id="qtdeCat">Nome</th>
+                        <th id="qtdeCat">Email</th>
+                        <th id="preco">Dados</th>
+                        <th id="iconesTh"></th>
+                        <th id="iconesTh"></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th id="dados" class="centralizar"></th>
+                        <td id="dados" class="centralizar"></td>
+                        <td id="iconsTable">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z" />
+                            </svg>
+                        </td>
+                        <td id="iconsTable">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                style="color: #9B5377; margin-left: 35px;" fill="currentColor" class="bi bi-pencil-fill"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.5.5 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11z" />
+                            </svg>
+                        </td>
+                        <td id="iconsTable">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
+                                style="color: #9B5377; margin-left: 35px;" fill="currentColor" class="bi bi-trash3-fill"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M11 1.5v1h3.5a.5.5 0 0 1 0 1h-.538l-.853 10.66A2 2 0 0 1 11.115 16h-6.23a2 2 0 0 1-1.994-1.84L2.038 3.5H1.5a.5.5 0 0 1 0-1H5v-1A1.5 1.5 0 0 1 6.5 0h3A1.5 1.5 0 0 1 11 1.5m-5 0v1h4v-1a.5.5 0 0 0-.5-.5h-3a.5.5 0 0 0-.5.5M4.5 5.029l.5 8.5a.5.5 0 1 0 .998-.06l-.5-8.5a.5.5 0 1 0-.998.06m6.53-.528a.5.5 0 0 0-.528.47l-.5 8.5a.5.5 0 0 0 .998.058l.5-8.5a.5.5 0 0 0-.47-.528M8 4.5a.5.5 0 0 0-.5.5v8.5a.5.5 0 0 0 1 0V5a.5.5 0 0 0-.5-.5" />
+                            </svg>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+        </div>
+
+    </main>
+
+    <footer> <img id="ondasFooter" src="../img/ondas-footer.png"> </footer>
+
+    <script src="../js/admCatalogoProdutos.js"></script>
+    <script defer>
+        $(function () {
+            $('#headerAdm').load("./partials/headerAdm.html");
+        });
+    </script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

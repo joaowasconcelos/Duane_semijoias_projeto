@@ -41,7 +41,7 @@
                 <a href="#" id="menuText" class="navAdm">Promoção</a>
                 <a href="#" id="menuText" class="navAdm">Gerenciamento de cupons</a>
                 <a href="#" id="menuText" class="navAdm">Cadastrar administrador</a>
-                <a href="#" id="menuText" class="navAdm">Clientes</a>
+                <a href="../html/todosClientes.html" id="menuText" class="navAdm">Clientes</a>
                 <a href="#" id="menuText" class="navAdm">Meus dados</a>
                 <a id="menuText" class="navAdm" type="button" class="btn btn-primary" data-toggle="modal"
                     data-target="#exampleModalCenter">Categorias
@@ -101,11 +101,20 @@
 
                             <p id="titleCadastradas">Categorias ja cadastradas</p>
 
-                            <table id="categorias" >
+                            <table id="categorias">
 
                                 <tbody>
 
-                                    
+                                    <tr id="categoria">
+                                        <td class="categoria" id="categoria"></td>
+                                        <td class="categoria2" id="dados2"><!--  mudei para categoria2 -->
+                                            <span id="iconTable" class="fas fa-edit" data-toggle="modal"
+                                                data-target="#meuModal" onclick="changeSubtitle()"></span>
+                                        </td>
+                                        <td class="categoria" id="dados2">
+                                            <span id="iconTable" class="fas fa-trash"></span>
+                                        </td>
+                                    </tr>
 
                                     <!-- <tr id="categoria">
                                         
