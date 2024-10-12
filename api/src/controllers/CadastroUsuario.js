@@ -12,6 +12,7 @@ const CadastroUsuario = {
         try {
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
+
             const vericaCampos = cPessoa.verificaCampos()
             if(!vericaCampos){
                 return res.status(500).json({ message: "Numero máximo de caracteres "})
@@ -20,11 +21,13 @@ const CadastroUsuario = {
             if(!validaCampos){
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
+
             const verificaCPF = cPessoa.validaCpf()
             if (!verificaCPF) {
                 return res.status(400).json({ message: "Erro CPF invalido" });
             }
             const conversaoData = cPessoa.DataConvert()
+
             if (conversaoData == "Invalid Date") {
                 return res.status(400).json({ message: "Erro Data invalida" });
             }

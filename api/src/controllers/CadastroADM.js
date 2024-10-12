@@ -101,17 +101,6 @@ const CadastroUsuario = {
             res.status(500).json({ error: "Erro ao cadastrar o usuário" });
         }
     },
-    ExcluirPessoaADM: async (req, res) => {
-        try {
-            const id = req.params
-            const cPessoa = new Pessoa(id);
-            await cPessoa.DeletarPessoa();
-            return res.status(200).json({ message: 'Pessoa excluída com sucesso!'});
-        } catch (error) {
-            console.error(error);
-            return res.status(500).json({message: 'Erro ao excluir pessoa'})
-        }
-    },
     EditarPessoaADM: async (req, res) => {
         const conn = await obterConexaoDoPool();
         try {

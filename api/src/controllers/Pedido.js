@@ -4,21 +4,38 @@ import Itens from "../model/Itens.js"
 const PedidoController = {
     Cadastro: async (req,res) =>{
         try {
-            const {status,valor_total,quantidade,id_produto,id_preco} = req.body;
-            const {id} =req.params
-            const cPedido = new Pedido(null,status,valor_total,id);
+            const {status, valor_total, id_cupons, itens} = req.body;
+            const id =req.id
+
+            const cPedido = new Pedido(null,status,valor_total,id,id_cupons);
+            const convertValor = cPedido.convertevalor()
+            if(!convertValor){
+            return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+      
             const validaCampos = cPedido.validaCampos()
             if(!validaCampos){
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const insertPedido = await cPedido.CadastraPedido()
-    
-            const cItem = new Itens(null,quantidade,id_produto,insertPedido,id_preco)
-            const validaCamposItem = cItem.validaCampos();
-            if(!validaCamposItem){
-                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            const objItens = [];
+
+            if (itens.length > 0) {
+                await Promise.all(itens.map(async vItens => {
+                    const { quantidade, id_produto, id_preco } = vItens;
+                    const cItem = new Itens(null, quantidade, id_produto, insertPedido, id_preco);
+                    const validaCamposItem = cItem.validaCampos();
+
+                    if(!validaCamposItem){
+                        return res.status(400).json({ error: "Dados inválidos fornecidos." });
+                    }
+
+                    const insertItens = await cItem.CadastraItens()
+                    objItens.push(cItem);
+                    console.log(cItem);
+                    console.log(insertItens);
+                }));
             }
-            const insertItem = await cItem.CadastraItens()
             return res.status(201).json({ message: "Pedido cadastrado com sucesso!" });
         }catch (error) {
             console.error(error);
