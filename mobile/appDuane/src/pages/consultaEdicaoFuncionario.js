@@ -87,13 +87,13 @@ export default function Home() {
             <ScrollView>
               <View style={styles.containerElements}>
                 <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-evenly', alignItems: 'center', width: '65%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '80%'}}>
+                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
                       <View>
                         <Text style={styles.textBtn}>Nome:</Text>
                         <Text style={{}}>Kevin Moreira</Text>
                       </View>
-                      <View>
+                      <View style={{marginRight: 40}}>
                         <Text style={styles.textBtn}>Idade:</Text>
                         <Text style={styles.textElement}>23</Text>
                       </View>
@@ -101,13 +101,12 @@ export default function Home() {
 
                     <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
 
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '80%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
                       <View style={{justifyContent: 'center'}} >
                         <Text style={styles.textBtn}>Status:</Text>
                         <Text style={{}}>Atvo</Text>
-                        
                       </View>
-                      <View>
+                      <View style={{marginRight: 40}}>
                         <Text style={styles.textBtn}>Cargo:</Text>
                         <Text style={{}}>Vendedor</Text>
                       </View>
@@ -195,6 +194,7 @@ const styles = StyleSheet.create({
     // fontFamily: "EBGaramond_400Regular",
     fontSize: 14,
     textAlign: "center",
+    marginRight: 40
   },
   textTitle: {
     fontFamily: "EBGaramond_800ExtraBold",
