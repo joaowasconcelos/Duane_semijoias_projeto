@@ -72,7 +72,7 @@ export default class Pessoa {
 
         try {
 
-            const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ?, cpf = ?, genero = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._cpf, this._genero, this._id]);
+            const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ?, genero = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._genero, this._id]);
 
             return { message: pessoaResult }
 
@@ -174,15 +174,46 @@ export default class Pessoa {
         return this.Data_nasc
     }
 
-    validaCampos() {
-        return (
-            this._nome &&
-            this._data_nasc &&
-            this._cpf &&
-            this._genero
-        )
+    verificaCampos(){
+        if(this._cpf.length>15  || this._data_nasc.length>10|| this._genero.length>20||this._nome.length>100){
+            return false
+        }
+        return true
     }
+    
 
+    validaCampos() {
+        if (!this._cpf || !this._data_nasc || !this._genero || !this._nome) {
+            return false
+        }
+        return true 
+    }
+    verificaCamposADM(){
+        if( this._data_nasc.length>10|| this._nome.length>100){
+            return false
+        }
+        return true
+    }
+    
+
+    validaCamposADM() {
+        if ( !this._data_nasc || !this._nome) {
+            return false
+        }
+        return true 
+    }
+    verificaCamposEditarUsuario(){
+        if( this._data_nasc.length>10|| this._nome.length>100 || !this._genero){
+            return false
+        }
+        return true
+    }
+    validaCamposEditarUsuario() {
+        if (!this._data_nasc || !this._genero || !this._nome) {
+            return false
+        }
+        return true 
+    }
     validaCpf() {
         // Remover caracteres especiais do CPF
         let value = this._cpf.replace(/[.-]/g, '');

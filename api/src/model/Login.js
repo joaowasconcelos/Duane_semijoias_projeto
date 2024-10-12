@@ -109,6 +109,7 @@ export default class Login {
         try {
             const loginResul = await conn.query(`UPDATE login SET usuario = ? WHERE pessoa_id = ?`,
                 [this._usuario, this._id]);
+                return loginResul
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -193,13 +194,14 @@ export default class Login {
         const bd = await obterConexaoDoPool();
         try {
             const loginResul = await bd.query(`SELECT usuario FROM login WHERE usuario=?;`, [this._usuario]);
-            const usuarioResult = loginResul[0][0].usuario;
-            console.log(usuarioResult)
-
-            if (usuarioResult === this._usuario) {
+            console.log(loginResul)
+            const usuarioResult = loginResul[0]
+            if (usuarioResult == "") {
+                console.log("OPSSSSSSSSSSS")
+                return true
+                }
                 return false
-            }
-            return true
+        
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -252,6 +254,14 @@ export default class Login {
         }
         return true
     }
+    validaCampos() {
+        if (!this._usuario || !this._senha ) {
+            return false
+        }
+        return true 
+    }
+
+
 }
 
 

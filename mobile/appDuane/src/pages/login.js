@@ -41,7 +41,7 @@ export default function Login(){
             <SafeAreaView style={styles.androidSafeArea}>
                 <View style={styles.container}>
                     <Image source={require("../../assets/ondas-rosa-header.png")} style={styles.imgHeader}/>
-                    <View style={{flex:1}}>
+                    <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
                         <View style={styles.containerLogoTitle}>
                             <Image source={require("../../assets/Duane.png")} style={styles.logoImg}/>
                             <Text style={styles.textTitle}>Seja Bem-vindo(a)!</Text>
@@ -50,13 +50,16 @@ export default function Login(){
                         <View style={styles.containerElements}>
                             <Text style={styles.textElement}>Realize o login com as suas credencias</Text>
                             <View style={styles.containerInputs}>
-                                <Text style={styles.textInputs}>Email:</Text>
+                                <View style={{width: '80%'}}><Text style={styles.textInputs}>Email:</Text></View>
                                 <TextInput style={styles.Inputs} onChangeText={()=>{}}></TextInput>
                             </View>
                             <View style={styles.containerInputs}>
-                                <Text style={styles.textInputs}>Senha:</Text>
+                                <View style={{width: '80%'}}><Text style={styles.textInputs}>Senha:</Text></View>
                                 <TextInput secureTextEntry={true} style={styles.Inputs} onChangeText={()=>{}}></TextInput>
-                                <Text style={styles.textForgotPass} onPress={()=>{}}>Esqueceu sua senha?</Text>
+                                <TouchableOpacity onPress={()=>{}}>
+                                    <Text style={styles.textForgotPass}>Esqueceu sua senha?</Text>
+                                </TouchableOpacity>
+                                
                             </View>
                             
                             <TouchableOpacity style={styles.btn} onPress={navigateHome}>
@@ -92,19 +95,13 @@ const styles = StyleSheet.create({
         alignItems: "center",
         backgroundColor: "#FFDEE7",
     },
-    textInputs:{
-        fontSize: 19,
-        color: '#AE4B67',
-        opacity: 0.5,
-        textAlign: 'left'
-    },
     containerElements:{
         justifyContent: 'center',
         alignItems: 'center',
-        
+        width: '100%'
     },
     Inputs:{
-        width: '100%',
+        width: '80%',
         height: 40,
         fontSize: 22,
         fontFamily: 'EBGaramond_400Regular',
@@ -173,5 +170,12 @@ const styles = StyleSheet.create({
     containerInputs:{
         width: '100%', 
         marginTop: 10,
+        alignItems: 'center'
+    },
+    textInputs:{
+        fontSize: 19,
+        color: '#AE4B67',
+        opacity: 0.5,
+        textAlign: 'left'
     }
 })
