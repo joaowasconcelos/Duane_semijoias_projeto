@@ -78,6 +78,56 @@ export default function Home() {
               
             </View>
 
+
+            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
+              </TextInput>
+            </View>
+
+            <ScrollView>
+              <View style={styles.containerElements}>
+                <View style={styles.btn}>
+                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View>
+                        <Text style={styles.textBtn}>Código:</Text>
+                        <Text style={{}}>123456</Text>
+                      </View>
+                      <View style={{}}>
+                        <Text style={styles.textBtn}>quantidade de itens:</Text>
+                        <Text style={styles.textElement}>23</Text>
+                      </View>
+                    </View>
+
+                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View style={{justifyContent: 'center'}} >
+                        <Text style={styles.textBtn}>Status:</Text>
+                        <Text style={{}}>Atvo</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Cliente:</Text>
+                        <Text style={{textAlign: 'center'}}>Sara</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40}}>
+                    <Text style={styles.textBtn}>Detalhes:</Text>
+                    <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                  
+                </View>
+
+                
+
+                
+
+                
+              </View>
+            </ScrollView>
+
             
           </View>
           <Image
@@ -113,23 +163,21 @@ const styles = StyleSheet.create({
     marginBottom: 60,
   },
   btn: {
-    width: "85%",
+    width: "95%",
     backgroundColor: "#FFFFFF",
-    height: 50,
-    justifyContent: "center",
+    height: 110,
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 20,
     borderRadius: 10,
-    borderColor: "#9B5377",
-    borderWidth: 1,
+    borderColor: "#FAADD1",
+    borderWidth: 2,
     flexDirection: "row",
   },
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
-    fontSize: 18,
+    fontSize: 15,
     color: "#ae4b67",
-    opacity: 0.8,
-    margin: 10,
     paddingRight: 5,
   },
   imgHeader: {
@@ -145,10 +193,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   textElement: {
-    fontFamily: "EBGaramond_400Regular",
-    fontSize: 26,
-    color: "#AE4B67",
+    // fontFamily: "EBGaramond_400Regular",
+    fontSize: 14,
     textAlign: "center",
+    marginRight: 40
   },
   textTitle: {
     fontFamily: "EBGaramond_800ExtraBold",
@@ -170,4 +218,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
+  Inputs:{
+    width: '80%',
+    height: 30,
+    fontSize: 18,
+    fontFamily: 'EBGaramond_400Regular',
+    borderRadius: 5,
+    backgroundColor: '#FFF6F2',
+    padding: 5,
+    color: '#000000',
+    fontWeight: 'bold',
+    borderWidth: 1,
+    borderColor: '#CF90A2',
+    margin: 5,
+  }
 });
