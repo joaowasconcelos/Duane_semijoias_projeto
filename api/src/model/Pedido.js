@@ -156,4 +156,11 @@ export default class Pedido {
         }
         return true 
     }
+
+    verificaCampos() {
+        if(this._status.length>50 || this._valor_total.length>50){
+            return false
+        }
+        return true
+    }
 }

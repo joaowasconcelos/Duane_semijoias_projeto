@@ -1,49 +1,72 @@
 import obterConexaoDoPool from "../config/mysql.js";
 
-class Feedback {
-    constructor(id, avaliacao, comentario, idProduto, idPessoa) {
-        this._id = id;
-        this._avaliacao = avaliacao;
-        this._comentario = comentario;
-        this._idProduto = idProduto;
-        this._idPessoa = idPessoa;
+export default class Feedback {
+    constructor(Id, Avaliacao, Comentario, ID_Produto, ID_Pessoa) {
+        this._id = Id;
+        this._avaliacao = Avaliacao;
+        this._comentario = Comentario;
+        this._id_produto = ID_Produto;
+        this._id_pessoa = ID_Pessoa;
     }
 
-    // Getters e Setters
-    get id() { return this._id; }
-    set id(value) { this._id = value; }
+    // Getters
+    get id() {
+        return this._id;
+    }
 
-    get avaliacao() { return this._avaliacao; }
-    set avaliacao(value) { this._avaliacao = value; }
+    get avaliacao() {
+        return this._avaliacao;
+    }
 
-    get comentario() { return this._comentario; }
-    set comentario(value) { this._comentario = value; }
+    get comentario() {
+        return this._comentario;
+    }
 
-    get idProduto() { return this._idProduto; }
-    set idProduto(value) { this._idProduto = value; }
+    get id_produto() {
+        return this._id_produto;
+    }
 
-    get idPessoa() { return this._idPessoa; }
-    set idPessoa(value) { this._idPessoa = value; }
+    get id_pessoa() {
+        return this._id_pessoa;
+    }
 
-    // Métodos de CRUD
-    async cadastrarFeedback() {
+    // Setters
+    set id(value) {
+        this._id = value;
+    }
+
+    set avaliacao(value) {
+        this._avaliacao = value;
+    }
+
+    set comentario(value) {
+        this._comentario = value;
+    }
+
+    set id_produto(value) {
+        this._id_produto = value;
+    }
+
+    set id_pessoa(value) {
+        this._id_pessoa = value;
+    }
+
+    async CadastrarFeedback() {
         const bd = await obterConexaoDoPool();
         try {
-            const query = `
-                INSERT INTO feedback (avaliacao, comentario, id_produto, id_pessoa)
-                VALUES (?, ?, ?, ?)
-            `;
-            const [result] = await bd.query(query, [this._avaliacao, this._comentario, this._idProduto, this._idPessoa]);
-            this._id = result.insertId;
-            return this._id;
+            const feedbackResult = await bd.query(`INSERT INTO comentarios (comentarios,produto_id,pessoa_id,avaliacao) VALUES (?,?,?,?);`,
+                [this._comentario,this._id_produto,this._id_pessoa,this._avaliacao]);
+            const feedbackId = feedbackResult[0].insertId;
+            console.log('ID do feedback', feedbackId);
+            return feedbackId;
         } catch (error) {
-            return { error: 'Erro ao cadastrar feedback', details: error };
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
         } finally {
             bd.release();
         }
     }
-
-    async modificarFeedback() {
+  async modificarFeedback() {
         const bd = await obterConexaoDoPool();
         try {
             const query = `
@@ -84,6 +107,20 @@ class Feedback {
             bd.release();
         }
     }
-}
 
-export default Feedback;
+    
+    validaCampos() {
+        if (!this._avaliacao || !this._comentario|| !this._id_pessoa|| !this._id_produto) {
+            return false
+        }
+        return true 
+    }
+
+    verificaCampos() {
+        if(this._avaliacao.length>10|| this._comentario.length>200 || this._id_pessoa === 0 || this._id_produto ===0 ){
+            return false
+        }
+        return true
+    }
+
+}

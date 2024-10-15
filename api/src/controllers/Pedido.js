@@ -12,10 +12,14 @@ const PedidoController = {
             if(!convertValor){
             return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
-      
+
             const validaCampos = cPedido.validaCampos()
             if(!validaCampos){
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const verificaCampos = cPedido.verificaCampos()
+            if(!verificaCampos){
+                return res.status(500).json({ message: "Numero máximo de caracteres "})
             }
             const insertPedido = await cPedido.CadastraPedido()
             const objItens = [];
@@ -36,6 +40,8 @@ const PedidoController = {
                     console.log(insertItens);
                 }));
             }
+            const insertItem = await cItem.CadastraItens()
+
             return res.status(201).json({ message: "Pedido cadastrado com sucesso!" });
         }catch (error) {
             console.error(error);

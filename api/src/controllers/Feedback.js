@@ -1,25 +1,41 @@
 import Feedback from "../model/Feedback.js";
+import createFilter from "../middleware/bad-words.js";
 
 const FeedbackController = {
-    // Cadastro de feedback
     Cadastro: async (req, res) => {
         try {
-            const { avaliacao, comentario, idProduto, idPessoa } = req.body;
-            const feedback = new Feedback(null, avaliacao, comentario, idProduto, idPessoa);
+            const { comentarios, avaliacao } = req.body;
+            const { id_produto } = req.params
+            const id = req.id
 
-            const cadastraFeedback = await feedback.cadastrarFeedback();
-            if (cadastraFeedback.error) {
-                return res.status(500).json({ error: "Erro ao cadastrar feedback", details: cadastraFeedback.details });
+            const filter = createFilter();
+            const cleanText = filter.clean(comentarios);
+        
+            if (filter.isProfane(comentarios)) {
+                return res.status(400).json({ message: "Comentário contém palavrões. Por favor, corrija." });
             }
-            return res.status(201).json({ message: "Feedback cadastrado com sucesso!", id: cadastraFeedback });
+           
+            const cFeedback = new Feedback(null, avaliacao, comentarios, id_produto, id)
+            const validaCampos = cFeedback.validaCampos()
+            if (!validaCampos) {
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const verificaCampos = cFeedback.verificaCampos()
+            if (!verificaCampos) {
+                return res.status(500).json({ message: "Numero máximo de caracteres " })
+            }
+            const insertFeedback = await cFeedback.CadastrarFeedback()
+            if (insertFeedback.error) {
+                return res.status(500).json({message: "Erro ao registrar feedback!"});
+            }
+            console.log(insertFeedback)
+            return res.status(201).json({ message: "feedback cadastrado com sucesso!" });
         } catch (error) {
             console.error(error);
-            return res.status(500).json({ error: "Erro interno ao cadastrar feedback" });
+            return res.status(500).json({ error: "Erro ao cadastrar um feedback" });
         }
     },
-
-    // Modificação de feedback
-    Modificar: async (req, res) => {
+      Modificar: async (req, res) => {
         try {
             const { id } = req.params;
             const { avaliacao, comentario, idProduto, idPessoa } = req.body;
@@ -66,6 +82,7 @@ const FeedbackController = {
             return res.status(500).json({ error: "Erro interno ao buscar feedbacks por produto" });
         }
     },
-};
+}
+
 
 export default FeedbackController;

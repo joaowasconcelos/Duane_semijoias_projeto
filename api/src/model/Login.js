@@ -86,6 +86,7 @@ export default class Login {
         this._nova_senha = value;
     }
 
+    //SENHA HASH??
     async CadastrarLogin() {
         const bd = await obterConexaoDoPool();
         try {
@@ -109,12 +110,12 @@ export default class Login {
         try {
             const loginResul = await conn.query(`UPDATE login SET usuario = ? WHERE pessoa_id = ?`,
                 [this._usuario, this._id]);
-                return loginResul
+            return loginResul
         }
         catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
-        } 
+        }
     }
 
     async AlterarSenha() {
@@ -144,9 +145,9 @@ export default class Login {
     async EsqueciSenha() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario=? = ?`, [this._usuario]);
+            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario=?`, [this._usuario]);
             const idResult = loginResul[0][0].id;
-
+            console.log(loginResul)
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._nova_senha, salt);
 
@@ -162,10 +163,11 @@ export default class Login {
         }
     }
 
+        //PRECISA ADICIONAR UM VERIFICAÇÃO NA FUNÇÃO VERIFICA LOGIN PARA QUE SE O USUARIO FOR INATIVO RETORNAR
     async VerificaLogin() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`SELECT usuario,senha,pessoa_id,perfis_id FROM login WHERE usuario=?;`, [this._usuario]);
+            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario=?;`, [this._usuario]);
             if (loginResul[0] == "") {
                 return false
             }
@@ -194,14 +196,12 @@ export default class Login {
         const bd = await obterConexaoDoPool();
         try {
             const loginResul = await bd.query(`SELECT usuario FROM login WHERE usuario=?;`, [this._usuario]);
-            console.log(loginResul)
             const usuarioResult = loginResul[0]
             if (usuarioResult == "") {
-                console.log("OPSSSSSSSSSSS")
                 return true
-                }
-                return false
-        
+            }
+            return false
+
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -211,9 +211,31 @@ export default class Login {
         }
     }
 
-    //ESSA FUNÇÃO VERIFICA SE É O PRIMEIRO ACESSO DO USUARIO FAZENDO ELE INSERIR UMA SENHA 
     //ESSA FUNÇÃO SERVE PARA ALTERAR A SENHA DO USUARIOS QUANDO FOR PRIMEIRO LOGIN
-    //PRECISA ADICIONAR UM VERIFICAÇÃO NA FUNÇÃO VERIFICA LOGIN PARA QUE SE O USUARIO FOR INATIVO RETORNAR
+    async primeiroLogin() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario =?;`,[this._usuario])
+            const login = loginResul[0][0]
+            console.log(login)
+            console.log(login.primeiro_login )
+            if(login.primeiro_login == 1){
+                const salt = await bcrypt.genSalt(12);
+                const passwordHash = await bcrypt.hash(this._senha, salt);
+                const updateSenha = await bd.query(`UPDATE login SET senha =? WHERE usuario =?;`, [passwordHash,this._usuario])
+                const updateStatus = await bd.query(`UPDATE login SET primeiro_login =? WHERE usuario =?;`, [this._p_log,this._usuario])
+                return true
+            }
+
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+
 
     //ESSA FUNÇÃO SERVE PARA INATIVAR UM USUARIO
     async InativaUsuario() {
@@ -255,10 +277,10 @@ export default class Login {
         return true
     }
     validaCampos() {
-        if (!this._usuario || !this._senha ) {
+        if (!this._usuario || !this._senha) {
             return false
         }
-        return true 
+        return true
     }
 
 

@@ -14,8 +14,8 @@ const CadastroUsuario = {
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
             console.log(cPessoa)
     
-            const vericaCampos = cPessoa.verificaCampos()
-            if(!vericaCampos){
+            const verificaCampos = cPessoa.verificaCampos()
+            if(!verificaCampos){
                 return res.status(500).json({ message: "Numero máximo de caracteres "})
             }
             const validaCampos = cPessoa.validaCampos()
