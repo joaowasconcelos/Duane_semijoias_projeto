@@ -34,15 +34,15 @@ export default class Telefone {
     async CadastrarTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-                const telefoneResult = await bd.query(`INSERT INTO telefone (numero) VALUES (?)`, [this._numero.Numero]);
-                const tel = (telefoneResult[0].insertId);
-                console.log('ID do Telefone:', tel);
-                
+            const telefoneResult = await bd.query(`INSERT INTO telefone (numero) VALUES (?)`, [this._numero.Numero]);
+            const tel = (telefoneResult[0].insertId);
+            console.log('ID do Telefone:', tel);
 
-                const telefoneHasPessoaResult = await bd.query(`INSERT INTO telefone_has_pessoa (telefone_id,pessoa_id) VALUES (?,?)`,
-                    [tel,this._idPessoa]);
-                console.log("Inseriu Pessoa e Telefone")
-                return tel
+
+            const telefoneHasPessoaResult = await bd.query(`INSERT INTO telefone_has_pessoa (telefone_id,pessoa_id) VALUES (?,?)`,
+                [tel, this._idPessoa]);
+            console.log("Inseriu Pessoa e Telefone")
+            return tel
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -52,22 +52,21 @@ export default class Telefone {
         }
     }
 
-    async ModificaTelefone() {
-        const bd = await obterConexaoDoPool();
+    async ModificaTelefone(conn) {
         try {
-            const telefoneResult = await bd.query(`UPDATE telefone SET numero = ? WHERE id = ?`, [this._numero, this._id]);
-            console.log(telefoneResult)
+            // console.log(tel,id)
+            const telefoneResult = await conn.query(`UPDATE telefone SET numero = ? WHERE id = ?`, [this._numero, this._id]);
+            // console.log(telefoneResult)
+            return telefoneResult;
         } catch (error) {
-            console.log('Erro na transação:', error);
-            return { error: 'Falha na transação', details: error };
-        } finally {
-            bd.release();
+
+            return { error }
         }
     }
 
     async DeletaTelefone() {
         try {
-            const telefoneResult = await bd.query(`delete from telefone where numero = ?`,[this._numero.Numero])
+            const telefoneResult = await bd.query(`delete from telefone where numero = ?`, [this._numero.Numero])
             console.log(telefoneResult)
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -86,7 +85,7 @@ export default class Telefone {
             WHERE thp.pessoa_id = ?`, [this._idPessoa]);
             console.log('TELEFONE')
             console.log(telefoneResult[0])
-            return telefoneResult[0]; 
+            return telefoneResult[0];
         } catch (error) {
             console.log('Erro ao buscar telefones:', error);
             return { error: 'Falha ao buscar telefones', details: error };
@@ -94,7 +93,7 @@ export default class Telefone {
             bd.release();
         }
     }
-    
+
 
     async SelecionaTelefone() {
         try {
@@ -108,18 +107,18 @@ export default class Telefone {
         }
     }
 
-    validaCampos() {
-        if (!this._numero || !this._idPessoa ) {
-            return false
-        }
-        return true 
-    }
-
-    verificaCampos() {
-        if(this._numero.length>20 || this._idPessoa != 0){
+    verificaCampos(){
+        if(this._numero.length>15){
             return false
         }
         return true
+    }
+    
+    validaCampos() {
+        if (!this._numero ) {
+            return false
+        }
+        return true 
     }
 }
 

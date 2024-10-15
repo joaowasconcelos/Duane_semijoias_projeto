@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Rubik&family=Secular+One&display=swap"
         rel="stylesheet">
@@ -21,9 +22,10 @@
 </head>
 
 <body>
-    <img id="ondas-rosa" src="../img/ondas-rosa.png">
+  
+    <img id="ondas-rosa" src="../img/ondas-rosa.png" width="100%" height="10%">
 
-    <div id="logo"><img src="../img/Duane.png" alt="DuaneSemijoias" width="110" height="110"></div>
+    <a href="/web/publico/html/home.html"><div id="logo"><img src="../img/Duane.png" alt="DuaneSemijoias" width="110" height="110"></div></a>
 
     <main class="container" id="container">
 
@@ -67,6 +69,7 @@
                 <input type="email" placeholder="Email">
                 <input type="password" placeholder="Senha">
                 <a href="#">Esqueceu sua senha?</a>
+                <div class="g-recaptcha" data-sitekey="SUA_SITE_KEY"></div>
                 <button class="bot">Acessar</button>
             </form>
         </div>

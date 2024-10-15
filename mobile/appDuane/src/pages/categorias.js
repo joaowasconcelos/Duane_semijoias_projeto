@@ -73,7 +73,7 @@ export default function Home() {
                 style={styles.logoImg}
               />
 
-              <Text style={styles.textTitle}>Clientes</Text>
+              <Text style={styles.textTitle}>Categorias</Text>
 
               
             </View>

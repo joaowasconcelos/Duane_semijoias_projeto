@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Catálogo de Produtos</title>
-    <link rel="stylesheet" href="../css/admCatalogoProdutos.css">
+    <title>Todos os clientes</title>
+    <link rel="stylesheet" href="../css/todosClientes.css">
     <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
@@ -43,7 +43,7 @@
 
         <div id="container2">
 
-            <p id="titulo2">Catálogo de produtos</p>
+            <p id="titulo2">Todos os clientes</p>
 
             <div id="groupSearch">
                 <div class="search-container">
@@ -57,18 +57,6 @@
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; margin-top: 7px;">
-                <p id="cadastrarNovo">Cadastrar novo produto</p>
-                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                    style="color: #9B5377; margin-bottom: 15px; margin-left: 10px;" fill="currentColor"
-                    class="bi bi-plus-lg" viewBox="0 0 16 16">
-                    <path fill-rule="evenodd"
-                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                </svg>
-            </div>
-
-
-
         </div>
 
         <div id="table">
@@ -76,10 +64,9 @@
             <table>
                 <thead>
                     <tr>
-                        <th id="qtdeCat">Quantidade</th>
-                        <th id="qtdeCat">Categoria</th>
-                        <th>Produto</th>
-                        <th id="preco">Preço</th>
+                        <th id="qtdeCat">Nome</th>
+                        <th id="qtdeCat">Email</th>
+                        <th id="preco">Dados</th>
                         <th id="iconesTh"></th>
                         <th id="iconesTh"></th>
                     </tr>
@@ -88,8 +75,13 @@
                     <tr>
                         <th id="dados" class="centralizar"></th>
                         <td id="dados" class="centralizar"></td>
-                        <td id="dados"></td>
-                        <td id="dados" class="centralizar"></td>
+                        <td id="iconsTable">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-file-earmark-text-fill" viewBox="0 0 16 16">
+                                <path
+                                    d="M9.293 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V4.707A1 1 0 0 0 13.707 4L10 .293A1 1 0 0 0 9.293 0M9.5 3.5v-2l3 3h-2a1 1 0 0 1-1-1M4.5 9a.5.5 0 0 1 0-1h7a.5.5 0 0 1 0 1zM4 10.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 0 1h-7a.5.5 0 0 1-.5-.5m.5 2.5a.5.5 0 0 1 0-1h4a.5.5 0 0 1 0 1z" />
+                            </svg>
+                        </td>
                         <td id="iconsTable">
                             <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                 style="color: #9B5377; margin-left: 35px;" fill="currentColor" class="bi bi-pencil-fill"

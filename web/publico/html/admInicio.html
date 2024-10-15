@@ -6,38 +6,49 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador</title>
     <link rel="stylesheet" href="../css/admInicio.css">
-
+    <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
-    <header></header>
+
+    <header id="header"></header>
+
     <main>
+
         <div id="container1">
-            <div id="bemVinda"> <span id="icon" class="fas fa-user fa"></span>
+            <div id="bemVinda">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px;" width="26" height="26"
+                    fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
                 <p id="bemVindaText">Bem vinda!</p>
             </div>
-            <div id="voltar"></div>
-            <p id="back">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span>
         </div>
-        
+
+        <!-- Menu -->
+
         <div class="container2">
             <div id="menuAdm">
                 <p id="titulo">MENU</p>
                 <a href="#" id="menuText" class="navAdm">Histórico de pedidos</a>
                 <a href="#" id="menuText" class="navAdm">Relatório de vendas</a>
-                <a href="#" id="menuText" class="navAdm">Cadastro de produtos</a>
-                <a href="#" id="menuText" class="navAdm">Catálogo de produtos</a>
+                <a href="../html/cadastrarNovoProduto.html" id="menuText" class="navAdm">Cadastro de produtos</a>
+                <a href="../html/admCatalogoProdutos.html" id="menuText" class="navAdm">Catálogo de produtos</a>
                 <a href="#" id="menuText" class="navAdm">Promoção</a>
                 <a href="#" id="menuText" class="navAdm">Gerenciamento de cupons</a>
                 <a href="#" id="menuText" class="navAdm">Cadastrar administrador</a>
-                <a href="#" id="menuText" class="navAdm">Clientes</a>
+                <a href="../html/todosClientes.html" id="menuText" class="navAdm">Clientes</a>
                 <a href="#" id="menuText" class="navAdm">Meus dados</a>
                 <a id="menuText" class="navAdm" type="button" class="btn btn-primary" data-toggle="modal"
                     data-target="#exampleModalCenter">Categorias
                     de produto</a>
             </div>
 
+            <!-- tabela -->
 
             <div id="table">
 
@@ -66,55 +77,19 @@
 
         </div>
 
-        <!-- <dialog id="dialog-box">
-
-            <span id="iconClose" class="fas fa-times" onclick="document.getElementById('dialog-box').close()"></span>
-
-            <p id="titleCategorias">CATEGORIAS DE PRODUTOS</p>
-
-            <div id="boxCategorias">
-
-                <p id="titleCadastradas">Categorias ja cadastradas</p>
-
-                <table>
-                    <tbody>
-                        <tr>
-                            <th class="categoria" id="dados3">Brincos</th>
-                            <td class="categoria" id="dados2"><span id="iconTable" class="fas fa-edit"
-                                    onclick="document.getElementById('edit-box').showModal()"></span></td>
-                            <td class="categoria" id="dados2"><span id="iconTable" class="fas fa-trash"></span> </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-
-            <div id="boxCadastrarCategorias">
-
-                <p id="titleCadastradas">Cadastrar nova categoria</p>
-                <p id="subtitleCadastradas">Qual a nova categoria de produtos?</p>
-                <input type="text" name="categoria" id="categoria">
-
-                <div id="btnsCadastrar">
-                    <button id="btn1" onclick="limparCampo()">Cancelar</button>
-                    <button id="btn1" onclick="cadastrarNovaCategoria()">Cadastrar</button>
-                </div>
-
-            </div>
-
-        </dialog> -->
-
         <!-- Modal -->
+
         <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
-            <div class="modal-dialog modal-dialog-centered" role="document">
+            <div class="modal-dialog modal-dialog-centered modal-md" role="document">
 
                 <div class="modal-content">
 
                     <div class="modal-header">
 
                         <p id="titleCategorias">CATEGORIAS DE PRODUTOS</p>
-                        <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                        <button type="button" id="close" class="close border-0" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                         </button>
 
@@ -126,36 +101,63 @@
 
                             <p id="titleCadastradas">Categorias ja cadastradas</p>
 
-                            <table>
+                            <table id="categorias">
+
                                 <tbody>
-                                    <tr>
-                                        <th class="categoria" id="dados3">Brincos</th>
-                                        <td class="categoria" id="dados2"><span id="iconTable" class="fas fa-edit"
-                                                onclick="document.getElementById('edit-box').showModal()"></span></td>
-                                        <td class="categoria" id="dados2"><span id="iconTable"
-                                                class="fas fa-trash"></span> </td>
+
+                                    <tr id="categoria">
+                                        <td class="categoria" id="categoria"></td>
+                                        <td class="categoria2" id="dados2"><!--  mudei para categoria2 -->
+                                            <span id="iconTable" class="fas fa-edit" data-toggle="modal"
+                                                data-target="#meuModal" onclick="changeSubtitle()"></span>
+                                        </td>
+                                        <td class="categoria" id="dados2">
+                                            <span id="iconTable" class="fas fa-trash"></span>
+                                        </td>
                                     </tr>
+
+                                    <!-- <tr id="categoria">
+                                        
+                                        <th class="categoria" id="categoria"></th>
+
+                                        <td class="categoria" id="dados2">
+                                            <span id="iconTable" class="fas fa-edit" data-toggle="modal"
+                                                data-target="#meuModal" onclick="changeSubtitle()"></span>
+                                        </td>
+
+                                        <td class="categoria" id="dados2">
+                                            <span id="iconTable" class="fas fa-trash"></span>
+                                        </td>
+
+                                    </tr> -->
+
                                 </tbody>
+
                             </table>
+
                         </div>
 
                         <div id="boxCadastrarCategorias">
 
-                            <p id="titleCadastradas">Cadastrar nova categoria</p>
+                            <p id="titleCadastradas2">Cadastrar nova categoria</p>
                             <p id="subtitleCadastradas">Qual a nova categoria de produtos?</p>
                             <input type="text" name="categoria" id="categoria">
 
                         </div>
 
                     </div>
+
                     <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary">Save changes</button>
-                        
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                        <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+
                     </div>
+
                 </div>
+
             </div>
+
         </div>
 
     </main>
@@ -163,7 +165,11 @@
     <footer> <img id="ondasFooter" src="../img/ondas-footer.png" alt=""> </footer>
 
     <script src="../js/admInicio.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script defer>
+        $(function () {
+            $('#header').load("./partials/headerAdm.html");
+        });
+    </script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>

@@ -67,6 +67,7 @@ main {
     font-optical-sizing: auto;
     font-style: normal;
     padding-bottom: 25px;
+    color: #9B5377
 }
 
 #titulo {
@@ -95,9 +96,27 @@ main {
     cursor: pointer;
 }
 
+.navAdm:hover {
+    text-decoration: none;
+    color: #AE4B67;
+
+}
+
 #icon {
     color: #9b5377;
     font-size: 25px;
+}
+
+/* lupa */
+
+.search-container {
+    display: flex;
+    align-items: center;
+}
+
+.bi-search {
+    margin-left: 10px;
+    z-index: 100;
 }
 
 /* container da tabela */
@@ -209,21 +228,18 @@ tbody th:last-child {
 /* modal */
 
 .modal-content {
-    width: 449px;
     background-color: #F2E9E7;
     border-radius: 5px;
     border-color: #633636;
     border: 1px solid;
-    background-color: #f2e9e7;
 }
 
 .modal {
-    height: auto;
     border: none !important;
 }
 
 .modal-body {
-    height: 500px;
+    height: 470px;
     background-color: #f2e9e7;
     border: none;
 }
@@ -240,12 +256,14 @@ tbody th:last-child {
     display: flex;
     flex-direction: row;
     align-items: center;
-    gap: 45px;
+    gap: 17px;
     height: 100%;
     border: none !important;
 }
 
-.btn, .btn-secondary, .btn-primary {
+.btn,
+.btn-secondary,
+.btn-primary {
     width: 195px;
     margin: auto;
 }
@@ -254,6 +272,17 @@ tbody th:last-child {
     background-color: #AE4B67 !important;
     border: none !important;
 }
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(174, 75, 103, 0.446) !important;
+    border-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(174, 75, 103, 0.446) !important;
+    border-color: rgba(255, 0, 0, 0.5) !important;
+}
+
 
 .btn-secondary {
     background-color: #AE4B67 !important;
@@ -297,6 +326,18 @@ tbody th:last-child {
     padding-bottom: 9px;
 }
 
+#titleCadastradas2 {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+    padding-bottom: 15px;
+    color: #633636;
+    text-align: center;
+    padding-top: 15px;
+    padding-bottom: 9px;
+}
+
 .categoria {
     border-right: 2px solid #633636;
 }
@@ -320,6 +361,7 @@ tbody th:last-child {
 #iconTable {
     color: #633636;
     font-size: 18px;
+    padding-left: 10px;
 }
 
 /* cadastrar nova categoria */
@@ -394,43 +436,7 @@ tbody th:last-child {
     margin-top: 25px;
 }
 
-/* Modal de edição da categoria */
-
-dialog::backdrop {
-    background: rgba(0, 0, 0, 0.5);
-}
-
-/* modal de edição da categoria */
-
-#edit-box {
-    width: 300px;
-    padding: 20px;
-    border: none;
-    border-radius: 8px;
-    box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.1);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    background-color: #F2E9E7;
-    border-radius: 5px;
-    border-color: #633636;
-    border: 2px solid;
-}
-
-#btn3 {
-    width: 110px;
-    height: 35px;
-    background-color: #5a3e40;
-    color: #f1f1f1;
-    border: none;
-    font-size: 16px;
-    border-radius: 7px;
-    margin-top: 25px;
-}
-
-/* Footer */
-
+/* footer */
 footer {
     width: 100%;
 }
