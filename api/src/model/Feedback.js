@@ -1,4 +1,3 @@
-import { compareSync } from "bcrypt";
 import obterConexaoDoPool from "../config/mysql.js";
 
 export default class Feedback {
@@ -63,6 +62,47 @@ export default class Feedback {
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+  async modificarFeedback() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const query = `
+                UPDATE feedback SET avaliacao = ?, comentario = ?, id_produto = ?, id_pessoa = ?
+                WHERE id = ?
+            `;
+            const result = await bd.query(query, [this._avaliacao, this._comentario, this._idProduto, this._idPessoa, this._id]);
+            return result;
+        } catch (error) {
+            return { error: 'Erro ao modificar feedback', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    async deletarFeedback() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const query = `DELETE FROM feedback WHERE id = ?`;
+            const result = await bd.query(query, [this._id]);
+            return result;
+        } catch (error) {
+            return { error: 'Erro ao deletar feedback', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    static async selecionarFeedbacksPorProduto(idProduto) {
+        const bd = await obterConexaoDoPool();
+        try {
+            const query = `SELECT * FROM feedback WHERE id_produto = ?`;
+            const [result] = await bd.query(query, [idProduto]);
+            return result;
+        } catch (error) {
+            return { error: 'Erro ao buscar feedbacks por produto', details: error };
         } finally {
             bd.release();
         }
