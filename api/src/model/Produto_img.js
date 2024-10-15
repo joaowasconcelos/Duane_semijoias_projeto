@@ -34,9 +34,11 @@ export default class Produto_Img {
     async CadastraProdutoImg() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoImgResult = await bd.query(`INSERT INTO produto_img (id_img,produto_id) VALUES (?, ?);`,[this._id_img,this._id_produto]);
+            const produtoImgResult = await bd.query(`INSERT INTO produto_img (id_img,produto_id)VALUES((SELECT REPLACE(DATE_FORMAT(CURRENT_TIMESTAMP(6), '%H%i%s%f'), ':', '') AS id_imagem),?);`,
+                [this._id_produto]);
             const produtoImgId = produtoImgResult[0].insertId;
-            console.log('ID do protudo:', produtoImgId);
+            const select = await bd.query(`SELECT id_img FROM produto_img WHERE id = ?;`,[produtoImgId])
+            return select[0][0].id_img
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -48,8 +50,9 @@ export default class Produto_Img {
     async DeletaProdutoImg() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoImgResult = await bd.query(`DELETE FROM produto_img WHERE id = ?;`,[this._id]);
+            const produtoImgResult = await bd.query(`DELETE FROM produto_img WHERE id_img = ?;`,[this._id_img]);
             console.log(produtoImgResult)
+            return produtoImgResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

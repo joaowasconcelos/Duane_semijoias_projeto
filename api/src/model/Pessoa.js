@@ -54,7 +54,7 @@ export default class Pessoa {
     async CadastrarPessoa() {
         const bd = await obterConexaoDoPool();
         try {
-            const pessoaResult = await bd.query('INSERT INTO pessoa (nome, data_nasc, cpf, genero, data_cad) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)',
+            const pessoaResult = await bd.query(`INSERT INTO pessoa (nome, data_nasc, cpf, genero, data_cad) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`,
                 [this._nome, this._data_nasc, this._cpf, this._genero]);
             const pessoaId = pessoaResult[0].insertId;
             console.log('ID da Pessoa:', pessoaId);
