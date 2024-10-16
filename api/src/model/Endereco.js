@@ -1,8 +1,8 @@
 import obterConexaoDoPool from "../config/mysql.js"
 
 export default class Endereco {
-    constructor(Id, CEP, Cidade, Bairro, Estado, Logradouro, Numero, Complemento,ID_pessoa) {
-        this._id = Id; 
+    constructor(Id, CEP, Cidade, Bairro, Estado, Logradouro, Numero, Complemento, ID_pessoa) {
+        this._id = Id;
         this._cep = CEP;
         this._cidade = Cidade;
         this._bairro = Bairro;
@@ -14,11 +14,11 @@ export default class Endereco {
     }
 
     get Id() {
-        return this._id; 
+        return this._id;
     }
 
     set Id(value) {
-        this._id = value; 
+        this._id = value;
     }
 
     get CEP() {
@@ -89,11 +89,11 @@ export default class Endereco {
         const bd = await obterConexaoDoPool();
         try {
             const enderecoResult = await bd.query(`INSERT INTO endereco (cep,cidade,estado,logradouro,numero_endereco,complemento) VALUES (?,?,?,?,?,?);`,
-                [this._cep,this._cidade,this._estado,this._logradouro,this._numero,this._complemento]);
+                [this._cep, this._cidade, this._estado, this._logradouro, this._numero, this._complemento]);
             const enderecoId = enderecoResult[0].insertId;
             console.log('ID do Endereço:', enderecoId);
 
-            const endereco_has_pessoa = await bd.query(`INSERT INTO endereco_has_pessoa (endereco_id,pessoa_id) VALUES (?,?);`,[enderecoId,this._id_pessoa])
+            const endereco_has_pessoa = await bd.query(`INSERT INTO endereco_has_pessoa (endereco_id,pessoa_id) VALUES (?,?);`, [enderecoId, this._id_pessoa])
             console.log(endereco_has_pessoa);
         }
         catch (error) {
@@ -108,7 +108,7 @@ export default class Endereco {
         const bd = await obterConexaoDoPool();
         try {
             const enderecoResult = await bd.query(`UPDATE endereco SET cep=?, cidade=?,estado=?,logradouro=?,numero_endereco=?,complemento=?;`,
-                [this._cep,this._cidade,this._estado,this._logradouro,this._numero,this._complemento]);
+                [this._cep, this._cidade, this._estado, this._logradouro, this._numero, this._complemento]);
             console.log(enderecoResult);
         }
         catch (error) {
@@ -122,7 +122,7 @@ export default class Endereco {
     async DeletaEndereco() {
         const bd = await obterConexaoDoPool();
         try {
-            const enderecoResult = await bd.query(`DELETE FROM endereco WHERE id = ?;`,[this._id]);
+            const enderecoResult = await bd.query(`DELETE FROM endereco WHERE id = ?;`, [this._id]);
             console.log(enderecoResult);
         }
         catch (error) {
@@ -132,18 +132,35 @@ export default class Endereco {
             bd.release();
         }
     }
-    validaCampos() {
-        if (!this._cep &&
-            !this._cidade &&
-            !this._estado &&
-            !this._bairro &&
-            !this._logradouro &&
-            !this._numero )  {
-            return false
+    verificaCampos() {
+        if (this._cep.length > 10 ||
+            this._cidade.length > 100 ||
+            this._bairro.length > 100 ||
+            this._estado.length > 2 ||  // Estados geralmente têm siglas de 2 caracteres n sei como vamos fazer
+            this._logradouro.length > 100 ||
+            this._numero.length > 10 ||
+            this._complemento.length > 50) {
+            return false;
         }
-        return true 
+        return true;
     }
 
- 
+    validaCampos() {
+        if (!this._cep ||
+            !this._cidade ||
+            !this._bairro ||
+            !this._estado ||
+            !this._logradouro ||
+            !this._numero ||
+            !this._id_pessoa) {
+            return false;
+        }
+        return true;
+    }
 }
+
+
+    
+ 
+
 

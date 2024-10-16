@@ -134,4 +134,14 @@ export default class Promocao {
         }
         return true 
     }
+
+    verificaCampos() {
+        if (this._categoria_produto.length > 100 || 
+            this._porcentagem.length > 5 || 
+            this._id_categoria.length > 10 || 
+            this._id_produto.length > 10) {
+            return false;
+        }
+        return true;
+    }
 }

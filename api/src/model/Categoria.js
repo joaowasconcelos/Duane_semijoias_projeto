@@ -83,4 +83,11 @@ export default class Categoria {
         }
         return true 
     }
+    verificaCampos(){
+        if(this._tipo.length>50 ){
+            return false
+        }
+        return true
+    }
+
 }
