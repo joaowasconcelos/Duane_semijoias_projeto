@@ -13,7 +13,6 @@ import CadastroADM from "../controllers/CadastroADM.js"
 import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
 import UploadImagens from "../controllers/Imagens.js";
-import Feedback from "../model/Feedback.js";
 import FeedbackController from "../controllers/Feedback.js";
 
 //Insert
@@ -49,6 +48,7 @@ routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);
 routerUser.put("/EsqueciSenha",LoginController.EsqueciSenha);
+routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modificar);
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
@@ -60,6 +60,7 @@ routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
 routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
 routerUser.get('/Postagens',UploadImagens.listAllFiles);
 routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
+routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);

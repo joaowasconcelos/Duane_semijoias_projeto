@@ -69,12 +69,9 @@ export default class Feedback {
   async modificarFeedback() {
         const bd = await obterConexaoDoPool();
         try {
-            const query = `
-                UPDATE feedback SET avaliacao = ?, comentario = ?, id_produto = ?, id_pessoa = ?
-                WHERE id = ?
-            `;
-            const result = await bd.query(query, [this._avaliacao, this._comentario, this._idProduto, this._idPessoa, this._id]);
-            return result;
+            const updateResult = await bd.query (`UPDATE comentarios SET avaliacao = ?, comentarios = ? WHERE id = ? AND pessoa_id =? AND produto_id = ?;`,
+                [this._avaliacao, this._comentario, this._id,this._id_pessoa,this._id_produto]);
+            return updateResult;
         } catch (error) {
             return { error: 'Erro ao modificar feedback', details: error };
         } finally {
@@ -82,23 +79,23 @@ export default class Feedback {
         }
     }
 
-    async deletarFeedback() {
-        const bd = await obterConexaoDoPool();
-        try {
-            const query = `DELETE FROM feedback WHERE id = ?`;
-            const result = await bd.query(query, [this._id]);
-            return result;
-        } catch (error) {
-            return { error: 'Erro ao deletar feedback', details: error };
-        } finally {
-            bd.release();
-        }
-    }
+    // async deletarFeedback() {
+    //     const bd = await obterConexaoDoPool();
+    //     try {
+    //         const query = `DELETE FROM comentarios WHERE id = ?`;
+    //         const result = await bd.query(query, [this._id]);
+    //         return result;
+    //     } catch (error) {
+    //         return { error: 'Erro ao deletar feedback', details: error };
+    //     } finally {
+    //         bd.release();
+    //     }
+    // }
 
     static async selecionarFeedbacksPorProduto(idProduto) {
         const bd = await obterConexaoDoPool();
         try {
-            const query = `SELECT * FROM feedback WHERE id_produto = ?`;
+            const query = `SELECT * FROM comentarios WHERE produto_id = ?`;
             const [result] = await bd.query(query, [idProduto]);
             return result;
         } catch (error) {
@@ -117,7 +114,7 @@ export default class Feedback {
     }
 
     verificaCampos() {
-        if(this._avaliacao.length>10|| this._comentario.length>200 || this._id_pessoa === 0 || this._id_produto ===0 ){
+        if(this._avaliacao.length>5|| this._comentario.length>100 || this._id_pessoa === 0 || this._id_produto ===0 ){
             return false
         }
         return true
