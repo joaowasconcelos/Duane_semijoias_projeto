@@ -114,7 +114,143 @@ export default function Home() {
                   </View>
 
                   <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                  
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View>
+                        <Text style={styles.textBtn}>Nome:</Text>
+                        <Text style={{}}>Kevin Moreira</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Idade:</Text>
+                        <Text style={styles.textElement}>23</Text>
+                      </View>
+                    </View>
+
+                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View style={{justifyContent: 'center'}} >
+                        <Text style={styles.textBtn}>Status:</Text>
+                        <Text style={{}}>Atvo</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Cargo:</Text>
+                        <Text style={{}}>Vendedor</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                  
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View>
+                        <Text style={styles.textBtn}>Nome:</Text>
+                        <Text style={{}}>Kevin Moreira</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Idade:</Text>
+                        <Text style={styles.textElement}>23</Text>
+                      </View>
+                    </View>
+
+                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View style={{justifyContent: 'center'}} >
+                        <Text style={styles.textBtn}>Status:</Text>
+                        <Text style={{}}>Atvo</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Cargo:</Text>
+                        <Text style={{}}>Vendedor</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                  
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View>
+                        <Text style={styles.textBtn}>Nome:</Text>
+                        <Text style={{}}>Kevin Moreira</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Idade:</Text>
+                        <Text style={styles.textElement}>23</Text>
+                      </View>
+                    </View>
+
+                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View style={{justifyContent: 'center'}} >
+                        <Text style={styles.textBtn}>Status:</Text>
+                        <Text style={{}}>Atvo</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Cargo:</Text>
+                        <Text style={{}}>Vendedor</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                  
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View>
+                        <Text style={styles.textBtn}>Nome:</Text>
+                        <Text style={{}}>Kevin Moreira</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Idade:</Text>
+                        <Text style={styles.textElement}>23</Text>
+                      </View>
+                    </View>
+
+                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+
+                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                      <View style={{justifyContent: 'center'}} >
+                        <Text style={styles.textBtn}>Status:</Text>
+                        <Text style={{}}>Atvo</Text>
+                      </View>
+                      <View style={{marginRight: 40}}>
+                        <Text style={styles.textBtn}>Cargo:</Text>
+                        <Text style={{}}>Vendedor</Text>
+                      </View>
+                    </View>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
+                    <Text style={styles.textBtn}>Editar:</Text>
                     <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
                   </TouchableOpacity>
                   
