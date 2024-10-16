@@ -37,11 +37,30 @@ const FeedbackController = {
     },
       Modificar: async (req, res) => {
         try {
-            const { id } = req.params;
-            const { avaliacao, comentario, idProduto, idPessoa } = req.body;
-            const feedback = new Feedback(id, avaliacao, comentario, idProduto, idPessoa);
+            const { id_feedback } = req.params;
+            const id_pessoa = req.id
+            const { avaliacao, comentario, idProduto } = req.body;
 
-            const modificaFeedback = await feedback.modificarFeedback();
+            const filter = createFilter();
+            const cleanText = filter.clean(comentario);
+        
+            if (filter.isProfane(comentario)) {
+                return res.status(400).json({ message: "Comentário contém palavrões. Por favor, corrija." });
+            }
+
+            const cFeedback = new Feedback(id_feedback, avaliacao, comentario, idProduto, id_pessoa);
+            console.log(cFeedback)
+    
+            const validaCampos = cFeedback.validaCampos()
+            if (!validaCampos) {
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const verificaCampos = cFeedback.verificaCampos()
+            if (!verificaCampos) {
+                return res.status(500).json({ message: "Numero máximo de caracteres " })
+            }
+
+            const modificaFeedback = await cFeedback.modificarFeedback();
             if (modificaFeedback.error) {
                 return res.status(500).json({ error: "Erro ao modificar feedback", details: modificaFeedback.details });
             }
