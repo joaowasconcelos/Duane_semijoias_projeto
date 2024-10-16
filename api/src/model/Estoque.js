@@ -58,4 +58,22 @@ export default class Estoque {
             bd.release();
         }
     }
+
+    verificaCampos() {
+        if ( 
+            this._quantidade.length > 10 ||  
+            this._idProduto.length > 10) {  
+            return false;
+        }
+        return true;
+    }
+
+    validaCampos() {
+        if (!this._id || 
+            !this._quantidade || 
+            !this._idProduto) {
+            return false;
+        }
+        return true;
+    }
 }

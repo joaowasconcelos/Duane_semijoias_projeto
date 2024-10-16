@@ -72,5 +72,15 @@ export default class Itens {
         }
         return true 
     }
+
+    verificaCampos() {
+        if (this._ID_Produto.toString().length > 10 ||
+            this._Quantidade.toString().length > 10 ||
+            this._ID_Pedido.toString().length > 10 ||
+            this._ID_Preço.toString().length > 10) {
+            return false;
+        }
+        return true;
+    }
 }
 
