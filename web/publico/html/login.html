@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="https://www.google.com/recaptcha/api.js" async defer></script>
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Rubik&family=Secular+One&display=swap"
@@ -22,10 +23,12 @@
 </head>
 
 <body>
-  
+
     <img id="ondas-rosa" src="../img/ondas-rosa.png" width="100%" height="10%">
 
-    <a href="/web/publico/html/home.html"><div id="logo"><img src="../img/Duane.png" alt="DuaneSemijoias" width="110" height="110"></div></a>
+    <a href="/web/publico/html/home.html">
+        <div id="logo"><img src="../img/Duane.png" alt="DuaneSemijoias" width="110" height="110"></div>
+    </a>
 
     <main class="container" id="container">
 
@@ -52,7 +55,7 @@
         </div>
 
         <div class="form-container sign-in">
-            <form>
+            <form id="loginForm">
                 <h1>Faça o login</h1>
                 <div class="social-icons">
                     <a href="#" class="icon">
@@ -66,11 +69,11 @@
                     </a>
                 </div>
                 <span>ou use seu email e senha</span>
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Senha">
+                <input type="email" placeholder="Email" id="username">
+                <input type="password" placeholder="Senha" id="password">
                 <a href="#">Esqueceu sua senha?</a>
-                <div class="g-recaptcha" data-sitekey="SUA_SITE_KEY"></div>
-                <button class="bot">Acessar</button>
+                <!-- <div class="g-recaptcha" data-sitekey="SUA_SITE_KEY"></div> -->
+                <button id="acessar" class="bot">Acessar</button>
             </form>
         </div>
         <div class="toggle-container">
@@ -109,7 +112,49 @@
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
         });
+
+        document.getElementById('loginForm').addEventListener('submit', function (event) {
+            event.preventDefault(); // Evita o reload da página
+
+            // Captura os valores dos inputs
+            const username = document.getElementById('username').value;
+            const password = document.getElementById('password').value;
+            console.log(username, password)
+
+            // Envia os dados para a rota de login
+            const response = axios.get('http://10.0.3.77:3000/VerificaLogin', {
+                params: {
+                    login: username,
+                    senha: password
+                }
+
+            })
+                .then(function (response) {
+                    // Sucesso no login
+                    console.log('Login realizado com sucesso', response.data);
+                    console.log(response.data.verificaLogin);
+
+
+                    // console.log(response.data.verificaLogin[0].perfis_id);
+                    // Redirecionar a resposta aqui
+                    if (response.data.verificaLogin[0].perfis_id === 1) {
+                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
+                    } else if (response.data.verificaLogin[0].perfis_id === 2) {
+                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
+                    } else {
+                        console.log('n foi');
+                        alert('Usuario não encontrado!')
+                        //arrumar isso
+                    }
+                })
+                .catch(function (error) {
+                    // Tratar erro de login
+                    console.error('Erro no login', error);
+                    alert('Usuario não encontrado!')
+                });
+        });
     </script>
+
 
 </body>
 
