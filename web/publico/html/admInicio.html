@@ -40,7 +40,7 @@
                 <a href="../html/admCatalogoProdutos.html" id="menuText" class="navAdm">Catálogo de produtos</a>
                 <a href="#" id="menuText" class="navAdm">Promoção</a>
                 <a href="#" id="menuText" class="navAdm">Gerenciamento de cupons</a>
-                <a href="#" id="menuText" class="navAdm">Cadastrar administrador</a>
+                <a href="../html/cadastrarNovoAdm.html" id="menuText" class="navAdm">Cadastrar administrador</a>
                 <a href="../html/todosClientes.html" id="menuText" class="navAdm">Clientes</a>
                 <a href="#" id="menuText" class="navAdm">Meus dados</a>
                 <a id="menuText" class="navAdm" type="button" class="btn btn-primary" data-toggle="modal"
@@ -54,24 +54,7 @@
 
                 <p id="titulo2">Últimos pedidos:</p>
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Código</th>
-                            <th>Data de compra</th>
-                            <th>Informações do pedido</th>
-                            <th>Status</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <th id="dados"></th>
-                            <td id="dados"></td>
-                            <td id="dados"><a href="#" id="link">Ver mais detalhes...</a></td>
-                            <td id="dados"></td>
-                        </tr>
-                    </tbody>
-                </table>
+                <table id="tbl-pedidos"></table>
 
             </div>
 
@@ -101,40 +84,10 @@
 
                             <p id="titleCadastradas">Categorias ja cadastradas</p>
 
-                            <table id="categorias">
-
-                                <tbody>
-
-                                    <tr id="categoria">
-                                        <td class="categoria" id="categoria"></td>
-                                        <td class="categoria2" id="dados2"><!--  mudei para categoria2 -->
-                                            <span id="iconTable" class="fas fa-edit" data-toggle="modal"
-                                                data-target="#meuModal" onclick="changeSubtitle()"></span>
-                                        </td>
-                                        <td class="categoria" id="dados2">
-                                            <span id="iconTable" class="fas fa-trash"></span>
-                                        </td>
-                                    </tr>
-
-                                    <!-- <tr id="categoria">
-                                        
-                                        <th class="categoria" id="categoria"></th>
-
-                                        <td class="categoria" id="dados2">
-                                            <span id="iconTable" class="fas fa-edit" data-toggle="modal"
-                                                data-target="#meuModal" onclick="changeSubtitle()"></span>
-                                        </td>
-
-                                        <td class="categoria" id="dados2">
-                                            <span id="iconTable" class="fas fa-trash"></span>
-                                        </td>
-
-                                    </tr> -->
-
-                                </tbody>
+                            <table id="tbl-categorias">
 
                             </table>
-
+                            
                         </div>
 
                         <div id="boxCadastrarCategorias">

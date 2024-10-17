@@ -8,14 +8,28 @@ function salvar() {
 }
 
 //puxando tabela de categorias do banco
+let responseTipo;
+let responsePed;
 
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        const responsePed = await axios.get('http://10.0.3.77:3000/SelecionaPedido');
-        const responseTipo = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
+        responsePed = await axios.get('http://10.0.3.77:3000/SelecionaPedido');
+        responseTipo = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
         console.log(responsePed.data)
         console.log(responseTipo.data)
+
+        if(responseTipo != null || responseTipo != undefined){
+            criarTabela();
+            carregaDadosModalCategoria();
+            // console.log("123")
+        }
+
+        if(responsePed != null || responsePed != undefined){
+            criarTabela2();
+            carregaDadosTabelaPedidos();
+            // console.log("123")
+        }
 
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
@@ -24,71 +38,59 @@ async function dados() {
 
 dados();
 
-// function catDrop(data) {
-//     const selecionaElemento = document.getElementById('categorias');
+var table;
 
-//     data.forEach((item) => {
-        
-//         const tipoCat = document.createElement('th');
-//         tipoCat.className = 'categoria';
-//         tipoCat.id = `categoria-${item.id}`;
-//         tipoCat.text = item.tipo;
+function criarTabela(){
+    table = `<tr>
+    <td>Descrição</td>
+    <td>Editar</td>
+    <td>Excluir</td>
+    </tr>`
+}
 
-//         const editar = document.createElement('td');
-//         editar.innerHTML = `<span id="iconTable" class="fas fa-edit" data-toggle="modal" data-target="#meuModal" onclick="changeSubtitle(${item.id})"></span>`;
+function carregaDadosModalCategoria(){
+    // console.log(responseTipo.data);
+    
+    $.each(responseTipo.data, function () {
+        table += 
+        `<tr>
+        <td>${this['tipo']}</td>
+        <td><a href="/editar/${this["id"]}">editar</a></td>
+        </tr>`
+    });
+    // console.log(table);
+    
+    document.getElementById('tbl-categorias').innerHTML = table;
+}
 
-//         const excluir = document.createElement('td');
-//         excluir.innerHTML = `<span id="iconTable" class="fas fa-trash" onclick="excluirCategoria(${item.id})"></span>`;
+//puxando tabela de pedidos do banco
 
-//         row.appendChild(tipoCat);
-//         row.appendChild(editar);
-//         row.appendChild(excluir);
+var table2;
 
-//         selecionaElemento.appendChild(row);
-//     });
-// }
+function criarTabela2(){
+    table2 = `
+        <tr>
+            <td id="codigot">Código</td>
+            <td id="dtComprat">Data de compra</td>
+            <td id="descricaott">Descrição</td>
+            <td id="statust">Status</td>
+        </tr>`
+}
 
-// function catDrop(data) {
-//     // Seleciona o tbody da tabela onde as categorias serão inseridas
-//     const selecionaElemento = document.querySelector('#categorias tbody'); 
-
-//     // Limpa o conteúdo anterior da tabela, caso esteja atualizando
-//     selecionaElemento.innerHTML = '';
-
-//     data.forEach((item) => {
-//         // Cria uma nova linha para a tabela
-//         const row = document.createElement('tr'); 
-
-//         // Cria a célula da categoria
-//         const tipoCat = document.createElement('th');
-//         tipoCat.className = 'categoria';
-//         tipoCat.id = `categoria-${item.id};` // Define o ID da categoria
-//         tipoCat.textContent = item.tipo; // Define o tipo da categoria como texto
-
-//         // Cria a célula para editar
-//         const editar = document.createElement('td');
-//         editar.innerHTML = `<span id="iconTable" class="fas fa-edit" data-toggle="modal" data-target="#meuModal" onclick="changeSubtitle(${item.id})"></span>;`
-
-//         // Cria a célula para excluir
-//         const excluir = document.createElement('td');
-//         excluir.innerHTML = `<span id="iconTable" class="fas fa-trash" onclick="excluirCategoria(${item.id})"></span>;`
-
-//         // Adiciona as células à linha
-//         row.appendChild(tipoCat);
-//         row.appendChild(editar);
-//         row.appendChild(excluir);
-
-//         // Adiciona a linha ao tbody da tabela
-//         selecionaElemento.appendChild(row);
-//     });
-// }
-
-tipoCategorias = function () {
-    var $linhas = $("#categorias > tr");
-    $linhas.each( function() {
-        var cat = $(".categoria", this). html();
-        console.log($(".categoria", this).html());
-
-        myJS
-    })
+function carregaDadosTabelaPedidos(){
+    
+    $.each(responsePed.data, function () {
+        table2 += 
+        `<tbody>
+        <tr>
+            <td id="codigo">${this['id']}</td>
+            <td id="dtCompra" >${this['data_formatada']}</td>
+            <td><a href="#" id="link">Ver mais detalhes...</a></td>
+            <td id="status">${this['status']}</td>
+        </tr>
+        </tbody>`
+    });
+    console.log(table2);
+    
+    document.getElementById('tbl-pedidos').innerHTML = table2;
 }

@@ -107,18 +107,6 @@ main {
     font-size: 25px;
 }
 
-/* lupa */
-
-.search-container {
-    display: flex;
-    align-items: center;
-}
-
-.bi-search {
-    margin-left: 10px;
-    z-index: 100;
-}
-
 /* container da tabela */
 
 #titulo2 {
@@ -164,7 +152,26 @@ main {
     padding-left: 25px;
 }
 
+#codigot,
+#dtComprat,
+#descricaot,
+#statust {
+    color: #9B5377;
+    font-weight: bold;
+    text-align: center;
+}
+
+#descricaott {
+    color: #9B5377;
+    font-weight: bold;
+}
+
+
 /* css da tabela */
+
+tbody {
+    overflow-y: scroll;
+}
 
 table {
     width: 100%;
@@ -173,20 +180,7 @@ table {
     font-size: 15px;
     font-family: Arial, sans-serif;
     text-align: left;
-}
-
-thead {
-    color: #9B5377;
-}
-
-thead tr th {
-    padding: 12px;
-    border-right: 2px solid #FAADD1;
-}
-
-thead th {
-    padding: 12px;
-    border-right: 2px solid #FAADD1;
+    overflow-y: scroll;
 }
 
 tbody tr th,
@@ -196,7 +190,7 @@ tbody tr td {
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f3d4eb61;
 }
 
 tbody tr th,
@@ -209,12 +203,6 @@ tbody tr th {
     color: #333;
 }
 
-#dados {
-    font-family: 'Open Sans', sans-serif;
-    font-size: 15px;
-    font-weight: bold;
-}
-
 #link {
     color: black;
 }
@@ -223,6 +211,39 @@ thead th:last-child,
 tbody td:last-child,
 tbody th:last-child {
     border-right: none;
+}
+
+/* colunas */
+
+#dtCompra {
+    width: 150px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#codigo {
+    width: 100px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#link {
+    font-weight: bold;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#status {
+    width: 120px;
+    text-align: center;
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 /* modal */
