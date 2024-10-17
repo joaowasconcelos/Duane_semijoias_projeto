@@ -13,6 +13,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
         console.log(response);
         console.log(response.data);
+
+        //carregar dados para o front com jquery
         
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
