@@ -6,8 +6,12 @@ const PromocaoController = {
             const {Categoria_produto,Porcentagem,Id_produto,Id_categoria} = req.body;
             const cPromocao = new Promocao(null,Categoria_produto,Porcentagem,Id_categoria,Id_produto);
             const validaCampos = cPromocao.validaCampos()
+            const verificaCampos = cPromocao.verificaCampos()
             if(!validaCampos){
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            if(!verificaCampos){
+                res.status(400).json({ error: "Campos nulos" });
             }
             const insertPromocao = await cPromocao.CadastraPromocao()
             if (insertPromocao.error) {

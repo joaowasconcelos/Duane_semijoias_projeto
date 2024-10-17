@@ -96,18 +96,31 @@ export default class Produto {
         try {
             const produtoResult = await bd.query(`
     SELECT 
-        p.id,
-        p.nome_produto,
-        p.descricao,
-        pc.preco,
-        c.tipo
-    FROM 
-        produto p
-    JOIN 
-        preco pc on pc.produto_id = p.id
-    JOIN
-        categoria c on c.id = p.categoria_id
-    WHERE p.status =1 AND pc.status = 1;`);
+    p.id,
+    p.nome_produto,
+    p.descricao,
+    pc.preco AS preco_normal,  -- Exibe o preço normal
+    COALESCE( 
+        pc.preco - (pc.preco * pr_prod.valor / 100), 
+        pc.preco - (pc.preco * pr_cat.valor / 100),   
+        pc.preco                                      
+    ) AS preco_promocional,  -- Exibe o preço com desconto, se houver
+    c.tipo
+FROM 
+    produto p
+JOIN 
+    preco pc ON pc.produto_id = p.id
+JOIN
+    categoria c ON c.id = p.categoria_id
+LEFT JOIN 
+    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1  
+LEFT JOIN 
+    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   
+WHERE 
+    p.status = 1 
+    AND pc.status = 1;
+
+`);
             return produtoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
