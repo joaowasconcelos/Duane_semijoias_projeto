@@ -1,5 +1,6 @@
 import Produto from "../model/Produto.js";
 import Preco from "../model/Preco.js"
+import Pessoa from "../model/Pessoa.js";
 
 const ProdutoController = {
     cadastro: async (req, res) => {
@@ -78,6 +79,7 @@ const ProdutoController = {
             return res.status(500).json({ message: "Erro ao cadastrar produto!" })
         }
     },
+
 
     Seleciona: async(req,res)=>{
         try {

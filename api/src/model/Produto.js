@@ -95,11 +95,12 @@ export default class Produto {
         const bd = await obterConexaoDoPool();
         try {
             const produtoResult = await bd.query(`
-    SELECT 
+     SELECT 
         p.id,
         p.nome_produto,
         p.descricao,
         pc.preco,
+        e.quantidade,
         c.tipo
     FROM 
         produto p
@@ -107,6 +108,8 @@ export default class Produto {
         preco pc on pc.produto_id = p.id
     JOIN
         categoria c on c.id = p.categoria_id
+    JOIN
+        estoque e on e.produto_id = p.id
     WHERE p.status =1 AND pc.status = 1;`);
             return produtoResult[0]
         } catch (error) {

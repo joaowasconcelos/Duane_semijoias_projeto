@@ -10,7 +10,8 @@ const LoginController = {
             if (!secretKey) {
                 return res.status(500).send("Chave secreta não configurada.");
             }
-            const { login, senha } = req.body
+            const { login, senha } = req.query
+            
             const cLogin = new Login(null, login, senha)
             const verificaCampos = cLogin.verificaCampos()
             if (!verificaCampos) {
@@ -31,7 +32,7 @@ const LoginController = {
 
             console.log(verificaLogin)
             const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
-            return res.json({ auth: true, token })
+            return res.json({ auth: true, token,verificaLogin })
 
         } catch (error) {
             res.status(500).json({ message: "Erro ao verificar login!" })
