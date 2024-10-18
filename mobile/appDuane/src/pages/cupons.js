@@ -48,7 +48,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%", alignItems: 'center'}}>
+          <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -74,62 +74,118 @@ export default function Home() {
               />
 
               <Text style={styles.textTitle}>Cupons</Text>
-
-              
             </View>
 
-            <View style={{height: '55%', borderWidth: 2, borderRadius: 5, borderColor: '#FAADD1', width: '95%', justifyContent: 'center', alignItems: 'center'}}>
-              <ScrollView >
+            <View
+              style={{
+                height: "55%",
+                borderWidth: 2,
+                borderRadius: 5,
+                borderColor: "#FAADD1",
+                width: "95%",
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+            >
+              <ScrollView>
                 <View style={styles.containerElements}>
+                  <Text
+                    style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}
+                  >
+                    Todos os Cupons:
+                  </Text>
                   <View style={styles.btn}>
-                    <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
-                      <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                        <View style={{marginRight: 40, marginBottom: 10}}>
+                    <View
+                      style={{
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "70%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
+                        <View style={{ marginBottom: 10, marginLeft: 20 }}>
                           <Text style={styles.textBtn}>Código:</Text>
                         </View>
-                        <View style={{marginRight: 40, marginBottom: 10}}>
-                          <Text style={styles.textElement}>23</Text>
+                        <View style={{ marginBottom: 10 }}>
+                          <Text style={styles.textElement}>DSJ0030D</Text>
                         </View>
                       </View>
 
-                      <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+                      <View
+                        style={{
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#FAADD1",
+                          width: "100%",
+                        }}
+                      />
 
-                      <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                        <View>
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
+                        <View style={{ marginLeft: 20 }}>
                           <Text style={styles.textBtn}>Status:</Text>
-                          
                         </View>
-                        <View style={{marginRight: 65}}>
-                          <Text style={{margin: 10}}>Atvo</Text>
+                        <View style={{ marginRight: 40 }}>
+                          <Text style={{ margin: 10 }}>Atvo</Text>
                         </View>
                       </View>
                     </View>
 
-                    <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40}}>
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                        marginTop: 40,
+                      }}
+                    >
                       <Text style={styles.textBtn}>Detalhes:</Text>
-                      <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
+                      <FontAwesome6
+                        name="magnifying-glass"
+                        color="#ae4b67"
+                        size={26}
+                      />
                     </TouchableOpacity>
-                    
                   </View>
-
-                  
-
-                  
-
-                  
                 </View>
               </ScrollView>
             </View>
 
-            <TouchableOpacity style={{width: '80%', backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', height: 50, marginTop: 20, borderRadius: 10, borderColor: "#FAADD1", borderWidth: 2}}>
-              <Text>
+            <TouchableOpacity
+              style={{
+                width: "80%",
+                backgroundColor: "#FFFFFF",
+                justifyContent: "center",
+                alignItems: "center",
+                height: 50,
+                marginTop: 10,
+                borderRadius: 10,
+                marginBottom: 5,
+                fontWeight: "bold",
+              }}
+            >
+              <Text
+                style={{
+                  color: "#FAADD1",
+                  fontSize: 18,
+                  fontFamily: 'EBGaramond_800ExtraBold'
+                }}
+              >
                 Cadastrar Novo cupom
               </Text>
             </TouchableOpacity>
-
-            
-
-            
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -140,7 +196,6 @@ export default function Home() {
     );
   }
 }
-
 
 const styles = StyleSheet.create({
   androidSafeArea: {
@@ -162,7 +217,6 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    
   },
   btn: {
     width: "95%",
@@ -181,7 +235,6 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#ae4b67",
     paddingRight: 5,
-    
   },
   imgHeader: {
     width: "100%",
@@ -199,7 +252,7 @@ const styles = StyleSheet.create({
     // fontFamily: "EBGaramond_400Regular",
     fontSize: 14,
     textAlign: "center",
-    marginRight: 40
+    marginRight: 40,
   },
   textTitle: {
     fontFamily: "EBGaramond_800ExtraBold",
@@ -215,25 +268,25 @@ const styles = StyleSheet.create({
     margin: 20,
     paddingTop: 10,
     position: "relative",
-    width: '100%'
+    width: "100%",
   },
   btnLogOut: {
     position: "absolute",
     marginTop: 50,
-    left: 50
+    left: 50,
   },
-  Inputs:{
-    width: '80%',
+  Inputs: {
+    width: "80%",
     height: 30,
     fontSize: 18,
-    fontFamily: 'EBGaramond_400Regular',
+    fontFamily: "EBGaramond_400Regular",
     borderRadius: 5,
-    backgroundColor: '#FFF6F2',
+    backgroundColor: "#FFF6F2",
     padding: 5,
-    color: '#000000',
-    fontWeight: 'bold',
+    color: "#000000",
+    fontWeight: "bold",
     borderWidth: 1,
-    borderColor: '#CF90A2',
+    borderColor: "#CF90A2",
     margin: 5,
-  }
+  },
 });
