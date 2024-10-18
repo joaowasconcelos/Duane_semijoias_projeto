@@ -43,9 +43,6 @@ const ProdutoFavController ={
     Seleciona:async(req,res)=>{
         try {
             const id = req.id
-            if(id == 0){
-                return res.status(500).json({message: "Selecione uma pessoa"})
-            }
             const cProduto = new Produto_Fav(null,null,id)
             const selecionaProdutoFav = await cProduto.SelecionaProdutoFav()
             console.log(selecionaProdutoFav)
@@ -60,6 +57,7 @@ const ProdutoFavController ={
             console.error(error);
             res.status(500).json({ error: "Erro ao selecionar um produto" });
         }
-    }
+    },
+    
 }
 export default ProdutoFavController

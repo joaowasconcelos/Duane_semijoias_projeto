@@ -46,6 +46,26 @@ const CuponsController = {
         } catch (error) {
             res.status(500).json({ message: "Erro ao editar cupom!" })
         }
+    },
+    Seleciona: async (req,res) => {
+        try {
+            const selecionaPessoas = Cupons.SelecionaCupom()
+            return res.json(selecionaPessoas);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Erro ao selecionar cupons" });
+        }
+    },
+    SelecionaDetalhes: async (req,res) => {
+        try {
+            const {id} = req.params
+            const cCupons = new Cupons(id)
+            const selecionaPessoas = await cCupons.SelecionaCupomDetalhes()
+            return res.json(selecionaPessoas);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Erro ao selecionar detalhes do cupons" });
+        }
     }
 }
 

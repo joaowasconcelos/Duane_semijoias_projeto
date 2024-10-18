@@ -70,6 +70,18 @@ const PromocaoController = {
             res.status(500).json({ error: "Erro ao selecionar uma promoção" });
         }
     },
+    SelecionaDetalhes: async (req, res) => {
+        try {
+            const selecionaPromocao = await Promocao.SelecionaPromocao()
+            if (selecionaPromocao.error) {
+                return res.status(500).json({message: "Erro ao selecionar promoção!"})
+            }
+            return res.json(selecionaPromocao);
+        } catch (error) {
+            console.error(error);
+            res.status(500).json({ error: "Erro ao selecionar uma promoção" });
+        }
+    },
     Verifica: async (req, res) => {
         try {
             const {id}= req.body 
