@@ -57,11 +57,38 @@ export default class Cupons {
         }
     }
 
-    async SelecionaCupom() {
+     static async SelecionaCupom() {
         const bd = await obterConexaoDoPool();
         try {
-            const cupomResult = await bd.query(`SELECT * FROM cupons;`)
-            console.log(cupomResult);
+            const cupomResult = await bd.query(`  SELECT 
+		c.id,
+		c.codigo,
+		c.status
+        FROM 
+            cupons c;`)
+            return cupomResult
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+    async SelecionaCupomDetalhes() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`    SELECT 
+		c.id,
+		c.codigo,
+		c.status,
+        c.quantidade,
+        c.valor,
+        c.descricao
+        FROM 
+            cupons c 
+		WHERE
+			c.id = ?;` , [this._id])
+            return cupomResult
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
