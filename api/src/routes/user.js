@@ -52,6 +52,8 @@ routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modif
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
+routerUser.get("/SelecionaUsuarios",CadastroUsuario.Seleciona);
+routerUser.get("/SelecionaInfoUsers/:id",CadastroUsuario.SelecionaInfoId);
 routerUser.get("/SelecionaPedido",PedidoController.Seleciona);
 routerUser.get("/SelecionaProdutoFav/:id",authenticateJWT,ProdutoFavController.Seleciona);
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
