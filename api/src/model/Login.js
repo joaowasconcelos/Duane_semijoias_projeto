@@ -180,6 +180,7 @@ export default class Login {
             if (loginResul[0][0].ativo === 0) {
                 return "Usuario Inativo"
             }
+            delete loginResul[0][0].senha;
             return loginResul[0]
         }
         catch (error) {
