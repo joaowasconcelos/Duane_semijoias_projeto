@@ -48,7 +48,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%" }}>
+          <View style={{ flex: 1, width: "100%", alignItems: 'center'}}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -78,54 +78,56 @@ export default function Home() {
               
             </View>
 
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
-              </TextInput>
-            </View>
-
-            <ScrollView>
-              <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Código:</Text>
-                        <Text style={{}}>123456</Text>
+            <View style={{height: '55%', borderWidth: 2, borderRadius: 5, borderColor: '#FAADD1', width: '95%', justifyContent: 'center', alignItems: 'center'}}>
+              <ScrollView >
+                <View style={styles.containerElements}>
+                  <View style={styles.btn}>
+                    <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
+                      <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                        <View style={{marginRight: 40, marginBottom: 10}}>
+                          <Text style={styles.textBtn}>Código:</Text>
+                        </View>
+                        <View style={{marginRight: 40, marginBottom: 10}}>
+                          <Text style={styles.textElement}>23</Text>
+                        </View>
                       </View>
-                      <View style={{}}>
-                        <Text style={styles.textBtn}>quantidade de itens:</Text>
-                        <Text style={styles.textElement}>23</Text>
+
+                      <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+
+                      <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
+                        <View>
+                          <Text style={styles.textBtn}>Status:</Text>
+                          
+                        </View>
+                        <View style={{marginRight: 65}}>
+                          <Text style={{margin: 10}}>Atvo</Text>
+                        </View>
                       </View>
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cliente:</Text>
-                        <Text style={{textAlign: 'center'}}>Sara</Text>
-                      </View>
-                    </View>
+                    <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40}}>
+                      <Text style={styles.textBtn}>Detalhes:</Text>
+                      <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
+                    </TouchableOpacity>
+                    
                   </View>
 
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
+                  
+
+                  
+
                   
                 </View>
+              </ScrollView>
+            </View>
 
-                
+            <TouchableOpacity style={{width: '80%', backgroundColor: '#FFFFFF', justifyContent: 'center', alignItems: 'center', height: 50, marginTop: 20, borderRadius: 10, borderColor: "#FAADD1", borderWidth: 2}}>
+              <Text>
+                Cadastrar Novo cupom
+              </Text>
+            </TouchableOpacity>
 
-                
-
-                
-              </View>
-            </ScrollView>
+            
 
             
           </View>
@@ -160,7 +162,7 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginBottom: 60,
+    
   },
   btn: {
     width: "95%",
@@ -179,6 +181,7 @@ const styles = StyleSheet.create({
     fontSize: 15,
     color: "#ae4b67",
     paddingRight: 5,
+    
   },
   imgHeader: {
     width: "100%",
@@ -212,11 +215,12 @@ const styles = StyleSheet.create({
     margin: 20,
     paddingTop: 10,
     position: "relative",
+    width: '100%'
   },
   btnLogOut: {
     position: "absolute",
-    alignSelf: "flex-start",
     marginTop: 50,
+    left: 50
   },
   Inputs:{
     width: '80%',
