@@ -97,10 +97,19 @@ export default class Produto {
         const bd = await obterConexaoDoPool();
         try {
             const produtoResult = await bd.query(`
-    SELECT 
+   SELECT 
     p.id,
     p.nome_produto,
     p.descricao,
+
+    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,  -- Usa MIN para pegar o maior preço se houver duplicatas
+    FORMAT(
+        COALESCE(
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
+            MIN(pc.preco)                                      
+        ), 
+        2, 'pt_BR'
     pc.preco AS preco_normal,  
     COALESCE( 
         pc.preco - (pc.preco * pr_prod.porcentagem / 100), 
@@ -120,7 +129,9 @@ LEFT JOIN
     promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   
 WHERE 
     p.status = 1 
-    AND pc.status = 1;`);
+    AND pc.status = 1
+GROUP BY 
+    p.id, p.nome_produto, p.descricao, c.tipo;`);
             return produtoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -138,12 +149,15 @@ WHERE
     p.id,
     p.nome_produto,
     p.descricao,
-    pc.preco AS preco_normal,  -- Exibe o preço normal
-    COALESCE( 
-        pc.preco - (pc.preco * pr_prod.valor / 100), 
-        pc.preco - (pc.preco * pr_cat.valor / 100),   
-        pc.preco                                      
-    ) AS preco_promocional,  -- Exibe o preço com desconto, se houver
+    FORMAT(pc.preco, 2, 'pt_BR') AS preco_normal,  
+    FORMAT(
+        COALESCE(
+            pc.preco - (pc.preco * MIN(pr_prod.valor) / 100), 
+            pc.preco - (pc.preco * MIN(pr_cat.valor) / 100),   
+            pc.preco                                      
+        ), 
+        2, 'pt_BR'
+    ) AS preco_promocional,  
     c.tipo
 FROM 
     produto p
@@ -158,7 +172,10 @@ LEFT JOIN
 WHERE 
     p.status = 1 
     AND pc.status = 1
-    AND C.id = ?
+    AND c.id = ?
+GROUP BY 
+    p.id, p.nome_produto, p.descricao, pc.preco, c.tipo;
+
 ` , [this._id]);
             return produtoResult[0]
         } catch (error) {
@@ -170,20 +187,23 @@ WHERE
     }
 
 
-   static async SelectProdutoMenorMaior() {
+    static async SelectProdutoMenorMaior() {
         const bd = await obterConexaoDoPool();
         try {
             const produtoResult = await bd.query(`
-    SELECT 
+   SELECT 
     p.id,
     p.nome_produto,
     p.descricao,
-    pc.preco AS preco_normal,  -- Exibe o preço normal
-    COALESCE( 
-        pc.preco - (pc.preco * pr_prod.valor / 100), 
-        pc.preco - (pc.preco * pr_cat.valor / 100),   
-        pc.preco                                      
-    ) AS preco_promocional,  -- Exibe o preço com desconto, se houver
+    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,  -- Formata o preço normal
+    FORMAT(
+        COALESCE(
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
+            MIN(pc.preco)                                      
+        ), 
+        2, 'pt_BR'
+    ) AS preco_promocional,  -- Formata o preço promocional
     c.tipo
 FROM 
     produto p
@@ -194,11 +214,19 @@ JOIN
 LEFT JOIN 
     promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1  
 LEFT JOIN 
-    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1  
+    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   
 WHERE 
     p.status = 1 
     AND pc.status = 1
-ORDER BY preco_promocional ASC;
+GROUP BY 
+    p.id, p.nome_produto, p.descricao, c.tipo
+ORDER BY 
+    COALESCE(
+        MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
+        MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
+        MIN(pc.preco)
+    ) ASC;  -- Ordena pelo preço promocional
+
 ` , [this._id]);
             return produtoResult[0]
         } catch (error) {
@@ -217,12 +245,15 @@ ORDER BY preco_promocional ASC;
     p.id,
     p.nome_produto,
     p.descricao,
-    pc.preco AS preco_normal,  -- Exibe o preço normal
-    COALESCE( 
-        pc.preco - (pc.preco * pr_prod.valor / 100), 
-        pc.preco - (pc.preco * pr_cat.valor / 100),   
-        pc.preco                                      
-    ) AS preco_promocional,  -- Exibe o preço com desconto, se houver
+    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,  -- Formata o preço normal
+    FORMAT(
+        COALESCE( 
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
+            MIN(pc.preco)                                      
+        ), 
+        2, 'pt_BR'
+    ) AS preco_promocional,  -- Formata o preço com desconto, se houver
     c.tipo
 FROM 
     produto p
@@ -237,7 +268,15 @@ LEFT JOIN
 WHERE 
     p.status = 1 
     AND pc.status = 1
-ORDER BY preco_promocional DESC;
+GROUP BY 
+    p.id, p.nome_produto, p.descricao, c.tipo  -- Agrupa pelos campos do produto e categoria
+ORDER BY 
+    COALESCE( 
+        MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
+        MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
+        MIN(pc.preco)
+    ) DESC;  -- Ordena pelo preço promocional do maior para o menor
+
 ` , [this._id]);
             return produtoResult[0]
         } catch (error) {
@@ -253,16 +292,19 @@ ORDER BY preco_promocional DESC;
         const bd = await obterConexaoDoPool();
         try {
             const produtoResult = await bd.query(`
-    SELECT 
+SELECT 
     p.id,
     p.nome_produto,
     p.descricao,
-    pc.preco AS preco_normal,  
-    COALESCE( 
-        pc.preco - (pc.preco * pr_prod.valor / 100), 
-        pc.preco - (pc.preco * pr_cat.valor / 100),   
-        pc.preco                                     
-    ) AS preco_promocional,  
+    FORMAT(pc.preco, 2, 'pt_BR') AS preco_normal,  -- Formata o preço normal
+    FORMAT(
+        COALESCE( 
+            pc.preco - (pc.preco * pr_prod.valor / 100), 
+            pc.preco - (pc.preco * pr_cat.valor / 100),   
+            pc.preco                                     
+        ), 
+        2, 'pt_BR'
+    ) AS preco_promocional,  -- Formata o preço promocional
     c.tipo,
     SUM(it.quantidade) AS total_vendido
 FROM 
@@ -281,9 +323,16 @@ WHERE
     p.status = 1 
     AND pc.status = 1
 GROUP BY 
-    p.id, p.nome_produto, p.descricao, pc.preco, pr_prod.valor, pr_cat.valor, c.tipo
+    p.id, 
+    p.nome_produto, 
+    p.descricao, 
+    pc.preco, 
+    pr_prod.valor, 
+    pr_cat.valor, 
+    c.tipo
 ORDER BY 
-    total_vendido DESC; 
+    total_vendido DESC;  -- Ordena pelo total vendido do maior para o menor
+
 ` , [this._id]);
             return produtoResult[0]
         } catch (error) {
@@ -293,7 +342,7 @@ ORDER BY
             bd.release();
         }
     }
-   
+
     verificaCampos() {
         if (this._descricao.length > 200 || this._status.length > 20 || this._nomeProduto.length > 150 || this._id_categoria.length > 20) {
             return false
