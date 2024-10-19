@@ -1,11 +1,49 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Carrinho</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Finalizar Compra</title>
+  <link rel="stylesheet" href="../css/carrinho.css">
 </head>
 <body>
-    <h1>oi</h1>
+  <h1>Finalizar Compra</h1>
+
+  <!-- Resumo do Pedido -->
+  <section id="order-summary">
+    <h2>Resumo do Pedido</h2>
+    <ul id="order-items"></ul>
+    <p>Total: R$ <span id="order-total">0.00</span></p>
+  </section>
+
+  <!-- Formulário de Dados do Cliente -->
+  <section id="customer-info">
+    <h2>Dados do Cliente</h2>
+    <form id="checkout-form">
+      <div>
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required>
+      </div>
+      <div>
+        <label for="email">Email:</label>
+        <input type="email" id="email" name="email" required>
+      </div>
+      <div>
+        <label for="address">Endereço:</label>
+        <input type="text" id="address" name="address" required>
+      </div>
+      <div>
+        <label for="payment-method">Método de Pagamento:</label>
+        <select id="payment-method" name="payment-method" required>
+          <option value="credit-card">Cartão de Crédito</option>
+          <option value="debit-card">Cartão de Débito</option>
+          <option value="boleto">Boleto</option>
+        </select>
+      </div>
+      <button type="submit">Confirmar Compra</button>
+    </form>
+  </section>
+
+  <script src="checkout.js"></script>
 </body>
 </html>
