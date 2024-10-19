@@ -90,7 +90,7 @@ const CadastroUsuario = {
         const conn = await obterConexaoDoPool();
         try {
             await conn.beginTransaction();
-            const { id } = req.params; // ID da pessoa
+            const id = req.id
             const { Nome, Data_Nasc, Genero, Telefones } = req.body;
             const cPessoa = new Pessoa(id, Nome, Data_Nasc, null, Genero);
             const vericaCampos = cPessoa.verificaCamposEditarUsuario()
