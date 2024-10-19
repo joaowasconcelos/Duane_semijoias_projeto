@@ -103,8 +103,8 @@ export default class Produto {
     p.descricao,
     pc.preco AS preco_normal,  
     COALESCE( 
-        pc.preco - (pc.preco * pr_prod.valor / 100), 
-        pc.preco - (pc.preco * pr_cat.valor / 100),   
+        pc.preco - (pc.preco * pr_prod.porcentagem / 100), 
+        pc.preco - (pc.preco * pr_cat.porcentagem / 100),   
         pc.preco                                      
     ) AS preco_promocional,  
     c.tipo
@@ -120,9 +120,7 @@ LEFT JOIN
     promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   
 WHERE 
     p.status = 1 
-    AND pc.status = 1;
-
-`);
+    AND pc.status = 1;`);
             return produtoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
