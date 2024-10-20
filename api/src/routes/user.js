@@ -15,6 +15,7 @@ import ProdutoController from "../controllers/Produto.js";
 import UploadImagens from "../controllers/Imagens.js";
 import FeedbackController from "../controllers/Feedback.js";
 
+
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//ESSA ROTA O PRÓPRIO USUÁRIO INSERE SEUS DADOS E SE CADASTRA
 routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);//ESSA ROTA O ADM CADASTRA UM USUARIO 
@@ -52,15 +53,24 @@ routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modif
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
+routerUser.get("/SelecionaUsuarios",CadastroUsuario.Seleciona);
+routerUser.get("/SelecionaInfoUsers/:id",CadastroUsuario.SelecionaInfoId);
 routerUser.get("/SelecionaPedido",PedidoController.Seleciona);
 routerUser.get("/SelecionaProdutoFav/:id",authenticateJWT,ProdutoFavController.Seleciona);
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
 routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
+routerUser.get("/SelecionaProdutoMaior",ProdutoController.SelecionaMaiorMenor);
+routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
+routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
+routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
+routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
 routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
 routerUser.get('/Postagens',UploadImagens.listAllFiles);
 routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
+routerUser.get('/selecionaCupons',CuponsController.Seleciona)
+routerUser.get('/selecionaCupons/:id',CuponsController.SelecionaDetalhes)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);

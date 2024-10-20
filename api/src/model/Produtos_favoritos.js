@@ -34,7 +34,7 @@ export default class Produto_Fav {
     async CadastraProduto_Fav() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoFavResult = await bd.query(`INSERT INTO produtos_favoritos(produto_id,pessoa_id) VALUES (?,?);`,[this._id_produto,this._id_produto]);
+            const produtoFavResult = await bd.query(`INSERT INTO produtos_favoritos(produto_id,pessoa_id) VALUES (?,?);`, [this._id_produto, this._id_produto]);
             const produtoFavId = produtoFavResult[0].insertId;
             console.log('ID do produto_favorito:', produtoFavId);
             return produtoFavId
@@ -49,8 +49,8 @@ export default class Produto_Fav {
     async DeleteProdutoFav() {
         const bd = await obterConexaoDoPool();
         try {
-            console.log(this._id_produto,this._id_pessoa)
-            const produtoFavResult = await bd.query(`DELETE FROM produtos_favoritos WHERE produto_id =? AND pessoa_id = ?;`,[this._id_produto,this._id_pessoa]);
+            console.log(this._id_produto, this._id_pessoa)
+            const produtoFavResult = await bd.query(`DELETE FROM produtos_favoritos WHERE produto_id =? AND pessoa_id = ?;`, [this._id_produto, this._id_pessoa]);
             console.log(produtoFavResult);
             return produtoFavResult
         } catch (error) {
@@ -64,7 +64,36 @@ export default class Produto_Fav {
     async SelecionaProdutoFav() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoFavResult = await bd.query(`SELECT * FROM produtos_favoritos WHERE pessoa_id = ?;`,[this._id_pessoa]);
+            const produtoFavResult = await bd.query(`SELECT 
+    p.id,
+    p.nome_produto,
+    p.descricao,
+    pc.preco AS preco_normal,  
+    COALESCE( 
+        pc.preco - (pc.preco * pr_prod.valor / 100), 
+        pc.preco - (pc.preco * pr_cat.valor / 100),   
+        pc.preco                                     
+    ) AS preco_promocional,  
+    c.tipo
+FROM 
+    produto p
+JOIN 
+    preco pc ON pc.produto_id = p.id
+JOIN
+    categoria c ON c.id = p.categoria_id
+LEFT JOIN 
+    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1  
+LEFT JOIN 
+    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1  
+JOIN 
+    produtos_favoritos f ON f.produto_id = p.id  
+WHERE 
+    p.status = 1 
+    AND pc.status = 1
+    AND f.pessoa_id = ?
+GROUP BY 
+    p.id, p.nome_produto, p.descricao, pc.preco, pr_prod.valor, pr_cat.valor, c.tipo;
+;`, [this._id_pessoa]);
             return produtoFavResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -74,9 +103,9 @@ export default class Produto_Fav {
         }
     }
     validaCampos() {
-        if (!this._id_pessoa|| !this._id_produto) {
+        if (!this._id_pessoa || !this._id_produto) {
             return false
         }
-        return true 
+        return true
     }
 }

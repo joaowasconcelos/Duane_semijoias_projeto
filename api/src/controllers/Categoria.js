@@ -6,8 +6,12 @@ const CategoriaController = {
             const { tipo } = req.body;
             const cCategoria = new Categoria(null, tipo);
             const validaCampos = cCategoria.validaCampos()
+            const verificaCapos = cCategoria.verificaCampos()
             if(!validaCampos){
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            if(!verificaCapos){
+                res.status(400).json({ error: "Campos vazios" });
             }
             const insertCategoria = await cCategoria.CadastraCategoria()
             console.log(insertCategoria)
@@ -29,8 +33,12 @@ const CategoriaController = {
             const {tipo} = req.body
             const cCategoria = new Categoria(id,tipo);
             const validaCampos = cCategoria.validaCampos(tipo)
+            const verificaCapos = cCategoria.verificaCampos()
             if(!validaCampos){
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            if(!verificaCapos){
+                res.status(400).json({ error: "Campos vazios" });
             }
             const modificaCategoria = await cCategoria.modificaCategoria()
             console.log(modificaCategoria)

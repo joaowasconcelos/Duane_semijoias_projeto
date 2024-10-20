@@ -1,5 +1,6 @@
 import Produto from "../model/Produto.js";
 import Preco from "../model/Preco.js"
+import Pessoa from "../model/Pessoa.js";
 
 const ProdutoController = {
     cadastro: async (req, res) => {
@@ -79,14 +80,49 @@ const ProdutoController = {
         }
     },
 
+
     Seleciona: async(req,res)=>{
         try {
             const selectProdutos =  await Produto.SelectProduto()
             return res.json(selectProdutos)
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao cadastrar produto!" })
+            return res.status(500).json({ message: "Erro ao vizualizar produto!" })
         }
-    }
+    },
+    SelecionaCate: async (req,res) => {
+        try {
+            const id = req.params
+            const cProduto = new Produto(id)
+            const selectProdutos =  await cProduto.SelectProdutoPorCategoria()
+            return res.json(selectProdutos)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao vizualizar produto!" })
+        }
+    },
+    SelecionaMaiorMenor: async(req,res)=>{
+        try {
+            const selectProdutos =  await Produto.SelectProdutoMaiorMenor()
+            return res.json(selectProdutos)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao vizualizar produto!" })
+        }
+    },
+    SelecionaMenorMaior: async(req,res)=>{
+        try {
+            const selectProdutos =  await Produto.SelectProdutoMenorMaior()
+            return res.json(selectProdutos)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao vizualizar produto!" })
+        }
+    },
+    SelecionaMaisVendido: async(req,res)=>{
+        try {
+            const selectProdutos =  await Produto.SelectProdutoMaisVendidos()
+            return res.json(selectProdutos)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao vizualizar produto!" })
+        }
+    },
 }
 
 export default ProdutoController

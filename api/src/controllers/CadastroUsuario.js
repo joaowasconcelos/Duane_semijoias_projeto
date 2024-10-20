@@ -125,6 +125,25 @@ const CadastroUsuario = {
             await conn.rollback();
             return res.status(500).json({ message: 'Erro ao editar dados' })
         }
+    },
+    Seleciona: async (req,res) => {
+        try {
+            const selectPessoa =  await Pessoa.Seleciona()
+            return res.json(selectPessoa)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao cadastrar produto!" })
+        }
+    },
+    SelecionaInfoId: async (req,res) => {
+        try {
+            const {id} = req.params
+            const cPessoa = new Pessoa(id)
+            const selectPessoa =  await cPessoa.SelecionaUsuarios()
+            console.log(selectPessoa);
+            return res.json(selectPessoa)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro Selecionar infos de pessoas!" })
+        }
     }
 }
 
