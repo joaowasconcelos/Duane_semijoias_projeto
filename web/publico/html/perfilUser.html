@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../css/perfilUser.css">
     <link rel="stylesheet" href="../css/partials/headerUser.css">
     <script  src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
      
     <script src="../js/perfilUser.js" defer></script>
     
@@ -75,7 +76,7 @@
                         <path
                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                     </svg>
-                    <input name="senhaAtual" type="password">
+                    <input name="senhaAtual" id="senhaAtual" type="password">
                     <label for="senha">Nova senha:* </label>
                     <svg xmlns="http://www.w3.org/2000/svg" id="olinhos" width="16" height="16" fill="currentColor"
                         class="bi bi-eye-fill" viewBox="0 0 16 16">
@@ -83,7 +84,7 @@
                         <path
                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                     </svg>
-                    <input name="novaSenha" type="password ">
+                    <input name="novaSenha" id="novaSenha" type="password">
 
                     <label for="senha">Confirmar nova senha:*</label>
                     <svg xmlns="http://www.w3.org/2000/svg" id="olinhos" width="16" height="16" fill="currentColor"
@@ -92,8 +93,8 @@
                         <path
                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                     </svg>
-                    <input name="confirmarSenha" type="password">
-                    <button class="close">Salvar</button>
+                    <input name="confirmarSenha" id="confirmarSenha" type="password">
+                    <button class="close" onclick="AlterarSenha()">Salvar</button>
                 </dialog>
             </div>
         </div>

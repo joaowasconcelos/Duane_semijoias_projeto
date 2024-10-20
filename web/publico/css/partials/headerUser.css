@@ -39,12 +39,12 @@ hr {
     z-index: 3;
     width: 100%;
     position: absolute;
-    top: 150px;
+    top: 150px; 
     left: 0;
 }
 
 /* icones */
-#iconH {
+#iconH #logout {
     color: #9b5377;
     gap: 15px;
     margin-top: 80%;
