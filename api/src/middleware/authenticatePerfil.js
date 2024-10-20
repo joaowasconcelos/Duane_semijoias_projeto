@@ -7,8 +7,9 @@ const authenticatePerfil = (req, res, next) => {
     }
 
     if (perfil === 1) {
-        console.log("aqui")
-        return res.json({ message: 'Acesso permitido' });
+        if (req.path === '/pagina-admin') {
+            return res.status(200).json({ message: "Token válido." });
+        }
         next();
     } else {
         return res.json({ message: 'Acesso negado' });

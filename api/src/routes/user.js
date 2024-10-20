@@ -14,7 +14,8 @@ import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
 import UploadImagens from "../controllers/Imagens.js";
 import FeedbackController from "../controllers/Feedback.js";
-import Verificatoken from "../controllers/VerificacaoJWT.js";
+import { logout } from "../middleware/authenticateJWT.js";
+
 
 
 //Insert
@@ -52,20 +53,19 @@ routerUser.put("/ModificarPessoa",authenticateJWT,CadastroUsuario.EditarPessoa)/
 routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)//USUARIO
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)//USUARIO
 routerUser.put("/EsqueciSenha",LoginController.EsqueciSenha);//USUARIO
+routerUser.put("/AlterarSenha",authenticateJWT,LoginController.AlteraSenha);//USUARIO
 routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modificar);//USUARIO
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
 routerUser.get("/SelecionaUsuarios",CadastroUsuario.Seleciona);
-routerUser.get("/SelecionaInfoUsers/:id",CadastroUsuario.SelecionaInfoId);
+routerUser.get("/SelecionaInfoUsers",authenticateJWT,CadastroUsuario.SelecionaInfoId);
 routerUser.get("/SelecionaPedido",PedidoController.Seleciona);//ADM
 
 routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);//USUARIO
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
 routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
-routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
-routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
 //routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
 routerUser.get('/Postagens',UploadImagens.listAllFiles);
 routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
@@ -78,8 +78,17 @@ routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
 routerUser.get("/SelecionaProdutoMaior",ProdutoController.SelecionaMaiorMenor);
 routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
 routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
+routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
+routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
 
 //Front-end
 routerUser.get("/pagina-admin",authenticateJWT,authenticatePerfil);
+routerUser.get("/logout",logout);
+// Rota para verificar o token JWT
+routerUser.get("/verificar-token", authenticateJWT, (req, res) => {
+    res.status(200).json({ message: "Token válido.", id: req.id, perfil: req.perfil });
+});
+
+
 export default routerUser;  
 

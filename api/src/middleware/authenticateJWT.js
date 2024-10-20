@@ -2,24 +2,57 @@ import jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+// Blacklist para armazenar tokens inválidos
+let blacklist = [];
+
+// Middleware de autenticação JWT
 const authenticateJWT = (req, res, next) => {
     const secretKey = process.env.SECRET_KEY;
     const token = req.headers['x-access-token'];
+
     // Verifica se o token está presente
     if (!token) {
         return res.status(401).json({ message: "Acesso negado: Token não fornecido." });
     }
+
+    // Verifica se o token está na blacklist
+    if (blacklist.includes(token)) {
+        return res.status(401).json({ message: "Token inválido." });
+    }
+
     try {
         // Verifica o token
         const verifica = jwt.verify(token, secretKey);
         req.id = verifica.id; // Salva o ID da pessoa no request para uso posterior
-        req.perfil = verifica.perfil
-        next(); // Passa o controle para o próximo middleware
+        req.perfil = verifica.perfil;
+
+        // Se a rota for para validação de token (ex: frontend)
+        if (req.path === '/verificar-token') {
+            return res.status(200).json({ message: "Token válido." });
+        }
+
+        // Caso contrário, continue a execução para o próximo middleware/rota
+        next();
     } catch (error) {
         console.log("Erro de autenticação JWT:", error);
         return res.status(401).json({ message: "Token inválido ou expirado." });
     }
 };
 
-export default authenticateJWT;
+// Função para invalidar (matar) o token, ou seja, adicionar à blacklist
+const invalidateToken = (token) => {
+    blacklist.push(token);
+};
 
+// Rota de logout ou para invalidar o token
+const logout = (req, res) => {
+    const token = req.headers['x-access-token'];
+    if (!token) {
+        return res.status(400).json({ message: "Token não fornecido." });
+    }
+    invalidateToken(token);
+    return res.status(200).json({ message: "Token inválido" });
+};
+
+export default authenticateJWT;
+export { logout };
