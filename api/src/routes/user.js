@@ -14,19 +14,22 @@ import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
 import UploadImagens from "../controllers/Imagens.js";
 import FeedbackController from "../controllers/Feedback.js";
+import Verificatoken from "../controllers/VerificacaoJWT.js";
 
 
 //Insert
-routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//ESSA ROTA O PRÓPRIO USUÁRIO INSERE SEUS DADOS E SE CADASTRA
-routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);//ESSA ROTA O ADM CADASTRA UM USUARIO 
-routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ESSA ROTA CADASTRA CATEGORIAS
-routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ESSA ROTA O ADM CADASTRA UMA PROMOÇÃO 
-routerUser.post("/CreatePedido",authenticateJWT,PedidoController.Cadastro);//trocar para o JWT
-routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//trocar para o JWT
-routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)
-routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)
-routerUser.post('/postagens/:id_produto',UploadImagens.Multer,UploadImagens.Imagens);
-routerUser.post('/Feedback/:id_produto',authenticateJWT,authenticatePerfil,FeedbackController.Cadastro);
+routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
+routerUser.post("/CreatePedido",authenticateJWT,PedidoController.Cadastro);//USUARIO
+routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//USUARIO
+routerUser.post('/Feedback/:id_produto',authenticateJWT,FeedbackController.Cadastro);//USUARIO
+
+routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);//ADM
+routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
+routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
+routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
+routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)//ADM
+routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,authenticatePerfil,UploadImagens.Imagens);//ADM
+
 
 //Delete
 // routerUser.delete("/DeleteCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Deletar);
@@ -39,33 +42,31 @@ routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,Pro
 routerUser.delete('/DeleteImage/:id',authenticateJWT,authenticatePerfil,UploadImagens.DeleteImage);
 
 //Update
-routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);
-routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);
-routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);
-routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)
-routerUser.put("/ModificarPessoa/:id",CadastroUsuario.EditarPessoa)
-routerUser.put("/ModificarPessoaADM/:id",CadastroADM.EditarPessoaADM)
-routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)
-routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)
-routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);
-routerUser.put("/EsqueciSenha",LoginController.EsqueciSenha);
-routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modificar);
+routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
+routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);//ADM
+routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);//ADM
+routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)//ADM
+routerUser.put("/ModificarPessoaADM/:id",authenticateJWT,authenticatePerfil,CadastroADM.EditarPessoaADM)//ADM
+routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);//ADM
+routerUser.put("/ModificarPessoa",authenticateJWT,CadastroUsuario.EditarPessoa)//USUARIO
+routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)//USUARIO
+routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)//USUARIO
+routerUser.put("/EsqueciSenha",LoginController.EsqueciSenha);//USUARIO
+routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modificar);//USUARIO
 
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
 routerUser.get("/SelecionaUsuarios",CadastroUsuario.Seleciona);
 routerUser.get("/SelecionaInfoUsers/:id",CadastroUsuario.SelecionaInfoId);
-routerUser.get("/SelecionaPedido",PedidoController.Seleciona);
-routerUser.get("/SelecionaProdutoFav/:id",authenticateJWT,ProdutoFavController.Seleciona);
-routerUser.get("/VerificaLogin",LoginController.VerificaLogin);
-routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);
+routerUser.get("/SelecionaPedido",PedidoController.Seleciona);//ADM
+
+routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);//USUARIO
+routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
+routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
-routerUser.get("/SelecionaProdutoMaior",ProdutoController.SelecionaMaiorMenor);
-routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
-routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
 routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
 routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
-routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
+//routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
 routerUser.get('/Postagens',UploadImagens.listAllFiles);
 routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
@@ -74,6 +75,11 @@ routerUser.get('/selecionaCupons/:id',CuponsController.SelecionaDetalhes)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
+routerUser.get("/SelecionaProdutoMaior",ProdutoController.SelecionaMaiorMenor);
+routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
+routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
 
+//Front-end
+routerUser.get("/pagina-admin",authenticateJWT,authenticatePerfil);
 export default routerUser;  
 
