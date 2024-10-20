@@ -11,7 +11,7 @@ const LoginController = {
                 return res.status(500).send("Chave secreta não configurada.");
             }
             const { login, senha } = req.query
-            
+
             const cLogin = new Login(null, login, senha)
             const verificaCampos = cLogin.verificaCampos()
             if (!verificaCampos) {
@@ -89,6 +89,29 @@ const LoginController = {
                 return res.status(500).json({message: "Erro ao registrar nova senha!"});
             }
             console.log(esqueciSenha)
+            return res.status(200).json({message: "Senha alterada com sucesso!"})
+            
+        } catch (error) {
+            return res.status(500).json({ message: "Erro no processo" })
+        }
+    },
+
+    AlteraSenha:async (req,res) => {
+        try {
+            console.log("aqui")
+            const {senhaAtual,novaSenha} = req.body 
+            console.log(novaSenha)
+            const id = req.id
+
+            if(senhaAtual === novaSenha){
+                return res.status(401).json({ message: "Senhas iguai, forneça senhas diferentes" })
+            }
+            const cLogin  = new Login(null,null,senhaAtual,null,null,null,id,novaSenha)
+            const AlterarSenha = await cLogin.AlterarSenha()
+            console.log(AlterarSenha)
+            if(AlterarSenha === "Senha atual incorreta"){
+                return res.status(401).json({message: "Senha atual incorreta!"})
+            }
             return res.status(200).json({message: "Senha alterada com sucesso!"})
             
         } catch (error) {

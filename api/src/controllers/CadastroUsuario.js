@@ -134,17 +134,24 @@ const CadastroUsuario = {
             return res.status(500).json({ message: "Erro ao cadastrar produto!" })
         }
     },
-    SelecionaInfoId: async (req,res) => {
+    SelecionaInfoId: async (req, res) => {
         try {
-            const {id} = req.params
-            const cPessoa = new Pessoa(id)
-            const selectPessoa =  await cPessoa.SelecionaUsuarios()
+            const id = req.id;
+            console.log(id);
+            const cPessoa = new Pessoa(id);
+            const selectPessoa = await cPessoa.SelecionaUsuarios();
             console.log(selectPessoa);
-            return res.json(selectPessoa)
+    
+            if (!selectPessoa) {
+                return res.status(404).json({ message: "Usuário não encontrado!" });
+            }
+    
+            return res.json(selectPessoa); // Certifique-se de usar 'return' aqui
         } catch (error) {
-            return res.status(500).json({ message: "Erro Selecionar infos de pessoas!" })
+            return res.status(500).json({ message: "Erro ao selecionar informações do usuário!" }); // 'return' garante que a resposta só seja enviada uma vez
         }
     }
+    
 }
 
 

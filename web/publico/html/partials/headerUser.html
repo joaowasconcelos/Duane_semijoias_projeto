@@ -11,7 +11,7 @@
                 <span id="iconH" class="fas fa-shopping-cart fa-2x">
                     <a href="../carrinho.html"></a>
                 </span>
-                <span id="iconH" class="fas fa-sign-out-alt fa-2x"></span>
+                <span id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
             </div>
 
         </div>
@@ -21,3 +21,26 @@
     <hr>
 
 </nav>
+
+<script>
+    async function logout() {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        window.location.href = 'login.html';
+        return;
+    }
+    try {
+        const resposta = await axios.get('http://192.168.3.9:3000/logout', {
+            headers: {
+                'x-access-token': `${token}`
+            }
+        });
+        if (resposta.data.message === "Token inválido") {
+            window.location.href = 'login.html';
+        }
+    } catch (error) {
+        console.error('Erro ao verificar o token:', error);
+        window.location.href = 'login.html';
+    }
+}
+</script>

@@ -4,7 +4,8 @@ import multer from 'multer';
 import admin from "firebase-admin";
 import sharp from 'sharp';
 import Produto_Img from '../model/Produto_img.js';
-import serviceAccount from "../config/firebase.js";
+// import serviceAccount from "../config/firebase.js";
+import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 
 const bucketName = "teste-firebase-b05a9.appspot.com";

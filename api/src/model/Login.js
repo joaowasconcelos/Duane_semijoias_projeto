@@ -123,13 +123,17 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT senha FROM login WHERE pessoa_id = ?`, [this._id_pessoa]);
             const senhaResult = loginResul[0][0].senha;
-            const compare = await bcrypt.compare(this._senha, senhaResult)
-
-            if (!compare) {
+            
+            const compare = await bcrypt.compare(this._nova_senha, senhaResult)
+            const compareSenha = await bcrypt.compare(this._senha, senhaResult)
+            if(!compareSenha){
+                return "Senha atual incorreta"
+            }
+            if (compare) {
                 return "senha já cadastrada"
             }
             const salt = await bcrypt.genSalt(12);
-            const passwordHash = await bcrypt.hash(this._senha, salt);
+            const passwordHash = await bcrypt.hash(this._nova_senha, salt);
             const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE pessoa_id = ?`, [passwordHash, this._id_pessoa])
             console.log(modificaSenha)
             return "senha modificada com sucesso"
