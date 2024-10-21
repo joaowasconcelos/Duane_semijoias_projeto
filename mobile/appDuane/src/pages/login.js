@@ -40,7 +40,7 @@ export default function Login() {
   const [token, setToken] = useState("");
 
   const verificaUser = async () => {
-    if (email.length <= 20 || (email !== "" && senha <= 20) || senha !== "") {
+    if (email.length <= 20 || email !== "" && senha <= 20 || senha !== "") {
       try {
         const response = await api.get(
           "http://10.0.3.77:3000/VerificaLogin",
@@ -117,7 +117,7 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={verificaUser}>
+              <TouchableOpacity style={styles.btn} onPress={navigateHome}>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>
             </View>

@@ -79,12 +79,13 @@ export default function Home() {
             <View
               style={{
                 height: "55%",
-                borderWidth: 2,
-                borderRadius: 5,
+                borderWidth: 1,
+                borderRadius: 10,
                 borderColor: "#FAADD1",
                 width: "95%",
                 justifyContent: "center",
                 alignItems: "center",
+                backgroundColor: '#FFF2F6'
               }}
             >
               <ScrollView>
