@@ -41,11 +41,14 @@ dados();
 var table;
 
 function criarTabela(){
-    table = `<tr>
-    <td>Descrição</td>
-    <td>Editar</td>
-    <td>Excluir</td>
-    </tr>`
+    table = `
+    <thead>
+        <tr>
+            <td>Descrição</td>
+            <td>Editar</td>
+            <td>Excluir</td>
+        </tr>
+    </thead>`
 }
 
 function carregaDadosModalCategoria(){
@@ -69,12 +72,15 @@ var table2;
 
 function criarTabela2(){
     table2 = `
+
+    <thead>
         <tr>
             <td id="codigot">Código</td>
             <td id="dtComprat">Data de compra</td>
             <td id="descricaott">Descrição</td>
             <td id="statust">Status</td>
-        </tr>`
+        </tr>
+    </thead>`
 }
 
 function carregaDadosTabelaPedidos(){

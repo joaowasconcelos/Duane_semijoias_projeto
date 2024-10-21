@@ -169,10 +169,6 @@ main {
 
 /* css da tabela */
 
-tbody {
-    overflow-y: scroll;
-}
-
 table {
     width: 100%;
     border-collapse: collapse;
@@ -180,7 +176,20 @@ table {
     font-size: 15px;
     font-family: Arial, sans-serif;
     text-align: left;
-    overflow-y: scroll;
+}
+
+thead {
+    color: #9B5377;
+}
+
+thead tr th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+thead th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
 }
 
 tbody tr th,
@@ -190,7 +199,7 @@ tbody tr td {
 }
 
 tbody tr:hover {
-    background-color: #f3d4eb61;
+    background-color: #f1f1f1;
 }
 
 tbody tr th,
@@ -201,6 +210,12 @@ tbody tr td {
 tbody tr th {
     font-weight: normal;
     color: #333;
+}
+
+#dados {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
 }
 
 #link {

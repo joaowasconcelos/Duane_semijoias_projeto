@@ -47,7 +47,9 @@ function limparInput() {
 function salvar() {
     limparInput()
     window.location.reload(true);
+
 }
+
 
 //puxando tabela de categorias do banco
 
@@ -63,7 +65,6 @@ async function dados() {
     }
 }
 
-
 //adicionando categorias ao dropdown 
 
 function criaDrop(data) {
@@ -78,4 +79,3 @@ function criaDrop(data) {
 }
 
 dados();
-
