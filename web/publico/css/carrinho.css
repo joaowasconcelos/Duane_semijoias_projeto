@@ -1,0 +1,132 @@
+/* Estilo básico da página */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.container {
+    width: 90%;
+    max-width: 800px;
+    margin: 20px auto;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+}
+
+/* Cabeçalho */
+h2 {
+    font-size: 24px;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Estilo dos itens do carrinho */
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+}
+
+.cart-item img {
+    width: 60px;
+    height: 60px;
+    border-radius: 4px;
+    margin-right: 10px;
+}
+
+.cart-item-details {
+    flex: 1;
+}
+
+.cart-item-details h4 {
+    font-size: 18px;
+    color: #555;
+    margin: 0 0 5px;
+}
+
+.cart-item-details p {
+    font-size: 14px;
+    color: #888;
+}
+
+.cart-item-price {
+    font-size: 16px;
+    color: #333;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+}
+
+.cart-item-quantity input {
+    width: 50px;
+    padding: 5px;
+    margin: 0 5px;
+    text-align: center;
+}
+
+/* Resumo do pedido */
+.order-summary {
+    margin-top: 20px;
+    padding: 10px;
+    background: #f9f9f9;
+    border-radius: 5px;
+}
+
+.order-summary p {
+    display: flex;
+    justify-content: space-between;
+    margin: 5px 0;
+    font-size: 16px;
+}
+
+.order-summary p strong {
+    color: #333;
+}
+
+/* Formulário do cliente */
+.customer-info {
+    margin-top: 20px;
+}
+
+.customer-info label {
+    display: block;
+    margin: 10px 0 5px;
+    font-size: 14px;
+    color: #555;
+}
+
+.customer-info input,
+.customer-info textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    font-size: 14px;
+}
+
+/* Botão de compra */
+.btn-buy {
+    display: block;
+    width: 100%;
+    background-color: #28a745;
+    color: #fff;
+    padding: 15px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    margin-top: 20px;
+    cursor: pointer;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+.btn-buy:hover {
+    background-color: #218838;
+}

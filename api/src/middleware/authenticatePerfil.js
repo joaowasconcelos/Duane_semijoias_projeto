@@ -1,6 +1,18 @@
 const authenticatePerfil = (req, res, next) => {
-    const perfil = req.perfil
-    if(perfil == 4 )return res.status(500).json({message: "Sem acesso para esse funcionalidade"})
-    next()
+    const perfil = req.perfil;
+
+    // Verifica se o perfil existe
+    if (perfil === undefined) {
+        return res.status(400).json({ message: 'Perfil não definido' });
+    }
+
+    if (perfil === 1) {
+        if (req.path === '/pagina-admin') {
+            return res.status(200).json({ message: "Token válido." });
+        }
+        next();
+    } else {
+        return res.json({ message: 'Acesso negado' });
+    }
 }
-export default authenticatePerfil
+export default authenticatePerfil;

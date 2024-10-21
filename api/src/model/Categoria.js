@@ -1,9 +1,10 @@
 import obterConexaoDoPool from "../config/mysql.js"
 
 export default class Categoria {
-    constructor(id, tipo) {
+    constructor(id, tipo,status) {
         this._id = id;
         this._tipo = tipo;
+        this._status = status
     }
     
     get id() {
@@ -22,10 +23,19 @@ export default class Categoria {
         this._tipo = value;
     }
 
+    
+    get status() {
+        return this._status;
+    }
+    set status(value) {
+        this._status = value;
+    }
+
+
     async CadastraCategoria() {
         const bd = await obterConexaoDoPool();
         try {
-            const categoriaResult = await bd.query(`INSERT INTO categoria (tipo) VALUES (?)`,[this._tipo]);
+            const categoriaResult = await bd.query(`INSERT INTO categoria (tipo,status) VALUES (?,?)`,[this._tipo,this.status]);
             const categoriaId = categoriaResult[0].insertId;
             console.log('ID da categoria:', categoriaId);
             return categoriaId

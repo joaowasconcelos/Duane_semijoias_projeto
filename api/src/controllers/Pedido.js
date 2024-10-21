@@ -83,6 +83,13 @@ const PedidoController = {
             console.error(error);
             res.status(500).json({ error: "Erro ao cadastrar uma categoria" });
         }
+    },
+    SelecionaDetalhes: async (req,res) => {
+        try {
+            //pegar o id pelo login e fazer esse tem SelecionaPedidoInfo() é o crud 
+        } catch (error) {
+            
+        }
     }
 
 }

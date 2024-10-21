@@ -90,7 +90,7 @@ const CadastroUsuario = {
         const conn = await obterConexaoDoPool();
         try {
             await conn.beginTransaction();
-            const { id } = req.params; // ID da pessoa
+            const id = req.id
             const { Nome, Data_Nasc, Genero, Telefones } = req.body;
             const cPessoa = new Pessoa(id, Nome, Data_Nasc, null, Genero);
             const vericaCampos = cPessoa.verificaCamposEditarUsuario()
@@ -125,7 +125,33 @@ const CadastroUsuario = {
             await conn.rollback();
             return res.status(500).json({ message: 'Erro ao editar dados' })
         }
+    },
+    Seleciona: async (req,res) => {
+        try {
+            const selectPessoa =  await Pessoa.Seleciona()
+            return res.json(selectPessoa)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao cadastrar produto!" })
+        }
+    },
+    SelecionaInfoId: async (req, res) => {
+        try {
+            const id = req.id;
+            console.log(id);
+            const cPessoa = new Pessoa(id);
+            const selectPessoa = await cPessoa.SelecionaUsuarios();
+            console.log(selectPessoa);
+    
+            if (!selectPessoa) {
+                return res.status(404).json({ message: "Usuário não encontrado!" });
+            }
+    
+            return res.json(selectPessoa); // Certifique-se de usar 'return' aqui
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao selecionar informações do usuário!" }); // 'return' garante que a resposta só seja enviada uma vez
+        }
     }
+    
 }
 
 

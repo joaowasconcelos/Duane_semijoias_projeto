@@ -104,7 +104,6 @@
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
 
-
         registerBtn.addEventListener('click', () => {
             container.classList.add("active");
         });
@@ -113,46 +112,41 @@
             container.classList.remove("active");
         });
 
-        document.getElementById('loginForm').addEventListener('submit', function (event) {
-            event.preventDefault(); // Evita o reload da página
+        document.getElementById('acessar').addEventListener('click', async function (event) {
+            event.preventDefault(); 
 
-            // Captura os valores dos inputs
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            console.log(username, password)
 
-            // Envia os dados para a rota de login
-            const response = axios.get('http://10.0.3.77:3000/VerificaLogin', {
-                params: {
-                    login: username,
-                    senha: password
+            try {
+                // Envia os dados para a rota de login
+                const response = await axios.get('http://192.168.3.9:3000/VerificaLogin', {
+                    params: {
+                        login: username,
+                        senha: password
+                    }
+                });
+                console.log("aqui",response);
+
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+
+                // Redirecionar a resposta aqui
+                if (response.data.verificaLogin[0].perfis_id === 1) {
+                    window.location.href = 'http://127.0.0.1:5500/publico/html/admInicio.html';
+                } else if (response.data.verificaLogin[0].perfis_id === 2) {
+                    window.location.href = 'http://127.0.0.1:5500/publico/html/perfilUser.html';
+                } else {
+                    console.log('Usuário não encontrado!');
+                    alert('Usuário não encontrado!');
                 }
 
-            })
-                .then(function (response) {
-                    // Sucesso no login
-                    console.log('Login realizado com sucesso', response.data);
-                    console.log(response.data.verificaLogin);
-
-
-                    // console.log(response.data.verificaLogin[0].perfis_id);
-                    // Redirecionar a resposta aqui
-                    if (response.data.verificaLogin[0].perfis_id === 1) {
-                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
-                    } else if (response.data.verificaLogin[0].perfis_id === 2) {
-                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
-                    } else {
-                        console.log('n foi');
-                        alert('Usuario não encontrado!')
-                        //arrumar isso
-                    }
-                })
-                .catch(function (error) {
-                    // Tratar erro de login
-                    console.error('Erro no login', error);
-                    alert('Usuario não encontrado!')
-                });
+            } catch (error) {
+                console.error('Erro no login', error);
+                alert('Usuário não encontrado!');
+            }
         });
+
     </script>
 
 

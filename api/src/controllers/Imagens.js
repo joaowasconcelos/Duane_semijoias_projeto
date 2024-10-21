@@ -2,9 +2,10 @@ import path from 'path';
 import { fileURLToPath } from 'url';
 import multer from 'multer';
 import admin from "firebase-admin";
-import serviceAccount from "../config/firebase.json" assert { type: 'json' };
+import sharp from 'sharp';
 import Produto_Img from '../model/Produto_img.js';
-// import serviceAccount from "../config/firebase.json";
+// import serviceAccount from "../config/firebase.js";
+import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 
 const bucketName = "teste-firebase-b05a9.appspot.com";
@@ -24,9 +25,9 @@ const __dirname = path.dirname(__filename);
 const UploadImagens = {
     Imagens: async (req, res, next) => {
         try {
-            const { id_produto } = req.params
-            const cProduto = new Produto_Img(null, null, id_produto)
-            const insertProduto_img = await cProduto.CadastraProdutoImg()
+            const { id_produto } = req.params;
+            const cProduto = new Produto_Img(null, null, id_produto);
+            const insertProduto_img = await cProduto.CadastraProdutoImg();
 
             if (!req.file) {
                 return res.status(400).send('Nenhuma imagem foi enviada.');
@@ -38,13 +39,17 @@ const UploadImagens = {
             console.log(`Nome do arquivo: ${nomeArquivo}`);
             console.log(imagem.originalname.split("."));
 
-            // // Processo para salvar no armazenamento (Firebase/Google Cloud Storage)
-            // // Exemplo comentado:
+            // Redimensionar a imagem usando o sharp
+            const imagemRedimensionada = await sharp(imagem.buffer)
+                .resize({ width: 200,height:200 }) 
+                .jpeg()
+                .toBuffer();
 
+        
             const file = bucket.file(nomeArquivo);
             const stream = file.createWriteStream({
                 metadata: {
-                    contentType: imagem.mimetype,
+                    contentType: 'image/jpeg', 
                 }
             });
 
@@ -59,7 +64,7 @@ const UploadImagens = {
                 next();
             });
 
-            stream.end(imagem.buffer);
+            stream.end(imagemRedimensionada);
 
             return res.status(200).json({ message: `Imagem ${nomeArquivo} processada com sucesso!` });
 

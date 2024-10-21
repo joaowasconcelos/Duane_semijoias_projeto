@@ -93,33 +93,70 @@ export default class Pessoa {
         }
     }
 
+    async DeletarPessoa() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const pessoaResult = await bd.query('DELETE FROM pessoa WHERE id = ?',
+                [this._id]);
+            return { success: true };
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
     async SelecionaUsuarios() {
         const bd = await obterConexaoDoPool();
         try {
             const pessoaResult = await bd.query(`
-        SELECT 
-            p.id,
-            p.nome,
-            p.data_nasc,
-            p.cpf,
-            l.usuario,
-            pf.tipo,
-            GROUP_CONCAT(t.numero) AS numeros 
-        FROM 
-            pessoa p 
-        JOIN 
-            login l ON l.pessoa_id = p.id 
-        JOIN 
-            perfis pf ON pf.id = l.perfis_id
-        JOIN 
-            telefone_has_pessoa tp ON tp.pessoa_id = p.id 
-        JOIN 
-            telefone t ON t.id = tp.telefone_id 
-        GROUP BY 
-            p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
-        LIMIT 0, 1000;`);
-            return pessoaResult
+            SELECT 
+                p.id,
+                p.nome,
+                DATE_FORMAT(data_nasc, '%d/%m/%Y') AS data_nasc ,
+                p.cpf,
+                l.usuario,
+                pf.tipo,
+                GROUP_CONCAT(t.numero) AS numeros 
+            FROM 
+                pessoa p 
+            JOIN 
+                login l ON l.pessoa_id = p.id 
+            JOIN 
+                perfis pf ON pf.id = l.perfis_id
+            JOIN 
+                telefone_has_pessoa tp ON tp.pessoa_id = p.id 
+            JOIN 
+                telefone t ON t.id = tp.telefone_id 
+            WHERE p.id = ?
+            GROUP BY 
+                p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
+            LIMIT 0, 1000;`,[this._id]);
+            console.log(pessoaResult)
+            return pessoaResult[0]
 
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    static async Seleciona() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const pessoaResult = await bd.query(`
+            SELECT 
+                p.id,
+                p.nome,
+                l.usuario
+            FROM
+                pessoa p
+            JOIN
+                login l on l.pessoa_id = p.id; `)
+            return pessoaResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
@@ -174,36 +211,36 @@ export default class Pessoa {
         return this.Data_nasc
     }
 
-    verificaCampos(){
-        if(this._cpf.length>15  || this._data_nasc.length>10|| this._genero.length>20||this._nome.length>100){
+    verificaCampos() {
+        if (this._cpf.length > 15 || this._data_nasc.length > 10 || this._genero.length > 20 || this._nome.length > 100) {
             return false
         }
         return true
     }
-    
+
 
     validaCampos() {
         if (!this._cpf || !this._data_nasc || !this._genero || !this._nome) {
             return false
         }
-        return true 
+        return true
     }
-    verificaCamposADM(){
-        if( this._data_nasc.length>10|| this._nome.length>100){
+    verificaCamposADM() {
+        if (this._data_nasc.length > 10 || this._nome.length > 100) {
             return false
         }
         return true
     }
-    
+
 
     validaCamposADM() {
-        if ( !this._data_nasc || !this._nome) {
+        if (!this._data_nasc || !this._nome) {
             return false
         }
-        return true 
+        return true
     }
-    verificaCamposEditarUsuario(){
-        if( this._data_nasc.length>10|| this._nome.length>100 || !this._genero){
+    verificaCamposEditarUsuario() {
+        if (this._data_nasc.length > 10 || this._nome.length > 100 || !this._genero) {
             return false
         }
         return true
@@ -212,7 +249,7 @@ export default class Pessoa {
         if (!this._data_nasc || !this._genero || !this._nome) {
             return false
         }
-        return true 
+        return true
     }
     validaCpf() {
         // Remover caracteres especiais do CPF
