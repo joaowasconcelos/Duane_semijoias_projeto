@@ -100,62 +100,97 @@
     <img id="ondasFooter" src="../img/ondas-footer.png" alt="">
 
     <script>
+        // console.log('asdadadad');
+        
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
-
-
+    
         registerBtn.addEventListener('click', () => {
             container.classList.add("active");
         });
-
+    
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
         });
-
-        document.getElementById('loginForm').addEventListener('submit', function (event) {
+    
+        document.getElementById('acessar').addEventListener('click', async function (event) {
             event.preventDefault(); // Evita o reload da página
-
+    
             // Captura os valores dos inputs
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-            console.log(username, password)
-
-            // Envia os dados para a rota de login
-            const response = axios.get('http://10.0.3.77:3000/VerificaLogin', {
-                params: {
-                    login: username,
-                    senha: password
-                }
-
-            })
-                .then(function (response) {
-                    // Sucesso no login
-                    console.log('Login realizado com sucesso', response.data);
-                    console.log(response.data.verificaLogin);
-
-
-                    // console.log(response.data.verificaLogin[0].perfis_id);
-                    // Redirecionar a resposta aqui
-                    if (response.data.verificaLogin[0].perfis_id === 1) {
-                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
-                    } else if (response.data.verificaLogin[0].perfis_id === 2) {
-                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
-                    } else {
-                        console.log('n foi');
-                        alert('Usuario não encontrado!')
-                        //arrumar isso
+            console.log(username, password);
+    
+            try {
+                // Envia os dados para a rota de login
+                const response = await axios.get('http://10.0.3.77:3000/VerificaLogin', {
+                    params: {
+                        login: username,
+                        senha: password
                     }
-                })
-                .catch(function (error) {
-                    // Tratar erro de login
-                    console.error('Erro no login', error);
-                    alert('Usuario não encontrado!')
+                }).then(response =>{
+                    console.log(response)
+                }).catch(error =>{
+                    console.log(error)
                 });
+    
+                // Sucesso no login
+                console.log('Login realizado com sucesso', response);
+                console.log(response.data.verificaLogin);
+                console.log(response.data.verificaLogin[0].perfis_id);
+                const token = response.data.token;
+                localStorage.setItem('token', token);
+    
+                // Verifique o acesso do administrador
+                const teste = verificarAcessoAdmin();
+                console.log(teste)
+    
+                // // Redirecionar a resposta aqui
+                // if (response.data.verificaLogin[0].perfis_id === 1) {
+                //     window.location.href = 'http://127.0.0.1:5500/publico/html/admInicio.html';
+                // } else if (response.data.verificaLogin[0].perfis_id === 2) {
+                //     window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
+                // } else {
+                //     console.log('Usuário não encontrado!');
+                //     alert('Usuário não encontrado!');
+                // }
+    
+            } catch (error) {
+                console.error('Erro no login', error);
+                alert('Usuário não encontrado!');
+            }
         });
+    
+        async function verificarAcessoAdmin() {
+            const token = localStorage.getItem('token');
+    
+            if (!token) {
+                window.location.href = 'login.html';
+                return;
+            }
+    
+            try {
+                const resposta = await axios.get('http://10.0.3.77:3000/pagina-admin', {
+                    headers: {
+                        'x-access-token': `${token}`
+                    }
+                });
+                console.log("AQUI",resposta)
+                if (resposta.status === 200) {
+                    return res.json({message:"ok"})
+                    // document.getElementById('conteudo-admin').style.display = 'block';
+                } else {
+                    window.location.href = 'login.html';
+                }
+    
+            } catch (error) {
+                console.error('Erro ao verificar o token:', error);
+                window.location.href = 'login.html';
+            }
+        }
     </script>
-
-
+    
 </body>
 
 </html>
