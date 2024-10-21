@@ -51,6 +51,10 @@ async function salvar() {
     const categoria = document.getElementById("categoria").value;
     const imagem = document.getElementById("imagem").value;
 
+
+function salvar() {
+//     limparInput()
+//     window.location.reload(true);
     try {
         const response = await axios.post('http://192.168.3.9:3000/CreateProduto', 
         {
@@ -85,6 +89,7 @@ async function salvar() {
     // window.location.reload(true);
 }
 
+
 //puxando tabela de categorias do banco
 
 async function dados() {
@@ -98,7 +103,6 @@ async function dados() {
         console.error('Erro ao buscar dados da API:', error);
     }
 }
-
 
 //adicionando categorias ao dropdown 
 
@@ -114,4 +118,3 @@ function criaDrop(data) {
 }
 
 dados();
-

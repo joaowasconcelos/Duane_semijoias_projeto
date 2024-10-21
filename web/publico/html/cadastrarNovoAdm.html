@@ -4,18 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Produto</title>
-    <link rel="stylesheet" href="../css/cadastrarNovoProduto.css">
+    <title>Cadastrar administrador</title>
+    <link rel="stylesheet" href="../css/cadastrarNovoAdm.css">
     <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+
 </head>
 
 <body>
-
 
     <header id="headerAdm"></header>
 
@@ -32,7 +31,10 @@
             </div>
 
             <div id="voltar"></div>
-            <a href="../html/admInicio.html" style="text-decoration: none;"> <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span></a>
+            <a href="../html/admInicio.html" style="text-decoration: none;">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon"
+                    class="fas fa-home fa"></span>
+            </a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                 class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
@@ -63,9 +65,15 @@
                         <input class="input" type="text" name="cpf" id="cpf">
 
                         <label for="genero">Gênero: *</label>
-                        <input type="radio" name="genero" id="genero">
-                        <input type="radio" name="genero" id="genero">
-                        
+                        <select id="genero">
+                            <option value="selecione"></option>
+                            <option value="feminino">Feminino</option>
+                            <option value="masculino">Masculino</option>
+                        </select>
+
+
+
+
 
                         <label for="preco">Preço: *</label>
                         <input class="input" type="text" id="preco" name="preco" onInput="mascaraMoeda(event);"
