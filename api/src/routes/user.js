@@ -64,7 +64,7 @@ routerUser.get("/SelecionaPedido",PedidoController.Seleciona);//ADM
 routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);//USUARIO
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
 routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
-routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
+routerUser.get("/SelecionaProduto",authenticateJWT,ProdutoController.Seleciona);
 //routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
 routerUser.get('/Postagens',UploadImagens.listAllFiles);
 routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
