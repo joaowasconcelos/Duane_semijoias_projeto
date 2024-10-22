@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function dados() {
   try {
     // Fazendo a requisição com axios.get
-    const response = await axios.get('http://192.168.3.9:3000/SelecionaProduto');
+    const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
     // const imagem = await axios.get('http://10.0.3.77:3000/Postagem');
     // console.log(imagem);
     
@@ -20,9 +20,7 @@ async function dados() {
     const itens = $("#cardGrid");
     response.data.forEach(element => {
 
-      console.log(element, 'oi');
-
-      const newCard = (element) => (`
+      const newCard = () => (`
         <div class="card h-100">
           <img src="../img/imgTest.jpeg" class="card-img-top" alt="...">
           <div class="card-body">
@@ -79,7 +77,7 @@ dados();
 //carrinho de compras
 
 // URL da API que retorna a lista de produtos
-const apiUrl = 'http://10.0.3.77:3000/SelecionaProduto'; // API
+const apiUrl = 'http://10.0.3.77:3000/'; // API
 
 // Inicializa o carrinho
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
