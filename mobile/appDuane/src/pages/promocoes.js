@@ -31,6 +31,14 @@ import {
 export default function Home() {
   const navigation = useNavigation();
 
+  const navegaDetalhesPromocao = () =>{
+    navigation.navigate('DetalhesPromocao')
+  }
+
+  const navegaGerarPromocao = () =>{
+    navigation.navigate('GerarPromocao')
+  }
+
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
     EBGaramond_500Medium,

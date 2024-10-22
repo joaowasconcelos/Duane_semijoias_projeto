@@ -76,46 +76,195 @@ export default function Home() {
               <Text style={styles.textTitle}>Categorias</Text>
             </View>
 
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
-              </TextInput>
-              <TouchableOpacity style={{margin: 5}} >
-                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
+            <View
+              style={{
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <TextInput
+                placeholder="Pesquise uma categoria"
+                style={styles.Inputs}
+              ></TextInput>
+              <TouchableOpacity style={{ margin: 5 }}>
+                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30} />
               </TouchableOpacity>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
                 <View style={styles.btn}>
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '55%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.textBtn}>Excluir:</Text>
-                        <FontAwesome6 name="trash-can" size={28} color="#AE4B67"/>
-                      </View>
-                    </View>
+                  <View style={{marginLeft: 10, marginBottom: 7}}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Brinco</Text>
                   </View>
 
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%'}}>
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="pen-to-square" color="#ae4b67" size={26} />
+                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
                   </TouchableOpacity>
-                  
+
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
+                  </TouchableOpacity>
                 </View>
 
-                
+                <View style={styles.btn}>
+                  <View style={{marginLeft: 10, marginBottom: 7}}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Colar</Text>
+                  </View>
 
-                
+                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
+                  </TouchableOpacity>
 
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{marginLeft: 10, marginBottom: 7}}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Pulseira</Text>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{marginLeft: 10, marginBottom: 7}}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Anel</Text>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                </View>
                 
+                <View style={styles.btn}>
+                  <View style={{marginLeft: 10, marginBottom: 7}}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Corrente</Text>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={styles.btn}>
+                  <View style={{marginLeft: 10, marginBottom: 7}}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Aliança</Text>
+                  </View>
+
+                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10
+                    }}
+                  >
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
+                  </TouchableOpacity>
+                </View>
+
               </View>
             </ScrollView>
-
-            
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -147,13 +296,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginBottom: 60,
+    marginBottom: 60, 
   },
   btn: {
-    width: "40%",
+    width: "80%",
     backgroundColor: "#FFFFFF",
-    height: 150,
-    justifyContent: "space-between",
+    height: 80,
+    justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 20,
     borderRadius: 10,
@@ -204,19 +353,18 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
-  Inputs:{
-    width: '80%',
+  Inputs: {
+    width: "80%",
     height: 30,
     fontSize: 18,
-    fontFamily: 'EBGaramond_400Regular',
+    fontFamily: "EBGaramond_400Regular",
     borderRadius: 5,
-    backgroundColor: '#FFF6F2',
+    backgroundColor: "#FFF6F2",
     padding: 5,
-    color: '#000000',
-    fontWeight: 'bold',
+    color: "#000000",
+    fontWeight: "bold",
     borderWidth: 1,
-    borderColor: '#CF90A2',
+    borderColor: "#CF90A2",
     margin: 5,
-  }
+  },
 });
-
