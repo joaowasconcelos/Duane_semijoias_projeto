@@ -65,28 +65,12 @@ export default function Home() {
     navigation.navigate('Cupons')
   }
 
-  const navegaCadastroNovoCupom = () =>{
-    navigation.navigate('CadastroNovoCupom')
-  }
-
-  const navegaDetalhesCupom = () =>{
-    navigation.navigate('DetalhesCupom')
-  }
-
   const navegaPedidos = () =>{
     navigation.navigate('Pedidos')
   }
 
   const navegaPromocoes = () =>{
     navigation.navigate('Promocoes')
-  }
-
-  const navegaDetalhesPromocao = () =>{
-    navigation.navigate('DetalhesPromocao')
-  }
-
-  const navegaGerarPromocao = () =>{
-    navigation.navigate('GerarPromocao')
   }
 
   const navegaRelatoriosVendas = () =>{
@@ -191,7 +175,7 @@ export default function Home() {
 
                 <TouchableOpacity style={styles.btn} onPress={navegaCategorias}>
                   <Text style={styles.textBtn}>Categorias</Text>
-                  <FontAwesome6 name="gifts" color="#ae4b67" size={26} />
+                  <FontAwesome6 name="layer-group" color="#ae4b67" size={26} />
                 </TouchableOpacity>
                 
               </View>
