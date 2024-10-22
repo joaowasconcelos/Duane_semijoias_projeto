@@ -42,7 +42,7 @@ function limparInput() {
     window.location.reload(true);
 }
 
-//salvar formulario *sim, eu sei, não ta finalizada, MEIO OBVIO NE*
+//salvar formulario sim, eu sei, não ta finalizada, MEIO OBVIO NE
 async function salvar() {
     const token = localStorage.getItem('token');
     const preco = document.getElementById("preco").value;
@@ -51,12 +51,8 @@ async function salvar() {
     const categoria = document.getElementById("categoria").value;
     const imagem = document.getElementById("imagem").value;
 
-
-function salvar() {
-//     limparInput()
-//     window.location.reload(true);
     try {
-        const response = await axios.post('http://192.168.3.9:3000/CreateProduto', 
+        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', 
         {
             preco: preco,
             produto: produto,
@@ -89,13 +85,12 @@ function salvar() {
     // window.location.reload(true);
 }
 
-
 //puxando tabela de categorias do banco
 
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        const response = await axios.get('http://192.168.3.9:3000/SelecionaCategoria');
+        const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
         console.log(response.data)
         criaDrop(response.data)
 
@@ -103,6 +98,7 @@ async function dados() {
         console.error('Erro ao buscar dados da API:', error);
     }
 }
+
 
 //adicionando categorias ao dropdown 
 
