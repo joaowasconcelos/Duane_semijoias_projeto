@@ -15,7 +15,7 @@ async function authenticateJWT() {
     return;
   }
   try {
-    const resposta = await axios.get('http://192.168.3.9:3000/verificar-token', {
+    const resposta = await axios.get('http://10.0.3.77:3000/verificar-token', {
       headers: {
         'x-access-token': `${token}`
       }
@@ -37,7 +37,7 @@ SelecionaInfo()
 async function SelecionaInfo() {
   const token = localStorage.getItem('token');
   try {
-    const resposta = await axios.get('http://192.168.3.9:3000/SelecionaInfoUsers', {
+    const resposta = await axios.get('http://10.0.3.77:3000/SelecionaInfoUsers', {
       headers: {
         'x-access-token': `${token}`
       }
@@ -64,7 +64,7 @@ async function AlterarSenha() {
   }
 
   try {
-    const resposta = await axios.put('http://192.168.3.9:3000/AlterarSenha', {
+    const resposta = await axios.put('http://10.0.3.77:3000/AlterarSenha', {
       senhaAtual,
       novaSenha
     }, {

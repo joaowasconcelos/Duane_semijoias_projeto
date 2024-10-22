@@ -6,7 +6,7 @@ async function verificaUser() {
         return;
     }
     try {
-        const resposta = await axios.get('http://192.168.3.9:3000/pagina-admin', {
+        const resposta = await axios.get('http://10.0.3.77:3000/pagina-admin', {
             headers: {
                 'x-access-token': `${token}`
             }
@@ -25,7 +25,6 @@ async function verificaUser() {
 }
 verificaUser()
 
-
 function changeSubtitle() {
     document.getElementById('subtitleCadastradas').textContent = 'Qual o novo nome da categoria?';
     document.getElementById('titleCadastradas2').textContent = 'Edite a categoria escolhida';
@@ -42,8 +41,8 @@ let responsePed;
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        responsePed = await axios.get('http:///192.168.3.9:3000/SelecionaPedido');
-        responseTipo = await axios.get('http:///192.168.3.9:3000/SelecionaCategoria');
+        responsePed = await axios.get('http:///10.0.3.77:3000/SelecionaPedido');
+        responseTipo = await axios.get('http:///10.0.3.77:3000/SelecionaCategoria');
         console.log(responsePed.data)
         console.log(responseTipo.data)
 

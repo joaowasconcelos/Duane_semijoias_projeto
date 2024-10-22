@@ -20,7 +20,6 @@ async function dados() {
 
 dados();
 
-
 var table;
 
 function criarTabela(){
