@@ -4,7 +4,7 @@ const CategoriaController = {
     Cadastro: async (req, res) => {
         try {
             const { tipo } = req.body;
-            const cCategoria = new Categoria(null, tipo);
+            const cCategoria = new Categoria(null, tipo,1);
             const validaCampos = cCategoria.validaCampos()
             const verificaCapos = cCategoria.verificaCampos()
             if(!validaCampos){

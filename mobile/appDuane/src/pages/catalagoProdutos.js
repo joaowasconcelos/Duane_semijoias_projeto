@@ -73,6 +73,7 @@ export default function Home() {
                   size={35}
                 />
               </TouchableOpacity>
+              
               <Image
                 source={require("../../assets/Duane.png")}
                 style={styles.logoImg}

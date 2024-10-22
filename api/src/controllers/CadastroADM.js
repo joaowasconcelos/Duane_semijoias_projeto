@@ -10,6 +10,7 @@ const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoaADM: async (req, res) => {
         try {
+            console.log("AQUIUIUIUIUIUIUIU",req.body)
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Telefones,perfil } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
             console.log(cPessoa)
@@ -65,7 +66,10 @@ const CadastroUsuario = {
                 if (!verificaLog) {
                     return res.status(400).json({ message: "Erro email ja cadastrado" });
                 }
+                console.log("teste1")
                 const insertLogin = await cLogin.CadastrarLogin();
+                console.log("teste",insertLogin)
+                console.log("teste",insertLogin.error)
                 if (!insertLogin.error) {
                     if (Telefones.length > 0) {
                         for (const numeroTelefone of Telefones) {
@@ -87,6 +91,7 @@ const CadastroUsuario = {
                         };
                     }
                 } else {
+                    console.log("teste")
                     const deletarPessoa = cPessoa.DeletarPessoa()
                     return res.status(400).json({ message: "Erro ao cadastrar Login!" });
                 }
