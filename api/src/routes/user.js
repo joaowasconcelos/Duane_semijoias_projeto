@@ -61,7 +61,6 @@ routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
 routerUser.get("/SelecionaUsuarios",CadastroUsuario.Seleciona);
 routerUser.get("/SelecionaInfoUsers",authenticateJWT,CadastroUsuario.SelecionaInfoId);
 routerUser.get("/SelecionaPedido",PedidoController.Seleciona);//ADM
-
 routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);//USUARIO
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
 routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
@@ -72,6 +71,7 @@ routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
 routerUser.get('/selecionaCupons',CuponsController.Seleciona)
 routerUser.get('/selecionaCupons/:id',CuponsController.SelecionaDetalhes)
+routerUser.get('/MeusPedidos/:id',PedidoController.selecionaMeusPedidos)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);

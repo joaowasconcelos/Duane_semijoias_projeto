@@ -92,7 +92,7 @@ const CadastroUsuario = {
                 }
                 return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
             } else {
-                return res.status(400).json({ message: "Erro ao cadastrar usuário!" });
+                return res.status(400).jsonXXXXXXXL({ message: "Erro ao cadastrar usuário!" });
             }
 
 
