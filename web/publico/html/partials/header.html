@@ -4,7 +4,9 @@
 
     <div id="conteudoHeader">
 
-        <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
+        <a href="/web/publico/html/home.html">
+            <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
+        </a>
 
         <div id="boxHeader">
 
@@ -18,6 +20,8 @@
                 <button onclick="openCartModal()" class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
                     data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><span id="icon"
                         class="fas fa-shopping-cart fa-2x"></span></button>
+
+                <span id="icon" id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
             </div>
 
 
@@ -28,3 +32,26 @@
     <hr>
 
 </nav>
+
+<script>
+    async function logout() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+        try {
+            const resposta = await axios.get('http://10.0.3.77:3000/logout', {
+                headers: {
+                    'x-access-token': `${token}`
+                }
+            });
+            if (resposta.data.message === "Token inválido") {
+                window.location.href = 'login.html';
+            }
+        } catch (error) {
+            console.error('Erro ao verificar o token:', error);
+            window.location.href = 'login.html';
+        }
+    }
+</script>

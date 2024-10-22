@@ -15,7 +15,7 @@ async function authenticateJWT() {
     return;
   }
   try {
-    const resposta = await axios.get('http://192.168.3.9:3000/verificar-token', {
+    const resposta = await axios.get('http://10.0.3.77:3000/verificar-token', {
       headers: {
         'x-access-token': `${token}`
       }
@@ -37,13 +37,18 @@ SelecionaInfo()
 async function SelecionaInfo() {
   const token = localStorage.getItem('token');
   try {
-    const resposta = await axios.get('http://192.168.3.9:3000/SelecionaInfoUsers', {
+    const resposta = await axios.get('http://10.0.3.77:3000/SelecionaInfoUsers', {
       headers: {
         'x-access-token': `${token}`
       }
     });
     console.log(resposta)
     console.log(resposta.data)
+
+    // const infos = $("#dados")
+    // response.data.forEach(element => {
+    //   console.log(element , 'oi');
+    // });
 
   } catch (error) {
     console.error('Erro ao verificar o token:', error);
@@ -61,10 +66,20 @@ async function AlterarSenha() {
   if (novaSenha !== confirmarSenha) {
     alert("A nova senha e a confirmação não coincidem.");
     return;
+  } 
+  // Verifica se a nova senha é nula
+  if (novaSenha == null) {
+    alert("A nova senha não pode ser nula.");
+    return;
+  } 
+  //Verifica se a confirmção de senha é nula
+  if (confirmarSenha == null) {
+    alert("A confirmação de senha não pode ser nula");
+    return
   }
 
   try {
-    const resposta = await axios.put('http://192.168.3.9:3000/AlterarSenha', {
+    const resposta = await axios.put('http://10.0.3.77:3000/AlterarSenha', {
       senhaAtual,
       novaSenha
     }, {
@@ -77,7 +92,7 @@ async function AlterarSenha() {
     if (resposta.data.message === "Senha alterada com sucesso!") {
       alert("Senha alterada com sucesso!");
       document.getElementById('modal').close();
-    } else {
+    }  else {
       alert("Erro ao alterar a senha: " + resposta.data.message);
     }
 

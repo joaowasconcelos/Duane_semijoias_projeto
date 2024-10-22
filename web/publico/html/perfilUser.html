@@ -11,12 +11,10 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
     <link rel="stylesheet" href="../css/perfilUser.css">
-    <link rel="stylesheet" href="../css/partials/headerUser.css">
+    <link rel="stylesheet" href="../css/partials/header.css">
     <script  src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-     
     <script src="../js/perfilUser.js" defer></script>
-    
 </head>
 
 <body>
@@ -44,8 +42,8 @@
         <div class="container2">
             <div id="menuAdm">
                 <p id="titulo">MENU</p>
-                <a href="#" id="menuText" class="navAdm">Histórico de pedidos</a>
-                <a href="#" id="menuText" class="navAdm">Meus endereços</a>
+                <a href="http://127.0.0.1:5500/web/publico/html/historicodePedido.html" id="menuText" class="navAdm">Histórico de pedidos</a>
+                <a href="http://127.0.0.1:5500/web/publico/html/meusEnderecos.html" id="menuText" class="navAdm">Meus endereços</a>
             </div>
             <div id="table">
 
@@ -53,47 +51,31 @@
                 <button id="btn-abrir-modal">Alterar senha?</button>
 
                 <div id="dados">
-                    <label for="Nome">Nome completo:</label>
-                    <input name="Nome" type="text">
+                    <label for="Nome" >Nome completo:</label>
+                    <input name="Nome" id="nome" type="text">
                     <label for="email">Email:</label>
-                    <input name="email" type="email">
+                    <input name="email" id="usuario" type="email">
                     <label for="cpf">CPF:</label>
-                    <input name="cpf" type="text">
+                    <input name="cpf" id="cpf" type="text">
                     <label for="dataNasc">Data de nascimento:</label>
-                    <input name="datNasc" type="date">
+                    <input name="datNasc" id="data_nasc" type="date">
                     <label for="tel">Telefone celular:</label>
-                    <input name="tel" type="number">
+                    <input name="tel" id="numeros" type="number">
                 </div>
                 <button id="btEdit">Editar meus dados</button>
             </div>
             <div id="container3">
 
                 <dialog id="modal">
-                    <label for="senha">Senha atual:* </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" id="olinhos" width="16" height="16" fill="currentColor"
-                        class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                        <path
-                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                    </svg>
-                    <input name="senhaAtual" id="senhaAtual" type="password">
-                    <label for="senha">Nova senha:* </label>
-                    <svg xmlns="http://www.w3.org/2000/svg" id="olinhos" width="16" height="16" fill="currentColor"
-                        class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                        <path
-                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                    </svg>
-                    <input name="novaSenha" id="novaSenha" type="password">
+                    <label for="senha">Senha atual:*</label>
+                    <input name="senhaAtual" id="senhaAtual" type="password" required>
+
+                    <label for="senha" >Nova senha:*</label>
+                    <input name="novaSenha" id="novaSenha" type="password" required>
 
                     <label for="senha">Confirmar nova senha:*</label>
-                    <svg xmlns="http://www.w3.org/2000/svg" id="olinhos" width="16" height="16" fill="currentColor"
-                        class="bi bi-eye-fill" viewBox="0 0 16 16">
-                        <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0" />
-                        <path
-                            d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
-                    </svg>
-                    <input name="confirmarSenha" id="confirmarSenha" type="password">
+                    <input name="confirmarSenha" id="confirmarSenha" type="password" required>
+
                     <button class="close" onclick="AlterarSenha()">Salvar</button>
                 </dialog>
             </div>
@@ -109,7 +91,7 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
     <script defer>
         $(function () {
-            $('#header').load("./partials/headerUser.html");
+            $('#header').load("./partials/header.html");
         });
     </script>
 </body>
