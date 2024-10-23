@@ -14,7 +14,7 @@
     <link rel="stylesheet" href="../css/partials/headerUser.css">
     <script  src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-     
+    <script src="../js/checkUserProfile.js"></script>
     <script src="../js/perfilUser.js" defer></script>
     
 </head>
@@ -60,9 +60,9 @@
                     <label for="cpf">CPF:</label>
                     <input name="cpf" type="text">
                     <label for="dataNasc">Data de nascimento:</label>
-                    <input name="datNasc" type="date">
+                    <input name="datNasc" type="text">
                     <label for="tel">Telefone celular:</label>
-                    <input name="tel" type="number">
+                    <input name="tel" type="text">
                 </div>
                 <button id="btEdit">Editar meus dados</button>
             </div>
@@ -94,6 +94,7 @@
                             d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7" />
                     </svg>
                     <input name="confirmarSenha" id="confirmarSenha" type="password">
+                    <button class="close" onclick="modalFechar()">Cancelar</button>
                     <button class="close" onclick="AlterarSenha()">Salvar</button>
                 </dialog>
             </div>

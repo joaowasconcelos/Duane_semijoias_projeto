@@ -1,30 +1,6 @@
-async function verificaUser() {
-    const token = localStorage.getItem('token');
-    console.log("token",token)
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-    try {
-        const resposta = await axios.get('http://10.0.3.77:3000/pagina-admin', {
-            headers: {
-                'x-access-token': `${token}`
-            }
-        });
-        if (resposta.data.message === "Token válido.") {
-            return 'Acesso autorizado';
-        } else {
-            // alert("Você não possui acesso para tal ação")
-            // window.location.href = 'login.html';
-        }
+import verificaUser from "./token.js";
 
-    } catch (error) {
-        console.error('Erro ao verificar o token:', error);
-        window.location.href = 'login.html';
-    }
-}
 verificaUser()
-
 
 function changeSubtitle() {
     document.getElementById('subtitleCadastradas').textContent = 'Qual o novo nome da categoria?';

@@ -1,10 +1,9 @@
-
 <img id="ondas-rosa" src="../img/ondas-rosa.png">
 
 <nav>
     <div id="conteudoHeader">
 
-        <div id="logo" ><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias" ></div>
+        <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
 
         <div id="boxHeader">
             <div id="icons">
@@ -24,23 +23,30 @@
 
 <script>
     async function logout() {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-    try {
-        const resposta = await axios.get('http://10.0.3.77:3000/logout', {
-            headers: {
-                'x-access-token': `${token}`
-            }
-        });
-        if (resposta.data.message === "Token inválido") {
+        const token = localStorage.getItem('token');
+        if (!token) {
             window.location.href = 'login.html';
+            return;
         }
-    } catch (error) {
-        console.error('Erro ao verificar o token:', error);
-        window.location.href = 'login.html';
+        try {
+            const resposta = await axios.get('http://10.0.3.77:3000/logout', {
+                headers: {
+                    'x-access-token': `${token}`
+                }
+            });
+            console.log("aqui",resposta)
+            if (resposta.data.message === "Token inválido") {
+                console.log("aqui");
+                
+                localStorage.removeItem('token');
+                localStorage.removeItem('userProfile');
+                window.location.href = 'login.html';
+            }
+        } catch (error) {
+            console.log("aqui error");
+            
+            console.error('Erro ao verificar o token:', error);
+           window.location.href = 'login.html';
+        }
     }
-}
 </script>

@@ -50,7 +50,7 @@
 
         <div id="table">
 
-            <form action="">
+            <form id="produto-form" enctype="multipart/form-data" method="post">
 
                 <div id="form">
 
@@ -81,10 +81,9 @@
                         <label class="picture" for="imagem">Foto do produto: *</label>
                         <p>Obrigatório carregar ao menos 1 foto do produto*</p>
                         <p>Adicione no maximo 5 fotos*</p>
-                        <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple"
+                        <input class="escolha" type="file" name="imagem" id="imagem" multiple="multiple"
                             maxlength="5">
                         <span class="picture__image"></span>
-
                     </div>
 
                 </div>

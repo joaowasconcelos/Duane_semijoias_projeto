@@ -1,39 +1,3 @@
-// trazer o header
-
-// fetch('../html/partials/headerUser.html')
-//     .then(response => response.text())
-//     .then(html => {
-//         const header = document.getElementById('header');
-//         header.innerHTML = html;
-//         document.body.appendChild(header);
-//     });
-
-async function authenticateJWT() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    window.location.href = 'login.html';
-    return;
-  }
-  try {
-    const resposta = await axios.get('http://10.0.3.77:3000/verificar-token', {
-      headers: {
-        'x-access-token': `${token}`
-      }
-    });
-    console.log(resposta)
-    console.log(resposta.data.message)
-    if (!resposta.data.message === "Token válido.") {
-      window.location.href = 'login.html';
-    }
-
-  } catch (error) {
-    console.error('Erro ao verificar o token:', error);
-    window.location.href = 'login.html';
-  }
-}
-authenticateJWT()
-SelecionaInfo()
-
 async function SelecionaInfo() {
   const token = localStorage.getItem('token');
   try {
@@ -45,11 +9,20 @@ async function SelecionaInfo() {
     console.log(resposta)
     console.log(resposta.data)
 
+    const userInfo = resposta.data[0];
+    document.querySelector('input[name="Nome"]').value = userInfo.nome
+    document.querySelector('input[name="email"]').value = userInfo.usuario;
+    document.querySelector('input[name="cpf"]').value = userInfo.cpf;
+    document.querySelector('input[name="datNasc"]').value = userInfo.data_nasc;
+    document.querySelector('input[name="tel"]').value = userInfo.numeros;
+
+
   } catch (error) {
     console.error('Erro ao verificar o token:', error);
-    window.location.href = 'login.html';
+    // window.location.href = 'login.html';
   }
 }
+SelecionaInfo()
 
 async function AlterarSenha() {
   const token = localStorage.getItem('token');

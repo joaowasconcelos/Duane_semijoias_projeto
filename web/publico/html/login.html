@@ -113,43 +113,56 @@
         });
 
         document.getElementById('acessar').addEventListener('click', async function (event) {
-            event.preventDefault(); 
+            event.preventDefault();
 
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
 
             try {
-                // Envia os dados para a rota de login
-                const response = await axios.get('http://10.0.3.77:3000/VerificaLogin', {
-                    params: {
-                        login: username,
-                        senha: password
-                    }
-                });
-                console.log("aqui",response);
-
-                const token = response.data.token;
-                localStorage.setItem('token', token);
-
-                // Redirecionar a resposta aqui
-                if (response.data.verificaLogin[0].perfis_id === 1) {
-                    window.location.href = 'http://127.0.0.1:5501/publico/html/admInicio.html';
-                } else if (response.data.verificaLogin[0].perfis_id === 2) {
-                    window.location.href = 'http://127.0.0.1:5501/publico/html/perfilUser.html';
-                } else {
-                    console.log('Usuário não encontrado!');
-                    alert('Usuário não encontrado!');
+            // Envia os dados para a rota de login
+            const response = await axios.get('http://10.0.3.77:3000/VerificaLogin', {
+                params: {
+                    login: username,
+                    senha: password
                 }
+            });
 
-            } catch (error) {
-                console.error('Erro no login', error);
-                alert('Usuário não encontrado!');
+            const token = response.data.token;
+
+            // Função para decodificar um JWT
+            function decodeJWT(token) {
+                const base64Url = token.split('.')[1];
+                const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                    return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                }).join(''));
+                return JSON.parse(jsonPayload);
             }
-        });
 
+            // Decodifica o token e extrai o perfil
+            const decodedToken = decodeJWT(token);
+        
+            // Armazena o token e o perfil no localStorage
+            localStorage.setItem('token', token);
+            localStorage.setItem('userProfile', JSON.stringify(decodedToken));
+    
+            // Verifica o perfil e redireciona
+            if (decodedToken.perfil === 1) {
+                window.location.href = 'http://127.0.0.1:5501/publico/html/admInicio.html';
+            } else if (decodedToken.perfil === 2) {
+                window.location.href = 'http://127.0.0.1:5501/publico/html/perfilUser.html';
+            } else {
+                console.log('Usuário não autorizado!');
+                alert('Usuário não autorizado!');
+            }
+
+        } catch (error) {
+            console.error('Erro no login', error);
+            alert('Usuário não encontrado!');
+        }
+
+    })
     </script>
-
-
 </body>
 
 </html>
