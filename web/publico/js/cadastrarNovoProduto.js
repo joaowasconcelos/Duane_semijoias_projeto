@@ -42,6 +42,7 @@ function limparInput() {
     window.location.reload(true);
 }
 
+//salvar formulario
 async function salvar() {
     const token = localStorage.getItem('token');
     //const preco = document.getElementById("preco").value;
@@ -51,45 +52,45 @@ async function salvar() {
     const imagem = document.getElementById("imagem").value;
 
     // $('produto-form').on('submit', async function (event) {
-        // event.preventDefault();
+    // event.preventDefault();
+    // formData.append('imagem', imagem)
+    console.log(formData)
 
-        // formData.append('imagem', imagem)
-        console.log(formData)
+    try {
+        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', formData,
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            });
+        console.log(response.data.insertProduto);
+        const id_produto = response.data.insertProduto
 
-        try {
-            const response = await axios.post('http://10.0.3.77:3000/CreateProduto', formData,
-                {
-                    headers: {
-                        'x-access-token': token
-                    }
-                });
-            console.log(response.data.insertProduto);
-            const id_produto = response.data.insertProduto
+        // const responseImg = await axios.post(`http://10.0.3.77:3000/postagens/${8}`, formData,
+        //     {
+        //         headers: {
+        //             'x-access-token': token,
+        //             'Content-Type': 'multipart/form-data' // Importante para o upload de arquivos
+        //         }
+        //     }
+        // );
 
-            // const responseImg = await axios.post(`http://10.0.3.77:3000/postagens/${8}`, formData,
-            //     {
-            //         headers: {
-            //             'x-access-token': token,
-            //             'Content-Type': 'multipart/form-data' // Importante para o upload de arquivos
-            //         }
-            //     }
-            // );
+        // if (response.status === 200) {
+        //     alert("Produto criado com sucesso!");
+        // } else {
+        //     alert("Erro ao criar o produto.");
+        // }
 
-            // if (response.status === 200) {
-            //     alert("Produto criado com sucesso!");
-            // } else {
-            //     alert("Erro ao criar o produto.");
-            // }
-
-        } catch (error) {
-            console.error('Erro ao criar o produto:', error);
-            alert("Ocorreu um erro ao criar o produto. Tente novamente.");
-        }
+    } catch (error) {
+        console.error('Erro ao criar o produto:', error);
+        alert("Ocorreu um erro ao criar o produto. Tente novamente.");
+    }
     // });
 
     // limparInput();
     // window.location.reload(true);
 }
+
 
 //puxando tabela de categorias do banco
 
@@ -111,7 +112,7 @@ async function dados() {
 function criaDrop(data) {
     const selecionaElemento = document.getElementById('categoria');
     data.forEach((item) => {
-        console.log(item)
+        //console.log(item)
         const opcao = document.createElement('option');
         opcao.value = item.id;
         opcao.text = item.tipo;
@@ -120,4 +121,3 @@ function criaDrop(data) {
 }
 
 dados();
-

@@ -20,9 +20,7 @@ async function dados() {
     const itens = $("#cardGrid");
     response.data.forEach(element => {
 
-      console.log(element, 'oi');
-
-      const newCard = (element) => (`
+      const newCard = () => (`
         <div class="card h-100">
           <img src="../img/imgTest.jpeg" class="card-img-top" alt="...">
           <div class="card-body">

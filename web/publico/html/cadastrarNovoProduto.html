@@ -11,11 +11,10 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+
 </head>
 
 <body>
-
 
     <header id="headerAdm"></header>
 
@@ -32,7 +31,10 @@
             </div>
 
             <div id="voltar"></div>
-            <a href="../html/admInicio.html" style="text-decoration: none;"> <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span></a>
+            <a href="#" style="text-decoration: none;" onclick="history.back()">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon"
+                    class="fas fa-home fa"></span>
+            </a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                 class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
@@ -51,18 +53,19 @@
         <div id="table">
 
             <form id="produto-form" enctype="multipart/form-data" method="post">
+            <!-- <form action="http://10.0.3.77:3000/CreateADM" method="post" id="cadastroForm"> -->
 
                 <div id="form">
 
                     <div id="dados">
 
-                        <label for="categoria">Categoria: *</label>
-                        <select class="form-control form-control-sm" id="categoria">
+                        <label for="tipo">Categoria: *</label>
+                        <select class="form-control form-control-sm" id="tipo" name="tipo">
                             <option></option>
                         </select>
 
-                        <label for="produto">Produto: *</label>
-                        <input class="input" type="text" name="produto" id="produto">
+                        <label for="nome_produto">Produto: *</label>
+                        <input class="input" type="text" name="nome_produto" id="nome_produto">
 
                         <label for="descricao">Descrição: *</label>
                         <input class="input" type="text" name="descricao" id="descricao">
@@ -90,8 +93,8 @@
 
                 <div id="btns">
 
-                    <button type="button" class="btn btn-primary save-changes" onclick="limparInput()">Cancelar</button>
-                    <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+                    <button class="btn btn-primary save-changes" onclick="limparInput()">Cancelar</button>
+                    <button type="submit" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
 
                 </div>
 

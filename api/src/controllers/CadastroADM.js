@@ -49,7 +49,7 @@ const CadastroUsuario = {
             if (!insertPessoa.error) {
                 const cLogin = new Login(null, Usuario, "DUANE123@", 0, 1,perfil, insertPessoa);
                 const VerificaLogin = cLogin.verificaCampos()
-                const validaLogin = cLogin.validaCampos()
+                const validaLogin = cLogin.validaCamposADM()
                 if(!VerificaLogin){
                     return res.status(500).json({ message: "Numero máximo de caracteres "})
                 }
@@ -96,7 +96,7 @@ const CadastroUsuario = {
                 }
                 return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
             } else {
-                return res.status(400).json({ message: "Erro ao cadastrar usuário!" });
+                return res.status(400).jsonXXXXXXXL({ message: "Erro ao cadastrar usuário!" });
             }
 
 

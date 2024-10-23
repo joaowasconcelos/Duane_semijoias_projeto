@@ -1,7 +1,3 @@
-import verificaUser from "./token.js";
-
-verificaUser()
-
 function changeSubtitle() {
     document.getElementById('subtitleCadastradas').textContent = 'Qual o novo nome da categoria?';
     document.getElementById('titleCadastradas2').textContent = 'Edite a categoria escolhida';
@@ -45,11 +41,14 @@ dados();
 var table;
 
 function criarTabela(){
-    table = `<tr>
-    <td>Descrição</td>
-    <td>Editar</td>
-    <td>Excluir</td>
-    </tr>`
+    table = `
+    <thead>
+        <tr>
+            <td>Descrição</td>
+            <td>Editar</td>
+            <td>Excluir</td>
+        </tr>
+    </thead>`
 }
 
 function carregaDadosModalCategoria(){
@@ -58,8 +57,9 @@ function carregaDadosModalCategoria(){
     $.each(responseTipo.data, function () {
         table += 
         `<tr>
-        <td>${this['tipo']}</td>
-        <td><a href="/editar/${this["id"]}">editar</a></td>
+            <td>${this['tipo']}</td>
+            <td><a href="/editar/${this["id"]}">editar</a></td>
+            <td>Editar</td>
         </tr>`
     });
     // console.log(table);
@@ -73,12 +73,14 @@ var table2;
 
 function criarTabela2(){
     table2 = `
+    <thead>
         <tr>
             <td id="codigot">Código</td>
             <td id="dtComprat">Data de compra</td>
             <td id="descricaott">Descrição</td>
             <td id="statust">Status</td>
-        </tr>`
+        </tr>
+    </thead>`
 }
 
 function carregaDadosTabelaPedidos(){
@@ -94,7 +96,7 @@ function carregaDadosTabelaPedidos(){
         </tr>
         </tbody>`
     });
-    console.log(table2);
+    //console.log(table2);
     
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }

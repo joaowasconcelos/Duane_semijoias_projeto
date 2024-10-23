@@ -31,6 +31,15 @@ import {
 export default function Home() {
   const navigation = useNavigation();
 
+
+  const navegaCadastroNovoCupom = () =>{
+    navigation.navigate('CadastroNovoCupom')
+  }
+
+  const navegaDetalhesCupom = () =>{
+    navigation.navigate('DetalhesCupom')
+  }
+
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
     EBGaramond_500Medium,
@@ -91,7 +100,7 @@ export default function Home() {
               <ScrollView>
                 <View style={styles.containerElements}>
                   <Text
-                    style={{ marginTop: 10, fontSize: 18, fontWeight: "bold" }}
+                    style={{ marginTop: 10, fontSize: 18, fontWeight: "bold", color: '#633636' }}
                   >
                     Todos os Cupons:
                   </Text>
@@ -151,6 +160,8 @@ export default function Home() {
                         height: "100%",
                         marginTop: 40,
                       }}
+
+                      onPress={navegaDetalhesCupom}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6
@@ -176,6 +187,8 @@ export default function Home() {
                 marginBottom: 5,
                 fontWeight: "bold",
               }}
+
+              onPress={navegaCadastroNovoCupom}
             >
               <Text
                 style={{
