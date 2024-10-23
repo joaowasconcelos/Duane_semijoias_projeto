@@ -136,6 +136,7 @@ const CadastroUsuario = {
     },
     SelecionaInfoId: async (req, res) => {
         try {
+            console.log("aqui")
             const id = req.id;
             console.log(id);
             const cPessoa = new Pessoa(id);

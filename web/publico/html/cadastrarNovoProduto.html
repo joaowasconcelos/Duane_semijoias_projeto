@@ -52,7 +52,8 @@
 
         <div id="table">
 
-            <form action="http://10.0.3.77:3000/CreateADM" method="post" id="cadastroForm">
+            <form id="produto-form" enctype="multipart/form-data" method="post">
+            <!-- <form action="http://10.0.3.77:3000/CreateADM" method="post" id="cadastroForm"> -->
 
                 <div id="form">
 
@@ -83,10 +84,9 @@
                         <label class="picture" for="imagem">Foto do produto: *</label>
                         <p>Obrigatório carregar ao menos 1 foto do produto*</p>
                         <p>Adicione no maximo 5 fotos*</p>
-                        <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple"
+                        <input class="escolha" type="file" name="imagem" id="imagem" multiple="multiple"
                             maxlength="5">
                         <span class="picture__image"></span>
-
                     </div>
 
                 </div>

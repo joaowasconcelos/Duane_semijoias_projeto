@@ -45,31 +45,36 @@ function limparInput() {
 //salvar formulario
 async function salvar() {
     const token = localStorage.getItem('token');
-    const preco = document.getElementById("preco").value;
-    const produto = document.getElementById("produto").value;
-    const descricao = document.getElementById("descricao").value;
-    const categoria = document.getElementById("categoria").value;
+    //const preco = document.getElementById("preco").value;
+    // const produto = document.getElementById("produto").value;
+    // const descricao = document.getElementById("descricao").value;
+    // const categoria = document.getElementById("categoria").value;
     const imagem = document.getElementById("imagem").value;
 
-    try {
-        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', 
-        {
-            preco: preco,
-            produto: produto,
-            descricao: descricao,
-            categoria: categoria,
-            imagem: imagem
-        }, 
-        {
-            headers: {
-                'x-access-token': token
-            }
-        });
-        console.log(response.data);
+    // $('produto-form').on('submit', async function (event) {
+    // event.preventDefault();
+    // formData.append('imagem', imagem)
+    console.log(formData)
 
-        //const responseImg = await axios.post('http://192.168.3.9:3000/postagens/${}')
-        
-        
+    try {
+        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', formData,
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            });
+        console.log(response.data.insertProduto);
+        const id_produto = response.data.insertProduto
+
+        // const responseImg = await axios.post(`http://10.0.3.77:3000/postagens/${8}`, formData,
+        //     {
+        //         headers: {
+        //             'x-access-token': token,
+        //             'Content-Type': 'multipart/form-data' // Importante para o upload de arquivos
+        //         }
+        //     }
+        // );
+
         // if (response.status === 200) {
         //     alert("Produto criado com sucesso!");
         // } else {
@@ -80,10 +85,12 @@ async function salvar() {
         console.error('Erro ao criar o produto:', error);
         alert("Ocorreu um erro ao criar o produto. Tente novamente.");
     }
+    // });
 
     // limparInput();
     // window.location.reload(true);
 }
+
 
 //puxando tabela de categorias do banco
 

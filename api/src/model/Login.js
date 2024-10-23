@@ -1,6 +1,7 @@
 import obterConexaoDoPool from "../config/mysql.js"
 import bcrypt from "bcrypt"
 
+
 export default class Login {
     _id
     _usuario
@@ -135,7 +136,6 @@ export default class Login {
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._nova_senha, salt);
             const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE pessoa_id = ?`, [passwordHash, this._id_pessoa])
-            console.log(modificaSenha)
             return "senha modificada com sucesso"
         }
         catch (error) {
@@ -151,7 +151,6 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT * FROM login WHERE usuario=?`, [this._usuario]);
             const idResult = loginResul[0][0].id;
-            console.log(loginResul)
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._nova_senha, salt);
 
@@ -222,7 +221,6 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT * FROM login WHERE usuario =?;`,[this._usuario])
             const login = loginResul[0][0]
-            console.log(login)
             console.log(login.primeiro_login )
             if(login.primeiro_login == 1){
                 const salt = await bcrypt.genSalt(12);
@@ -282,7 +280,10 @@ export default class Login {
         return true
     }
     validaCampos() {
-        if (!this._usuario || !this._senha) {
+        console.log(!this._usuario || !this._senha ||!this._nova_senha)
+        console.log(this._usuario,this._senha,this._nova_senha)
+        console.log(this._id_pessoa)
+        if (!this._id_pessoa || !this._senha ||!this._nova_senha) {
             return false
         }
         return true
@@ -296,5 +297,6 @@ export default class Login {
 
 
 }
+
 
 

@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function dados() {
   try {
     // Fazendo a requisição com axios.get
-    const response = await axios.get('http://10.0.3.94:3000/SelecionaProduto');
+    const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
     // const imagem = await axios.get('http://10.0.3.77:3000/Postagem');
     // console.log(imagem);
     
@@ -77,7 +77,7 @@ dados();
 //carrinho de compras
 
 // URL da API que retorna a lista de produtos
-const apiUrl = 'http://10.0.3.94:3000/SelecionaProduto'; // API
+const apiUrl = 'http://10.0.3.77:3000/SelecionaProduto'; // API
 
 // Inicializa o carrinho
 let cart = JSON.parse(localStorage.getItem('cart')) || [];

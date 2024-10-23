@@ -35,16 +35,20 @@ async function SelecionaInfo() {
     console.log(resposta)
     console.log(resposta.data)
 
-    // const infos = $("#dados")
-    // response.data.forEach(element => {
-    //   console.log(element , 'oi');
-    // });
+    const userInfo = resposta.data[0];
+    document.querySelector('input[name="Nome"]').value = userInfo.nome
+    document.querySelector('input[name="email"]').value = userInfo.usuario;
+    document.querySelector('input[name="cpf"]').value = userInfo.cpf;
+    document.querySelector('input[name="datNasc"]').value = userInfo.data_nasc;
+    document.querySelector('input[name="tel"]').value = userInfo.numeros;
+
 
   } catch (error) {
     console.error('Erro ao verificar o token:', error);
-    window.location.href = 'login.html';
+    // window.location.href = 'login.html';
   }
 }
+SelecionaInfo()
 
 async function AlterarSenha() {
   const token = localStorage.getItem('token');

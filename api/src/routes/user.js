@@ -12,9 +12,11 @@ import LoginController from "../controllers/Login.js";
 import CadastroADM from "../controllers/CadastroADM.js"
 import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
+// import UploadImagens from "../controllers/Imagens.old.js";
 // import UploadImagens from "../controllers/Imagens.js";
 import FeedbackController from "../controllers/Feedback.js";
 import { logout } from "../middleware/authenticateJWT.js";
+import { upload } from "../middleware/imagens.js";
 
 
 
@@ -28,7 +30,8 @@ routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.Cada
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
-routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)//ADM
+routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.single("imagem"),ProdutoController.cadastro)//ADM
+// routerUser.post('/postagens/:id_produto',,UploadImagens.Imagens);//ADM
 // routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,authenticatePerfil,UploadImagens.Imagens);//ADM
 
 

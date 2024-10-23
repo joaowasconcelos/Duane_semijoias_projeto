@@ -1,0 +1,52 @@
+<img id="ondas-rosa" src="../img/ondas-rosa.png">
+
+<nav>
+    <div id="conteudoHeader">
+
+        <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
+
+        <div id="boxHeader">
+            <div id="icons">
+                <span id="iconH" class="fas fa-shopping-cart fa-2x">
+                    <a href="../carrinho.html"></a>
+                </span>
+                <span id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
+            </div>
+
+        </div>
+
+    </div>
+
+    <hr>
+
+</nav>
+
+<script>
+    async function logout() {
+        const token = localStorage.getItem('token');
+        if (!token) {
+            window.location.href = 'login.html';
+            return;
+        }
+        try {
+            const resposta = await axios.get('http://10.0.3.77:3000/logout', {
+                headers: {
+                    'x-access-token': `${token}`
+                }
+            });
+            console.log("aqui",resposta)
+            if (resposta.data.message === "Token inválido") {
+                console.log("aqui");
+                
+                localStorage.removeItem('token');
+                localStorage.removeItem('userProfile');
+                window.location.href = 'login.html';
+            }
+        } catch (error) {
+            console.log("aqui error");
+            
+            console.error('Erro ao verificar o token:', error);
+           window.location.href = 'login.html';
+        }
+    }
+</script>
