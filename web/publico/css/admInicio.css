@@ -169,10 +169,15 @@ main {
 
 /* css da tabela */
 
+#tbl-categorias {
+    display: block;
+    overflow-y: scroll;
+    height: 600px;
+}
+
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 15px;
     font-family: Arial, sans-serif;
     text-align: left;
