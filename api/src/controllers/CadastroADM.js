@@ -49,7 +49,7 @@ const CadastroUsuario = {
             if (!insertPessoa.error) {
                 const cLogin = new Login(null, Usuario, "DUANE123@", 0, 1,perfil, insertPessoa);
                 const VerificaLogin = cLogin.verificaCampos()
-                const validaLogin = cLogin.validaCampos()
+                const validaLogin = cLogin.validaCamposADM()
                 if(!VerificaLogin){
                     return res.status(500).json({ message: "Numero máximo de caracteres "})
                 }

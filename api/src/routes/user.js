@@ -12,7 +12,7 @@ import LoginController from "../controllers/Login.js";
 import CadastroADM from "../controllers/CadastroADM.js"
 import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
-import UploadImagens from "../controllers/Imagens.js";
+// import UploadImagens from "../controllers/Imagens.js";
 import FeedbackController from "../controllers/Feedback.js";
 import { logout } from "../middleware/authenticateJWT.js";
 
@@ -29,7 +29,7 @@ routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaC
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
 routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,ProdutoController.cadastro)//ADM
-routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,authenticatePerfil,UploadImagens.Imagens);//ADM
+// routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,authenticatePerfil,UploadImagens.Imagens);//ADM
 
 
 //Delete
@@ -40,7 +40,7 @@ routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,au
 // routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroADM.ExcluirPessoa)// ADM
 // Por enquanto o administrador não poderá excluir um usuario pois isso altera algumas informações em nosso banco
 routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
-routerUser.delete('/DeleteImage/:id',authenticateJWT,authenticatePerfil,UploadImagens.DeleteImage);
+// routerUser.delete('/DeleteImage/:id',authenticateJWT,authenticatePerfil,UploadImagens.DeleteImage);
 
 //Update
 routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
@@ -64,14 +64,15 @@ routerUser.get("/SelecionaPedido",PedidoController.Seleciona);//ADM
 routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);//USUARIO
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
 routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
-routerUser.get("/SelecionaProduto",authenticateJWT,ProdutoController.Seleciona);
+routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
 //routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
-routerUser.get('/Postagens',UploadImagens.listAllFiles);
-routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
+// routerUser.get('/Postagens',UploadImagens.listAllFiles);
+// routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
 routerUser.get('/selecionaCupons',CuponsController.Seleciona)
 routerUser.get('/selecionaCupons/:id',CuponsController.SelecionaDetalhes)
-routerUser.get('/MeusPedidos/:id',PedidoController.selecionaMeusPedidos)
+routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
+routerUser.get('/MeuPedido/id:',authenticateJWT,PedidoController.SelecionaDetalhes)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
