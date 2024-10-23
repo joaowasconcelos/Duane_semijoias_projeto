@@ -84,8 +84,9 @@ function carregaDadosModalCategoria(){
     $.each(responseTipo.data, function () {
         table += 
         `<tr>
-        <td>${this['tipo']}</td>
-        <td><a href="/editar/${this["id"]}">editar</a></td>
+            <td>${this['tipo']}</td>
+            <td><a href="/editar/${this["id"]}">editar</a></td>
+            <td>Editar</td>
         </tr>`
     });
     // console.log(table);
@@ -99,7 +100,6 @@ var table2;
 
 function criarTabela2(){
     table2 = `
-
     <thead>
         <tr>
             <td id="codigot">Código</td>
@@ -123,7 +123,7 @@ function carregaDadosTabelaPedidos(){
         </tr>
         </tbody>`
     });
-    console.log(table2);
+    //console.log(table2);
     
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }

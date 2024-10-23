@@ -144,7 +144,7 @@ async function salvar() {
     const Genero = document.getElementById("Genero").value;
     const Data_Nasc = document.getElementById("Data_Nasc").value;
     const Telefones = document.getElementById("Telefones").value;
-    //const perfil = document.getElementById("perfil").value
+    const perfil = document.getElementById("perfil").value
 
     try {
         const response = await axios.post('http://10.0.3.77:3000/CreateADM', 
@@ -155,7 +155,7 @@ async function salvar() {
             Genero: Genero,
             Data_Nasc: Data_Nasc,
             Telefones: Telefones,
-            //perfil: perfil
+            perfil: perfil
         }, 
         {
             headers: {
@@ -169,6 +169,5 @@ async function salvar() {
         alert("Ocorreu um erro ao cadastrar novo ADM. Tente novamente.");
     }
 
-    // limparInput();
-    //window.location.reload(true);
+    window.location.reload(true);
 }

@@ -42,7 +42,7 @@ function limparInput() {
     window.location.reload(true);
 }
 
-//salvar formulario sim, eu sei, não ta finalizada, MEIO OBVIO NE
+//salvar formulario
 async function salvar() {
     const token = localStorage.getItem('token');
     const preco = document.getElementById("preco").value;
@@ -105,7 +105,7 @@ async function dados() {
 function criaDrop(data) {
     const selecionaElemento = document.getElementById('categoria');
     data.forEach((item) => {
-        console.log(item)
+        //console.log(item)
         const opcao = document.createElement('option');
         opcao.value = item.id;
         opcao.text = item.tipo;

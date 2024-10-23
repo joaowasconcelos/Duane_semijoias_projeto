@@ -28,8 +28,9 @@ function criarTabela() {
             <tr>
                 <th id="qtdeCat">Quantidade</th>
                 <th id="qtdeCat">Categoria</th>
-                <th>Produto</th>
-                <th id="preco">Preço</th>
+                <th id="produto">Produto</th>
+                <th id="preco">Preço normal:</th>
+                <th id="preco">Preço promocional:</th>
                 <th id="iconesTh"></th>
                 <th id="iconesTh"></th>
             </tr>
@@ -41,11 +42,13 @@ function carregaDadosProd() {
 
     $.each(responseProd.data, function () {
         table +=
-            `<tr>
-                <td id="dados" class="centralizar">${ this['quantidade'] }</td>
-                <td id="dados" class="centralizar">${ this['tipo'] }</td>
-                <td id="dados">${ this['nome_produto'] }</td>
-                <td id="dados" class="centralizar">${ this['preco'] }</td>
+            `
+            <tr>
+                <td id="dados" class="centralizar">${this['quantidade']}</td>
+                <td id="dados" class="centralizar">${this['tipo']}</td>
+                <td id="dados">${this['nome_produto']}</td>
+                <td id="dados" class="centralizar">${this['preco_normal']}</td>
+                <td id="dados" class="centralizar">${this['preco_promocional']}</td>
                 <td>
                     <svg xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                     style="color: #9B5377; margin-left: 35px;" fill="currentColor" class="bi bi-pencil-fill"
@@ -69,6 +72,3 @@ function carregaDadosProd() {
     document.getElementById('tbl-produtos').innerHTML = table;
 }
 
-
-
-// ${ this['tipo'] }
