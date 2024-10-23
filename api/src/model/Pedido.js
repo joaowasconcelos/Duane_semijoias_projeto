@@ -122,7 +122,7 @@ export default class Pedido {
         }
     }
 
-    static async SelecionaPedidoInfo() {
+    async SelecionaPedidoInfo() {
         const bd = await obterConexaoDoPool();
         try {
             const pedidoResult = await bd.query(`SELECT 

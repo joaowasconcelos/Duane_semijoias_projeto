@@ -287,6 +287,12 @@ export default class Login {
         }
         return true
     }
+    validaCamposADM() {
+        if (!this._usuario || !this._senha || ! this._id_perfil) {
+            return false
+        }
+        return true
+    }
 
 
 }

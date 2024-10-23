@@ -86,7 +86,7 @@ const PedidoController = {
     },
     selecionaMeusPedidos : async (req,res) => {
         try {
-          const id = req.params
+          const id = req.id
           const cPedido = new Pedido(id)
           const selecionaMeusPedidos = await cPedido.PedidoPorUsuario()
           return res.json(selecionaMeusPedidos);
@@ -97,10 +97,14 @@ const PedidoController = {
     },
     SelecionaDetalhes: async (req,res) => {
         try {
-            //pegar o id pelo login e fazer esse tem SelecionaPedidoInfo() é o crud 
-        } catch (error) {
-            
-        }
+            const id = req.params
+            const cPedido = new Pedido(id)
+            const selecionaMeuPedidos = await cPedido.SelecionaPedidoInfo()
+            return res.json(selecionaMeuPedidos);
+          } catch (error) {
+              console.error(error);
+              res.status(500).json({ error: "Erro ao selecionar pedidos" });
+          }
     }
 
 }
