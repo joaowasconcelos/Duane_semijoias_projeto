@@ -42,82 +42,54 @@ function limparInput() {
     window.location.reload(true);
 }
 
-//salvar formulario
 async function salvar() {
     const token = localStorage.getItem('token');
-    //const preco = document.getElementById("preco").value;
-    // const produto = document.getElementById("produto").value;
-    // const descricao = document.getElementById("descricao").value;
-    // const categoria = document.getElementById("categoria").value;
-    const imagem = document.getElementById("imagem").value;
 
-    // $('produto-form').on('submit', async function (event) {
-    // event.preventDefault();
-    // formData.append('imagem', imagem)
+    const formData = new FormData();  // Collecting form data
+    formData.append('produto', document.getElementById("nome_produto").value);
+    formData.append('descricao', document.getElementById("descricao").value);
+    formData.append('categoria', document.getElementById("tipo").value); // 'categoria' select has id "tipo"
+    formData.append('preco', document.getElementById("preco").value);
+    formData.append('imagem', document.getElementById("imagem").files[0]);  // File input
     console.log(formData)
 
     try {
-        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', formData,
-            {
-                headers: {
-                    'x-access-token': token
-                }
-            });
-        console.log(response.data.insertProduto);
-        const id_produto = response.data.insertProduto
-
-        // const responseImg = await axios.post(`http://10.0.3.77:3000/postagens/${8}`, formData,
-        //     {
-        //         headers: {
-        //             'x-access-token': token,
-        //             'Content-Type': 'multipart/form-data' // Importante para o upload de arquivos
-        //         }
-        //     }
-        // );
-
-        // if (response.status === 200) {
-        //     alert("Produto criado com sucesso!");
-        // } else {
-        //     alert("Erro ao criar o produto.");
-        // }
-
+        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', formData, {
+            headers: {
+                'x-access-token': token,
+                'Content-Type': 'multipart/form-data'
+            }
+        });
+        console.log(response);
+        alert("Produto criado com sucesso!");
     } catch (error) {
         console.error('Erro ao criar o produto:', error);
         alert("Ocorreu um erro ao criar o produto. Tente novamente.");
     }
-    // });
-
-    // limparInput();
-    // window.location.reload(true);
 }
+
 
 
 //puxando tabela de categorias do banco
 
 async function dados() {
     try {
-        // Fazendo a requisição com axios.get
         const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
-        console.log(response.data)
-        criaDrop(response.data)
-
+        console.log(response.data);
+        criaDrop(response.data);
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
 }
 
-
-//adicionando categorias ao dropdown 
-
 function criaDrop(data) {
-    const selecionaElemento = document.getElementById('categoria');
+    const selecionaElemento = document.getElementById('tipo');
     data.forEach((item) => {
-        //console.log(item)
         const opcao = document.createElement('option');
         opcao.value = item.id;
-        opcao.text = item.tipo;
+        opcao.text = item.tipo;  // Ensure 'tipo' is the correct property for the category name
         selecionaElemento.appendChild(opcao);
-    })
+    });
 }
 
 dados();
