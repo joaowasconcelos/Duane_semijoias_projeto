@@ -101,7 +101,6 @@ export default class Produto {
     p.id,
     p.nome_produto,
     p.descricao,
-<<<<<<< HEAD
 
     -- Usa MIN para pegar o menor preço se houver duplicatas
     FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,
@@ -116,17 +115,6 @@ export default class Produto {
         2, 'pt_BR'
     ) AS preco_promocional,  
 
-=======
-    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal, -- Usa MIN para pegar o menor preço se houver duplicatas
-    FORMAT(
-        COALESCE(
-            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
-            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
-            MIN(pc.preco)
-        ), 
-        2, 'pt_BR'
-    ) AS preco_promocional,  -- Preço promocional calculado
->>>>>>> 7cfaa9daf0c82a596deaa71e6adc56b82df15961
     c.tipo
 FROM 
     produto p
