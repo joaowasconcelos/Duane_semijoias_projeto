@@ -30,9 +30,9 @@ const LoginController = {
                 return res.status(201).json({ message: "Primeiro Login desse usuário, precisa redefinir a senha",})
             }
 
-            console.log(verificaLogin)
+        
             const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
-            return res.json({ auth: true, token:token,verificaLogin:verificaLogin })
+            return res.json({ auth: true, token:token})
 
         } catch (error) {
             res.status(500).json({ message: "Erro ao verificar login!" })

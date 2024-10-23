@@ -136,7 +136,6 @@ export default class Login {
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._nova_senha, salt);
             const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE pessoa_id = ?`, [passwordHash, this._id_pessoa])
-            console.log(modificaSenha)
             return "senha modificada com sucesso"
         }
         catch (error) {
@@ -152,7 +151,6 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT * FROM login WHERE usuario=?`, [this._usuario]);
             const idResult = loginResul[0][0].id;
-            console.log(loginResul)
             const salt = await bcrypt.genSalt(12);
             const passwordHash = await bcrypt.hash(this._nova_senha, salt);
 
@@ -223,7 +221,6 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT * FROM login WHERE usuario =?;`,[this._usuario])
             const login = loginResul[0][0]
-            console.log(login)
             console.log(login.primeiro_login )
             if(login.primeiro_login == 1){
                 const salt = await bcrypt.genSalt(12);

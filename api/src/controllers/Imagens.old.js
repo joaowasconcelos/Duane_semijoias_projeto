@@ -25,9 +25,14 @@ const __dirname = path.dirname(__filename);
 const UploadImagens = {
     Imagens: async (req, res, next) => {
         try {
+            console.log(req.params)
+            console.log(req.body)
+            console.log(req.file)
+            return
             const { id_produto } = req.params;
             const cProduto = new Produto_Img(null, null, id_produto);
             const insertProduto_img = await cProduto.CadastraProdutoImg();
+            console.log()
 
             if (!req.file) {
                 return res.status(400).send('Nenhuma imagem foi enviada.');
@@ -128,7 +133,7 @@ const UploadImagens = {
     Multer: multer({
         storage: multer.memoryStorage(),
         limits: { fileSize: 1024 * 1024 } // Limite de 1MB para o tamanho do arquivo
-    }).single('imagem') // Nome do campo de upload
+    }).single('imagem')
 }
 
 export default UploadImagens;

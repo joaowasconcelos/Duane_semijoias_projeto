@@ -10,7 +10,6 @@ const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoaADM: async (req, res) => {
         try {
-            console.log("AQUIUIUIUIUIUIUIU",req.body)
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Telefones,perfil } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
             console.log(cPessoa)
