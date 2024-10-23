@@ -1,13 +1,3 @@
-// trazer o header
-
-// fetch('../html/partials/headerUser.html')
-//     .then(response => response.text())
-//     .then(html => {
-//         const header = document.getElementById('header');
-//         header.innerHTML = html;
-//         document.body.appendChild(header);
-//     });
-
 async function authenticateJWT() {
   const token = localStorage.getItem('token');
   if (!token) {
