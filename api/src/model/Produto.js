@@ -101,21 +101,15 @@ export default class Produto {
     p.id,
     p.nome_produto,
     p.descricao,
-
-    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,  -- Usa MIN para pegar o maior preço se houver duplicatas
+    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal, -- Usa MIN para pegar o menor preço se houver duplicatas
     FORMAT(
         COALESCE(
             MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
             MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
-            MIN(pc.preco)                                      
+            MIN(pc.preco)
         ), 
         2, 'pt_BR'
-    pc.preco AS preco_normal,  
-    COALESCE( 
-        pc.preco - (pc.preco * pr_prod.porcentagem / 100), 
-        pc.preco - (pc.preco * pr_cat.porcentagem / 100),   
-        pc.preco                                      
-    ) AS preco_promocional,  
+    ) AS preco_promocional,  -- Preço promocional calculado
     c.tipo
 FROM 
     produto p
@@ -131,7 +125,8 @@ WHERE
     p.status = 1 
     AND pc.status = 1
 GROUP BY 
-    p.id, p.nome_produto, p.descricao, c.tipo;`);
+    p.id, p.nome_produto, p.descricao, c.tipo;
+`);
             return produtoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
