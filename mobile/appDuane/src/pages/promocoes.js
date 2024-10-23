@@ -159,6 +159,7 @@ export default function Home() {
                         height: "100%",
                         marginTop: 40,
                       }}
+                      onPress={navegaDetalhesPromocao}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6
@@ -183,6 +184,7 @@ export default function Home() {
                 borderRadius: 10,
                 marginBottom: 5,
               }}
+              onPress={navegaGerarPromocao}
             >
               <Text
                 style={{
