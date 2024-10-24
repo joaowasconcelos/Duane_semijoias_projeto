@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="pt-br">
 
 <head>
     <meta charset="UTF-8">
@@ -22,6 +22,7 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    
     <link rel="stylesheet" href="../css/partials/header.css">
     <link rel="stylesheet" href="../css/partials/footer.css">
     <link rel="stylesheet" href="../css/home.css">
@@ -49,8 +50,8 @@
                 <h3 id="filtros">Meus favoritos</h3>
             </div>
             <!-- card dos produtos -->
-            <div id="cardGrid222">
-                <div id="cardGrid" class="row row-cols-3 row-cols-md-3 g-4"></div>
+            <div id="cardGrid2" style="display: block; width: 100%; overflow-y: scroll; height: 650px;" >
+                <div id="cardGrid" ></div>
             </div>
         </div>
         <div class="container3">
@@ -72,19 +73,6 @@
                 </div>
               </div>
 
-            <!-- <div class="offcanvas offcanvas-start" data-bs-scroll="true" data-bs-backdrop="false" tabindex="-1"
-                id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
-                <div class="offcanvas-header">
-                    <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Seu Carrinho</h5>
-                </div>
-                <div class="offcanvas-body">
-                    <button data-bs-dismiss="offcanvas" aria-label="Close">
-                        <p>Continuar comprando</p>
-                    </button><button>
-                        <p>Finalizar compra</p>
-                    </button>
-                </div>
-            </div> -->
     </main>
     <footer id="footer"></footer>
     <script src="../js/home.js"></script>

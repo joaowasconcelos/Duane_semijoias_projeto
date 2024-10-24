@@ -86,6 +86,7 @@ body {
     border-radius: 8px;
     width: 100%;
     outline: none;
+    font-family:'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif !important;
 }
 
 .form-container {

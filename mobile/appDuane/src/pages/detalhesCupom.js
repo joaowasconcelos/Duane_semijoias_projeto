@@ -48,7 +48,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
+          <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -87,57 +87,99 @@ export default function Home() {
                 alignItems: "center",
               }}
             >
-              <ScrollView style={{width: '100%'}}>
+              <ScrollView style={{ width: "100%" }}>
                 <View style={styles.containerElements}>
                   <Text
-                    style={{ marginTop: 10, fontSize: 18, fontWeight: "bold", color: '#633636' }}
+                    style={{
+                      marginTop: 10,
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: "#633636",
+                    }}
                   >
                     Detalhes do Cupom:
                   </Text>
 
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '100%'}}>
-                    <View style={{width: '90%', justifyContent: 'flex-start', }}>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
                       <Text style={styles.textBtn}>Código:</Text>
                       <TextInput style={styles.Inputs}></TextInput>
                     </View>
 
-                    <View style={{width: '90%', justifyContent: 'flex-start', }}>
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
                       <Text style={styles.textBtn}>Quantidade:</Text>
                       <TextInput style={styles.Inputs}></TextInput>
                     </View>
 
-                    <View style={{width: '90%', justifyContent: 'flex-start', }}>
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
                       <Text style={styles.textBtn}>Descrição:</Text>
                       <TextInput style={styles.Inputs}></TextInput>
                     </View>
 
-                    <View style={{width: '90%', justifyContent: 'flex-start', }}>
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
                       <Text style={styles.textBtn}>Validade:</Text>
                       <TextInput style={styles.Inputs}></TextInput>
                     </View>
 
-                    <View style={{width: '90%', justifyContent: 'flex-start', }}>
-                      <Text style={styles.textBtn}>Valor/Porcentagem do desconto:</Text>
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
+                      <Text style={styles.textBtn}>
+                        Valor/Porcentagem do desconto:
+                      </Text>
                       <TextInput style={styles.Inputs}></TextInput>
                     </View>
 
-                    <View style={{width: '100%', justifyContent: "space-evenly", alignItems: 'center', flexDirection: 'row', margin: 10}}>
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onChangeText={()=>{}}>
-                    <FontAwesome6 name="pen" size={40} color="#ae4b67"/>
-                  </TouchableOpacity>
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}} onChangeText={()=>{}}>
-                    <FontAwesome6 name="trash-can" size={40} color="#ae4b67"/>
-                  </TouchableOpacity>
-                </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        margin: 10,
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onChangeText={() => {}}
+                      >
+                        <FontAwesome6 name="pen" size={40} color="#ae4b67" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onChangeText={() => {}}
+                      >
+                        <FontAwesome6
+                          name="trash-can"
+                          size={40}
+                          color="#ae4b67"
+                        />
+                      </TouchableOpacity>
+                    </View>
                   </View>
-
-
-                  
                 </View>
               </ScrollView>
             </View>
-
-            
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -185,7 +227,7 @@ const styles = StyleSheet.create({
     fontFamily: "EBGaramond_800ExtraBold",
     fontSize: 19,
     color: "#ae4b67",
-    marginLeft: 8
+    marginLeft: 8,
   },
   imgHeader: {
     width: "100%",
@@ -240,11 +282,11 @@ const styles = StyleSheet.create({
     borderColor: "#CF90A2",
     margin: 5,
   },
-  textButton:{
+  textButton: {
     fontFamily: "EBGaramond_800ExtraBold",
     fontSize: 19,
     color: "#FFFFFF",
     padding: 5,
-    textAlign: 'center'
-  }
+    textAlign: "center",
+  },
 });

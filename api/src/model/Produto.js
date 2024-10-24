@@ -101,15 +101,20 @@ export default class Produto {
     p.id,
     p.nome_produto,
     p.descricao,
-    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal, -- Usa MIN para pegar o menor preço se houver duplicatas
+
+    -- Usa MIN para pegar o menor preço se houver duplicatas
+    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,
+
+    -- Calcula o preço promocional, usando COALESCE para escolher entre as promoções de produto ou categoria
     FORMAT(
         COALESCE(
-            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), 
-            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),   
-            MIN(pc.preco)
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), -- Desconto por produto
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),  -- Desconto por categoria
+            MIN(pc.preco)                                               -- Caso não haja promoção
         ), 
         2, 'pt_BR'
-    ) AS preco_promocional,  -- Preço promocional calculado
+    ) AS preco_promocional,  
+
     c.tipo
 FROM 
     produto p
@@ -118,9 +123,9 @@ JOIN
 JOIN
     categoria c ON c.id = p.categoria_id
 LEFT JOIN 
-    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1  
+    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1  -- Promoção por produto ativa
 LEFT JOIN 
-    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   
+    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   -- Promoção por categoria ativa
 WHERE 
     p.status = 1 
     AND pc.status = 1

@@ -1,13 +1,3 @@
-// trazer o header
-
-// fetch('../html/partials/headerUser.html')
-//     .then(response => response.text())
-//     .then(html => {
-//         const header = document.getElementById('header');
-//         header.innerHTML = html;
-//         document.body.appendChild(header);
-//     });
-
 async function authenticateJWT() {
   const token = localStorage.getItem('token');
   if (!token) {
@@ -45,11 +35,20 @@ async function SelecionaInfo() {
     console.log(resposta)
     console.log(resposta.data)
 
+    const userInfo = resposta.data[0];
+    document.querySelector('input[name="Nome"]').value = userInfo.nome
+    document.querySelector('input[name="email"]').value = userInfo.usuario;
+    document.querySelector('input[name="cpf"]').value = userInfo.cpf;
+    document.querySelector('input[name="datNasc"]').value = userInfo.data_nasc;
+    document.querySelector('input[name="tel"]').value = userInfo.numeros;
+
+
   } catch (error) {
     console.error('Erro ao verificar o token:', error);
-    window.location.href = 'login.html';
+    // window.location.href = 'login.html';
   }
 }
+SelecionaInfo()
 
 async function AlterarSenha() {
   const token = localStorage.getItem('token');
@@ -61,6 +60,16 @@ async function AlterarSenha() {
   if (novaSenha !== confirmarSenha) {
     alert("A nova senha e a confirmação não coincidem.");
     return;
+  } 
+  // Verifica se a nova senha é nula
+  if (novaSenha == null) {
+    alert("A nova senha não pode ser nula.");
+    return;
+  } 
+  //Verifica se a confirmção de senha é nula
+  if (confirmarSenha == null) {
+    alert("A confirmação de senha não pode ser nula");
+    return
   }
 
   try {
@@ -77,7 +86,7 @@ async function AlterarSenha() {
     if (resposta.data.message === "Senha alterada com sucesso!") {
       alert("Senha alterada com sucesso!");
       document.getElementById('modal').close();
-    } else {
+    }  else {
       alert("Erro ao alterar a senha: " + resposta.data.message);
     }
 

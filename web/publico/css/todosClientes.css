@@ -70,10 +70,14 @@ tbody tr th {
     color: #333;
 }
 
-#dados {
+#dados, #titulo{
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: bold;
+}
+
+#titulo {
+    padding-left: 13px;
 }
 
 #link {
@@ -130,6 +134,13 @@ tbody th:last-child {
     font-style: normal;
     color: #9B5377;
     font-size: 19px;
+}
+
+#dados {
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    width: 5%;
 }
 
 /* container da tabela */

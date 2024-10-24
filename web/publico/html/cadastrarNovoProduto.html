@@ -11,11 +11,10 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+
 </head>
 
 <body>
-
 
     <header id="headerAdm"></header>
 
@@ -32,7 +31,10 @@
             </div>
 
             <div id="voltar"></div>
-            <a href="../html/admInicio.html" style="text-decoration: none;"> <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span></a>
+            <a href="#" style="text-decoration: none;" onclick="history.back()">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon"
+                    class="fas fa-home fa"></span>
+            </a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                 class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
@@ -50,7 +52,8 @@
 
         <div id="table">
 
-            <form action="http://10.0.3.77:3000/CreateADM" method="post" id="cadastroForm">
+            <form id="produto-form" enctype="multipart/form-data" method="post">
+            <!-- <form action="http://10.0.3.77:3000/CreateADM" method="post" id="cadastroForm"> -->
 
                 <div id="form">
 
@@ -81,10 +84,9 @@
                         <label class="picture" for="imagem">Foto do produto: *</label>
                         <p>Obrigatório carregar ao menos 1 foto do produto*</p>
                         <p>Adicione no maximo 5 fotos*</p>
-                        <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple"
+                        <input class="escolha" type="file" name="imagem" id="imagem" multiple="multiple"
                             maxlength="5">
                         <span class="picture__image"></span>
-
                     </div>
 
                 </div>
@@ -92,7 +94,8 @@
                 <div id="btns">
 
                     <button class="btn btn-primary save-changes" onclick="limparInput()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+                    <button type="submit" class="btn btn-primary save-changes" onclick="event.preventDefault(); salvar();">Salvar</button>
+
 
                 </div>
 

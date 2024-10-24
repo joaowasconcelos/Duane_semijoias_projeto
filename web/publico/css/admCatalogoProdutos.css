@@ -27,6 +27,7 @@ footer {
 
 /* Tabela */
 
+
 table {
     width: 100%;
     border-collapse: collapse;
@@ -34,6 +35,9 @@ table {
     font-size: 15px;
     font-family: Arial, sans-serif;
     text-align: left;
+    display: block;
+    overflow-y: scroll;
+    height: 600px;
 }
 
 thead {
@@ -70,10 +74,14 @@ tbody tr th {
     color: #333;
 }
 
-#dados {
+#dados, #produto {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: bold;
+}
+
+#produto {
+    width: 50%;
 }
 
 #link {
