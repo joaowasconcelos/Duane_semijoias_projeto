@@ -126,7 +126,7 @@ WHERE
     AND pc.status = 1
 GROUP BY 
     p.id, p.nome_produto, p.descricao, c.tipo;
-`);
+1`);
             return produtoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
