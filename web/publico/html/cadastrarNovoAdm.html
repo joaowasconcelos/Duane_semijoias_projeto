@@ -4,18 +4,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cadastro de Produto</title>
-    <link rel="stylesheet" href="../css/cadastrarNovoProduto.css">
+    <title>Cadastrar administrador</title>
+    <link rel="stylesheet" href="../css/cadastrarNovoAdm.css">
     <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+
 </head>
 
 <body>
-
 
     <header id="headerAdm"></header>
 
@@ -32,7 +31,10 @@
             </div>
 
             <div id="voltar"></div>
-            <a href="../html/admInicio.html" style="text-decoration: none;"> <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon" class="fas fa-home fa"></span></a>
+            <a href="../html/admInicio.html" style="text-decoration: none;">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon"
+                    class="fas fa-home fa"></span>
+            </a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                 class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
@@ -50,40 +52,53 @@
 
         <div id="table">
 
-            <form action="">
+            <form action="http://10.0.3.77:3000/CreateADM" method="POST" id="envia-form">
 
                 <div id="form">
 
                     <div id="dados">
 
-                        <label for="nome">Nome completo: *</label>
-                        <input class="input" type="text" name="nome" id="nome">
+                        <label for="Nome">Nome completo: *</label>
+                        <input class="input" type="text" name="Nome" id="Nome" required>
 
-                        <label for="cpf">C.P.F: *</label>
-                        <input class="input" type="text" name="cpf" id="cpf">
+                        <label for="CPF">C.P.F: *</label>
+                        <input  type="text" id="CPF" placeholder="###.###.###-##" onkeyup="mascara('###.###.###-##',this,event,true)" maxlength="14" required>
 
-                        <label for="genero">Gênero: *</label>
-                        <input type="radio" name="genero" id="genero">
-                        <input type="radio" name="genero" id="genero">
-                        
+                        <label for="Genero">Gênero: *</label>
+                        <select id="Genero" name="Genero" required>
+                            <option value="selecione"></option>
+                            <option value="feminino">Feminino</option>
+                            <option value="masculino">Masculino</option>
+                        </select>
 
-                        <label for="preco">Preço: *</label>
-                        <input class="input" type="text" id="preco" name="preco" onInput="mascaraMoeda(event);"
-                            onkeydown="return somenteNumeros(event)">
+                        <label for="Data_Nasc">Data de nascimento: *</label>
+                        <input class="input" type="date" id="Data_Nasc" name="Data_Nasc" required>
 
-                        <label for="quantidade">Quantidade: *</label>
-                        <input class="input" type="number" name="quantidade" id="quantidade">
+                        <label for="Telefones">Telefone: *</label>
+                        <input class="input" type="text" name="Telefones" id="Telefones" required>
 
                     </div>
 
-                    <div id="addFotos">
+                    <div id="dados">
+                        
+                        <label for="Telefones">Telefone: </label>
+                        <input class="input Telefone2" type="text" name="Telefones" id="Telefones">
 
-                        <label class="picture" for="imagem">Foto do produto: *</label>
-                        <p>Obrigatório carregar ao menos 1 foto do produto*</p>
-                        <p>Adicione no maximo 5 fotos*</p>
-                        <input class="escolha" type="file" name="imagem[]" id="imagem" multiple="multiple"
-                            maxlength="5">
-                        <span class="picture__image"></span>
+                        <label for="Usuario">Email: * </label><span id="text"></span>
+                        <input type="text" name="Usuario" id="Usuario" autocomplete="Usuario" onkeydown="validando()" required>
+
+                        <label for="perfil">Tipo: *</label>
+                        <select id="perfil" name="perfil" required>
+                            <option value="selecione"></option>
+                            <option value="1">ADM</option>
+                            <option value="2">Cliente</option>
+                        </select>
+
+                        <br>
+
+                        <p>**Confira se todos os dados estão devidamente preenchidos <br>
+                            antes de finalizar o cadastro.</p>
+                        <p>**Todos os campos marcados com “ * ” são obrigatórios.</p>
 
                     </div>
 

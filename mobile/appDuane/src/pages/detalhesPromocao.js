@@ -13,7 +13,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-
+import { RadioButton } from 'react-native-paper';
+import { Picker } from '@react-native-picker/picker';
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -48,7 +49,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%" }}>
+          <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -73,9 +74,142 @@ export default function Home() {
                 style={styles.logoImg}
               />
 
-              <Text style={styles.textTitle}>Promoções</Text>
+              <Text style={styles.textTitle}>Promoções</Text>              
+            </View>
 
-              
+            <View
+              style={{
+                height: "66%",
+                borderWidth: 1,
+                borderRadius: 10,
+                borderColor: "#FAADD1",
+                width: "95%",
+                justifyContent: "center",
+                alignItems: "center",
+                backgroundColor: "#FFF2F6",
+              }}
+            >
+              <ScrollView>
+                <View style={styles.containerElements}>
+                  <Text
+                    style={{
+                      marginTop: 15,
+                      fontSize: 18,
+                      fontWeight: "bold",
+                      color: "#633636",
+                    }}
+                  >
+                    Detalhes da Promoção:
+                  </Text>
+                  <View
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      width: "100%",
+                    }}
+                  >
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
+                      <Text style={styles.textBtn}>Código:</Text>
+                      <TextInput style={styles.Inputs}></TextInput>
+                    </View>
+
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
+                      <Text style={styles.textBtn}>Descrição:</Text>
+                      <TextInput style={styles.Inputs}></TextInput>
+                    </View>
+
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
+                      <Text style={styles.textBtn}>Validade:</Text>
+                      <TextInput style={styles.Inputs}></TextInput>
+                    </View>
+
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start" }}
+                    >
+                      <Text style={styles.textBtn}>
+                        Valor/Porcentagem do desconto:
+                      </Text>
+                      <TextInput style={styles.Inputs}></TextInput>
+                    </View>
+
+                    <View
+                      style={{ width: "90%", justifyContent: "flex-start", alignItems: 'flex-start',  }}>
+                      <Text style={styles.textBtn}>Por:</Text>
+                      <RadioButton.Group
+                        // onValueChange={(newValue) => setValue(newValue)}
+                        // value={value}
+                        style={{}}
+                      >
+                        <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', marginLeft: 10, width: '45%' }}>
+                          <View>
+                            <Text>Produto</Text>
+                            <RadioButton value="first" />
+                          </View>
+                          <View>
+                            <Text>Categoria</Text>
+                            <RadioButton value="second" />
+                          </View>
+                        </View>
+                      </RadioButton.Group>
+
+                      <TouchableOpacity style={{height: 35, backgroundColor: '#FFF6F2', justifyContent: 'center', borderRadius: 5, borderWidth: 1, borderColor: '#9B5377', fontWeight: 'bold', width: '100%', marginLeft: 10}}>
+                        <Picker
+                            // selectedValue={}
+                            
+                            // onValueChange={(itemValue) => setCate(itemValue)}
+                        >
+                            <Picker.Item label="Selecione a Categoria" value=""/>
+                            <Picker.Item label="Brinco" value="Brinco"/>
+                            <Picker.Item label="Colar" value="Colar"/>
+                            <Picker.Item label="Pulseira" value=""/>
+                            <Picker.Item label="Anel" value="Anel"/>
+                            <Picker.Item label="Conjunto" value="Conjunto"/>
+                        </Picker>
+                      </TouchableOpacity>
+                    </View>
+
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "space-evenly",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        margin: 10,
+
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onChangeText={() => {}}
+                      >
+                        <FontAwesome6 name="pen" size={34} color="#ae4b67" />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                        onChangeText={() => {}}
+                      >
+                        <FontAwesome6
+                          name="trash-can"
+                          size={34}
+                          color="#ae4b67"
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  </View>
+                </View>
+              </ScrollView>
             </View>
 
             
@@ -110,27 +244,24 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     width: "100%",
-    marginBottom: 60,
+    height: "100%",
   },
   btn: {
-    width: "85%",
-    backgroundColor: "#FFFFFF",
-    height: 50,
+    width: "35%",
+    backgroundColor: "#E5969C",
+    height: 35,
     justifyContent: "center",
     alignItems: "center",
     marginTop: 20,
     borderRadius: 10,
     borderColor: "#9B5377",
     borderWidth: 1,
-    flexDirection: "row",
   },
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
-    fontSize: 18,
+    fontSize: 19,
     color: "#ae4b67",
-    opacity: 0.8,
-    margin: 10,
-    paddingRight: 5,
+    marginLeft: 8,
   },
   imgHeader: {
     width: "100%",
@@ -145,10 +276,10 @@ const styles = StyleSheet.create({
     bottom: 0,
   },
   textElement: {
-    fontFamily: "EBGaramond_400Regular",
-    fontSize: 26,
-    color: "#AE4B67",
+    // fontFamily: "EBGaramond_400Regular",
+    fontSize: 14,
     textAlign: "center",
+    marginRight: 40,
   },
   textTitle: {
     fontFamily: "EBGaramond_800ExtraBold",
@@ -164,10 +295,33 @@ const styles = StyleSheet.create({
     margin: 20,
     paddingTop: 10,
     position: "relative",
+    width: "100%",
   },
   btnLogOut: {
     position: "absolute",
-    alignSelf: "flex-start",
     marginTop: 50,
+    left: 50,
+  },
+  Inputs: {
+    width: "100%",
+    height: 35,
+    fontSize: 18,
+    fontFamily: "EBGaramond_400Regular",
+    borderRadius: 10,
+    backgroundColor: "#FFF6F2",
+    padding: 5,
+    color: "#000000",
+    fontWeight: "bold",
+    borderWidth: 1,
+    borderColor: "#CF90A2",
+    margin: 5,
+  },
+  textButton: {
+    fontFamily: "EBGaramond_800ExtraBold",
+    fontSize: 19,
+    color: "#FFFFFF",
+    padding: 5,
+    textAlign: "center",
   },
 });
+

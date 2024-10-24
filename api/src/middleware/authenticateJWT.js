@@ -21,17 +21,14 @@ const authenticateJWT = (req, res, next) => {
     }
 
     try {
-        // Verifica o token
         const verifica = jwt.verify(token, secretKey);
-        req.id = verifica.id; // Salva o ID da pessoa no request para uso posterior
+        req.id = verifica.id;
         req.perfil = verifica.perfil;
 
-        // Se a rota for para validação de token (ex: frontend)
         if (req.path === '/verificar-token') {
             return res.status(200).json({ message: "Token válido." });
         }
 
-        // Caso contrário, continue a execução para o próximo middleware/rota
         next();
     } catch (error) {
         console.log("Erro de autenticação JWT:", error);
@@ -43,6 +40,7 @@ const authenticateJWT = (req, res, next) => {
 const invalidateToken = (token) => {
     blacklist.push(token);
 };
+
 
 // Rota de logout ou para invalidar o token
 const logout = (req, res) => {

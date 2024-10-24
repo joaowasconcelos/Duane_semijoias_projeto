@@ -1,31 +1,3 @@
-async function verificaUser() {
-    const token = localStorage.getItem('token');
-    console.log("token",token)
-    if (!token) {
-        window.location.href = 'login.html';
-        return;
-    }
-    try {
-        const resposta = await axios.get('http://192.168.3.9:3000/pagina-admin', {
-            headers: {
-                'x-access-token': `${token}`
-            }
-        });
-        if (resposta.data.message === "Token válido.") {
-            return 'Acesso autorizado';
-        } else {
-            // alert("Você não possui acesso para tal ação")
-            // window.location.href = 'login.html';
-        }
-
-    } catch (error) {
-        console.error('Erro ao verificar o token:', error);
-        window.location.href = 'login.html';
-    }
-}
-verificaUser()
-
-
 function changeSubtitle() {
     document.getElementById('subtitleCadastradas').textContent = 'Qual o novo nome da categoria?';
     document.getElementById('titleCadastradas2').textContent = 'Edite a categoria escolhida';
@@ -42,8 +14,8 @@ let responsePed;
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        responsePed = await axios.get('http:///192.168.3.9:3000/SelecionaPedido');
-        responseTipo = await axios.get('http:///192.168.3.9:3000/SelecionaCategoria');
+        responsePed = await axios.get('http:///10.0.3.77:3000/SelecionaPedido');
+        responseTipo = await axios.get('http:///10.0.3.77:3000/SelecionaCategoria');
         console.log(responsePed.data)
         console.log(responseTipo.data)
 
@@ -69,11 +41,14 @@ dados();
 var table;
 
 function criarTabela(){
-    table = `<tr>
-    <td>Descrição</td>
-    <td>Editar</td>
-    <td>Excluir</td>
-    </tr>`
+    table = `
+    <thead>
+        <tr>
+            <td>Descrição</td>
+            <td>Editar</td>
+            <td>Excluir</td>
+        </tr>
+    </thead>`
 }
 
 function carregaDadosModalCategoria(){
@@ -82,8 +57,9 @@ function carregaDadosModalCategoria(){
     $.each(responseTipo.data, function () {
         table += 
         `<tr>
-        <td>${this['tipo']}</td>
-        <td><a href="/editar/${this["id"]}">editar</a></td>
+            <td>${this['tipo']}</td>
+            <td><a href="/editar/${this["id"]}">editar</a></td>
+            <td>Editar</td>
         </tr>`
     });
     // console.log(table);
@@ -97,12 +73,14 @@ var table2;
 
 function criarTabela2(){
     table2 = `
+    <thead>
         <tr>
             <td id="codigot">Código</td>
             <td id="dtComprat">Data de compra</td>
             <td id="descricaott">Descrição</td>
             <td id="statust">Status</td>
-        </tr>`
+        </tr>
+    </thead>`
 }
 
 function carregaDadosTabelaPedidos(){
@@ -118,7 +96,7 @@ function carregaDadosTabelaPedidos(){
         </tr>
         </tbody>`
     });
-    console.log(table2);
+    //console.log(table2);
     
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }

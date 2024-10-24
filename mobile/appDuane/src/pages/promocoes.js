@@ -31,6 +31,14 @@ import {
 export default function Home() {
   const navigation = useNavigation();
 
+  const navegaDetalhesPromocao = () =>{
+    navigation.navigate('DetalhesPromocao')
+  }
+
+  const navegaGerarPromocao = () =>{
+    navigation.navigate('GerarPromocao')
+  }
+
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
     EBGaramond_500Medium,
@@ -151,6 +159,7 @@ export default function Home() {
                         height: "100%",
                         marginTop: 40,
                       }}
+                      onPress={navegaDetalhesPromocao}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6
@@ -175,6 +184,7 @@ export default function Home() {
                 borderRadius: 10,
                 marginBottom: 5,
               }}
+              onPress={navegaGerarPromocao}
             >
               <Text
                 style={{
