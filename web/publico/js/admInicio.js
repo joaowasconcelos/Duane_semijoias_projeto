@@ -71,9 +71,9 @@ function criarTabela(){
     table = `
     <thead>
         <tr>
-            <td>Descrição</td>
-            <td>Editar</td>
-            <td>Excluir</td>
+            <td id="desc" class="tituloD">Descrição</td>
+            <td  class="titulo">Editar</td>
+            <td  class="titulo">Excluir</td>
         </tr>
     </thead>`
 }
@@ -84,9 +84,10 @@ function carregaDadosModalCategoria(){
     $.each(responseTipo.data, function () {
         table += 
         `<tr>
-            <td>${this['tipo']}</td>
-            <td><a href="/editar/${this["id"]}">editar</a></td>
-            <td>Editar</td>
+            <td id="desc">${this['tipo']}</td>
+            <td><a href="/editar/${this["id"]}" onclick="changeSubtitle()">Editar</a></td>
+            
+            <td>Excluir</td>
         </tr>`
     });
     // console.log(table);
