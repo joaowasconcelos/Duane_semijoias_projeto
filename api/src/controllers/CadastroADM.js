@@ -49,7 +49,7 @@ const CadastroUsuario = {
             if (!insertPessoa.error) {
                 const cLogin = new Login(null, Usuario, "DUANE123@", 0, 1,perfil, insertPessoa);
                 const VerificaLogin = cLogin.verificaCampos()
-                const validaLogin = cLogin.validaCampos()
+                const validaLogin = cLogin.validaCamposADM()
                 if(!VerificaLogin){
                     return res.status(500).json({ message: "Numero máximo de caracteres "})
                 }
@@ -65,7 +65,10 @@ const CadastroUsuario = {
                 if (!verificaLog) {
                     return res.status(400).json({ message: "Erro email ja cadastrado" });
                 }
+                console.log("teste1")
                 const insertLogin = await cLogin.CadastrarLogin();
+                console.log("teste",insertLogin)
+                console.log("teste",insertLogin.error)
                 if (!insertLogin.error) {
                     if (Telefones.length > 0) {
                         for (const numeroTelefone of Telefones) {
@@ -87,12 +90,13 @@ const CadastroUsuario = {
                         };
                     }
                 } else {
+                    console.log("teste")
                     const deletarPessoa = cPessoa.DeletarPessoa()
                     return res.status(400).json({ message: "Erro ao cadastrar Login!" });
                 }
                 return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
             } else {
-                return res.status(400).json({ message: "Erro ao cadastrar usuário!" });
+                return res.status(400).jsonXXXXXXXL({ message: "Erro ao cadastrar usuário!" });
             }
 
 

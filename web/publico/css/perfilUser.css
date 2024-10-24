@@ -38,11 +38,6 @@ h2 {
     gap: 11px;
 }
 
-#icon {
-    font-size: 30px;
-    margin-top: 12px;
-}
-
 .menu {
     align-items: center;
     justify-content: center;
@@ -69,11 +64,6 @@ h2 {
     color: #9B5377;
     padding: 2%;
     font-size: 95%;
-}
-
-a {
-    text-decoration: none;
-    color: #9B5377;
 }
 
 #dados {
@@ -122,10 +112,6 @@ input:focus {
     height: 35px;
 }
 
-#olinhos{
-    top: 10%;
-}
-
 #modal {
     position: absolute;
     top: 80%;
@@ -162,36 +148,21 @@ input:focus {
     border-color: #633636;
 }
 
-.modal[open] {
+/* .modal[open] {
     display: block;
-    /* Exibe o modal quando o atributo open é adicionado */
+    Exibe o modal quando o atributo open é adicionado
     border-radius: 15px;
     border-radius: 15px;
     border: 2px;
     border-color: #633636;
+    gap: 10px;
+} */
+
+#btn {
+    padding: 10px;
+    gap: 10px !important;
 }
 
-.close {
-    color: #aaa;
-    float: right;
-    font-size: 18px;
-    font-weight: bold;
-    margin-top: 20px;
-    border-radius: 15px;
-    border: 2px;
-    border-color: #633636;
-    background-color: #AE4B67;
-    border-radius: 15px;
-}
-
-.close:hover,
-.close:focus {
-    color: #ffffff;
-    text-decoration: none;
-    cursor: pointer; 
-    background-color: #AE4B67;
-    border-radius: 15px;
-}
 
 @import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Average&display=swap');
@@ -212,26 +183,22 @@ main {
     flex-direction: row;
     margin-top: 190px;
     width: 100%;
-    height: 60px;
+    align-items: center;
 }
 
 /* voltar ao inicio */
 
 #voltar {
     margin-left:75%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
     align-items: center;
 }
 
 #back {
-    font-family: "Average", serif;
-    font-weight: 400;
-    font-style: normal;
-    color: #9B5377;
+    font-weight: bold;
     font-size: 19px;
-    width: 130px;
-    height: 30%;
-    display: flex;
-    flex-direction: row;
 }
 
 /* bem vinda + nome */
@@ -239,16 +206,15 @@ main {
 #bemVinda {
     display: flex;
     flex-direction: row;
-    gap: 19px;
+    gap: 5px;
+    margin-left: 10px;
+    align-items: center;
 }
 
 #bemVindaText {
     font-weight: bold;
     font-size: 19px;
-    width: 150px;
-    height: 30px;
 }
-
 /* Toda estilização dentro do menu do adm */
 #menuAdm {
     display: flex;
@@ -296,7 +262,6 @@ main {
 
 #icon {
     color: #9b5377;
-     font-size: 19px;
 }
 
 /* container da tabela */

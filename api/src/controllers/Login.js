@@ -30,9 +30,9 @@ const LoginController = {
                 return res.status(201).json({ message: "Primeiro Login desse usuário, precisa redefinir a senha",})
             }
 
-            console.log(verificaLogin)
+        
             const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
-            return res.json({ auth: true, token:token,verificaLogin:verificaLogin })
+            return res.json({ auth: true, token:token})
 
         } catch (error) {
             res.status(500).json({ message: "Erro ao verificar login!" })
@@ -98,15 +98,20 @@ const LoginController = {
 
     AlteraSenha:async (req,res) => {
         try {
-            console.log("aqui")
             const {senhaAtual,novaSenha} = req.body 
-            console.log(novaSenha)
             const id = req.id
+            
 
             if(senhaAtual === novaSenha){
-                return res.status(401).json({ message: "Senhas iguai, forneça senhas diferentes" })
+                return res.status(401).json({ message: "Senhas iguais, forneça senhas diferentes" })
             }
+            console.log("aqui",senhaAtual,novaSenha,id)
             const cLogin  = new Login(null,null,senhaAtual,null,null,null,id,novaSenha)
+            const validaCampos = cLogin.validaCampos()
+            console.log(validaCampos)
+            if(!validaCampos){
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
             const AlterarSenha = await cLogin.AlterarSenha()
             console.log(AlterarSenha)
             if(AlterarSenha === "Senha atual incorreta"){
