@@ -162,10 +162,12 @@ const styles = StyleSheet.create({
     height: 120,
   },
   containerLogoTitle: {
+    justifyContent: "center",
     alignItems: "center",
     margin: 20,
     paddingTop: 10,
     position: "relative",
+    
   },
   btnLogOut: {
     position: "absolute",
@@ -173,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   Inputs: {
-    width: "80%",
+    width: "70%",
     height: 30,
     fontSize: 18,
     fontFamily: "EBGaramond_400Regular",
@@ -186,4 +188,10 @@ const styles = StyleSheet.create({
     borderColor: "#CF90A2",
     margin: 5,
   },
+  searchContainer:{
+    width: "100%",
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
 });
