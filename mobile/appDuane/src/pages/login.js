@@ -12,6 +12,8 @@ import {
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import AppLoading from "expo-app-loading";
 import {
@@ -39,28 +41,59 @@ export default function Login() {
 
   const [token, setToken] = useState("");
 
-  const verificaUser = async () => {
-    if (email.length <= 20 || email !== "" && senha <= 20 || senha !== "") {
-      try {
-        const response = await api.get(
-          "http://10.0.3.77:3000/VerificaLogin",
-          {email: email, senha: senha,});
-          if(response.data){
-            setEmail(response.data.email);
-            setSenha(response.data.senha);
-            setToken(response.data.token);
-            console.log(response.data.token);
-            navigateHome();
-          }else{
-            alert(response.data.message || "Email ou senha inválidos!");
-          }
-      } catch (error) {
-        console.error("Erro ao fazer o login" ,error);
-      }
-    }else{
-        alert("Ocorreu um erro ao tentar fazer login. Verifique a conexão com a api.");
+  const decodeJWT = (token) => {
+    try {
+      const base64Url = token.split('.')[1];
+      const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+      const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+      }).join(''));
+      return JSON.parse(jsonPayload);
+    } catch (e) {
+      console.error("Erro ao decodificar o token", e);
+      return null;
     }
   };
+  
+
+  const verificaUser = async () => {
+    if (email.length <= 150 && email !== "" && senha.length <= 100 && senha !== "") {
+      try {
+        const response = await api.get(`http://10.0.3.77:3000/VerificaLogin?login=${email}&senha=${senha}`);
+         
+        if (response.data && response.data.token) {
+          const token = response.data.token;
+          setToken(token);
+          await AsyncStorage.setItem('userToken', JSON.stringify(token));
+          console.log(token);
+          const decodedToken = decodeJWT(token);
+          console.log(decodedToken);
+        if (decodedToken.perfil === 1) {
+            navigateHome(); // Navega para a home somente se o login der certo
+        } else  {
+          console.log('Usuário não autorizado!');
+          alert('Usuário não autorizado!');
+        }
+        } else {
+          alert(response.data.message || "Email ou senha inválidos!");
+        }
+      } catch (error) {
+        if (error.response) {
+          alert(error.response.data.message || "Erro ao tentar conectar à API.");
+        } else {
+          alert("Erro ao tentar conectar à API.");
+        }
+        console.error("Erro ao fazer o login", error);
+      }
+    } else {
+      alert("Por favor, preencha os campos corretamente.");
+    }
+  };
+  
+  
+  
+  
+  
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -112,12 +145,12 @@ export default function Login() {
                   onChangeText={setSenha}
                   value={senha}
                 ></TextInput>
-                <TouchableOpacity onPress={() => {}}>
+                <TouchableOpacity onPress={() => { }}>
                   <Text style={styles.textForgotPass}>Esqueceu sua senha?</Text>
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={navigateHome}>
+              <TouchableOpacity style={styles.btn} onPress={verificaUser}>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>
             </View>
