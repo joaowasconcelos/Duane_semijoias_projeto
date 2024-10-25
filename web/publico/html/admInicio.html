@@ -78,32 +78,39 @@
 
                     </div>
 
-                    <div class="modal-body">
 
-                        <div id="boxCategorias">
+                    <form action="http://10.0.3.77:3000/CreateCategoria" method="POST" id="envia-form">
 
-                            <p id="titleCadastradas">Categorias ja cadastradas</p>
+                        <div class="modal-body">
 
-                            <table id="tbl-categorias"></table>
-                            
+                            <div id="boxCategorias">
+
+                                <p id="titleCadastradas">Categorias ja cadastradas</p>
+
+                                <table id="tbl-categorias"></table>
+
+                            </div>
+
+                            <div id="boxCadastrarCategorias">
+
+                                <p id="titleCadastradas2">Cadastrar nova categoria</p>
+                                <p id="subtitleCadastradas">Qual a nova categoria de produtos?</p>
+                                <input type="text" name="categoria" id="tipo">
+
+                            </div>
+
                         </div>
 
-                        <div id="boxCadastrarCategorias">
+                        <div class="modal-footer">
 
-                            <p id="titleCadastradas2">Cadastrar nova categoria</p>
-                            <p id="subtitleCadastradas">Qual a nova categoria de produtos?</p>
-                            <input type="text" name="categoria" id="categoria">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"
+                                onclick="window.location.reload(true);">Cancelar</button>
+
+                            <button id="salvando" type="submit" class="btn btn-primary save-changes"
+                                onclick="save()">Salvar</button>
 
                         </div>
-
-                    </div>
-
-                    <div class="modal-footer">
-
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
-
-                    </div>
+                    </form>
 
                 </div>
 
