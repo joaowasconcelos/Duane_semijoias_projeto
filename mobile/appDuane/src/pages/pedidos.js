@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,7 +27,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
@@ -38,6 +39,38 @@ export default function Home() {
     EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+  const [pedidos, setPedidos] = useState([]);
+  const selecionaCate = async () => {
+    try {
+      const response = await api.get(`http://10.0.3.77:3000/SelecionaPedido`);
+      setPedidos(response.data); 
+      console.log(response.data)
+      console.log(pedidos)
+    } catch (error) {
+      console.error("Erro ao buscar as categorias:", error); 
+    }
+  };
+
+  
+  useEffect(() => {
+    getToken(); // Chama a função para obter o token
+    selecionaCate(); 
+  }, []);
+
+
+
 
   if (!fontsLoaded) {
   } else {
