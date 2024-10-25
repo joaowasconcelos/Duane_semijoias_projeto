@@ -56,8 +56,6 @@ export default function Home() {
     try {
       const response = await api.get(`http://10.0.3.77:3000/SelecionaPedido`);
       setPedidos(response.data); 
-      console.log(response.data)
-      console.log(pedidos)
     } catch (error) {
       console.error("Erro ao buscar as categorias:", error); 
     }
@@ -69,6 +67,13 @@ export default function Home() {
     selecionaCate(); 
   }, []);
 
+  useEffect(() => {
+   console.log(pedidos)
+  }, [pedidos]);
+
+
+  
+  
 
 
 
