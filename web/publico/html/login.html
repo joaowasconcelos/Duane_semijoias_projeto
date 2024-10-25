@@ -148,9 +148,9 @@
     
                 // Verifica o perfil e redireciona
                 if (decodedToken.perfil === 1) {
-                    window.location.href = 'http://127.0.0.1:5501/publico/html/admInicio.html';
+                    window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
                 } else if (decodedToken.perfil === 2) {
-                    window.location.href = 'http://127.0.0.1:5501/publico/html/perfilUser.html';
+                    window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
                 } else {
                     console.log('Usuário não autorizado!');
                     alert('Usuário não autorizado!');
