@@ -15,22 +15,21 @@ const LoginController = {
             const cLogin = new Login(null, login, senha)
             const verificaCampos = cLogin.verificaCampos()
             if (!verificaCampos) {
-                return res.status(500).json({ message: "Numero máximo de caracteres " })
+                return res.status(401).json({ message: "Numero máximo de caracteres " })
             }
             const verificaLogin = await cLogin.VerificaLogin()
 
             if (!verificaLogin) {
-                return res.status(500).json({ message: "Usuário ou senha incorretos" })
+                return res.status(401).json({ error: "Usuário ou senha incorretos" })
             }
             if (verificaLogin === "Usuario Inativo") {
-                return res.status(500).json({ message: "Usuário inativado" })
+                return res.status(401).json({ error: "Usuário inativado" })
             }
 
             if (verificaLogin[0].primeiro_login == 1) {
                 return res.status(201).json({ message: "Primeiro Login desse usuário, precisa redefinir a senha",})
             }
 
-        
             const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
             return res.json({ auth: true, token:token})
 

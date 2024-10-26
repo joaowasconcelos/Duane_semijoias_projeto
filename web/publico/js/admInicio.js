@@ -49,7 +49,7 @@ function carregaDadosModalCategoria() {
         table +=
             `<tr>
             <td id="desc" class="selectIdProd" data-id="${this['id']}">${this['tipo']}</td>
-            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit">Editar</a></td>
+            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit" >Editar</a></td>
             <td class="btnMod">Excluir</td>
         </tr>`
     });
@@ -60,8 +60,9 @@ function carregaDadosModalCategoria() {
     document.getElementById('tbl-categorias').innerHTML = table;
 }
 
-//puxando tabela de pedidos do banco
 
+
+//puxando tabela de pedidos do banco
 var table2;
 
 function criarTabela2() {
@@ -94,70 +95,78 @@ function carregaDadosTabelaPedidos() {
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }
 
-//altera subtitulos e tipo do form
+const form = document.getElementById('envia-form'); // Define `form` no escopo global
+const elemento = document.getElementById('tipo');
 
-const form = document.getElementById('envia-form');
-
+//função para alterar o formulário 
 function changeSubtitle(link) {
 
     document.getElementById('subtitleCadastradas').textContent = 'Qual o novo nome da categoria?';
     document.getElementById('titleCadastradas2').textContent = 'Edite a categoria escolhida';
-    //document.getElementById('tipo').value = '';
 
-    form.method = 'PUT'; //muda o metodo do formulario
+    const td = link.closest('tr').querySelector('#desc').innerHTML;
+    const id = link.closest('tr').querySelector('td').getAttribute('data-id');
 
-    var td = link.closest('tr').querySelector('#desc').innerHTML;
-    var id = link.closest('tr').querySelector('td').getAttribute('data-id');
-
-    const elemento = document.getElementById('tipo');
-    elemento.value = td;
     elemento.setAttribute('data-id', id);
+    elemento.value = td;
 
+    btnSave.setAttribute('data-id', id);
 
-
+    console.log(elemento)
     console.log(td);
-
+    console.log(form.method)
+    console.log(id)
 
     return false;
-
 }
 
-const btnSave = document.getElementById('salvando')
+//IDENTIFICAR SE O ELEMENTO DO CAMPO INPUT POSSUI ID
+//SE TIVER ID É POST
+//SE NÃO É GET
 
-btnSave.addEventListener('click', function () {
+const btnSave = document.getElementById('salvando');
 
-    console.log('tetetetetetetet');
-    
-    if (form.method.toUpperCase() === 'PUT') {
-        put();
-        form.submit();
-        //console.log('enviando com PUT')
+btnSave.addEventListener('click', function (link) {
+
+    // console.log("entrou")
+    const id = btnSave.getAttribute('data-id');
+    elemento.setAttribute('data-id', id);
+
+    console.log(id)
+
+    if (!id) {
+        console.log("id é uma string vazia ou null");
+        // post();
     } else {
-        post();
-        form.submit()
-        //console.log('enviando com POST')
+        console.log("id possui um valor válido");
+        put();
     }
-})
 
-//função para editar
+});
+
+// ModificaCategoria/:id  UPDATE
+// CreateCategoria
+
+
+// //função para editar
 async function put() {
 
     const token = localStorage.getItem('token');
+    console.log(token)
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
 
 
     try {
-        const response = await axios.post('http://10.0.3.77:3000/ModificaCategoria/:id',
-
+        const response = await axios.post(`http://10.0.3.77:3000/ModificaCategoria/${id}`,
+            
             {
-                headers: {
-                    'x-access-token': token
-                }
+                tipo: tipo
             },
             {
-                id: id,
-                tipo: tipo
+                headers: {
+                    'x-access-token': localStorage.getItem('token')
+                }
             }
 
         );
@@ -172,11 +181,13 @@ async function put() {
     window.location.reload(true);
 }
 
+
 //função para cadastrar
 async function post() {
 
     const token = localStorage.getItem('token');
     const tipo = document.getElementById("tipo").value;
+    const id = document.getElementById("tipo").getAttribute('data-id');
 
     try {
         const response = await axios.post('http://10.0.3.77:3000/CreateCategoria',
@@ -187,6 +198,7 @@ async function post() {
                 }
             },
             {
+                id: id,
                 tipo: tipo
             }
 

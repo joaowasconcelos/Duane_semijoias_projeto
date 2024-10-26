@@ -3,6 +3,7 @@ import Categoria from "../model/Categoria.js";
 const CategoriaController = {
     Cadastro: async (req, res) => {
         try {
+            console.log(req.body)
             const { tipo } = req.body;
             const cCategoria = new Categoria(null, tipo,1);
             const validaCampos = cCategoria.validaCampos()

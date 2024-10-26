@@ -49,8 +49,8 @@ const CuponsController = {
     },
     Seleciona: async (req,res) => {
         try {
-            const selecionaPessoas = Cupons.SelecionaCupom()
-            return res.json(selecionaPessoas);
+            const selecionaCupom = await Cupons.SelecionaCupom()
+            return res.json(selecionaCupom);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Erro ao selecionar cupons" });

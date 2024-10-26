@@ -9,6 +9,7 @@ let blacklist = [];
 const authenticateJWT = (req, res, next) => {
     const secretKey = process.env.SECRET_KEY;
     const token = req.headers['x-access-token'];
+   
 
     // Verifica se o token está presente
     if (!token) {

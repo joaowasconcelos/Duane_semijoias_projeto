@@ -87,7 +87,6 @@ export default class Login {
         this._nova_senha = value;
     }
 
-    //SENHA HASH??
     async CadastrarLogin() {
         const bd = await obterConexaoDoPool();
         try {
