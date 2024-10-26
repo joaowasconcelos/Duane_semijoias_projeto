@@ -10,7 +10,9 @@ const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoa: async (req, res) => {
         try {
+            console.log(req.body)
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
+            console.log(Telefones)
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
 
             const vericaCampos = cPessoa.verificaCampos()
@@ -23,6 +25,7 @@ const CadastroUsuario = {
             }
 
             const verificaCPF = cPessoa.validaCpf()
+            console.log(verificaCPF)
             if (!verificaCPF) {
                 return res.status(400).json({ message: "Erro CPF invalido" });
             }
@@ -46,6 +49,7 @@ const CadastroUsuario = {
                 const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
 
                 const verificaEmail = await cLogin.VerificaUsuario()
+                console.log(verificaEmail)
 
                 if (!verificaEmail) {
                     const deletarPessoa = cPessoa.DeletarPessoa()
@@ -58,14 +62,19 @@ const CadastroUsuario = {
                 }
                 const insertLogin = await cLogin.CadastrarLogin();
 
+                console.log(Telefones)
                 if (!insertLogin.error) {
+                    console.log("entrei")
+                    console.log(Telefones)
                     if (Telefones.length > 0) {
+                        console.log(Telefones)
                         for (const numeroTelefone of Telefones) {
+                            console.log("numeroTelefone",numeroTelefone)
                             const novoTelefone = new Telefone(null, numeroTelefone, insertPessoa);
                             insertTele = await novoTelefone.CadastrarTelefone();
                             if (insertTele.error) {
-                                const deleteLogin = cLogin.DeletarLogin();
-                                const deletarPessoa = cPessoa.DeletarPessoa();
+                                const deleteLogin = await cLogin.DeletarLogin();
+                                const deletarPessoa = await cPessoa.DeletarPessoa();
                                 return res.status(400).json({ message: "Erro ao cadastrar Numero!" });
 
                             }

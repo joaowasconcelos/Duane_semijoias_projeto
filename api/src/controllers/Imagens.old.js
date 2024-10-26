@@ -1,21 +1,21 @@
-import path from 'path';
-import { fileURLToPath } from 'url';
-import multer from 'multer';
-import admin from "firebase-admin";
-import sharp from 'sharp';
-import Produto_Img from '../model/Produto_img.js';
-import serviceAccount from "../config/firebase.js";
+// import path from 'path';
+// import { fileURLToPath } from 'url';
+// import multer from 'multer';
+// import admin from "firebase-admin";
+// import sharp from 'sharp';
+// import serviceAccount from "../config/firebase.js";
+// import Produto_Img from '../model/Produto_img.js';
 // import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 
-// const bucketName = "teste-firebase-b05a9.appspot.com";
+const bucketName = "teste-firebase-b05a9.appspot.com";
 
-// // admin.initializeApp({
-// //     credential: admin.credential.cert(serviceAccount),
-// //     storageBucket: bucketName
-// // });
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount),
+    storageBucket: bucketName
+});
 
-// const bucket = admin.storage().bucket();
+const bucket = admin.storage().bucket();
 
 
 // const __filename = fileURLToPath(import.meta.url);
