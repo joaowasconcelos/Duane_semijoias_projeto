@@ -103,21 +103,21 @@
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
-    
+
         registerBtn.addEventListener('click', () => {
             container.classList.add("active");
         });
-    
+
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
         });
-    
+
         document.getElementById('acessar').addEventListener('click', async function (event) {
             event.preventDefault();
-    
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-    
+
             try {
                 // Envia os dados para a rota de login
                 const response = await axios.get('http://10.0.3.77:3000/VerificaLogin', {
@@ -125,44 +125,57 @@
                         login: username,
                         senha: password
                     }
-                });
+                }).then(response => {
+                    console.log(response)
+                    console.log(response.data.token)
 
-                const token = response.data.token;
-                localStorage.setItem('token', token);
-    
-                // Função para decodificar um JWT
-                function decodeJWT(token) {
-                    const base64Url = token.split('.')[1];
-                    const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
-                    const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
-                        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
-                    }).join(''));
-                    return JSON.parse(jsonPayload);
-                }
-    
-                // Decodifica o token e extrai o perfil
-                const decodedToken = decodeJWT(token);
-    
-                // Armazena o token e o perfil no localStorage
-                localStorage.setItem('userProfile', JSON.stringify(decodedToken));
-    
-                // Verifica o perfil e redireciona
-                if (decodedToken.perfil === 1) {
-                    window.location.href = 'http://127.0.0.1:5501/publico/html/admInicio.html';
-                } else if (decodedToken.perfil === 2) {
-                    window.location.href = 'http://127.0.0.1:5501/publico/html/perfilUser.html';
-                } else {
-                    console.log('Usuário não autorizado!');
-                    alert('Usuário não autorizado!');
-                }
-    
+                    const token = response.data.token;
+                    localStorage.setItem('token', token);
+
+                    // Função para decodificar um JWT
+                    function decodeJWT(token) {
+                        const base64Url = token.split('.')[1];
+                        const base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+                        const jsonPayload = decodeURIComponent(atob(base64).split('').map(function (c) {
+                            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+                        }).join(''));
+                        return JSON.parse(jsonPayload);
+                    }
+
+                    // Decodifica o token e extrai o perfil
+                    const decodedToken = decodeJWT(token);
+
+                    // Armazena o token e o perfil no localStorage
+                    localStorage.setItem('userProfile', JSON.stringify(decodedToken));
+
+                    // Verifica o perfil e redireciona
+                    if (decodedToken.perfil === 1) {
+                        window.location.href = 'http://127.0.0.1:5501/publico/html/admInicio.html';
+                    } else if (decodedToken.perfil === 2) {
+                        window.location.href = 'http://127.0.0.1:5501/publico/html/perfilUser.html';
+                    } else {
+                        console.log('Usuário não autorizado!');
+                        alert('Usuário não autorizado!');
+                    }
+
+                }).catch(error => {
+                    if(error.response.data.error === "Usuário ou senha incorretos"){
+                        alert("Usuário ou senha incorretos")
+                    }
+                    if(error.response.data.error === "Usuário inativado"){
+                        alert("Usuário inativado")
+                    }
+                    if(error.response.data.error === "Numero máximo de caracteres"){
+                        alert("Numero máximo de caracteres")
+                    }
+                });
             } catch (error) {
                 console.error('Erro no login', error);
                 alert('Usuário não encontrado!');
             }
         });
     </script>
-    
+
 </body>
 
 </html>

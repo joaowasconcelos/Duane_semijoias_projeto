@@ -1,7 +1,15 @@
 Paginas a fazer para essa Sprint (web)
 
--Home ok
--Login/Cadastro ok
+*****USUARIO******
+-Home 
+*Filtros, Produtos dinamicos, fotos dinamicos, adicionar o carrinho ao local storage, funcionalidade do carrinho e paginação
+-Login ok
+
+*****ADM*********
+-Cadastro Adm
+*Falta verificar se esta funcionando
+-Clientes Cadastrados 
+*Falta exibir os dados de cada cliente 
 -Catalogo de produtos ok
 -Adm Inicio ok
 -Footer/Header ok
@@ -9,5 +17,7 @@ Paginas a fazer para essa Sprint (web)
 -Cadastro de produto 
 -Usuário inicio 
 -Usuario editar dados
-
 -Gerenciamento de cupons
+
+MOBILE
+PAGINAS PRONTAS FALTA INTEGRAÇÃO COM A API
