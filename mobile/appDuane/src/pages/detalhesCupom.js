@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,7 +27,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
@@ -38,6 +39,35 @@ export default function Home() {
     EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  const [detalhesCupom, setDetalhesCupom] = useState([]);
+  const selecionaDetalhesCup = async () => {
+    try {
+      const response = await api.get(`/selecionaCupons?${id}`);
+      setDetalhesCupom(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar as clientes:", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); // Chama a função para obter o token
+    selecionaDetalhesCup();
+  }, []);
 
   if (!fontsLoaded) {
   } else {
@@ -100,7 +130,8 @@ export default function Home() {
                     Detalhes do Cupom:
                   </Text>
 
-                  <View
+                  {detalhesCupom.map(detalhesCup => (
+                    <View
                     style={{
                       justifyContent: "center",
                       alignItems: "center",
@@ -177,6 +208,7 @@ export default function Home() {
                       </TouchableOpacity>
                     </View>
                   </View>
+                  ))}
                 </View>
               </ScrollView>
             </View>

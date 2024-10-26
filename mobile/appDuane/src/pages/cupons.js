@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,7 +27,9 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
+
+
 
 export default function Home() {
   const navigation = useNavigation();
@@ -47,6 +50,35 @@ export default function Home() {
     EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  const [cupons, setCupons] = useState([]);
+  const selecionaCup = async () => {
+    try {
+      const response = await api.get(`/selecionaCupons`);
+      setCupons(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar os cupons:", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); // Chama a função para obter o token
+    selecionaCup();
+  }, []);
+
 
   if (!fontsLoaded) {
   } else {
@@ -104,7 +136,8 @@ export default function Home() {
                   >
                     Todos os Cupons:
                   </Text>
-                  <View style={styles.btn}>
+                  {cupons.map(cup =>(
+                    <View style={styles.btn}>
                     <View
                       style={{
                         justifyContent: "space-between",
@@ -124,7 +157,7 @@ export default function Home() {
                           <Text style={styles.textBtn}>Código:</Text>
                         </View>
                         <View style={{ marginBottom: 10 }}>
-                          <Text style={styles.textElement}>DSJ0030D</Text>
+                          <Text style={styles.textElement}>{cup.codigo}</Text>
                         </View>
                       </View>
 
@@ -148,7 +181,7 @@ export default function Home() {
                           <Text style={styles.textBtn}>Status:</Text>
                         </View>
                         <View style={{ marginRight: 40 }}>
-                          <Text style={{ margin: 10 }}>Atvo</Text>
+                          <Text style={{ margin: 10 }}>{cup.status === 1 ? "Ativo" : "Inativo"}</Text>
                         </View>
                       </View>
                     </View>
@@ -171,6 +204,7 @@ export default function Home() {
                       />
                     </TouchableOpacity>
                   </View>
+                  ))}
                 </View>
               </ScrollView>
             </View>

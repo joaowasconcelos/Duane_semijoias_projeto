@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,7 +27,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
@@ -38,6 +39,35 @@ export default function Home() {
     EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  const [clientes, setClientes] = useState([]);
+  const selecionaCate = async () => {
+    try {
+      const response = await api.get(`/SelecionaUsuarios`);
+      setClientes(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar as clientes:", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); // Chama a função para obter o token
+    selecionaCate();
+  }, []);
 
   if (!fontsLoaded) {
   } else {
@@ -85,16 +115,17 @@ export default function Home() {
 
             <ScrollView>
               <View style={styles.containerElements}>
-                <View style={styles.btn}>
+              {clientes.map(client => (
+                <View key={client.id} style={styles.btn}>
                   <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
                     <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
                       <View>
                         <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Giovana Rocha</Text>
+                        <Text style={{}}>{client.nome}</Text>
                       </View>
                       <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
+                        <Text style={styles.textBtn}>Data Nascimento:</Text>
+                        <Text style={styles.textElement}>Colocar ainda na rota</Text>
                       </View>
                     </View>
 
@@ -102,8 +133,8 @@ export default function Home() {
 
                     <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
                       <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
+                        <Text style={styles.textBtn}>Usuario:</Text>
+                        <Text style={{}}>{client.usuario}</Text>
                       </View>
                       
                     </View>
@@ -115,7 +146,7 @@ export default function Home() {
                   </TouchableOpacity>
                   
                 </View>
-
+              ))}
                 
 
                 

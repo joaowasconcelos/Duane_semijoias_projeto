@@ -52,28 +52,29 @@ export default function Home() {
     }
   };
   const [pedidos, setPedidos] = useState([]);
-  const selecionaCate = async () => {
+  const selecionaPedid = async () => {
     try {
-      const response = await api.get(`http://10.0.3.77:3000/SelecionaPedido`);
-      setPedidos(response.data); 
+      const response = await api.get(`/SelecionaPedido`);
+      setPedidos(response.data);
     } catch (error) {
-      console.error("Erro ao buscar as categorias:", error); 
+      console.error("Erro ao buscar as categorias:", error);
     }
   };
 
-  
+
   useEffect(() => {
     getToken(); // Chama a função para obter o token
-    selecionaCate(); 
+    selecionaPedid();
   }, []);
 
   useEffect(() => {
-   console.log(pedidos)
+    console.log("OIII")
+    console.log(pedidos)
   }, [pedidos]);
 
 
-  
-  
+
+
 
 
 
@@ -113,60 +114,59 @@ export default function Home() {
 
               <Text style={styles.textTitle}>Pedidos</Text>
 
-              
+
             </View>
 
 
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
               </TextInput>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Código:</Text>
-                        <Text style={{}}>123456</Text>
+                {pedidos.map(pedid => (
+                  <View key={pedid.id} style={styles.btn}>
+                    <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '70%' }}>
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View>
+                          <Text style={styles.textBtn}>Código:</Text>
+                          <Text  style={{}}>{pedid.id}</Text>
+                        </View>
+                        <View style={{}}>
+                          <Text style={styles.textBtn}>Data do pedido: </Text>
+                          <Text style={styles.textElement}>{pedid.data_formatada}</Text>
+                        </View>
                       </View>
-                      <View style={{}}>
-                        <Text style={styles.textBtn}>quantidade de itens:</Text>
-                        <Text style={styles.textElement}>23</Text>
+
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ justifyContent: 'center' }} >
+                          <Text style={styles.textBtn}>Status:</Text>
+                          <Text style={{}}>{pedid.status === 1 ? "Ativo" : "Inativo"}
+                            </Text>
+                        </View>
+                       
                       </View>
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40 }}>
+                      <Text style={styles.textBtn}>Detalhes:</Text>
+                      <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
+                    </TouchableOpacity>
 
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cliente:</Text>
-                        <Text style={{textAlign: 'center'}}>Sara</Text>
-                      </View>
-                    </View>
                   </View>
+                ))}
 
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
 
-                
 
-                
 
-                
+
               </View>
             </ScrollView>
 
-            
+
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -256,7 +256,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
-  Inputs:{
+  Inputs: {
     width: '80%',
     height: 30,
     fontSize: 18,

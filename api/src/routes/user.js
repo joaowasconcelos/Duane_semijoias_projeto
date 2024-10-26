@@ -25,7 +25,6 @@ routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
 routerUser.post("/CreatePedido",authenticateJWT,PedidoController.Cadastro);//USUARIO
 routerUser.post("/CreatePedidoFav/:id",authenticateJWT,ProdutoFavController.Cadastro);//USUARIO
 routerUser.post('/Feedback/:id_produto',authenticateJWT,FeedbackController.Cadastro);//USUARIO
-
 routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.CadastroPessoaADM);//ADM
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
