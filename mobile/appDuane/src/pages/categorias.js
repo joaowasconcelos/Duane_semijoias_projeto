@@ -1,281 +1,100 @@
 import React, { useEffect, useState } from "react";
-import { StatusBar } from "expo-status-bar";
-import {
-  View,
-  Text,
-  StyleSheet,
-  TouchableOpacity,
-  Image,
-  Platform,
-  ScrollView,
-  TextInput,
-} from "react-native";
+import { View, Text, StyleSheet, TouchableOpacity, Image, ScrollView, TextInput } from "react-native";
 import { useNavigation } from "@react-navigation/native";
-import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
+import { SafeAreaView } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-
-import AppLoading from "expo-app-loading";
-import {
-  useFonts,
-  EBGaramond_400Regular,
-  EBGaramond_500Medium,
-  EBGaramond_600SemiBold,
-  EBGaramond_700Bold,
-  EBGaramond_800ExtraBold,
-} from "@expo-google-fonts/eb-garamond";
-
-// import {getStatusBarHeight} from "react-native-status-bar-height";
-
-// import api from "../services/api/api"
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { useFonts, EBGaramond_400Regular, EBGaramond_800ExtraBold } from "@expo-google-fonts/eb-garamond";
+import api from "../services/api/api";
 
 export default function Home() {
+  const [categories, setCategories] = useState([]); // Estado para armazenar categorias
   const navigation = useNavigation();
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
-    EBGaramond_500Medium,
-    EBGaramond_600SemiBold,
-    EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
 
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken(); 
+    selecionaCate();
+  }, []);
+
+  const selecionaCate = async () => {
+    try {
+      const response = await api.get(`http://10.0.3.77:3000/SelecionaCategoria`);
+      setCategories(response.data); // Atualiza o estado com as categorias recebidas
+    } catch (error) {
+      console.error("Erro ao buscar as categorias:", error);
+    }
+  };
+
   if (!fontsLoaded) {
-  } else {
-    return (
-      <SafeAreaView style={styles.androidSafeArea}>
-        <View style={styles.container}>
-          <Image
-            source={require("../../assets/ondas-rosa-header.png")}
-            style={styles.imgHeader}
-          />
-          <View style={{ flex: 1, width: "100%" }}>
-            <View style={styles.containerLogoTitle}>
-              <TouchableOpacity
-                style={styles.btnLogOut}
-                onHoverIn={() => {
-                  // Add hover effect here, e.g. change the button's background color
-                  styles.btnLogOut.backgroundColor = "#ccc";
-                }}
-                onHoverOut={() => {
-                  // Remove hover effect here, e.g. reset the button's background color
-                  styles.btnLogOut.backgroundColor = "#fff";
-                }}
-                onPress={() => navigation.goBack()}
-              >
-                <FontAwesome6
-                  name="circle-arrow-left"
-                  color="#ae4b67"
-                  size={35}
-                />
-              </TouchableOpacity>
-              <Image
-                source={require("../../assets/Duane.png")}
-                style={styles.logoImg}
-              />
-
-              <Text style={styles.textTitle}>Categorias</Text>
-            </View>
-
-            <View
-              style={{
-                width: "100%",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "row",
-              }}
-            >
-              <TextInput
-                placeholder="Pesquise uma categoria"
-                style={styles.Inputs}
-              ></TextInput>
-              <TouchableOpacity style={{ margin: 5 }}>
-                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30} />
-              </TouchableOpacity>
-            </View>
-
-            <ScrollView>
-              <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{marginLeft: 10, marginBottom: 7}}>
-                    <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Brinco</Text>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.textBtn}>Excluir:</Text>
-                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
-                      marginRight: 10
-                    }}
-                  >
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6
-                      name="pen-to-square"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{marginLeft: 10, marginBottom: 7}}>
-                    <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Colar</Text>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.textBtn}>Excluir:</Text>
-                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
-                      marginRight: 10
-                    }}
-                  >
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6
-                      name="pen-to-square"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{marginLeft: 10, marginBottom: 7}}>
-                    <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Pulseira</Text>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.textBtn}>Excluir:</Text>
-                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
-                      marginRight: 10
-                    }}
-                  >
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6
-                      name="pen-to-square"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{marginLeft: 10, marginBottom: 7}}>
-                    <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Anel</Text>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.textBtn}>Excluir:</Text>
-                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
-                      marginRight: 10
-                    }}
-                  >
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6
-                      name="pen-to-square"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
-                
-                <View style={styles.btn}>
-                  <View style={{marginLeft: 10, marginBottom: 7}}>
-                    <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Corrente</Text>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.textBtn}>Excluir:</Text>
-                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
-                      marginRight: 10
-                    }}
-                  >
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6
-                      name="pen-to-square"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{marginLeft: 10, marginBottom: 7}}>
-                    <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{fontSize: 17, fontWeight: 'bold'}}>Aliança</Text>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: 'center', alignItems: 'center'}}>
-                    <Text style={styles.textBtn}>Excluir:</Text>
-                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
-                  </TouchableOpacity>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      height: "100%",
-                      marginRight: 10
-                    }}
-                  >
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6
-                      name="pen-to-square"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
-
-              </View>
-            </ScrollView>
-          </View>
-          <Image
-            source={require("../../assets/ondas-rosa-footer.png")}
-            style={styles.imgFooter}
-          />
-        </View>
-      </SafeAreaView>
-    );
+    return null; // ou um carregador
   }
-}
 
+  return (
+    <SafeAreaView style={styles.androidSafeArea}>
+      <View style={styles.container}>
+        <Image source={require("../../assets/ondas-rosa-header.png")} style={styles.imgHeader} />
+        <View style={{ flex: 1, width: "100%" }}>
+          <View style={styles.containerLogoTitle}>
+            <TouchableOpacity style={styles.btnLogOut} onPress={() => navigation.goBack()}>
+              <FontAwesome6 name="circle-arrow-left" color="#ae4b67" size={35} />
+            </TouchableOpacity>
+            <Image source={require("../../assets/Duane.png")} style={styles.logoImg} />
+            <Text style={styles.textTitle}>Categorias</Text>
+          </View>
+
+          <View style={styles.searchContainer}>
+            <TextInput placeholder="Pesquise uma categoria" style={styles.Inputs} />
+            <TouchableOpacity style={{ margin: 5 }}>
+              <FontAwesome6 name="circle-plus" color="#ae4b67" size={30} />
+            </TouchableOpacity>
+          </View>
+
+          <ScrollView>
+            <View style={styles.containerElements}>
+              {categories.map(category => (
+                <View key={category.id} style={styles.btn}>
+                  <View style={{ marginLeft: 10, marginBottom: 7 }}>
+                    <Text style={styles.textBtn}>Categoria:</Text>
+                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{category.tipo}</Text>
+                  </View>
+
+                  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}>
+                    <Text style={styles.textBtn}>Excluir:</Text>
+                    <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
+                  </TouchableOpacity>
+
+                  <TouchableOpacity style={{ justifyContent: "center", alignItems: "center", height: "100%", marginRight: 10 }}>
+                    <Text style={styles.textBtn}>Editar:</Text>
+                    <FontAwesome6 name="pen-to-square" color="#ae4b67" size={26} />
+                  </TouchableOpacity>
+                </View>
+              ))}
+            </View>
+          </ScrollView>
+        </View>
+        <Image source={require("../../assets/ondas-rosa-footer.png")} style={styles.imgFooter} />
+      </View>
+    </SafeAreaView>
+  );
+}
 const styles = StyleSheet.create({
   androidSafeArea: {
     flex: 1,
@@ -343,10 +162,12 @@ const styles = StyleSheet.create({
     height: 120,
   },
   containerLogoTitle: {
+    justifyContent: "center",
     alignItems: "center",
     margin: 20,
     paddingTop: 10,
     position: "relative",
+    
   },
   btnLogOut: {
     position: "absolute",
@@ -354,7 +175,7 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   Inputs: {
-    width: "80%",
+    width: "70%",
     height: 30,
     fontSize: 18,
     fontFamily: "EBGaramond_400Regular",
@@ -367,4 +188,10 @@ const styles = StyleSheet.create({
     borderColor: "#CF90A2",
     margin: 5,
   },
+  searchContainer:{
+    width: "100%",
+    alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'center'
+  }
 });

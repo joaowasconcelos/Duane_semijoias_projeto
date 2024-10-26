@@ -13,6 +13,8 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
+
 
 import AppLoading from "expo-app-loading";
 import {
@@ -80,6 +82,23 @@ export default function Home() {
   const navegaCategorias = ()=>{
     navigation.navigate('Categorias')
   }
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+  
+  useEffect(() => {
+    getToken(); // Chama a função para obter o token
+  }, []); // O array vazio [] garante que o useEffect rode apenas uma vez quando o componente for montado
 
   if (!fontsLoaded) {
   } else {
