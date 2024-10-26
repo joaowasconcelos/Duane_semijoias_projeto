@@ -35,7 +35,7 @@
         <div class="form-container sign-up">
             <form>
                 <h1>Faça o seu cadastro </h1>
-                <div class="social-icons">
+                <!-- <div class="social-icons">
                     <a href="#" class="icon">
                         <i class="fa-brands fa-google-plus-g"></i>
                     </a>
@@ -45,12 +45,9 @@
                     <a href="#" class="icon">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                </div>
-                <span>ou use email e cpf para se cadastrar </span>
-                <input type="text" placeholder="Name">
-                <input type="email" placeholder="Email">
-                <input type="password" placeholder="Password">
-                <button class="bot">Cadastrar</button>
+                </div> -->
+               
+                <button class="bot">Cadastrar-se<a href="/web/publico/html/cadastroUser.html"></a></button>
             </form>
         </div>
 
@@ -103,21 +100,21 @@
         const container = document.getElementById('container');
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
-    
+
         registerBtn.addEventListener('click', () => {
             container.classList.add("active");
         });
-    
+
         loginBtn.addEventListener('click', () => {
             container.classList.remove("active");
         });
-    
+
         document.getElementById('acessar').addEventListener('click', async function (event) {
             event.preventDefault();
-    
+
             const username = document.getElementById('username').value;
             const password = document.getElementById('password').value;
-    
+
             try {
                 // Envia os dados para a rota de login
                 const response = await axios.get('http://10.0.3.77:3000/VerificaLogin', {
@@ -129,7 +126,7 @@
 
                 const token = response.data.token;
                 localStorage.setItem('token', token);
-    
+
                 // Função para decodificar um JWT
                 function decodeJWT(token) {
                     const base64Url = token.split('.')[1];
@@ -139,13 +136,13 @@
                     }).join(''));
                     return JSON.parse(jsonPayload);
                 }
-    
+
                 // Decodifica o token e extrai o perfil
                 const decodedToken = decodeJWT(token);
-    
+
                 // Armazena o token e o perfil no localStorage
                 localStorage.setItem('userProfile', JSON.stringify(decodedToken));
-    
+
                 // Verifica o perfil e redireciona
                 if (decodedToken.perfil === 1) {
                     window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
@@ -155,14 +152,14 @@
                     console.log('Usuário não autorizado!');
                     alert('Usuário não autorizado!');
                 }
-    
+
             } catch (error) {
                 console.error('Erro no login', error);
                 alert('Usuário não encontrado!');
             }
         });
     </script>
-    
+
 </body>
 
 </html>
