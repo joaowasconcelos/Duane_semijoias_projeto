@@ -59,7 +59,7 @@ export default function Login() {
   const verificaUser = async () => {
     if (email.length <= 150 && email !== "" && senha.length <= 100 && senha !== "") {
       try {
-        const response = await api.get(`http://10.0.3.77:3000/VerificaLogin?login=${email}&senha=${senha}`);
+        const response = await api.get(`/VerificaLogin?login=${email}&senha=${senha}`);
          
         if (response.data && response.data.token) {
           const token = response.data.token;
