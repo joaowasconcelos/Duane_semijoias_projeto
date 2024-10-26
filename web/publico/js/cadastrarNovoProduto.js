@@ -42,31 +42,34 @@ function limparInput() {
     window.location.reload(true);
 }
 
-async function salvar() {
+$('#produto-form').on('submit', async function (event) {
+    event.preventDefault()
+    console.log("auiq")
     const token = localStorage.getItem('token');
-
-    const formData = new FormData();  // Collecting form data
-    formData.append('produto', document.getElementById("nome_produto").value);
-    formData.append('descricao', document.getElementById("descricao").value);
-    formData.append('categoria', document.getElementById("tipo").value); // 'categoria' select has id "tipo"
-    formData.append('preco', document.getElementById("preco").value);
-    formData.append('imagem', document.getElementById("imagem").files[0]);  // File input
+    const formData = new FormData(this);
     console.log(formData)
+    // formData.append('produto', document.getElementById("nome_produto").value);
+    // formData.append('descricao', document.getElementById("descricao").value);
+    // formData.append('categoria', document.getElementById("tipo").value);
+    // formData.append('preco', document.getElementById("preco").value);
+
 
     try {
-        const response = await axios.post('http://10.0.3.77:3000/CreateProduto', formData, {
+        await axios.post('http://10.0.3.77:3000/CreateProduto', formData, {
             headers: {
                 'x-access-token': token,
-                'Content-Type': 'multipart/form-data'
             }
+        }).then(response =>{
+            console.log(response)
+        }).catch(error =>{
+            console.log(error)
         });
-        console.log(response);
-        alert("Produto criado com sucesso!");
+        
     } catch (error) {
         console.error('Erro ao criar o produto:', error);
         alert("Ocorreu um erro ao criar o produto. Tente novamente.");
     }
-}
+})
 
 
 

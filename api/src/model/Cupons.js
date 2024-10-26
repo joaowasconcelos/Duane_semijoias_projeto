@@ -66,7 +66,7 @@ export default class Cupons {
 		c.status
         FROM 
             cupons c;`)
-            return cupomResult
+            return cupomResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

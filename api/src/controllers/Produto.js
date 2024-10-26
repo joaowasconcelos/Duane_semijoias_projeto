@@ -6,7 +6,7 @@ const ProdutoController = {
     cadastro: async (req, res) => {
         try {
             console.log("req.body",req.body)
-            console.log("req.file",req.file)
+            console.log("req.file",req.files, req.imagemUrl)
             return
             const { descricao, produto, categoria, preco } = req.body;
         

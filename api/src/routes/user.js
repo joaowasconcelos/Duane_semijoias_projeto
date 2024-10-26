@@ -30,8 +30,8 @@ routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.Cada
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
-routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.single("imagem"),ProdutoController.cadastro)//ADM
-// routerUser.post('/postagens/:id_produto',,UploadImagens.Imagens);//ADM
+routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),ProdutoController.cadastro)//ADM
+// routerUser.post('/postagens/:id_produto',,UploadImagens.Imagens);//ADM   
 // routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,authenticatePerfil,UploadImagens.Imagens);//ADM
 
 
@@ -46,7 +46,7 @@ routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,Pro
 // routerUser.delete('/DeleteImage/:id',authenticateJWT,authenticatePerfil,UploadImagens.DeleteImage);
 
 //Update
-routerUser.put("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
+routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
 routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);//ADM
 routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);//ADM
 routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)//ADM

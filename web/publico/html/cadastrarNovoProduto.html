@@ -53,53 +53,39 @@
         <div id="table">
 
             <form id="produto-form" enctype="multipart/form-data" method="post">
-            <!-- <form action="http://10.0.3.77:3000/CreateADM" method="post" id="cadastroForm"> -->
-
                 <div id="form">
-
                     <div id="dados">
-
                         <label for="tipo">Categoria: *</label>
                         <select class="form-control form-control-sm" id="tipo" name="tipo">
                             <option></option>
                         </select>
-
+            
                         <label for="nome_produto">Produto: *</label>
                         <input class="input" type="text" name="nome_produto" id="nome_produto">
-
+            
                         <label for="descricao">Descrição: *</label>
                         <input class="input" type="text" name="descricao" id="descricao">
-
+            
                         <label for="preco">Preço: *</label>
                         <input class="input" type="text" id="preco" name="preco" onInput="mascaraMoeda(event);"
                             onkeydown="return somenteNumeros(event)">
-
-                        <!-- <label for="quantidade">Quantidade: *</label>
-                        <input class="input" type="number" name="quantidade" id="quantidade"> -->
-
                     </div>
-
+            
                     <div id="addFotos">
-
                         <label class="picture" for="imagem">Foto do produto: *</label>
                         <p>Obrigatório carregar ao menos 1 foto do produto*</p>
-                        <p>Adicione no maximo 5 fotos*</p>
-                        <input class="escolha" type="file" name="imagem" id="imagem" multiple="multiple"
-                            maxlength="5">
+                        <p>Adicione no máximo 5 fotos*</p>
+                        <input class="escolha" type="file" name="imagem" id="imagem" multiple accept="imagem/">
                         <span class="picture__image"></span>
                     </div>
-
                 </div>
-
+            
                 <div id="btns">
-
                     <button class="btn btn-primary save-changes" onclick="limparInput()">Cancelar</button>
-                    <button type="submit" class="btn btn-primary save-changes" onclick="event.preventDefault(); salvar();">Salvar</button>
-
-
+                    <button type="submit" class="btn btn-primary save-changes">Salvar</button>
                 </div>
-
             </form>
+            
 
         </div>
 
