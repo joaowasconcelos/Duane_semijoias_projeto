@@ -1,0 +1,55 @@
+/* Estilos para a notificação */
+#notification {
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    background-color: #9B5377; /* Cor de fundo harmonizada com seu tema */
+    color: #fff;
+    padding: 15px 20px;
+    border-radius: 12px; /* Bordas levemente arredondadas */
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3); /* Sombra um pouco mais pronunciada */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 1;
+    transition: opacity 0.3s, transform 0.3s; /* Adicionando transição suave para transformações */
+    z-index: 1000;
+    transform: translateY(-20px); /* Adiciona um deslocamento vertical inicial */
+}
+
+/* Adicionando classe para ocultar */
+#notification.hidden {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(0); /* Retorna ao lugar quando oculto */
+}
+
+#notificationText {
+    color: white;
+    font-family: 'Times New Roman', Times, serif, sans-serif; /* Usando a nova fonte Roboto */
+    font-size: 16px;
+    margin: 0;
+    line-height: 1.5; /* Melhora a legibilidade */
+}
+
+#closeNotification {
+    font-family: 'Times New Roman', Times, serif, sans-serif;
+    background-color: transparent; /* Manter fundo transparente para não distrair */
+    border: none; /* Sem bordas */
+    color: #fff;
+    font-size: 16px; /* Aumentar o tamanho da fonte para melhor visibilidade */
+    cursor: pointer;
+    margin-left: 10px; /* Espaço entre o texto e o botão */
+    padding: 8px; /* Adicionar algum padding */
+    border-radius: 5px; /* Bordas arredondadas para um visual mais suave */
+    transition: background-color 0.3s, transform 0.3s; /* Transição suave para a cor de fundo e transformações */
+}
+
+/* Efeito ao passar o mouse */
+#closeNotification:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Adicionar um fundo claro ao passar o mouse */
+    transform: scale(1.05); /* Aumenta um pouco o tamanho */
+    color: #F784B9; /* Cor ao passar o mouse */
+}
+
+

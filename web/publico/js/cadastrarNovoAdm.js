@@ -1,92 +1,82 @@
 function limparInput() {
-    document.getElementById('Nome').value = '';
-    document.getElementById('CPF').value = '';
-    document.getElementById('Usuario').value = '';
-    document.getElementById('Data_Nasc').value = '';
-    document.getElementById('Genero').value = '';
-    document.getElementById('Telefones').value = '';
-    window.location.reload(true);
+    const campos = ['Nome', 'CPF', 'Usuario', 'Data_Nasc', 'Genero', 'Telefones', 'Telefones2'];
+    campos.forEach(campo => {
+        document.getElementById(campo).value = '';
+    });
+    // Em vez de recarregar a página, você pode querer fazer alguma atualização dinâmica aqui.
 }
 
-//mascara para numero de telefone
+// Função para aplicar a máscara de telefone
+function aplicarMascaraTelefone(input) {
+    input.addEventListener('input', () => {
+        let valor = input.value.replace(/\D/g, ''); // Remove caracteres não numéricos
+        valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2'); // Adiciona a máscara de DDD
+        valor = valor.replace(/(\d)(\d{4})$/, '$1-$2'); // Adiciona o hífen
+        input.value = valor;
+    });
+}
 
-const telefoneInput = document.getElementById('Telefones');
-
-telefoneInput.addEventListener('input', () => {
-    let valor = telefoneInput.value;
-
-    // Remover caracteres não numéricos
-    valor = valor.replace(/\D/g, '');
-
-    // Adicionar máscara
-    valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
-    valor = valor.replace(/(\d)(\d{4})$/, '$1-$2');
-
-    telefoneInput.value = valor;
+// Aplicar a máscara a todos os inputs de telefone
+const telefoneInputs = ['Telefones', 'Telefones2'];
+telefoneInputs.forEach(id => {
+    const telefoneInput = document.getElementById(id);
+    if (telefoneInput) {
+        aplicarMascaraTelefone(telefoneInput);
+    }
 });
 
-// const telefoneInput2 = document.getElementsByClassName('Telefone2');
+// Função para extrair apenas os números do CPF
+function obterApenasNumerosCPF() {
+    const input = document.getElementById('CPF');
+    const apenasNumerosCPF = input.value.replace(/\D/g, ''); // Remove tudo que não for número
+    console.log(apenasNumerosCPF); // Mostra apenas os números no console
+    return apenasNumerosCPF; // Retorna os números do CPF
+}
 
-// telefoneInput2.addEventListener('input', () => {
-//     let valor2 = telefoneInput2.value;
+// Função para extrair apenas os números dos telefones
+function obterApenasNumerosTel() {
+    const telefoneIds = ['Telefones', 'Telefones2']; // Array com os IDs dos campos de telefone
+    const apenasNumerosArray = telefoneIds.map(id => {
+        const input = document.getElementById(id);
+        return input ? input.value.replace(/\D/g, '') : ''; // Remove tudo que não for número
+    });
 
-//     // Remover caracteres não numéricos
-//     valor2 = valor2.replace(/\D/g, '');
+    console.log(apenasNumerosArray); // Mostra os números de cada telefone como array no console
+    return apenasNumerosArray; // Retorna o array com os números de telefone
+}
 
-//     // Adicionar máscara
-//     valor2 = valor2.replace(/^(\d{2})(\d)/g, '($1) $2');
-//     valor2 = valor2.replace(/(\d)(\d{4})$/, '$1-$2');
-
-//     telefoneInput2.value = valor2;
-// });
-
-//mascara CPF
-
+// Função para mascarar CPF
 function mascara(m, t, e, c) {
     var cursor = t.selectionStart;
-    var texto = t.value;
-    texto = texto.replace(/\D/g, '');
+    var texto = t.value.replace(/\D/g, ''); // Remove caracteres não numéricos
     var l = texto.length;
     var lm = m.length;
-    if (window.event) {
-        id = e.keyCode;
-    } else if (e.which) {
-        id = e.which;
-    }
-    cursorfixo = false;
-    if (cursor < l) cursorfixo = true;
-    var livre = false;
-    if (id == 16 || id == 19 || (id >= 33 && id <= 40)) livre = true;
-    ii = 0;
-    mm = 0;
-    if (!livre) {
-        if (id != 8) {
-            t.value = "";
-            j = 0;
-            for (i = 0; i < lm; i++) {
-                if (m.substr(i, 1) == "#") {
-                    t.value += texto.substr(j, 1);
-                    j++;
-                } else if (m.substr(i, 1) != "#") {
-                    t.value += m.substr(i, 1);
-                }
-                if (id != 8 && !cursorfixo) cursor++;
-                if ((j) == l + 1) break;
+    var id = (window.event) ? e.keyCode : e.which;
+    var cursorfixo = cursor < l;
 
+    var livre = (id == 16 || id == 19 || (id >= 33 && id <= 40));
+    var j = 0;
+
+    if (!livre && id !== 8) {
+        t.value = "";
+        for (var i = 0; i < lm; i++) {
+            if (m.charAt(i) === "#") {
+                t.value += texto.charAt(j++);
+            } else if (m.charAt(i) !== "#") {
+                t.value += m.charAt(i);
             }
+            if (!cursorfixo) cursor++;
+            if (j === l + 1) break;
         }
-        if (c) coresMask(t);
     }
+
     if (cursorfixo && !livre) cursor--;
     t.setSelectionRange(cursor, cursor);
 }
 
-// Funçao para não permitir caracteres especiais ao preencher o Nome
-
+// Função para não permitir caracteres especiais ao preencher o Nome
 const nomeInput = document.querySelector("#Nome");
-
 nomeInput.addEventListener("keypress", function (e) {
-
     if (!checandoCaracter(e)) {
         e.preventDefault();
     }
@@ -94,80 +84,82 @@ nomeInput.addEventListener("keypress", function (e) {
 
 function checandoCaracter(e) {
     const caracter = String.fromCharCode(e.keyCode);
-
     const pattern = '[a-z A-Z]';
-
-    if (caracter.match(pattern)) {
-        return true;
-    }
+    return caracter.match(pattern);
 }
 
-//Funçao para validar Usuario
-
+// Função para validar o usuário (email)
 function validando() {
-    var form = document.getElementById("form");
-    var Usuario = document.getElementById("Usuario").value;
-    var text = document.getElementById("text");
-    var pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    const form = document.getElementById("form");
+    const usuario = document.getElementById("Usuario").value;
+    const text = document.getElementById("text");
+    const pattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
-    if (Usuario.match(pattern)) {
+    if (usuario.match(pattern)) {
         form.classList.add("valid");
         form.classList.remove("invalid");
         text.innerHTML = "";
         text.style.color = "#00ff00";
-    }
-    else {
+    } else {
         form.classList.remove("valid");
         form.classList.add("invalid");
-        text.innerHTML = "Por favor, insira um email valido."
+        text.innerHTML = "Por favor, insira um email válido.";
         text.style.color = "#ff0000";
         text.style.fontFamily = "sans-serif";
         text.style.fontWeight = "bold";
         text.style.fontSize = "11px";
     }
 
-    if (Usuario == "") {
+    if (usuario === "") {
         form.classList.remove("valid");
         form.classList.remove("invalid");
         text.innerHTML = "";
-        text.style.color = "#00ff00";
     }
 }
 
-//função para enviar formulário
-
+// Função para enviar o formulário
 async function salvar() {
     const token = localStorage.getItem('token');
     const Nome = document.getElementById("Nome").value;
     const Usuario = document.getElementById("Usuario").value;
-    const CPF = document.getElementById("CPF").value;
+    const CPF = obterApenasNumerosCPF();
     const Genero = document.getElementById("Genero").value;
     const Data_Nasc = document.getElementById("Data_Nasc").value;
-    const Telefones = document.getElementById("Telefones").value;
-    const perfil = document.getElementById("perfil").value
+    const Telefones = obterApenasNumerosTel();
+    const perfil = document.getElementById("perfil").value;
 
     try {
-        const response = await axios.post('http://10.0.3.77:3000/CreateADM', 
-        {
-            Nome: Nome,
-            Usuario: Usuario,
-            CPF: CPF,
-            Genero: Genero,
-            Data_Nasc: Data_Nasc,
-            Telefones: Telefones,
-            perfil: perfil
-        }, 
-        {
-            headers: {
-                'x-access-token': token
-            }
-        });
-        console.log(response.data);
+        await axios.post('http://192.168.3.9:3000/CreateADM',
+            {
+                Nome,
+                Usuario,
+                CPF,
+                Genero,
+                Data_Nasc,
+                Telefones, // Agora um array com os números
+                perfil
+            },
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            }).then(response => {
+                showNotification(response.data.message);
+                limparInput()
+            }).catch(error => {
+                console.log(error)
+                if (error.response.data.message === "Erro CPF ja cadastrado")
+                    showNotification(error.response.data.message)
+
+                if (error.response.data.message === "Erro Usuario ja cadastrado")
+                    showNotification(error.response.data.message)
+            })
+
 
     } catch (error) {
         console.error('Erro ao cadastrar novo ADM:', error);
-        alert("Ocorreu um erro ao cadastrar novo ADM. Tente novamente.");
+        showNotification("Ocorreu um erro ao cadastrar novo ADM. Tente novamente.");
     }
 
-    window.location.reload(true);
+    // Em vez de recarregar a página, você pode querer fazer alguma atualização dinâmica aqui.
 }

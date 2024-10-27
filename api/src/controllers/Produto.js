@@ -1,20 +1,19 @@
 import Produto from "../model/Produto.js";
 import Preco from "../model/Preco.js"
-import Pessoa from "../model/Pessoa.js";
+import Produto_img from "../model/Produto_img.js"
+import { listAllFilesId } from "../middleware/imagens.js";
 
 const ProdutoController = {
     cadastro: async (req, res) => {
         try {
-            console.log("req.body",req.body)
-            console.log("req.file",req.files, req.imagemUrl)
-            return
             const { descricao, produto, categoria, preco } = req.body;
-        
+            const idImagens = req.imageUrls
+
             let valorSemSimbolo = preco.replace("R$", "").trim();
             valorSemSimbolo = valorSemSimbolo.replace(/\./g, "");
             valorSemSimbolo = valorSemSimbolo.replace(",", ".");
             let valor = parseFloat(valorSemSimbolo);
-            
+
             const cProduto = new Produto(null, descricao, 1, produto, categoria)
             const vericaCampos = cProduto.verificaCampos()
             if (!vericaCampos) {
@@ -28,6 +27,15 @@ const ProdutoController = {
             if (insertProduto.error) {
                 return res.status(500).json({ message: "Erro ao cadastrar produto!" });
             }
+
+            for (const imagemId of idImagens) {
+                const cProdutoImg = new Produto_img(null, imagemId, insertProduto);
+                const insertImagem = await cProdutoImg.CadastraProdutoImg()
+                if (insertImagem.error) {
+                    return res.status(500).json({ message: "Erro ao associar imagem ao produto!" });
+                }
+            }
+
             const cPreco = new Preco(null, valor, 1, insertProduto);
             const verificaCamposPreco = cPreco.verificaCampos()
             if (!verificaCamposPreco) {
@@ -38,13 +46,13 @@ const ProdutoController = {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const insertPreco = await cPreco.CadastraPreco()
-            console.log(insertPreco)
+
             if (insertPreco.error) {
                 const deleteProduto = await cProduto.DeletaProduto()
                 console.log("delete", deleteProduto)
                 return res.status(400).json({ message: "Erro ao cadastrar Produto!" });
             }
-            return res.status(201).json({ message: "Produto cadastrado com sucesso!",insertProduto})
+            return res.status(201).json({ message: "Produto cadastrado com sucesso!", insertProduto })
         } catch (error) {
             return res.status(500).json({ message: "Erro ao cadastrar produto!" })
         }
@@ -92,8 +100,15 @@ const ProdutoController = {
 
     Seleciona: async (req, res) => {
         try {
+           
             const selectProdutos = await Produto.SelectProduto()
+            selectProdutos.forEach(produto => {
+                produto.imagens = produto.imagens.split(',').map(img => img.trim());
+            });
+            const ListarImg = await listAllFilesId(selectProdutos);
+            console.log("Resultado de listAllFilesId:", ListarImg);
             return res.json(selectProdutos)
+
         } catch (error) {
             return res.status(500).json({ message: "Erro ao vizualizar produto!" })
         }

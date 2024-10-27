@@ -1,0 +1,70 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: 700;
+    font-style: normal;
+    color: #AE4B67;
+    font-family: "Cormorant Garamond", serif;
+}
+
+main {
+    box-sizing: border-box;
+    flex: 1;
+}
+
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+label {
+    display: block; /* Faz com que os rótulos ocupem toda a largura */
+    margin: 20px 0 5px; /* Margem em cima e em baixo */
+    font-weight: 600; /* Para destacar os rótulos */
+    color: #633636; /* Cor diferente para os rótulos */
+}
+
+input[type="email"],
+input[type="password"] {
+    width: 100%; /* Para ocupar toda a largura do container */
+    padding: 10px; /* Para dar um pouco de espaço interno */
+    margin-bottom: 15px; /* Margem embaixo dos campos */
+    border: 1px solid #ddd; /* Borda leve */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+}
+
+input[type="email"]:focus,
+input[type="password"]:focus {
+    border-color: #AE4B67; /* Cor da borda ao focar */
+    outline: none; /* Remove o contorno padrão */
+    box-shadow: 0 0 5px rgba(174, 75, 103, 0.5); /* Sombra ao focar */
+}
+
+#container {
+    max-width: 400px; 
+    margin: 200px auto ; /* Centraliza o container na tela */
+    padding: 20px; /* Padding interno */
+    background-color: #f9f9f9; /* Cor de fundo */
+    border: 1px solid #ddd; /* Borda do container */
+    border-radius: 10px; /* Bordas arredondadas para o container */
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); /* Sombra leve */
+}
+
+button {
+    width: 100%; /* Largura total do botão */
+    padding: 10px; /* Padding interno */
+    background-color: #AE4B67; /* Cor de fundo do botão */
+    color: white; /* Cor do texto */
+    border: none; /* Remove a borda padrão */
+    border-radius: 5px; /* Bordas arredondadas */
+    font-size: 16px; /* Tamanho da fonte */
+    cursor: pointer; /* Muda o cursor ao passar sobre o botão */
+    margin-top: 15px; /* Espaço acima do botão */
+}
+
+button:hover {
+    background-color: #9d3e54; /* Cor ao passar o mouse */
+}

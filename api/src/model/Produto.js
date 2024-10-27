@@ -54,7 +54,7 @@ export default class Produto {
             const produtoResult = await bd.query(`INSERT INTO produto (nome_produto, descricao, status, data_cad,categoria_id) VALUES (?, ?, ?, CURRENT_TIMESTAMP,?);`,
                 [this._nomeProduto, this._descricao, this._status, this._id_categoria]);
             const produtoId = produtoResult[0].insertId;
-            console.log('ID do protudo:', produtoId);
+            console.log('ID do produto:', produtoId);
             this._id = produtoId
             return produtoId;
         } catch (error) {
@@ -97,41 +97,38 @@ export default class Produto {
         const bd = await obterConexaoDoPool();
         try {
             const produtoResult = await bd.query(`
-   SELECT 
+SELECT 
     p.id,
     p.nome_produto,
     p.descricao,
-
-    -- Usa MIN para pegar o menor preço se houver duplicatas
     FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,
-
-    -- Calcula o preço promocional, usando COALESCE para escolher entre as promoções de produto ou categoria
     FORMAT(
         COALESCE(
-            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100), -- Desconto por produto
-            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),  -- Desconto por categoria
-            MIN(pc.preco)                                               -- Caso não haja promoção
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100),
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),
+            MIN(pc.preco)
         ), 
         2, 'pt_BR'
-    ) AS preco_promocional,  
-
-    c.tipo
+    ) AS preco_promocional,
+    c.tipo,
+    GROUP_CONCAT(p_img.id_img ORDER BY p_img.id SEPARATOR ', ') AS imagens
 FROM 
     produto p
 JOIN 
     preco pc ON pc.produto_id = p.id
 JOIN
+    produto_img p_img ON p_img.produto_id = p.id
+JOIN
     categoria c ON c.id = p.categoria_id
 LEFT JOIN 
-    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1  -- Promoção por produto ativa
+    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1
 LEFT JOIN 
-    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1   -- Promoção por categoria ativa
+    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1
 WHERE 
     p.status = 1 
     AND pc.status = 1
 GROUP BY 
-    p.id, p.nome_produto, p.descricao, c.tipo;
-1`);
+    p.id, p.nome_produto, p.descricao, c.tipo;`);
             return produtoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);

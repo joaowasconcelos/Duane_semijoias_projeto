@@ -143,6 +143,14 @@ const CadastroUsuario = {
             return res.status(500).json({ message: "Erro ao cadastrar produto!" })
         }
     },
+    SelecionaADM: async (req,res) => {
+        try {
+            const selectPessoa =  await Pessoa.SelecionaUsuariosAdm()
+            return res.json(selectPessoa)
+        } catch (error) {
+            return res.status(500).json({ message: "Erro ao cadastrar produto!" })
+        }
+    },
     SelecionaInfoId: async (req, res) => {
         try {
             console.log("aqui")

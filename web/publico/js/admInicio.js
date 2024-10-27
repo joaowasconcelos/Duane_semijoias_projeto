@@ -4,24 +4,40 @@ let responsePed;
 
 async function dados() {
     try {
-        // Fazendo a requisição com axios.get
-        responsePed = await axios.get('http:///10.0.3.77:3000/SelecionaPedido');
-        responseTipo = await axios.get('http:///10.0.3.77:3000/SelecionaCategoria');
-        console.log(responsePed.data)
-        console.log(responseTipo.data)
+        const token = localStorage.getItem('token');
+        await axios.get(
+            'http://192.168.3.9:3000/SelecionaCategoria',
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            }).then(response => {
+            responseTipo = response.data
+            if (responseTipo != null || responseTipo != undefined) {
+                criarTabela();
+                carregaDadosModalCategoria(responseTipo);
+            }
+        }).catch(error => {
+            console.log(error);
+        });
 
-        if (responseTipo != null || responseTipo != undefined) {
-            criarTabela();
-            carregaDadosModalCategoria();
-            // console.log("123")
-        }
 
-        if (responsePed != null || responsePed != undefined) {
-            criarTabela2();
-            carregaDadosTabelaPedidos();
-            // console.log("123")
-        }
-
+        await axios.get(
+            'http://192.168.3.9:3000/SelecionaPedido',
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            }
+        ).then(response => {
+            responsePed = response.data
+            if (responsePed != null || responsePed != undefined) {
+                criarTabela2();
+                carregaDadosTabelaPedidos(responsePed)
+            }
+        }).catch(error => {
+            console.log(error);
+        });
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
@@ -39,28 +55,21 @@ function criarTabela() {
             <td></td>
             <td></td>
         </tr>
-    </thead>`
+    </thead>`;
 }
 
-function carregaDadosModalCategoria() {
-    // console.log(responseTipo.data);
-
-    $.each(responseTipo.data, function () {
+function carregaDadosModalCategoria(responseTipo) {
+    $.each(responseTipo, function () {
         table +=
             `<tr>
             <td id="desc" class="selectIdProd" data-id="${this['id']}">${this['tipo']}</td>
-            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit" >Editar</a></td>
-            <td class="btnMod">Excluir</td>
-        </tr>`
+            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit">Editar</a></td>
+          <td class="btnMod"><a href="#" id="excluir" data-id="${this['id']}" onclick="confirmarExclusao(this)">Excluir</a></td>
+        </tr>`;
     });
-    // console.log(table);
-
-    // <td><a href="/editar/${this["id"]}" onclick="changeSubtitle()">Editar</a></td>
 
     document.getElementById('tbl-categorias').innerHTML = table;
 }
-
-
 
 //puxando tabela de pedidos do banco
 var table2;
@@ -77,21 +86,18 @@ function criarTabela2() {
     </thead>`
 }
 
-function carregaDadosTabelaPedidos() {
-
-    $.each(responsePed.data, function () {
+function carregaDadosTabelaPedidos(responsePed) {
+    $.each(responsePed, function () {
         table2 +=
             `<tbody>
         <tr>
             <td id="codigo">${this['id']}</td>
             <td id="dtCompra" >${this['data_formatada']}</td>
-            <td><a href="#" id="link">Ver mais detalhes...</a></td>
+            <td><a href="#" id="link" data-id="${this['id']}" onclick="Verdetalhes(this)">Ver mais detalhes...</a></td>
             <td id="status">${this['status']}</td>
         </tr>
         </tbody>`
     });
-    //console.log(table2);
-
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }
 
@@ -127,89 +133,143 @@ function changeSubtitle(link) {
 const btnSave = document.getElementById('salvando');
 
 btnSave.addEventListener('click', function (link) {
-
-    // console.log("entrou")
     const id = btnSave.getAttribute('data-id');
     elemento.setAttribute('data-id', id);
-
-    console.log(id)
-
     if (!id) {
-        console.log("id é uma string vazia ou null");
-        // post();
+        post();
     } else {
-        console.log("id possui um valor válido");
         put();
     }
 
 });
 
-// ModificaCategoria/:id  UPDATE
-// CreateCategoria
-
-
-// //função para editar
 async function put() {
-
     const token = localStorage.getItem('token');
-    console.log(token)
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
-
-
     try {
-        const response = await axios.post(`http://10.0.3.77:3000/ModificaCategoria/${id}`,
-            
+        await axios.post(`http://192.168.3.9:3000/ModificaCategoria/${id}`,
             {
                 tipo: tipo
             },
-            {
-                headers: {
-                    'x-access-token': localStorage.getItem('token')
-                }
-            }
-
-        );
-        console.log(response.data);
-
-    } catch (error) {
-        console.error('Erro ao atualizar categoria:', error);
-        alert("Ocorreu um erro ao editar categoria. Tente novamente.");
-    }
-
-    document.getElementById('tipo').value = '';
-    window.location.reload(true);
-}
-
-
-//função para cadastrar
-async function post() {
-
-    const token = localStorage.getItem('token');
-    const tipo = document.getElementById("tipo").value;
-    const id = document.getElementById("tipo").getAttribute('data-id');
-
-    try {
-        const response = await axios.post('http://10.0.3.77:3000/CreateCategoria',
-
             {
                 headers: {
                     'x-access-token': token
                 }
+            }).then(response => {
+                showNotification(response.data.message)
+                document.getElementById('tipo').value = '';
+
+                fecharModal();
+
+                setTimeout(() => {
+                    window.location.reload(true);
+                }, 2000)
+            }).catch(error => {
+                showNotification(error.response.data.error)
+            })
+    } catch (error) {
+        console.error('Erro ao atualizar categoria:', error);
+        showNotification("Ocorreu um erro ao editar categoria. Tente novamente.");
+    }
+
+}
+
+function fecharModal() {
+    $('#exampleModalCenter').modal('hide');
+}
+
+//função para cadastrar
+async function post() {
+    const token = localStorage.getItem('token');
+    const tipo = document.getElementById("tipo").value;
+
+    try {
+        const response = await axios.post(
+            'http://192.168.3.9:3000/CreateCategoria',
+            {
+                tipo: tipo
             },
             {
-                id: id,
-                tipo: tipo
+                headers: {
+                    'x-access-token': token
+                }
             }
+        ).then(response => {
+            showNotification(response.data.message)
+            document.getElementById('tipo').value = '';
+            fecharModal();
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 2000)
+        }).catch(error => {
+            showNotification(error.response.data.error);
+        });
+    } catch (error) {
+        console.error('Erro ao cadastrar nova Categoria:', error);
+        showNotification("Ocorreu um erro ao cadastrar nova Categoria. Tente novamente.");
+    }
+}
 
-        );
-        console.log(response.data);
+
+function Verdetalhes(link) {
+    const id = link.getAttribute('data-id');
+    DetalhesPedido(id)
+  
+}
+
+
+function confirmarExclusao(link) {
+    const id = link.getAttribute('data-id');
+    const confirmation = confirm("Você tem certeza que deseja excluir este item?");
+
+    if (confirmation) {
+        excluir(id);
+    }
+}
+
+async function excluir(id) {
+    const token = localStorage.getItem('token');
+    try {
+        await axios.post(`http://192.168.3.9:3000/InativaCategoria/${id}`,
+            {}, 
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            }
+        ).then(response => {
+            showNotification(response.data.message)
+            fecharModal();
+            setTimeout(() => {
+                window.location.reload(true);
+            }, 2000)
+        }).catch(error => {
+            showNotification(error.response.data.error);
+        });
+    } catch (error) {
+        console.error('Erro ao cadastrar nova Categoria:', error);
+        showNotification("Ocorreu um erro ao cadastrar nova Categoria. Tente novamente.");
+    }
+}
+
+async function DetalhesPedido(id) {
+    const token = localStorage.getItem('token');
+    try {
+        await axios.get(`http://192.168.3.9:3000/MeuPedido/${id}`,
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            }).then(response => {
+            console.log(response.data)
+        }).catch(error => {
+            console.log(error)
+        })
 
     } catch (error) {
         console.error('Erro ao cadastrar nova Categoria:', error);
-        alert("Ocorreu um erro ao cadastrar nova Categoria. Tente novamente.");
+        showNotification("Ocorreu um erro ao cadastrar nova Categoria. Tente novamente.");
     }
-
-    document.getElementById('tipo').value = '';
-    window.location.reload(true);
 }
+

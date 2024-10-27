@@ -6,7 +6,7 @@ dotenv.config();
 let blacklist = [];
 
 // Middleware de autenticação JWT
-const authenticateJWT = (req, res, next) => {
+const authenticateJWT = (req, res, next) => {   
     const secretKey = process.env.SECRET_KEY;
     const token = req.headers['x-access-token'];
    

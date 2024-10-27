@@ -151,7 +151,9 @@ export default class Pessoa {
             SELECT 
                 p.id,
                 p.nome,
-                l.usuario
+                p.data_nasc,
+                l.usuario,
+                l.ativo
             FROM
                 pessoa p
             JOIN
@@ -166,7 +168,7 @@ export default class Pessoa {
     }
 
 
-    async SelecionaUsuariosAdm() {
+    static async SelecionaUsuariosAdm() {
         const bd = await obterConexaoDoPool();
         try {
             const pessoaResult = await bd.query(`
@@ -193,7 +195,7 @@ export default class Pessoa {
         GROUP BY 
             p.id, p.nome, pf.tipo, p.data_nasc, p.cpf, l.usuario
         LIMIT 0, 1000;`)
-            return pessoaResult
+            return pessoaResult[0]
 
         } catch (error) {
             console.log('Erro na transação:', error);

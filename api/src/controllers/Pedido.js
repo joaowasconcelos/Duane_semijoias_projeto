@@ -77,6 +77,7 @@ const PedidoController = {
     },
     Seleciona: async (req, res) => {
         try {
+
             const selecionaPedido = await Pedido.SelecionaPedido()
             return res.json(selecionaPedido);
         } catch (error) {
@@ -97,7 +98,7 @@ const PedidoController = {
     },
     SelecionaDetalhes: async (req,res) => {
         try {
-            const id = req.params
+            const {id} = req.params
             const cPedido = new Pedido(id)
             const selecionaMeuPedidos = await cPedido.SelecionaPedidoInfo()
             return res.json(selecionaMeuPedidos);

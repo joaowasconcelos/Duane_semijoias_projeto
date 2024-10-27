@@ -63,8 +63,7 @@ export default class Categoria {
     async DeletarCategoria() {
         const bd = await obterConexaoDoPool();
         try {
-            const categoriaResult = await bd.query(`DELETE FROM categoria WHERE id = ?`,[this._id]);
-            console.log(categoriaResult);
+            const categoriaResult = await bd.query(`UPDATE categoria SET status = 0 WHERE id = ?`,[this._id]);
             return categoriaResult
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -77,7 +76,7 @@ export default class Categoria {
    static async SelecionarCategorias() {
         const bd = await obterConexaoDoPool();
         try {
-            const categoriaResult = await bd.query(`SELECT * FROM categoria`);
+            const categoriaResult = await bd.query(`SELECT * FROM categoria WHERE status = 1`);
             return categoriaResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);

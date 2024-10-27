@@ -1,7 +1,7 @@
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        responseProd = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
+        responseProd = await axios.get('http://192.168.3.9:3000/SelecionaProduto');
         console.log(responseProd.data)
 
         if (responseProd != null || responseProd != undefined) {

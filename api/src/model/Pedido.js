@@ -128,7 +128,7 @@ export default class Pedido {
             const pedidoResult = await bd.query(`SELECT 
     p.id AS pedidos_id,             
     p.valor_total,                  
-    p.data_cad AS data_pedido,     
+    DATE_FORMAT(p.data_cad, '%d/%m/%Y') AS data_formatada,
     pe.nome AS nome_cliente,         
     pe.cpf AS cpf_cliente,          
     GROUP_CONCAT(CONCAT(' Nome: ', prod.nome_produto, ', Quantidade: ', i.quantidade)) AS itens                   

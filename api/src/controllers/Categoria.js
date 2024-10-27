@@ -33,7 +33,7 @@ const CategoriaController = {
             const {id} = req.params
             const {tipo} = req.body
             const cCategoria = new Categoria(id,tipo);
-            const validaCampos = cCategoria.validaCampos(tipo)
+            const validaCampos = cCategoria.validaCampos()
             const verificaCapos = cCategoria.verificaCampos()
             if(!validaCampos){
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
@@ -42,22 +42,19 @@ const CategoriaController = {
                 res.status(400).json({ error: "Campos vazios" });
             }
             const modificaCategoria = await cCategoria.modificaCategoria()
-            console.log(modificaCategoria)
-            if (modificaCategoria.error) {
-                return res.status(500).json({message: "Erro ao modificar uma categoria"});
-            }
+
             return res.status(201).json({ message: "Categoria modificada com sucesso!" });
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Erro ao modificar uma categoria" });
         }
     },
-    Deletar: async (req, res) => {
+    Inativar: async (req, res) => {
         try {
             const {id} = req.params
+            console.log(id)
             const cCategoria = new Categoria(id);
             const deleteCategoria = await cCategoria.DeletarCategoria()
-            console.log(deleteCategoria)
             return res.status(201).json({ message: "Categoria deletada com sucesso!" });
         } catch (error) {
             console.error(error);

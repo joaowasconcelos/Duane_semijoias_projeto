@@ -44,7 +44,6 @@ export default class Preco {
         try {
             const precoSelect = await bd.query(`SELECT * FROM preco WHERE produto_id = ? ORDER BY id DESC LIMIT 1;`,[this._id_produto])
             const preco = precoSelect[0].Id
-            console.log(precoSelect)
             if(!preco == 0){
                 const precoModifica = await bd.query(`UPDATE preco SET status = ? WHERE id = ?;`,[this._status,preco])
                 console.log(precoModifica)
