@@ -3,7 +3,7 @@
     padding: 0;
     box-sizing: border-box;
     font-family: "Petit Formal Script";
-    font-weight: 700;
+    font-weight: 400;
     font-style: normal;
 }
 
@@ -119,6 +119,7 @@ body {
     align-items: center;
     justify-content: center;
     font-family: "Parisienne";
+    font-size: 12px;
 }
 
 .container.active .sign-up {
