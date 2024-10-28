@@ -220,13 +220,18 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT * FROM login WHERE usuario =?;`,[this._usuario])
             const login = loginResul[0][0]
-            console.log(login.primeiro_login )
+            if(login === undefined){
+                return "User Invalid"
+            }
+         
             if(login.primeiro_login == 1){
                 const salt = await bcrypt.genSalt(12);
                 const passwordHash = await bcrypt.hash(this._senha, salt);
                 const updateSenha = await bd.query(`UPDATE login SET senha =? WHERE usuario =?;`, [passwordHash,this._usuario])
                 const updateStatus = await bd.query(`UPDATE login SET primeiro_login =? WHERE usuario =?;`, [this._p_log,this._usuario])
                 return true
+            }else{
+                return "Esse login não é o primeiro acesso"
             }
 
         } catch (error) {

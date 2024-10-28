@@ -34,11 +34,10 @@ export default class Produto_Img {
     async CadastraProdutoImg() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoImgResult = await bd.query(`INSERT INTO produto_img (id_img,produto_id)VALUES((SELECT REPLACE(DATE_FORMAT(CURRENT_TIMESTAMP(6), '%H%i%s%f'), ':', '') AS id_imagem),?);`,
-                [this._id_produto]);
-            const produtoImgId = produtoImgResult[0].insertId;
-            const select = await bd.query(`SELECT id_img FROM produto_img WHERE id = ?;`,[produtoImgId])
-            return select[0][0].id_img
+            const produtoImgResult = await bd.query(`INSERT INTO produto_img (id_img,produto_id)VALUES(?,?);`,
+                [this._id_img,this._id_produto]);
+            const produtoImgId = produtoImgResult[0]
+            return produtoImgId
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

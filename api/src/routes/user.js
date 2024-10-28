@@ -12,13 +12,9 @@ import LoginController from "../controllers/Login.js";
 import CadastroADM from "../controllers/CadastroADM.js"
 import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
-// import UploadImagens from "../controllers/Imagens.old.js";
-// import UploadImagens from "../controllers/Imagens.js";
 import FeedbackController from "../controllers/Feedback.js";
 import { logout } from "../middleware/authenticateJWT.js";
-import { upload } from "../middleware/imagens.js";
-
-
+import { upload,handleImageUpload} from "../middleware/imagens.js";
 
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
@@ -29,9 +25,7 @@ routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.Cada
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
-routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),ProdutoController.cadastro)//ADM
-// routerUser.post('/postagens/:id_produto',,UploadImagens.Imagens);//ADM   
-// routerUser.post('/postagens/:id_produto',UploadImagens.Multer,authenticateJWT,authenticatePerfil,UploadImagens.Imagens);//ADM
+routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
 
 
 //Delete
@@ -41,11 +35,13 @@ routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array
 // routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroUsuario.ExcluirPessoa);
 // routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroADM.ExcluirPessoa)// ADM
 // Por enquanto o administrador não poderá excluir um usuario pois isso altera algumas informações em nosso banco
-routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
 // routerUser.delete('/DeleteImage/:id',authenticateJWT,authenticatePerfil,UploadImagens.DeleteImage);
+routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
 
 //Update
 routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
+routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
+routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);//ADM
 routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);//ADM
 routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)//ADM
@@ -61,20 +57,17 @@ routerUser.put('/Feedback/:id_feedback',authenticateJWT,FeedbackController.Modif
 //Select
 routerUser.get("/SelecionaCategoria",CategoriaController.Seleciona);
 routerUser.get("/SelecionaUsuarios",CadastroUsuario.Seleciona);
+routerUser.get("/SelecionaFuncionarios",CadastroUsuario.SelecionaADM);
 routerUser.get("/SelecionaInfoUsers",authenticateJWT,CadastroUsuario.SelecionaInfoId);
-routerUser.get("/SelecionaPedido",PedidoController.Seleciona);//ADM
+routerUser.get("/SelecionaPedido",authenticateJWT,authenticatePerfil,PedidoController.Seleciona);//ADM
 routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Seleciona);//USUARIO
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
-routerUser.get("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
-//routerUser.get("/VerificaItens",PromocaoController.Verifica);//Essa rota verifica se os itens realmente está em promoção e verifica se está atendendo a porcentagem anteriormente definida
-// routerUser.get('/Postagens',UploadImagens.listAllFiles);
-// routerUser.get('/Postagens/:filename',UploadImagens.listAllFilesId);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
 routerUser.get('/selecionaCupons',CuponsController.Seleciona)
 routerUser.get('/selecionaCupons/:id',CuponsController.SelecionaDetalhes)
 routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
-routerUser.get('/MeuPedido/id:',authenticateJWT,PedidoController.SelecionaDetalhes)
+routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
@@ -85,13 +78,6 @@ routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
 routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
 
 //Front-end
-routerUser.get("/pagina-admin",authenticateJWT,authenticatePerfil);
 routerUser.get("/logout",logout);
-// Rota para verificar o token JWT
-routerUser.get("/verificar-token", authenticateJWT, (req, res) => {
-    res.status(200).json({ message: "Token válido.", id: req.id, perfil: req.perfil });
-});
-
-
 export default routerUser;  
 

@@ -11,6 +11,11 @@
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/checkUserProfile.js"></script>
+    <script src="../js/verificaToken.js"></script>
+    <link rel="stylesheet" href="../css/notificacao.css">
+    <script src="../js/notificacao.js"></script>
+
 
 </head>
 
@@ -56,12 +61,12 @@
                 <div id="form">
                     <div id="dados">
                         <label for="tipo">Categoria: *</label>
-                        <select class="form-control form-control-sm" id="tipo" name="tipo">
+                        <select class="form-control form-control-sm" id="categoria" name="categoria">
                             <option></option>
                         </select>
             
                         <label for="nome_produto">Produto: *</label>
-                        <input class="input" type="text" name="nome_produto" id="nome_produto">
+                        <input class="input" type="text" name="produto" id="produto">
             
                         <label for="descricao">Descrição: *</label>
                         <input class="input" type="text" name="descricao" id="descricao">

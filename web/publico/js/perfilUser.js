@@ -1,33 +1,7 @@
-async function authenticateJWT() {
-  const token = localStorage.getItem('token');
-  if (!token) {
-    window.location.href = 'login.html';
-    return;
-  }
-  try {
-    const resposta = await axios.get('http://10.0.3.77:3000/verificar-token', {
-      headers: {
-        'x-access-token': `${token}`
-      }
-    });
-    console.log(resposta)
-    console.log(resposta.data.message)
-    if (!resposta.data.message === "Token válido.") {
-      window.location.href = 'login.html';
-    }
-
-  } catch (error) {
-    console.error('Erro ao verificar o token:', error);
-    window.location.href = 'login.html';
-  }
-}
-authenticateJWT()
-SelecionaInfo()
-
 async function SelecionaInfo() {
   const token = localStorage.getItem('token');
   try {
-    const resposta = await axios.get('http://10.0.3.77:3000/SelecionaInfoUsers', {
+    const resposta = await axios.get('http://192.168.3.9:3000/SelecionaInfoUsers', {
       headers: {
         'x-access-token': `${token}`
       }
@@ -58,17 +32,17 @@ async function AlterarSenha() {
 
   // Verifica se as senhas coincidem
   if (novaSenha !== confirmarSenha) {
-    alert("A nova senha e a confirmação não coincidem.");
+    showNotification("A nova senha e a confirmação não coincidem.");
     return;
   } 
   // Verifica se a nova senha é nula
   if (novaSenha == null) {
-    alert("A nova senha não pode ser nula.");
+    showNotification("A nova senha não pode ser nula.");
     return;
   } 
   //Verifica se a confirmção de senha é nula
   if (confirmarSenha == null) {
-    alert("A confirmação de senha não pode ser nula");
+    showNotification("A confirmação de senha não pode ser nula");
     return
   }
 
@@ -84,18 +58,18 @@ async function AlterarSenha() {
 
     console.log(resposta.data)
     if (resposta.data.message === "Senha alterada com sucesso!") {
-      alert("Senha alterada com sucesso!");
+      showNotification("Senha alterada com sucesso!");
       document.getElementById('modal').close();
     }  else {
-      alert("Erro ao alterar a senha: " + resposta.data.message);
+      showNotification("Erro ao alterar a senha: " + resposta.data.message);
     }
 
   } catch (error) {
     if (error.response) {
       if (error.response.status === 401) {
-        alert("Senha atual incorreta.");
+        showNotification("Senha atual incorreta.");
       } else if (error.response.status === 500) {
-        alert("Erro no servidor. Tente novamente mais tarde.");
+        showNotification("Erro no servidor. Tente novamente mais tarde.");
       } 
     }
   }

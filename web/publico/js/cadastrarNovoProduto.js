@@ -44,30 +44,28 @@ function limparInput() {
 
 $('#produto-form').on('submit', async function (event) {
     event.preventDefault()
-    console.log("auiq")
     const token = localStorage.getItem('token');
     const formData = new FormData(this);
     console.log(formData)
-    // formData.append('produto', document.getElementById("nome_produto").value);
-    // formData.append('descricao', document.getElementById("descricao").value);
-    // formData.append('categoria', document.getElementById("tipo").value);
-    // formData.append('preco', document.getElementById("preco").value);
-
-
     try {
-        await axios.post('http://10.0.3.77:3000/CreateProduto', formData, {
+        await axios.post('http://192.168.3.9:3000/CreateProduto', formData, {
             headers: {
                 'x-access-token': token,
             }
         }).then(response =>{
             console.log(response)
+            showNotification(response.data.message)
+            setTimeout(() => {
+                window.location.reload(true)
+            }, 3000);
+            return
         }).catch(error =>{
             console.log(error)
         });
         
     } catch (error) {
         console.error('Erro ao criar o produto:', error);
-        alert("Ocorreu um erro ao criar o produto. Tente novamente.");
+        showNotification("Ocorreu um erro ao criar o produto. Tente novamente.");
     }
 })
 
@@ -77,7 +75,7 @@ $('#produto-form').on('submit', async function (event) {
 
 async function dados() {
     try {
-        const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
+        const response = await axios.get('http://192.168.3.9:3000/SelecionaCategoria');
         console.log(response.data);
         criaDrop(response.data);
     } catch (error) {
@@ -86,7 +84,7 @@ async function dados() {
 }
 
 function criaDrop(data) {
-    const selecionaElemento = document.getElementById('tipo');
+    const selecionaElemento = document.getElementById('categoria');
     data.forEach((item) => {
         const opcao = document.createElement('option');
         opcao.value = item.id;

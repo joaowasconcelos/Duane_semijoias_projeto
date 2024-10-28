@@ -8,14 +8,14 @@
 // import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 
-const bucketName = "teste-firebase-b05a9.appspot.com";
+// const bucketName = "teste-firebase-b05a9.appspot.com";
 
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount),
-    storageBucket: bucketName
-});
+// admin.initializeApp({
+//     credential: admin.credential.cert(serviceAccount),
+//     storageBucket: bucketName
+// });
 
-const bucket = admin.storage().bucket();
+// const bucket = admin.storage().bucket();
 
 
 // const __filename = fileURLToPath(import.meta.url);

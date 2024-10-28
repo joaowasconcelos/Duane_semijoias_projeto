@@ -34,9 +34,9 @@ export default class Telefone {
     async CadastrarTelefone() {
         const bd = await obterConexaoDoPool();
         try {
-            console.log(this._numero)
+            console.log("AQUIQ",this._numero)
             console.log(this._numero.Numero)
-            const telefoneResult = await bd.query(`INSERT INTO telefone (numero) VALUES (?)`, [this._numero.Numero]);
+            const telefoneResult = await bd.query(`INSERT INTO telefone (numero) VALUES (?)`, [this._numero]);
             const tel = (telefoneResult[0].insertId);
             console.log('ID do Telefone:', tel);
 

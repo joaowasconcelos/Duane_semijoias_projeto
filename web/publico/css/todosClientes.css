@@ -12,7 +12,7 @@ main {
     margin: 0 auto;
 }
 
-/* footer */
+/* Footer */
 footer {
     width: 100%;
 }
@@ -22,58 +22,83 @@ footer {
     bottom: 0;
     display: block;
     height: 90px;
-    /* position: absolute; */
 }
 
 /* Tabela */
-
 table {
-    width: 100%;
+    width: 100%; 
     border-collapse: collapse;
-    margin: 25px 0;
     font-size: 15px;
-    font-family: Arial, sans-serif;
+    font-family: 'Roboto Mono', monospace;
     text-align: left;
+    overflow-y: auto; /* Adiciona scroll vertical se necessário */
 }
 
 thead {
-    color: #9B5377;
+    background-color: #b9648e;
+    color: #fff;
+    font-weight: bold;
 }
 
 thead tr th {
     padding: 12px;
-    border-right: 2px solid #FAADD1;
+    border-right: 1px solid #FAADD1;
 }
 
-thead th {
-    padding: 12px;
-    border-right: 2px solid #FAADD1;
+thead th:last-child {
+    border-right: none;
 }
 
-tbody tr th,
-tbody tr td {
-    padding: 12px;
-    border-right: 2px solid #FAADD1;
+tbody tr {
+    transition: background-color 0.2s ease;
+}
+
+tbody tr:nth-child(even) {
+    background-color: #f9f3f5;
 }
 
 tbody tr:hover {
-    background-color: #f1f1f1;
+    background-color: #f0e2e5;
 }
 
-tbody tr th,
-tbody tr td {
+tbody td, tbody th {
     padding: 12px;
+    border-right: 1px solid #FAADD1;
+    color: #333;
+}
+
+tbody td:last-child, tbody th:last-child {
+    border-right: none;
 }
 
 tbody tr th {
     font-weight: normal;
-    color: #333;
+    color: #ffffff;
 }
 
-#dados, #titulo{
+/* Estilos das colunas */
+#iconesTh {
+    width: 120px;
+}
+
+#qtdeCat, #preco {
+    width: 130px;
+    text-align: center;
+}
+
+
+/* Botão de cadastrar */
+#cadastrarNovo {
+    color: #9B5377;
+    font-weight: bold;
+}
+
+/* Estilos para as fontes */
+#dados, #titulo {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: bold;
+    color: #ffffff;
 }
 
 #titulo {
@@ -84,36 +109,7 @@ tbody tr th {
     color: black;
 }
 
-thead th:last-child,
-tbody td:last-child,
-tbody th:last-child {
-    border-right: none;
-}
-
-#iconesTh {
-    width: 120px;
-}
-
-#qtdeCat {
-    width: 130px;
-    text-align: center;
-}
-
-#preco {
-    width: 120px;
-    text-align: center;
-}
-
-.iconeT {
-    padding-left: 40px;
-}
-
-.centralizar {
-    text-align: center;
-}
-
 /* Parte de cima */
-
 #container1 {
     display: flex;
     flex-direction: row;
@@ -131,7 +127,6 @@ tbody th:last-child {
     font-family: "Average", serif;
     font-weight: 400;
     padding-top: 15px;
-    font-style: normal;
     color: #9B5377;
     font-size: 19px;
 }
@@ -143,12 +138,11 @@ tbody th:last-child {
     width: 5%;
 }
 
-/* container da tabela */
-
+/* Container da tabela */
 #container2 {
     display: flex;
     flex-direction: row;
-    justify-content:space-between;
+    justify-content: space-between;
     align-items: center;
     gap: 40px;
     width: 100%;
@@ -156,11 +150,8 @@ tbody th:last-child {
 
 #titulo2 {
     font-family: "Roboto Mono", monospace;
-    font-optical-sizing: auto;
-    font-style: normal;
     font-size: 20px;
     font-weight: bold;
-    text-align: justify;
     color: #633636;
     padding-top: 10px;
     margin-right: 25px;
@@ -172,8 +163,6 @@ tbody th:last-child {
     border-radius: 5px;
     height: 35px;
     font-family: "Roboto Mono", monospace;
-    font-optical-sizing: auto;
-    font-style: normal;
     font-size: 16px;
     color: #633636;
     padding-left: 15px;
@@ -199,34 +188,28 @@ tbody th:last-child {
     color: #9B5377;
 }
 
-#cadastrarNovo {
-    color: #9B5377;
-    font-weight: bold;
-}
-
 .fas {
     color: #9b5377;
     font-size: 16px;
 }
 
+/* Tabela e ícones */
 #iconsTable {
+    display: flex;
     justify-content: center;
     align-items: center;
 }
-/* */
 
+/* Estilo adicional para a tabela */
 #table {
     display: flex;
     flex-direction: column;
-    height: 587px;
-    width: 1453px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
     padding-left: 25px;
 }
 
-/* bem vinda + nome */
-
+/* Bem-vinda + Nome */
 #bemVinda {
     display: flex;
     flex-direction: row;
@@ -239,17 +222,17 @@ tbody th:last-child {
     font-size: 19px;
 }
 
+/* Responsividade */
+@media (max-width: 768px) {
+    #pesquisa {
+        width: 100%; /* Ajuste de largura para dispositivos menores */
+    }
 
-/* Footer */
+    #titulo2 {
+        font-size: 18px; /* Tamanho do título para dispositivos menores */
+    }
 
-footer {
-    width: 100%;
-}
-
-#ondasFooter {
-    width: 100%;
-    bottom: 0;
-    display: block;
-    height: 90px;
-    /* position: absolute; */
+    table {
+        font-size: 14px; /* Tamanho da fonte da tabela para dispositivos menores */
+    }
 }

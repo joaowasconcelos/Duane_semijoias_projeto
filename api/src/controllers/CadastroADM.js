@@ -10,6 +10,8 @@ const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoaADM: async (req, res) => {
         try {
+            console.log(req.body)
+        
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Telefones,perfil } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
             console.log(cPessoa)
@@ -47,7 +49,7 @@ const CadastroUsuario = {
             const insertPessoa = await cPessoa.CadastrarPessoa();
             let insertTele;
             if (!insertPessoa.error) {
-                const cLogin = new Login(null, Usuario, "DUANE123@", 0, 1,perfil, insertPessoa);
+                const cLogin = new Login(null, Usuario, "DUANE123@",1, 1,perfil, insertPessoa);
                 const VerificaLogin = cLogin.verificaCampos()
                 const validaLogin = cLogin.validaCamposADM()
                 if(!VerificaLogin){
@@ -71,23 +73,36 @@ const CadastroUsuario = {
                 console.log("teste",insertLogin.error)
                 if (!insertLogin.error) {
                     if (Telefones.length > 0) {
+                        console.log(Telefones);
                         for (const numeroTelefone of Telefones) {
+                            console.log(numeroTelefone);
+                            
+                            // Cria uma nova instância da classe Telefone
                             const novoTelefone = new Telefone(null, numeroTelefone, insertPessoa);
-                            const verificaTele = novoTelefone.verificaCampos()
-                            const validaTele = novoTelefone.validaCampos()
-                            if(!verificaTele){
-                                return res.status(500).json({ message: "Numero máximo de caracteres "})
+                            
+                            // Verifica se os campos são válidos
+                            const verificaTele = novoTelefone.verificaCampos();
+                            const validaTele = novoTelefone.validaCampos();
+                    
+                            // Se a verificação falhar, retorna erro 500
+                            if (!verificaTele) {
+                                return res.status(500).json({ message: "Número máximo de caracteres excedido." });
                             }
-                            if(!validaTele){
+                    
+                            // Se a validação falhar, retorna erro 400
+                            if (!validaTele) {
                                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
                             }
-                            insertTele = await novoTelefone.CadastrarTelefone();
+                    
+                            const insertTele = await novoTelefone.CadastrarTelefone();
                             if (insertTele.error) {
-                                const deleteLogin = cLogin.DeletarLogin();
-                                const deletarPessoa = cPessoa.DeletarPessoa();
-                                return res.status(400).json({ message: "Erro ao cadastrar Numero!" });
+                                await Promise.all([
+                                    cLogin.DeletarLogin(),
+                                    cPessoa.DeletarPessoa()
+                                ]);
+                                return res.status(400).json({ message: "Erro ao cadastrar número!" });
                             }
-                        };
+                        }
                     }
                 } else {
                     console.log("teste")

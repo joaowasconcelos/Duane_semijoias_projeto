@@ -41,7 +41,7 @@ function handleFormSubmit(event) {
   })
   .then(response => response.json())
   .then(data => {
-    alert('Compra realizada com sucesso!');
+    showNotification('Compra realizada com sucesso!');
     console.log('Resposta do servidor:', data);
     // Limpa o carrinho e redireciona para uma página de sucesso
     localStorage.removeItem('cart');
@@ -49,7 +49,7 @@ function handleFormSubmit(event) {
   })
   .catch(error => {
     console.error('Erro ao finalizar a compra:', error);
-    alert('Ocorreu um erro ao finalizar a compra. Tente novamente.');
+    showNotification('Ocorreu um erro ao finalizar a compra. Tente novamente.');
   });
 }
 

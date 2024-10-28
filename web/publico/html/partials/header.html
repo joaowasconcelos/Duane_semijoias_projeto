@@ -10,8 +10,6 @@
 
         <div id="boxHeader">
 
-            <span id="bemVinda">Bem vinda!</span>
-
             <div id="icons">
                 <a href="/web/publico/html/login.html">
                     <span id="icon" class="fas fa-user fa-2x"></span>
@@ -41,15 +39,26 @@
             return;
         }
         try {
-            const resposta = await axios.get('http://10.0.3.77:3000/logout', {
+            await axios.get('http://192.168.3.9:3000/logout', {
                 headers: {
                     'x-access-token': `${token}`
                 }
+            }).then(response => {
+                console.log("aqui", response)
+                if (response.data.message === "Token inválido") {
+                    console.log("aqui");
+
+                    localStorage.removeItem('token');
+                    localStorage.removeItem('userProfile');
+                    window.location.href = 'login.html';
+                }
+            }).catch(error=>{
+                console.log(error)
             });
-            if (resposta.data.message === "Token inválido") {
-                window.location.href = 'login.html';
-            }
+
         } catch (error) {
+            console.log("aqui error");
+
             console.error('Erro ao verificar o token:', error);
             window.location.href = 'login.html';
         }
