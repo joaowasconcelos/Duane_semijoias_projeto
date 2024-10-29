@@ -126,10 +126,6 @@ function changeSubtitle(link) {
     return false;
 }
 
-//IDENTIFICAR SE O ELEMENTO DO CAMPO INPUT POSSUI ID
-//SE TIVER ID É POST
-//SE NÃO É GET
-
 const btnSave = document.getElementById('salvando');
 
 btnSave.addEventListener('click', function (link) {
@@ -148,7 +144,7 @@ async function put() {
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
     try {
-        await axios.post(`http://10.0.3.77:3000/ModificaCategoria/${id}`,
+        await axios.post(`http://10.0.3.77:3000/ModificaCategoria/${id}`, //mudei a rota
             {
                 tipo: tipo
             },

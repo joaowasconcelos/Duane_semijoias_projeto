@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador</title>
-    <link rel="stylesheet" href="../css/admInicio.css">
+    <title>Promoções</title>
+    <link rel="stylesheet" href="../css/promoAdm.css">
     <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -32,34 +32,63 @@
                 </svg>
                 <p id="bemVindaText">Bem vinda!</p>
             </div>
+
+            <div id="voltar"></div>
+            <a href="#" style="text-decoration: none;" onclick="history.back()">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> 
+            </a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                class="bi home bi-house-fill" viewBox="0 0 16 16" id="icon">
+                <path
+                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+            </svg>
+        </div>
+
+        <div id="container2">
+
+            <p id="titulo2">Gerenciamento de promoções</p>
+
         </div>
 
         <!-- Menu -->
 
         <div class="container2">
+
             <div id="menuAdm">
-                <p id="titulo">MENU</p>
-                <!-- <a href="#" id="menuText" class="navAdm">Histórico de pedidos</a> -->
-                <!-- <a href="#" id="menuText" class="navAdm">Relatório de vendas</a> -->
-                <a href="../html/cadastrarNovoProduto.html" id="menuText" class="navAdm">Cadastro de produtos</a>
-                <a href="../html/admCatalogoProdutos.html" id="menuText" class="navAdm">Catálogo de produtos</a>
-                <a href="../html/promoAdm.html" id="menuText" class="navAdm">Controle de promoções</a>
-                <a href="../html/cuponsAdm.html" id="menuText" class="navAdm">Gerenciamento de cupons</a>
-                <a href="../html/cadastrarNovoAdm.html" id="menuText" class="navAdm">Cadastrar novo usuário</a>
-                <a href="../html/todosClientes.html" id="menuText" class="navAdm">Clientes cadastrados</a>
-                <a href="#" id="menuText" class="navAdm">Meus dados</a>
-                <a id="menuText" class="navAdm" type="button" class="btn btn-primary" data-toggle="modal"
-                    data-target="#exampleModalCenter">Categorias
-                    de produto</a>
+
+                <p id="titulo">Todas as promoções</p>
+
+                <table id="tbl-promo"></table>
+
             </div>
 
             <!-- tabela -->
 
             <div id="table">
 
-                <p id="titulo2">Últimos pedidos:</p>
+                <p id="titulo2">Cadastrar nova promoção:</p>
 
-                <table id="tbl-pedidos"></table>
+                <form action="http://10.0.3.77:3000/CreateCupom" method="POST" id="envia-form">
+
+
+
+
+
+
+
+
+                    <div id="btns">
+
+                        <button type="button" class="btn btn-primary save-changes"
+                            onclick="limparInput()">Cancelar</button>
+                        <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+
+                    </div>
+
+
+                </form>
+
 
             </div>
 
@@ -67,7 +96,7 @@
 
         <!-- Modal -->
 
-        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+        <!-- <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
             aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
 
             <div class="modal-dialog modal-dialog-centered modal-md" role="document">
@@ -120,18 +149,20 @@
 
             </div>
 
-        </div>
+        </div> -->
 
     </main>
 
     <footer> <img id="ondasFooter" src="../img/ondas-footer.png" alt=""> </footer>
 
-    <script src="../js/admInicio.js"></script>
+    <script src="../js/promoAdm.js"></script>
+
     <script defer>
         $(function () {
             $('#header').load("./partials/headerAdm.html");
         });
     </script>
+
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 
 </body>
