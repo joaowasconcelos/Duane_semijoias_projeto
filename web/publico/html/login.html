@@ -49,9 +49,11 @@
                     <a href="#" class="icon">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
-                </div> -->
-               
-                <button class="bot">Cadastrar-se<a href="/web/publico/html/cadastroUser.html"></a></button>
+                </div>
+                 <button class="bot">Cadastrar-se</button>
+                -->
+
+                
             </form>
         </div>
 
@@ -89,9 +91,11 @@
                 <div class="toggle-panel toggle-right">
                     <h1>Seja bem-vinda!</h1>
                     <p>Ainda não é cadastrada? clique no botão abaixo para realizar seu cadastro</p>
-                    <button class="hidden bot2" id="register">
-                        Cadastrar
-                    </button>
+                    <a href="/web/publico/html/cadastroUser.html">
+                        <button class="hidden bot2" id="register">
+                            Cadastrar
+                        </button>
+                    </a>
                 </div>
             </div>
         </div>
@@ -121,7 +125,7 @@
 
             try {
                 // Envia os dados para a rota de login
-                await axios.get('http://192.168.3.9:3000/VerificaLogin', {
+                await axios.get('http://10.0.3.77:3000/VerificaLogin', {
                     params: {
                         login: username,
                         senha: password
@@ -160,9 +164,9 @@
 
                     // Verifica o perfil e redireciona
                     if (decodedToken.perfil === 1) {
-                        window.location.href = 'http://127.0.0.1:5500/publico/html/admInicio.html';
+                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
                     } else if (decodedToken.perfil === 2) {
-                        window.location.href = 'http://127.0.0.1:5500/publico/html/perfilUser.html';
+                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
                     } else {
                         console.log('Usuário não autorizado!');
                         showNotification('Usuário não autorizado!');
