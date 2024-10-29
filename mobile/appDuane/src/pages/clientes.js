@@ -105,57 +105,65 @@ export default function Home() {
 
               <Text style={styles.textTitle}>Clientes</Text>
 
-              
+
             </View>
 
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
               </TextInput>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-              {clientes.map(client => (
-                <View key={client.id} style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '70%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>{client.nome}</Text>
+                {clientes.map(client => (
+                  <View key={client.id} style={styles.btn}>
+                    <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '70%' }}>
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View>
+                          <Text style={styles.textBtn}>Nome:</Text>
+                          <Text style={{}}>{client.nome}</Text>
+                        </View>
+                     
                       </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Data Nascimento:</Text>
-                        <Text style={styles.textElement}>Colocar ainda na rota</Text>
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ marginRight: 40 }}>
+                          <Text style={styles.textBtn}>Data Nascimento:</Text>
+                          <Text style={styles.textElement}>
+                            {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(client.data_nasc))}
+                          </Text>
+
+                        </View>
+                      </View>
+
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ justifyContent: 'center' }} >
+                          <Text style={styles.textBtn}>Usuario:</Text>
+                          <Text style={{}}>{client.usuario}</Text>
+                        </View>
+
                       </View>
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40 }}>
+                      <Text style={styles.textBtn}>Detalhes:</Text>
+                      <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
+                    </TouchableOpacity>
 
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Usuario:</Text>
-                        <Text style={{}}>{client.usuario}</Text>
-                      </View>
-                      
-                    </View>
                   </View>
+                ))}
 
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-              ))}
-                
 
-                
 
-                
+
+
               </View>
             </ScrollView>
 
-            
+
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -193,7 +201,7 @@ const styles = StyleSheet.create({
   btn: {
     width: "95%",
     backgroundColor: "#FFFFFF",
-    height: 110,
+    height: "auto",
     justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 20,
@@ -246,7 +254,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
-  Inputs:{
+  Inputs: {
     width: '80%',
     height: 30,
     fontSize: 18,
