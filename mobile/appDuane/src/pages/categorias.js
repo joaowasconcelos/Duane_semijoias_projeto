@@ -305,7 +305,7 @@ const styles = StyleSheet.create({
     flex: 1,
     justifyContent: "center",
     alignItems: "center",
-    backgroundColor: "rgba(0, 0, 0, 0.5)",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   modalContent: {
     backgroundColor: "#fff",
@@ -323,6 +323,8 @@ const styles = StyleSheet.create({
     shadowRadius: 5,
     justifyContent: "space-evenly",
     alignItems: "center",
+    borderWidth: 2,
+    borderColor: '#CF90A2'
   },
   inputModal: {
     borderWidth: 2,
