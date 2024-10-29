@@ -48,7 +48,7 @@ $('#produto-form').on('submit', async function (event) {
     const formData = new FormData(this);
     console.log(formData)
     try {
-        await axios.post('http://192.168.3.9:3000/CreateProduto', formData, {
+        await axios.post('http://10.0.3.77:3000/CreateProduto', formData, {
             headers: {
                 'x-access-token': token,
             }
@@ -75,7 +75,7 @@ $('#produto-form').on('submit', async function (event) {
 
 async function dados() {
     try {
-        const response = await axios.get('http://192.168.3.9:3000/SelecionaCategoria');
+        const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
         console.log(response.data);
         criaDrop(response.data);
     } catch (error) {

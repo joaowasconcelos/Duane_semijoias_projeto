@@ -6,7 +6,7 @@ async function dados() {
     try {
         const token = localStorage.getItem('token');
         await axios.get(
-            'http://192.168.3.9:3000/SelecionaCategoria',
+            'http://10.0.3.77:3000/SelecionaCategoria',
             {
                 headers: {
                     'x-access-token': token
@@ -23,7 +23,7 @@ async function dados() {
 
 
         await axios.get(
-            'http://192.168.3.9:3000/SelecionaPedido',
+            'http://10.0.3.77:3000/SelecionaPedido',
             {
                 headers: {
                     'x-access-token': token
@@ -126,10 +126,6 @@ function changeSubtitle(link) {
     return false;
 }
 
-//IDENTIFICAR SE O ELEMENTO DO CAMPO INPUT POSSUI ID
-//SE TIVER ID É POST
-//SE NÃO É GET
-
 const btnSave = document.getElementById('salvando');
 
 btnSave.addEventListener('click', function (link) {
@@ -148,7 +144,7 @@ async function put() {
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
     try {
-        await axios.post(`http://192.168.3.9:3000/ModificaCategoria/${id}`,
+        await axios.post(`http://10.0.3.77:3000/ModificaCategoria/${id}`, //mudei a rota
             {
                 tipo: tipo
             },
@@ -186,7 +182,7 @@ async function post() {
 
     try {
         const response = await axios.post(
-            'http://192.168.3.9:3000/CreateCategoria',
+            'http://10.0.3.77:3000/CreateCategoria',
             {
                 tipo: tipo
             },
@@ -231,7 +227,7 @@ function confirmarExclusao(link) {
 async function excluir(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.post(`http://192.168.3.9:3000/InativaCategoria/${id}`,
+        await axios.post(`http://10.0.3.77:3000/InativaCategoria/${id}`,
             {}, 
             {
                 headers: {
@@ -256,7 +252,7 @@ async function excluir(id) {
 async function DetalhesPedido(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.get(`http://192.168.3.9:3000/MeuPedido/${id}`,
+        await axios.get(`http://10.0.3.77:3000/MeuPedido/${id}`,
             {
                 headers: {
                     'x-access-token': token

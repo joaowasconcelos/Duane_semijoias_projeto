@@ -129,7 +129,7 @@ async function salvar() {
     const perfil = document.getElementById("perfil").value;
 
     try {
-        await axios.post('http://192.168.3.9:3000/CreateADM',
+        await axios.post('http://10.0.3.77:3000/CreateADM',
             {
                 Nome,
                 Usuario,

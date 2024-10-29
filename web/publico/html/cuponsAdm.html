@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cupons</title>
+    <link rel="stylesheet" href="../css/cuponsAdm.css">
+    <link rel="stylesheet" href="../css/partials/headerAdm.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.7.1.js"
+        integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
+    <script src="../js/checkUserProfile.js"></script>
+    <script src="../js/verificaToken.js"></script>
+    <link rel="stylesheet" href="../css/notificacao.css">
+    <script src="../js/notificacao.js"></script>
+
+</head>
+
+<body>
+
+    <header id="header"></header>
+
+    <main>
+
+        <div id="container1">
+            <div id="bemVinda">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px;" width="26" height="26"
+                    fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+
+            <div id="voltar"></div>
+            <a href="#" style="text-decoration: none;" onclick="history.back()">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p>
+            </a>
+            <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
+                class="bi home bi-house-fill" viewBox="0 0 16 16" id="icon">
+                <path
+                    d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+            </svg>
+        </div>
+
+        <div id="container2">
+
+            <p id="titulo2">Gerenciamento de cupons</p>
+
+        </div>
+
+        <!-- Menu -->
+
+        <div class="container2">
+
+            <div id="menuAdm">
+
+                <p id="titulo">Todos os cupons</p>
+
+                <table id="tbl-cupons"></table>
+
+            </div>
+
+            <!-- tabela -->
+
+            <div id="table">
+
+                <p id="titulo2">Cadastrar novo cupom:</p>
+
+
+                <form action="http://10.0.3.77:3000/CreateCupom" method="POST" id="envia-form">
+
+
+
+
+
+
+
+
+                    <div id="btns">
+
+                        <button type="button" class="btn btn-primary save-changes"
+                            onclick="limparInput()">Cancelar</button>
+                        <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+
+                    </div>
+
+
+                </form>
+
+
+
+
+            </div>
+
+        </div>
+
+
+    </main>
+
+    <footer> <img id="ondasFooter" src="../img/ondas-footer.png" alt=""> </footer>
+
+    <script src="../js/cuponsAdm.js"></script>
+
+    <script defer>
+        $(function () {
+            $('#header').load("./partials/headerAdm.html");
+        });
+    </script>
+
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>

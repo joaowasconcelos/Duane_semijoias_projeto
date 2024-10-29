@@ -145,7 +145,7 @@ export default function Home() {
                         width: "70%",
                       }}
                     >
-                      <View
+                      <View key={cupons.id}
                         style={{
                           justifyContent: "space-between",
                           alignItems: "center",
