@@ -40,6 +40,7 @@ export default function Login() {
   const [senha, setSenha] = useState("");
 
   const [token, setToken] = useState("");
+  
 
   const decodeJWT = (token) => {
     try {
@@ -150,7 +151,10 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={verificaUser}>
+              <TouchableOpacity style={styles.btn} onPress={
+                //verificaUser
+                navigateHome
+                }>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>
             </View>
