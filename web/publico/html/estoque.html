@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="../css/partials/footer.css">
     <link rel="stylesheet" href="../css/redefinirSenha.css">
     <link rel="stylesheet" href="../css/notificacao.css">
+    <link rel="stylesheet" href="../css/estoque.css">
     <script src="../js/notificacao.js"></script>
 
 </head>
@@ -35,8 +36,63 @@
     <header id="header"></header>
 
     <main>
-        <div id="container">
-   
+        <div id="container1">
+            <div id="bemVinda">
+                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px;" width="26" height="26"
+                    fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
+                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
+                </svg>
+                <p id="bemVindaText">Bem vinda!</p>
+            </div>
+            <div id="voltar"></div>
+
+            <a href="#" onclick="history.back()" style="text-decoration: none; display: flex; flex-direction: row;">
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p><svg xmlns="http://www.w3.org/2000/svg"
+                    width="26" height="26" style="margin-top: 14px; color: #9B5377; margin-left: 13px;"
+                    fill="currentColor" class="bi home bi-house-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
+                    <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
+                </svg>
+            </a>
+
+        </div>
+
+
+        <div id="container2">
+
+            <p id="titulo2">Estoque de produtos</p>
+
+            <div id="groupSearch">
+                <div class="search-container">
+                    <input type="text" name="pesquisa" id="pesquisa"
+                        placeholder="Pesquise por produto ou categoria ...">
+                </div>
+            </div>
+
+            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; margin-top: 7px;">
+                <a href="../html/cadastrarNovoProduto.html" style="text-decoration: none;">
+                    <p id="cadastrarNovo">Cadastrar novo produto</p>
+                </a>
+                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                        style="color: #9B5377; margin-bottom: 15px; margin-left: 10px;" fill="currentColor"
+                        class="bi bi-plus-lg" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd"
+                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                    </svg>
+                
+            </div>
+
+
+
+        </div>
+
+        <div id="table">
+
+            <table id="tbl-produtos"></table>
+                
+            </table>
+
         </div>
     </main>
 
