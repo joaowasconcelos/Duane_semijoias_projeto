@@ -1,7 +1,7 @@
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        responsePed = await axios.get('http:///192.168.3.9:3000/');
+        responsePed = await axios.get('http:///10.0.3.77:3000/');
         console.log(responsePed.data)
 
         if(responsePed != null || responsePed != undefined){

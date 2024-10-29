@@ -13,6 +13,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,7 +27,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
@@ -38,6 +39,35 @@ export default function Home() {
     EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  const [funcionarios, setFuncionarios] = useState([]);
+  const selecionaCate = async () => {
+    try {
+      const response = await api.get(`/SelecionaFuncionarios`);
+      setFuncionarios(response.data);
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar as clientes:", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+    selecionaCate();
+  }, []);
 
   if (!fontsLoaded) {
   } else {
@@ -76,193 +106,65 @@ export default function Home() {
               <Text style={styles.textTitle}>Funcionários</Text>
             </View>
 
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
               <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
               </TextInput>
-              <TouchableOpacity style={{margin: 5}} >
-                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
+              <TouchableOpacity style={{ margin: 5 }} >
+                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30} />
               </TouchableOpacity>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Kevin Moreira</Text>
+                {funcionarios.map(funci => (
+                  <View key={funci.id} style={styles.btn}>
+                    <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '60%' }}>
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View>
+                          <Text style={styles.textBtn}>Nome:</Text>
+                          <Text style={{}}>{funci.nome}</Text>
+                        </View>
+
                       </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
+
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ marginRight: 40 }}>
+                          <Text style={styles.textBtn}>Data nascimento:</Text>
+                          <Text style={styles.textElement}>
+                            {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(funci.data_nasc))}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ marginRight: 40 }}>
+                          <Text style={styles.textBtn}>Numero:</Text>
+                          {funci.numeros ? (
+                            funci.numeros.split(',').map(num => (
+                              <Text>{num}</Text>
+                            ))
+                          ) : (
+                            <Text>Número não disponível</Text>
+                          )}
+
+                        </View>
                       </View>
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 90 }}
+                    >
+                      <FontAwesome6 name="user-pen" color="#ae4b67" size={40} />
+                    </TouchableOpacity>
 
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cargo:</Text>
-                        <Text style={{}}>Vendedor</Text>
-                      </View>
-                    </View>
                   </View>
 
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Kevin Moreira</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
-                      </View>
-                    </View>
-
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cargo:</Text>
-                        <Text style={{}}>Vendedor</Text>
-                      </View>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Kevin Moreira</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
-                      </View>
-                    </View>
-
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cargo:</Text>
-                        <Text style={{}}>Vendedor</Text>
-                      </View>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Kevin Moreira</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
-                      </View>
-                    </View>
-
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cargo:</Text>
-                        <Text style={{}}>Vendedor</Text>
-                      </View>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Kevin Moreira</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
-                      </View>
-                    </View>
-
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Atvo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cargo:</Text>
-                        <Text style={{}}>Vendedor</Text>
-                      </View>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="user-pen" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                
-
-                
+                ))}
               </View>
             </ScrollView>
 
-            
+
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -299,7 +201,7 @@ const styles = StyleSheet.create({
   btn: {
     width: "95%",
     backgroundColor: "#FFFFFF",
-    height: 100,
+    height: "auto",
     justifyContent: "space-evenly",
     alignItems: "center",
     marginTop: 20,
@@ -352,7 +254,7 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
-  Inputs:{
+  Inputs: {
     width: '80%',
     height: 30,
     fontSize: 18,

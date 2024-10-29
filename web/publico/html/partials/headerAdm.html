@@ -8,7 +8,7 @@
 
         <div id="boxHeader">
 
-            <div id="icons">
+            <div id="icons" onclick="logout()">
                 <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                     class="bi bin bi-box-arrow-right" viewBox="0 0 16 16">
                     <path fill-rule="evenodd"
@@ -35,7 +35,7 @@
             return;
         }
         try {
-            await axios.get('http://192.168.3.9:3000/logout', {
+            await axios.get('http://10.0.3.77:3000/logout', {
                 headers: {
                     'x-access-token': `${token}`
                 }
