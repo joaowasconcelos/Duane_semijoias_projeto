@@ -10,7 +10,7 @@ document.addEventListener("DOMContentLoaded", function () {
 async function dados() {
   try {
     // Fazendo a requisição com axios.get
-    const response = await axios.get('http://192.168.3.9:3000/SelecionaProduto');
+    const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
     // const imagem = await axios.get('http://10.0.3.77:3000/Postagem');
     // console.log(imagem);
     

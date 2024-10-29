@@ -1,0 +1,274 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Average&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 95%;
+    margin: 0 auto;
+}
+
+#container1 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-top: 180px;
+}
+
+/* voltar ao inicio */
+#voltar {
+    display: flex;
+    flex-direction: row;
+    width: 76%;
+}
+
+#back {
+    font-family: "Average", serif;
+    font-weight: 400;
+    padding-top: 15px;
+    font-style: normal;
+    color: #9B5377;
+    font-size: 19px;
+    padding-left: 10px;
+}
+
+/* bem vinda + nome */
+#bemVinda {
+    display: flex;
+    flex-direction: row;
+    gap: 15px;
+}
+
+#bemVindaText {
+    padding-top: 15px;
+    font-weight: bold;
+    font-size: 19px;
+}
+
+/* Toda estilização dentro do menu do adm */
+#menuAdm {
+    display: flex;
+    flex-direction: column;
+    height: 587px;
+    width: 353px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+}
+
+#menuText {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    padding-bottom: 25px;
+    color: #9B5377
+}
+
+#titulo {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    color: #633636;
+    padding-bottom: 5px;
+    padding-top: 25px;
+    padding-right: 20px;
+    padding-left: 12px;
+}
+
+/* navegadores */
+.navAdm {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #9B5377;
+    padding-bottom: 25px;
+    text-align: justify;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+.navAdm:hover {
+    text-decoration: none;
+    color: #AE4B67;
+
+}
+
+#icon {
+    color: #9b5377;
+    height: 37px;
+    margin-top: 3px;
+}
+
+/* container da tabela */
+#titulo2 {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px;
+    text-align: justify;
+    color: #633636;
+    padding-top: 25px;
+    padding-left: 14px;
+    margin-right: 25px;
+    font-weight: bold;
+}
+
+.container2 {
+    display: flex;
+    flex-direction: row;
+    gap: 40px;
+    width: 100%;
+}
+
+#container2 {
+    height: 40px;
+}
+
+#table {
+    display: flex;
+    flex-direction: column;
+    height: 587px;
+    width: 1453px;
+    margin-top: 29px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+    padding-left: 25px;
+}
+
+.icon {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 16px;
+    z-index: 2;
+    color: #9B5377;
+}
+
+/* css da tabela */
+#tbl-categorias {
+    display: block;
+    overflow-y: scroll;
+    height: 600px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+
+thead tr th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+thead th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+tbody tr th,
+tbody tr td {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+tbody tr th,
+tbody tr td {
+    padding: 12px;
+}
+
+tbody tr th {
+    font-weight: normal;
+    color: #333;
+}
+
+thead th:last-child,
+tbody td:last-child,
+tbody th:last-child {
+    border-right: none;
+}
+
+td {
+    text-align: center;
+}
+
+.tituloTd {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    text-align: center;
+    color: #9B5377;
+}
+
+.dados {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+}
+
+#tbl-promo {
+    display: block;
+    overflow-y: scroll;
+    max-height: 620px;
+    padding-left: 25px;
+}
+
+/* btn */
+
+#btns {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+button {
+    margin-top: 30px !important;
+}
+
+.btn-primary {
+    width: 195px;
+    margin: auto;
+}
+
+.btn-primary {
+    background-color: #E5969C !important;
+    border: none !important;
+}
+
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(174, 75, 103, 0.446) !important;
+    border-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+/* footer */
+footer {
+    width: 100%;
+}
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    /* position: absolute; */
+}
