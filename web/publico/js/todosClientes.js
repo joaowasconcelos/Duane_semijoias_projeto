@@ -4,7 +4,7 @@ let responseCli;
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        await axios.get('http://192.168.3.9:3000/SelecionaUsuarios')
+        await axios.get('http://10.0.3.77:3000/SelecionaUsuarios')
             .then(response => {
                 console.log(response);
                 criarTabela();
