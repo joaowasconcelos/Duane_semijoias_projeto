@@ -182,8 +182,18 @@ async function salvar() {
                 Data_Nasc: Data_Nasc,
                 Telefones: Telefones,
                 Senha: Senha
+            })
+            .then(response => {
+                showNotification(response.data.message);
+                limparInput()
+            }).catch(error => {
+                console.log(error)
+                if (error.response.data.message === "Erro CPF ja cadastrado")
+                    showNotification(error.response.data.message)
+
+                if (error.response.data.message === "Erro Usuario ja cadastrado")
+                    showNotification(error.response.data.message)
             });
-        console.log(response.data);
 
     } catch (error) {
         console.error('Erro ao cadastrar novo Usuario:', error);
