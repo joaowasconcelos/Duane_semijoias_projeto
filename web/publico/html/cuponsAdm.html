@@ -72,26 +72,28 @@
 
                 <form action="http://10.0.3.77:3000/CreateCupom" method="POST" id="envia-form">
 
+                    <label for="Codigo">Código: *</label>
+                    <input class="input" type="text" name="Codigo" id="Codigo">
 
+                    <label for="Descricao">Descrição: *</label>
+                    <input class="input" type="text" name="Descricao" id="Descricao">
 
+                    <label for="Valor">Valor do desconto: *</label>
+                    <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
+                        onkeydown="return somenteNumeros(event)">
 
-
-
-
+                    <label for="Quantidade">Quantidade: *</label>
+                    <input class="input" type="number" name="Quantidade" id="Quantidade">
 
                     <div id="btns">
 
                         <button type="button" class="btn btn-primary save-changes"
                             onclick="limparInput()">Cancelar</button>
-                        <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+                        <button type="submit" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
 
                     </div>
 
-
                 </form>
-
-
-
 
             </div>
 

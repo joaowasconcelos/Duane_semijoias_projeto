@@ -52,9 +52,84 @@ function carregaCupons(responseCupom) {
         </tr>`;
     });
 
-
-
     document.getElementById('tbl-cupons').innerHTML = table;
 
 }
 
+//dinheiro
+
+const mascaraMoeda = (event) => {
+    const valor = event.target.value.replace(",", ".");
+    const onlyDigits = valor
+        .split("")
+        .filter(s => /\d/.test(s))
+        .join("")
+        .padStart(3, "0")
+    const digitsFloat = onlyDigits.slice(0, -2) + "." + onlyDigits.slice(-2)
+    event.target.value = maskCurrency(digitsFloat)
+}
+
+const maskCurrency = (valor, locale = 'pt-BR', currency = 'BRL') => {
+    return new Intl.NumberFormat(locale, {
+        style: 'currency',
+        currency
+    }).format(valor)
+}
+
+// utilizar somente numeros
+
+function somenteNumeros(e) {
+    var tecla = e.which || e.keyCode;
+
+    if ((tecla >= 48 && tecla <= 57) || tecla == 8) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//limpar input 
+
+function limparInput() {
+    document.getElementById('Codigo').value = '';
+    document.getElementById('Descricao').value = '';
+    document.getElementById('Valor').value = '';
+    document.getElementById('Quantidade').value = '';
+    window.location.reload(true);
+}
+
+//cadastrar cupom
+
+async function salvar() {
+    const token = localStorage.getItem('token');
+    console.log(token)
+    const Codigo = document.getElementById("Codigo").value;
+    const Descricao = document.getElementById("Descricao").value;
+    const Valor = document.getElementById("Valor").value;
+    const Quantidade = document.getElementById("Quantidade").value;
+
+    try {
+        const response = await axios.post(
+            'http://10.0.3.77:3000/CreateCupom',
+            {
+                Codigo: Codigo,
+                Descricao: Descricao,
+                Valor: Valor,
+                Quantidade: Quantidade
+            },
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            }
+        ).then(response => {
+            console.log(response)
+        }).catch(error =>{
+            console.log(error)
+        })
+
+    } catch (error) {
+        console.error('Erro ao cadastrar novo cupom:', error);
+        showNotification("Ocorreu um erro ao cadastrar novo cupom. Tente novamente.");
+    }
+}
