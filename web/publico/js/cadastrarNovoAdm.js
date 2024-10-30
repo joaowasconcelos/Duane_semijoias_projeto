@@ -161,5 +161,4 @@ async function salvar() {
         showNotification("Ocorreu um erro ao cadastrar novo ADM. Tente novamente.");
     }
 
-    // Em vez de recarregar a página, você pode querer fazer alguma atualização dinâmica aqui.
 }

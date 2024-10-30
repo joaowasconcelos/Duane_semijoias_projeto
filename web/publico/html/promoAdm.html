@@ -35,7 +35,7 @@
 
             <div id="voltar"></div>
             <a href="#" style="text-decoration: none;" onclick="history.back()">
-                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> 
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p>
             </a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
                 class="bi home bi-house-fill" viewBox="0 0 16 16" id="icon">
@@ -69,23 +69,38 @@
 
                 <p id="titulo2">Cadastrar nova promoção:</p>
 
-                <form action="http://10.0.3.77:3000/CreateCupom" method="POST" id="envia-form">
+                <form action="http://10.0.3.77:3000/CreatePromocao" method="POST" id="envia-form">
 
+                    <div class="dropdown">
+                        <button class="dropdown-button">Selecione opções</button>
+                        <div class="dropdown-content">
+                            <label><input type="checkbox" value="opcao1"> Opção 1</label>
+                            <label><input type="checkbox" value="opcao2"> Opção 2</label>
+                            <label><input type="checkbox" value="opcao3"> Opção 3</label>
+                            <label><input type="checkbox" value="opcao4"> Opção 4</label>
+                        </div>
+                    </div>
+                    
+                    <label for="Codigo">Código: *</label>
+                    <input class="input" type="text" name="Codigo" id="Codigo">
 
+                    <label for="Descricao">Descrição: *</label>
+                    <input class="input" type="text" name="Descricao" id="Descricao">
 
+                    <label for="Valor">Valor do desconto: *</label>
+                    <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
+                        onkeydown="return somenteNumeros(event)">
 
-
-
-
+                    <label for="Quantidade">Quantidade: *</label>
+                    <input class="input" type="number" name="Quantidade" id="Quantidade">
 
                     <div id="btns">
 
                         <button type="button" class="btn btn-primary save-changes"
                             onclick="limparInput()">Cancelar</button>
-                        <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
+                        <button type="submit" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
 
                     </div>
-
 
                 </form>
 
