@@ -78,17 +78,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fetchProducts(); // Inicia a busca de produtos
 });
-<<<<<<< HEAD
-=======
-
 
 async function dados() {
   try {
     // Fazendo a requisição com axios.get
     const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
-    // const imagem = await axios.get('http://10.0.3.77:3000/Postagem');
-    // console.log(imagem);
-    
+   
     console.log(response);
     console.log(response.data);
 
@@ -148,133 +143,3 @@ async function dados() {
 }
 
 dados();
-
-//carrinho de compras
-
-// URL da API que retorna a lista de produtos
-const apiUrl = 'http://10.0.3.77:3000/SelecionaProduto'; // API
-
-// Inicializa o carrinho
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
-
-async function fetchProducts() {
-  try {
-    const response = await fetch(apiUrl);
-    const products = await response.json();
-    displayProducts(products);
-  } catch (error) {
-    console.error('Erro ao buscar produtos:', error);
-  }
-}
-
-function displayProducts(products) {
-  const productList = document.getElementById('product-list');
-  productList.innerHTML = ''; // Limpa a lista antes de adicionar novos produtos
-
-  products.forEach(product => {
-    const li = document.createElement('li');
-    li.textContent = `${product.name} - R$ ${product.price}`;
-    const button = document.createElement('button');
-    button.textContent = 'Adicionar ao carrinho';
-    button.onclick = () => addToCart(product);
-    li.appendChild(button);
-    productList.appendChild(li);
-  });
-}
-
-function addToCart(product) {
-  const cartItem = cart.find(item => item.id === product.id);
-  if (cartItem) {
-    cartItem.quantity++;
-  } else {
-    cart.push({ ...product, quantity: 1 });
-  }
-  updateCart();
-  openCartModal();
-}
-
-function openCartModal() {
-  const modal = document.getElementById('cart-modal');
-  modal.style.display = 'flex';
-  updateCart();
-}
-
-function closeCartModal() {
-  const modal = document.getElementById('cart-modal');
-  modal.style.display = 'none';
-}
-
-function updateCart() {
-  const cartList = document.getElementById('cart-list');
-  cartList.innerHTML = ''; // Limpa o carrinho atual
-
-  cart.forEach(item => {
-    const li = document.createElement('li');
-    li.textContent = `${item.name} - R$ ${item.price} - Quantidade: `;
-    
-    // Input para editar a quantidade
-    const input = document.createElement('input');
-    input.type = 'number';
-    input.value = item.quantity;
-    input.min = 1;
-    input.onchange = (e) => updateQuantity(item.id, e.target.value);
-    li.appendChild(input);
-
-    // Botão para remover o item
-    const removeButton = document.createElement('button');
-    removeButton.textContent = 'Remover';
-    removeButton.onclick = () => removeFromCart(item.id);
-    li.appendChild(removeButton);
-
-    cartList.appendChild(li);
-  });
-
-  // Atualiza o total
-  const total = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
-  document.getElementById('total').textContent = total.toFixed(2);
-
-  // Salva o carrinho no localStorage
-  localStorage.setItem('cart', JSON.stringify(cart));
-}
-
-function updateQuantity(productId, newQuantity) {
-  const cartItem = cart.find(item => item.id === productId);
-  if (cartItem && newQuantity > 0) {
-    cartItem.quantity = parseInt(newQuantity);
-    updateCart();
-  }
-}
-
-function removeFromCart(productId) {
-  cart = cart.filter(item => item.id !== productId);
-  updateCart();
-}
-
-// function finalizePurchase() {
-//   if (cart.length > 0) {
-//     // Simulando envio do pedido para a API
-//     fetch('https://sua-api.com/comprar', {
-//       method: 'POST',
-//       headers: { 'Content-Type': 'application/json' },
-//       body: JSON.stringify(cart)
-//     })
-//     .then(response => response.json())
-//     .then(data => {
-//       alert('Compra finalizada com sucesso!');
-//       cart = [];
-//       updateCart();
-//       closeCartModal();
-//       localStorage.removeItem('cart');
-//     })
-//     .catch(error => {
-//       console.error('Erro ao finalizar a compra:', error);
-//     });
-//   } else {
-//     alert('O carrinho está vazio!');
-//   }
-// }
-
-// Carrega os produtos e o carrinho na inicialização
-fetchProducts();
-updateCart();
->>>>>>> c9d1e41a6d8702276c62dfb70ead2d83f7dc71ce
