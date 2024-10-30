@@ -119,9 +119,8 @@ export default function Home() {
               <Text style={styles.textTitle}>Funcionários</Text>
             </View>
 
-
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-              <TextInput placeholder='Pesquise pelo ou idade...' style={styles.Inputs}>
+            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
+              <TextInput placeholder='Pesquise pelo nome ou idade' style={styles.Inputs}>
               </TextInput>
               <TouchableOpacity style={{margin: 5}} onPress={navegaCadastroFuncionario}>
                 <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
@@ -131,39 +130,53 @@ export default function Home() {
 
             <ScrollView>
               <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{justifyContent: 'space-between', alignItems: 'center', width: '60%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Nome:</Text>
-                        <Text style={{}}>Kevin Moreira</Text>
+              {funcionarios.map(funci => (
+                  <View key={funci.id} style={styles.btn}>
+                    <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '60%' }}>
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View>
+                          <Text style={styles.textBtn}>Nome:</Text>
+                          <Text style={{}}>{funci.nome}</Text>
+                        </View>
+
                       </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Idade:</Text>
-                        <Text style={styles.textElement}>23</Text>
+
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ marginRight: 40 }}>
+                          <Text style={styles.textBtn}>Data nascimento:</Text>
+                          <Text style={styles.textElement}>
+                            {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(funci.data_nasc))}
+                          </Text>
+                        </View>
+                      </View>
+                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                        <View style={{ marginRight: 40 }}>
+                          <Text style={styles.textBtn}>Numero:</Text>
+                          {funci.numeros ? (
+                            funci.numeros.split(',').map(num => (
+                              <Text>{num}</Text>
+                            ))
+                          ) : (
+                            <Text>Número não disponível</Text>
+                          )}
+
+                        </View>
                       </View>
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 90 }} 
+                    onPress={()=>{pressDetails()}}
+                    >
+                      <FontAwesome6 name="person-circle-question" color="#ae4b67" size={40} />
+                    </TouchableOpacity>
 
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View style={{justifyContent: 'center'}} >
-                        <Text style={styles.textBtn}>Status:</Text>
-                        <Text style={{}}>Ativo</Text>
-                      </View>
-                      <View style={{marginRight: 40}}>
-                        <Text style={styles.textBtn}>Cargo:</Text>
-                        <Text style={{}}>Vendedor</Text>
-                      </View>
-                    </View>
                   </View>
 
-                  <TouchableOpacity onPress={pressDetails} style={{justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 20}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="person-circle-question" color="#ae4b67" size={36} />
-                  </TouchableOpacity>
-                  
-                </View>
+                ))}
+              
 
                 
               </View>
@@ -262,52 +275,6 @@ export default function Home() {
                     </TouchableOpacity>
                   </View>
                 </View>
-
-                {funcionarios.map(funci => (
-                  <View key={funci.id} style={styles.btn}>
-                    <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '60%' }}>
-                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
-                        <View>
-                          <Text style={styles.textBtn}>Nome:</Text>
-                          <Text style={{}}>{funci.nome}</Text>
-                        </View>
-
-                      </View>
-
-                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
-
-                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
-                        <View style={{ marginRight: 40 }}>
-                          <Text style={styles.textBtn}>Data nascimento:</Text>
-                          <Text style={styles.textElement}>
-                            {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(funci.data_nasc))}
-                          </Text>
-                        </View>
-                      </View>
-                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
-                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
-                        <View style={{ marginRight: 40 }}>
-                          <Text style={styles.textBtn}>Numero:</Text>
-                          {funci.numeros ? (
-                            funci.numeros.split(',').map(num => (
-                              <Text>{num}</Text>
-                            ))
-                          ) : (
-                            <Text>Número não disponível</Text>
-                          )}
-
-                        </View>
-                      </View>
-                    </View>
-
-                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 90 }}
-                    >
-                      <FontAwesome6 name="user-pen" color="#ae4b67" size={40} />
-                    </TouchableOpacity>
-
-                  </View>
-
-                ))}
 
               </View>
             </Modal>

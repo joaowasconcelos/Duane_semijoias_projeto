@@ -9,6 +9,7 @@ import {
   Platform,
   ScrollView,
   TextInput,
+  Modal
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -31,6 +32,7 @@ import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -72,9 +74,10 @@ export default function Home() {
     console.log(pedidos)
   }, [pedidos]);
 
+  const pressDetails = () =>{
+    setModalVisible(true);
 
-
-
+  }
 
 
 
@@ -151,7 +154,9 @@ export default function Home() {
                       </View>
                     </View>
 
-                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40 }}>
+                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40 }}
+                    onPress={()=>{pressDetails()}}
+                    >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
                     </TouchableOpacity>
@@ -165,6 +170,97 @@ export default function Home() {
 
               </View>
             </ScrollView>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      color: "#ae4b67",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Detalhes do Pedido
+                  </Text>
+                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Código:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Código"
+                      readOnly
+                    ></TextInput>
+                  </View>
+                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data do pedido:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Data do pedido"
+                      readOnly
+                    ></TextInput>
+                  </View>
+                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Status:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Status"
+                      readOnly
+                    ></TextInput>
+                  </View>
+                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Produtos:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder=""
+                      readOnly
+                    ></TextInput>
+                  </View>
+                  
+                  
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "flex-end",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      marginBottom: 5,
+                    }}
+                  >
+                    
+                    <TouchableOpacity
+                      style={styles.btnModal}
+                      onPress={() => setModalVisible(false)}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#FFF",
+                          fontSize: 20,
+                        }}
+                      >
+                        Fechar
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+
+              </View>
+            </Modal>
 
 
           </View>
@@ -269,5 +365,53 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: '#CF90A2',
     margin: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 10,
+    width: "95%",
+    height: "65%",
+    elevation: 5,
+    // shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: '#CF90A2'
+  },
+  inputModal: {
+    borderWidth: 2,
+    borderColor: "#CF90A2",
+    borderRadius: 10,
+    padding: 5,
+    marginBottom: 20,
+    width: "100%",
+    backgroundColor: "#FFF6f2",
+    color: "#ae4b67",
+    fontSize: 16,
+    fontWeight: "bold",
+    height: 45
+  },
+  btnModal:{
+    width: "45%",
+    backgroundColor: "#E5969C",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "#9B5377",
+    borderWidth: 1,
   }
 });

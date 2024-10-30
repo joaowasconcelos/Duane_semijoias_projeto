@@ -115,7 +115,7 @@ export default function Home() {
 
           <ScrollView>
             <View style={styles.containerElements}>
-              {/* {categories.map(category => (
+              {categories.map(category => (
                 <View key={category.id} style={styles.contentElements}>
                   <View style={{ marginLeft: 10, marginBottom: 7 }}>
                     <Text style={styles.textBtn}>Categoria:</Text>
@@ -132,7 +132,7 @@ export default function Home() {
                     <FontAwesome6 name="pen-to-square" color="#ae4b67" size={26} />
                   </TouchableOpacity>
                 </View>
-              ))} */}
+              ))}
             </View>
           </ScrollView>
           <Modal
@@ -158,8 +158,6 @@ export default function Home() {
                 </Text>
                 <TextInput
                   style={styles.inputModal}
-                  //value={filme}
-                  //onChangeText={setFilme}
                   placeholder="Insira aqui a nova categoria"
                 />
                 <View
@@ -171,13 +169,13 @@ export default function Home() {
                     marginBottom: 5,
                   }}
                 >
-                  <TouchableOpacity style={styles.btn} onPress={()=> {
+                  <TouchableOpacity style={styles.btnModal} onPress={()=> {
                     saveAddCat();
                     setModalVisible(false);
                   }}>
                     <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Cancelar</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.btn} onPress={()=>setModalVisible(false)}>
+                  <TouchableOpacity style={styles.btnModal} onPress={()=>setModalVisible(false)}>
                     <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Salvar</Text>
                   </TouchableOpacity>
                 </View>
@@ -227,7 +225,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     flexDirection: "row",
   },
-  btn: {
+  btnModal: {
     width: "45%",
     backgroundColor: "#E5969C",
     height: 40,
@@ -314,7 +312,7 @@ const styles = StyleSheet.create({
     width: "95%",
     height: "40%",
     elevation: 5,
-    // shadowColor: '#000',
+    shadowColor: '#000',
     shadowOffset: {
       width: 0,
       height: 5,
