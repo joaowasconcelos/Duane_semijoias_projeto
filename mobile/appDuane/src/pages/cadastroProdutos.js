@@ -82,40 +82,42 @@ export default function Home() {
 
     try {
       const token = await AsyncStorage.getItem('userToken');
-      
+
       // Aqui você pode implementar o upload das imagens antes de criar o produto
       // Exemplo:
       const formData = new FormData();
       imagens.forEach((imagem, index) => {
+        console.log(`URI da imagem ${index}:`, imagem);
         formData.append(`imagens[${index}]`, {
           uri: imagem,
-          type: 'image/jpeg', // ou o tipo correto da imagem
+          type: 'image/png', // ou o tipo correto da imagem
           name: `imagem_${index}.jpg`, // nome da imagem
         });
       });
-      
+
       formData.append('produto', produto);
       formData.append('categoria', selectedCategory);
       formData.append('preco', preco);
       formData.append('descricao', descricao);
       console.log(formData)
       const response = await api.post('/CreateProduto', formData, {
-        
-          headers: {
-              'Content-Type': 'multipart/form-data',
-              'x-access-token': `${token}`, // Adiciona o token ao cabeçalho
-          },
+
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-access-token': `${token}`, // Adiciona o token ao cabeçalho
+        },
+
       });
 
       if (response.data.error) {
-          alert(response.data.error);
+        alert(response.data.error);
       } else {
-          alert("Produto criado com sucesso!");
-          setProduto("");
-          setDescricao("");
-          setPreco("");
-          setSelectedCategory("");
-          setImagens([]); // Limpa as imagens após o sucesso
+        alert("Produto criado com sucesso!");
+        setProduto("");
+        setDescricao("");
+        setPreco("");
+        setSelectedCategory("");
+        setImagens([]); // Limpa as imagens após o sucesso
       }
     } catch (error) {
       console.error("Erro ao criar o produto", error);
@@ -127,7 +129,7 @@ export default function Home() {
     const resultado = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [150, 200],
       quality: 1,
       // Limite o número de imagens aqui se necessário
     });
