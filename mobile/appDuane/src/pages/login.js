@@ -9,6 +9,7 @@ import {
   Platform,
   ScrollView,
   TextInput,
+  Modal
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -31,6 +32,11 @@ import api from "../services/api/api"
 
 export default function Login() {
   const navigation = useNavigation();
+  const [modalVisible, setModalVisible] = useState(false);
+
+  const redefinirSenha = ()=>{
+    setModalVisible(true)
+  }
 
   const navigateHome = () => {
     navigation.navigate("Home");
@@ -40,6 +46,7 @@ export default function Login() {
   const [senha, setSenha] = useState("");
 
   const [token, setToken] = useState("");
+  
 
   const decodeJWT = (token) => {
     try {
@@ -145,16 +152,65 @@ export default function Login() {
                   onChangeText={setSenha}
                   value={senha}
                 ></TextInput>
-                <TouchableOpacity onPress={() => { }}>
+                <TouchableOpacity onPress={() => {redefinirSenha()}}>
                   <Text style={styles.textForgotPass}>Esqueceu sua senha?</Text>
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={verificaUser}>
+              <TouchableOpacity style={styles.btn} onPress={
+                //verificaUser
+                navigateHome
+                }>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>
             </View>
           </View>
+          <Modal
+            animationType="slide"
+            transparent={true}
+            visible={modalVisible}
+            onRequestClose={() => {
+              setModalVisible(!modalVisible);
+            }}
+          >
+            <View style={styles.modalContainer}>
+              <View style={styles.modalContent}>
+                <Text
+                  style={{
+                    textAlign: "center",
+                    fontSize: 24,
+
+                    color: "#E5969C",
+                    fontWeight: "bold",
+                  }}
+                >
+                  Insira um email de recuperação
+                </Text>
+                <TextInput
+                  style={styles.inputModal}
+                  placeholder="Email"
+                />
+                <View
+                  style={{
+                    width: "100%",
+                    justifyContent: "space-between",
+                    alignItems: "center",
+                    flexDirection: "row",
+                    marginBottom: 5,
+                  }}
+                >
+                  <TouchableOpacity style={styles.btnModal} onPress={()=> {
+                    setModalVisible(false);
+                  }}>
+                    <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Cancelar</Text>
+                  </TouchableOpacity>
+                  <TouchableOpacity style={styles.btnModal} onPress={()=>setModalVisible(false)}>
+                    <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Salvar</Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            </View>
+          </Modal>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
             style={styles.imgFooter}
@@ -262,4 +318,51 @@ const styles = StyleSheet.create({
     opacity: 0.5,
     textAlign: "left",
   },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 10,
+    width: "95%",
+    height: "40%",
+    elevation: 5,
+    shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: '#CF90A2'
+  },
+  inputModal: {
+    borderWidth: 2,
+    borderColor: "#CF90A2",
+    borderRadius: 10,
+    padding: 15,
+    marginBottom: 20,
+    width: "100%",
+    backgroundColor: "#FFF6f2",
+    color: "#E5969C",
+    fontSize: 18,
+    fontWeight: "bold",
+  },
+  btnModal: {
+    width: "45%",
+    backgroundColor: "#E5969C",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "#9B5377",
+    borderWidth: 1,
+  }
 });
