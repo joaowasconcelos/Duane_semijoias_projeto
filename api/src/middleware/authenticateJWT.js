@@ -8,9 +8,8 @@ let blacklist = [];
 // Middleware de autenticação JWT
 const authenticateJWT = (req, res, next) => {   
     const secretKey = process.env.SECRET_KEY;
-    const token = req.headers['x-access-token'];
-   
-
+    const token = req.headers['x-access-token']
+    
     // Verifica se o token está presente
     if (!token) {
         return res.status(401).json({ message: "Acesso negado: Token não fornecido." });
@@ -22,7 +21,7 @@ const authenticateJWT = (req, res, next) => {
     }
 
     try {
-        const verifica = jwt.verify(token, secretKey);
+        const verifica = jwt.verify(token, secretKey)
         req.id = verifica.id;
         req.perfil = verifica.perfil;
 
@@ -41,6 +40,7 @@ const authenticateJWT = (req, res, next) => {
 const invalidateToken = (token) => {
     blacklist.push(token);
 };
+
 
 
 // Rota de logout ou para invalidar o token

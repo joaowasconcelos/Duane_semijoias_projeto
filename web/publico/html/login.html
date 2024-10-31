@@ -49,11 +49,16 @@
                     <a href="#" class="icon">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
+
+                </div> -->
+
+                <button class="bot">Cadastrar-se<a href="/web/publico/html/cadastroUser.html"></a></button>
+
                 </div>
                  <button class="bot">Cadastrar-se</button>
-                -->
+             
 
-                
+               
             </form>
         </div>
 
@@ -109,6 +114,7 @@
         const registerBtn = document.getElementById('register');
         const loginBtn = document.getElementById('login');
 
+
         registerBtn.addEventListener('click', () => {
             container.classList.add("active");
         });
@@ -125,7 +131,7 @@
 
             try {
                 // Envia os dados para a rota de login
-                await axios.get('http://10.0.3.77:3000/VerificaLogin', {
+                await axios.get(`${localStorage.getItem("ip")}VerificaLogin`, {
                     params: {
                         login: username,
                         senha: password
@@ -164,9 +170,9 @@
 
                     // Verifica o perfil e redireciona
                     if (decodedToken.perfil === 1) {
-                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/admInicio.html';
+                        window.location.href = 'http://127.0.0.1:5500/publico/html/admInicio.html';
                     } else if (decodedToken.perfil === 2) {
-                        window.location.href = 'http://127.0.0.1:5500/web/publico/html/perfilUser.html';
+                        window.location.href = 'http://127.0.0.1:5500/publico/html/perfilUser.html';
                     } else {
                         console.log('Usuário não autorizado!');
                         showNotification('Usuário não autorizado!');

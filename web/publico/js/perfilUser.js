@@ -1,7 +1,7 @@
 async function SelecionaInfo() {
   const token = localStorage.getItem('token');
   try {
-    const resposta = await axios.get('http://10.0.3.77:3000/SelecionaInfoUsers', {
+    const resposta = await axios.get(`${localStorage.getItem("ip")}SelecionaInfoUsers`, {
       headers: {
         'x-access-token': `${token}`
       }
@@ -47,7 +47,7 @@ async function AlterarSenha() {
   }
 
   try {
-    const resposta = await axios.put('http://10.0.3.77:3000/AlterarSenha', {
+    const resposta = await axios.put(`${localStorage.getItem("ip")}AlterarSenha`, {
       senhaAtual,
       novaSenha
     }, {
