@@ -2,11 +2,12 @@
 let responseTipo;
 let responsePed;
 
+
 async function dados() {
     try {
         const token = localStorage.getItem('token');
         await axios.get(
-            'http://10.0.3.77:3000/SelecionaCategoria',
+            `${localStorage.getItem("ip")}SelecionaCategoria`,
             {
                 headers: {
                     'x-access-token': token
@@ -23,7 +24,7 @@ async function dados() {
 
 
         await axios.get(
-            'http://10.0.3.77:3000/SelecionaPedido',
+            `${localStorage.getItem("ip")}SelecionaPedido`,
             {
                 headers: {
                     'x-access-token': token
@@ -144,7 +145,7 @@ async function put() {
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
     try {
-        await axios.post(`http://10.0.3.77:3000/ModificaCategoria/${id}`, //mudei a rota
+        await axios.post(`http://${ip}:3000/ModificaCategoria/${id}`,
             {
                 tipo: tipo
             },
@@ -182,7 +183,7 @@ async function post() {
 
     try {
         const response = await axios.post(
-            'http://10.0.3.77:3000/CreateCategoria',
+            `http://${ip}:3000/CreateCategoria`,
             {
                 tipo: tipo
             },
@@ -227,7 +228,7 @@ function confirmarExclusao(link) {
 async function excluir(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.post(`http://10.0.3.77:3000/InativaCategoria/${id}`,
+        await axios.post(`http://${ip}:3000/InativaCategoria/${id}`,
             {}, 
             {
                 headers: {
@@ -252,7 +253,7 @@ async function excluir(id) {
 async function DetalhesPedido(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.get(`http://10.0.3.77:3000/MeuPedido/${id}`,
+        await axios.get(`http://${ip}:3000/MeuPedido/${id}`,
             {
                 headers: {
                     'x-access-token': token

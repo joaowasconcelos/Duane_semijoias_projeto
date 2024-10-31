@@ -71,4 +71,3 @@ function carregaDadosProd() {
 
     document.getElementById('tbl-produtos').innerHTML = table;
 }
-

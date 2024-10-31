@@ -9,14 +9,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 async function dados() {
   try {
-    // Fazendo a requisição com axios.get
-    const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
-    // const imagem = await axios.get('http://10.0.3.77:3000/Postagem');
-    // console.log(imagem);
-    
-    console.log(response);
-    console.log(response.data);
-
+    const response = await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`);    
+ 
     const itens = $("#cardGrid");
     response.data.forEach(element => {
 
@@ -64,7 +58,7 @@ async function dados() {
       
       itens.append(newCard);
     });
-
+    apiIp()
     //carregar dados para o front com jquery
 
   } catch (error) {
@@ -74,10 +68,16 @@ async function dados() {
 
 dados();
 
+function apiIp() {
+  const ip = `http://10.0.3.77:3000/`
+  localStorage.setItem('ip', ip);
+}
+
 //carrinho de compras
 
 // URL da API que retorna a lista de produtos
-const apiUrl = 'http://10.0.3.77:3000/SelecionaProduto'; // API
+const apiUrl = `${localStorage.getItem("ip")}SelecionaProduto`; // API
+// console.log('api: ', apiUrl)
 
 // Inicializa o carrinho
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
