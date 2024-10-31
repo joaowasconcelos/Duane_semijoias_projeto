@@ -9,7 +9,7 @@ async function RedefinirSenha() {
     }
 
     try {
-        await axios.post('http://10.0.3.77:3000/PrimeiroAcesso',
+        await axios.post(`${localStorage.getItem("ip")}PrimeiroAcesso`,
             {
                 login,
                 senha

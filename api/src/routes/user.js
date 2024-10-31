@@ -64,8 +64,8 @@ routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Selec
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
-routerUser.get('/selecionaCupons',CuponsController.Seleciona)
-routerUser.get('/selecionaCupons/:id',CuponsController.SelecionaDetalhes)
+routerUser.get('/selecionaCupons',authenticateJWT,authenticatePerfil,CuponsController.Seleciona)
+routerUser.get('/selecionaCupons/:id',authenticateJWT,authenticatePerfil,CuponsController.SelecionaDetalhes)
 routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
 routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)
 

@@ -1,6 +1,7 @@
 import multer from "multer";
 import admin from "firebase-admin";
-import serviceAccount from "../config/firebase.json" assert { type: 'json' };
+import serviceAccount from "../config/firebase.js";
+// import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 // Inicializa o Firebase Admin SDK
 const bucketName = "teste-firebase-b05a9.appspot.com";
@@ -38,7 +39,6 @@ export const uploadImagesToFirebase = async (files) => {
                     await new Promise((resolve) => setTimeout(resolve, 800));
                     await fileUpload.makePublic();
                     const firebaseUrl = `https://storage.googleapis.com/${bucketName}/${nomeArquivo}`;
-                    console.log('Imagem salva com sucesso:', firebaseUrl);
                     resolve(nomeArquivo);
                 } catch (error) {
                     console.error('Erro ao tornar a imagem pública:', error);
@@ -85,7 +85,6 @@ export async function listAllFilesId(produtos) {
                     action: 'read',
                     expires: '03-01-2500'
                 });
-                console.log(url)
                 return url; 
                 
             } catch (error) {

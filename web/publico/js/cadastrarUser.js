@@ -119,7 +119,6 @@ function obterApenasNumerosTel() {
 
 
 // Funçao para não permitir caracteres especiais ao preencher o Nome
-
 const nomeInput = document.querySelector("#Nome");
 
 nomeInput.addEventListener("keypress", function (e) {
@@ -173,7 +172,7 @@ async function salvar() {
     const Senha = document.getElementById("Senha").value;
 
     try {
-        const response = await axios.post('http://10.0.3.77:3000/CreateUser',
+        await axios.post(`http://${ip}:3000/CreateUser`,
             {
                 Nome: Nome,
                 Usuario: Usuario,
@@ -182,8 +181,8 @@ async function salvar() {
                 Data_Nasc: Data_Nasc,
                 Telefones: Telefones,
                 Senha: Senha
-            })
-            .then(response => {
+
+            }).then(response => {
                 showNotification(response.data.message);
                 limparInput()
             }).catch(error => {
@@ -194,6 +193,7 @@ async function salvar() {
                 if (error.response.data.message === "Erro Usuario ja cadastrado")
                     showNotification(error.response.data.message)
             });
+
 
     } catch (error) {
         console.error('Erro ao cadastrar novo Usuario:', error);
