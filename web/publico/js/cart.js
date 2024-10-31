@@ -1,6 +1,9 @@
 // cart.js
-
+// Carrega o carrinho do localStorage, ou inicializa como um array vazio se não houver nada
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+
+// Salva o carrinho no localStorage
+localStorage.setItem('cart', JSON.stringify(cart));
 
 // Atualiza a exibição do carrinho
 function updateCart() {
@@ -10,7 +13,12 @@ function updateCart() {
     // Atualiza a lista de produtos no carrinho
     cart.forEach(item => {
         const li = document.createElement('li');
-        li.textContent = `${item.nome_produto} - R$ ${item.preco_normal.toFixed(2)} - Quantidade: `;
+        console.log(li);
+        
+        // Converte a vírgula por ponto para exibição
+        const precoNormalFormatado = parseFloat((item.preco_normal || '0').toString().replace(',', '.')).toFixed(2);
+
+        li.textContent = `${item.nome_produto} - R$ ${precoNormalFormatado} - Quantidade: `;
 
         // Input para quantidade
         const input = document.createElement('input');
@@ -30,7 +38,10 @@ function updateCart() {
     });
 
     // Atualiza o total
-    const total = cart.reduce((sum, item) => sum + (item.preco_normal || 0) * item.quantity, 0);
+    const total = cart.reduce((sum, item) => {
+        const precoNormal = parseFloat((item.preco_normal || '0').toString().replace(',', '.'));
+        return sum + precoNormal * item.quantity;
+    }, 0);
     document.getElementById('total').textContent = total.toFixed(2);
 
     // Salva o carrinho no localStorage
@@ -39,7 +50,9 @@ function updateCart() {
 
 // Adiciona produto ao carrinho
 function addToCart(product) {
+    console.log( "oi");
     const cartItem = cart.find(item => item.id === product.id);
+    
     if (cartItem) {
         cartItem.quantity++;
     } else {
