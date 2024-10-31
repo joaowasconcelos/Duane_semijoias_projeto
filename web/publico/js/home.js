@@ -81,7 +81,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Controle de índice para exibir as imagens
   const imageIndices = {};
 
-  // Funções para exibir imagens anteriores e próximas - no escopo global
+  // Funções para exibir imagens anteriores e próximas
   window.showPrevImage = function (productId) {
       const product = products.find(item => item.id === productId);
       if (product) {

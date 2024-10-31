@@ -184,8 +184,16 @@ img.card-img-top {
     margin-top: 10px;
 }
 
-.bot {
-    height: 30px;
-    font-size: 25px;
-    width: 30px;
+#bot {
+    padding: 10px;
+    font-size: 17px;
+    margin-left: 150px;
+    border: 1px;
+    border-radius: 5px;
+    border-color: #AE4B67;
+    text-decoration: none;
+    color: #050505;
+    background-color: #AE4B67;
+    width: 140px;
+    margin-bottom: 10px;
 }
