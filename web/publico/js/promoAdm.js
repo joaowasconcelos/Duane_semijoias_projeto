@@ -1,12 +1,10 @@
-let responsePromo;
-
 async function dados() {
     try {
         const token = localStorage.getItem('token');
 
         //puxando promoçoes
         await axios.get(
-            'http://10.0.3.77:3000/SelecionaPromocao',
+            `${localStorage.getItem("ip")}SelecionaPromocao`,
             {
                 headers: {
                     'x-access-token': token

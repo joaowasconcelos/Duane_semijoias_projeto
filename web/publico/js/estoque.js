@@ -1,7 +1,7 @@
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        responseProd = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
+        responseProd = await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`);
         console.log(responseProd.data);
 
         if (responseProd != null) {
@@ -59,7 +59,7 @@ async function Salvar(index, id) {
     console.log(`Valor da quantidade para o produto com índice ${index} e ID ${id}:`, vlDados);
 
     try {
-        await axios.post(`http://10.0.3.77:3000/`,{
+        await axios.post(`${localStorage.getItem("ip")}`,{
 
         },
         {

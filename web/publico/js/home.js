@@ -12,6 +12,60 @@ document.addEventListener("DOMContentLoaded", function () {
 
   let products = [];
 
+
+async function dados() {
+  try {
+    const response = await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`);    
+ 
+    const itens = $("#cardGrid");
+    response.data.forEach(element => {
+
+      const newCard = () => (`
+        <div class="card h-100">
+          <img src="../img/imgTest.jpeg" class="card-img-top" alt="...">
+          <div class="card-body">
+            <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>
+            <a href="/web/publico/html/cardItem.html/${element.id || '#'}">Ver mais</a>
+          </div>
+          <div class="card-footer">
+            <span class="text-title">R$ ${element.preco_normal || '0.00'}</span>
+            <div class="card-button">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                fill="currentColor" 
+                class="bi bi-cart" 
+                viewBox="0 0 16 16"
+                onclick="addToCart(${element.id || 0})"
+                style="cursor: pointer;"
+              >
+                <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
+              </svg>
+            </div>
+            <div class="card-button">
+              <svg 
+                xmlns="http://www.w3.org/2000/svg" 
+                width="16" 
+                height="16" 
+                fill="currentColor" 
+                class="bi bi-heart" 
+                viewBox="0 0 16 16"
+                onclick="toggleFavorite(${element.id || 0})"
+                style="cursor: pointer;"
+              >
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143q.09.083.176.171a3 3 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15"/>
+              </svg>
+            </div>
+          </div>
+        </div>
+      `);
+      
+      
+      itens.append(newCard);
+    });
+    apiIp()
+    //carregar dados para o front com jquery
   async function fetchProducts() {
       try {
           const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
@@ -32,6 +86,17 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
+
+function apiIp() {
+  const ip = `http://10.0.3.77:3000/`
+  localStorage.setItem('ip', ip);
+}
+
+//carrinho de compras
+
+// URL da API que retorna a lista de produtos
+const apiUrl = `${localStorage.getItem("ip")}SelecionaProduto`; // API
+// console.log('api: ', apiUrl)
   function newCard(element) {
       return `
           <div class="card h-100">
@@ -102,6 +167,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   fetchProducts();
 });
+
 
 
 // async function dados() {
