@@ -95,6 +95,24 @@ export default function Home() {
       console.error("Erro ao recuperar o token", error);
     }
   };
+
+
+const logout = async () => {
+  try {
+    // Remove o token de autenticação
+    await AsyncStorage.removeItem('userToken');
+    
+    // Redireciona o usuário para a tela de login
+    // Exemplo usando React Navigation
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
+  } catch (error) {
+    console.error("Erro ao fazer logout:", error);
+  }
+};
+
   
   useEffect(() => {
     getToken(); // Chama a função para obter o token
@@ -121,7 +139,7 @@ export default function Home() {
                   // Remove hover effect here, e.g. reset the button's background color
                   styles.btnLogOut.backgroundColor = "#fff";
                 }}
-                onPress={()=>{}}
+                onPress={logout}
               >
                 <FontAwesome6
                   name="door-open"
