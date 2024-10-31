@@ -56,10 +56,15 @@ export default function Home() {
   const [pedidos, setPedidos] = useState([]);
   const selecionaPedid = async () => {
     try {
-      const response = await api.get(`/SelecionaPedido`);
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await api.get(`/SelecionaPedido`, {
+        headers:{
+          'x-access-token': `${token}`,
+        }
+      });
       setPedidos(response.data);
     } catch (error) {
-      console.error("Erro ao buscar as categorias:", error);
+      console.error("Erro ao buscar o pedido:", error);
     }
   };
 

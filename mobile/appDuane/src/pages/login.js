@@ -71,7 +71,7 @@ export default function Login() {
         if (response.data && response.data.token) {
           const token = response.data.token;
           setToken(token);
-          await AsyncStorage.setItem('userToken', JSON.stringify(token));
+          await AsyncStorage.setItem('userToken',(token));
           console.log(token);
           const decodedToken = decodeJWT(token);
           console.log(decodedToken);
@@ -158,8 +158,7 @@ export default function Login() {
               </View>
 
               <TouchableOpacity style={styles.btn} onPress={
-                //verificaUser
-                navigateHome
+                verificaUser
                 }>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>
