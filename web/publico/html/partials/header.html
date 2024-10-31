@@ -15,13 +15,10 @@
                     <span id="icon" class="fas fa-user fa-2x"></span>
                 </a>
 
-                <button onclick="openCartModal()" class="btn btn-primary" type="button" data-bs-toggle="offcanvas"
-                    data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling"><span id="icon"
-                        class="fas fa-shopping-cart fa-2x"></span></button>
+               
 
                 <span id="icon" id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
             </div>
-
 
         </div>
 
@@ -52,7 +49,7 @@
                     localStorage.removeItem('userProfile');
                     window.location.href = 'login.html';
                 }
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error)
             });
 

@@ -1,5 +1,7 @@
 // Carrega o carrinho do localStorage
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
+console.log(cart);
+
 
 function loadOrderSummary() {
   const orderItems = document.getElementById('order-items');
@@ -10,9 +12,11 @@ function loadOrderSummary() {
 
   cart.forEach(item => {
     const li = document.createElement('li');
-    li.textContent = `${item.name} - Quantidade: ${item.quantity} - R$ ${(item.price * item.quantity).toFixed(2)}`;
+    console.log(li);
+    
+    li.textContent = `${item.nome_produto} - Quantidade: ${item.quantity} - R$ ${item.preco_normal}`;
     orderItems.appendChild(li);
-    total += item.price * item.quantity;
+    total += item.preco_normal * item.quantity;
   });
 
   orderTotalElement.textContent = total.toFixed(2);
@@ -21,9 +25,9 @@ function loadOrderSummary() {
 function handleFormSubmit(event) {
   event.preventDefault();
 
-  const name = document.getElementById('name').value;
+  const name = document.getElementById('nome_produto').value;
   const email = document.getElementById('email').value;
-  const address = document.getElementById('address').value;
+  const address = document.getElementById('endereco').value;
   const paymentMethod = document.getElementById('payment-method').value;
 
   const orderDetails = {
@@ -33,8 +37,8 @@ function handleFormSubmit(event) {
     total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0)
   };
 
-  // Simula a chamada da API para enviar o pedido
-  fetch('https://sua-api.com/comprar', {
+  //chamada da API para enviar o pedido
+  fetch( axios.get('http://10.0.3.77:3000/Pedido'), {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify(orderDetails)

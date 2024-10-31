@@ -9,10 +9,12 @@ import {
   Platform,
   ScrollView,
   TextInput,
+  Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AppLoading from "expo-app-loading";
 import {
@@ -26,15 +28,55 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
+  const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
+  const [quantidade, setQuantidade] = useState([]);
 
+  const navegaCadastroProduto = () => {
+    navigation.navigate("CadastroProdutos");
+  };
 
-  const navegaCadastroProduto = () =>{
-    navigation.navigate('CadastroProdutos')
-  }
+  const pressBtnDetalhes = () => {
+    setModalVisible(true);
+  };
+
+  const saveProduto = () => {
+    setModalVisible(false);
+  };
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      if (token) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+    selecionaCate();
+  }, []);
+  const [prod, setProd] = useState([]);
+
+  const selecionaCate = async () => {
+    try {
+      const response = await api.get(
+        `/SelecionaProduto`
+      );
+      setProd(response.data); // Atualiza o estado com as categorias recebidas
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar os produtos:", error);
+    }
+  };
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -53,7 +95,7 @@ export default function Home() {
             source={require("../../assets/ondas-rosa-header.png")}
             style={styles.imgHeader}
           />
-          <View style={{ flex: 1, width: "100%", alignItems: 'center' }}>
+          <View style={{ flex: 1, width: "100%", alignItems: "center" }}>
             <View style={styles.containerLogoTitle}>
               <TouchableOpacity
                 style={styles.btnLogOut}
@@ -73,7 +115,7 @@ export default function Home() {
                   size={35}
                 />
               </TouchableOpacity>
-              
+
               <Image
                 source={require("../../assets/Duane.png")}
                 style={styles.logoImg}
@@ -82,181 +124,201 @@ export default function Home() {
               <Text style={styles.textTitle}>Catálago de Produtos</Text>
             </View>
 
-            <View style={{width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row'}}>
-              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
-              </TextInput>
-              <TouchableOpacity style={{margin: 5}} onPress={navegaCadastroProduto}>
-                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
+            <View
+              style={{
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <TextInput
+                placeholder="Pesquise por produto ou categoria"
+                style={styles.Inputs}
+              ></TextInput>
+              <TouchableOpacity
+                style={{ margin: 5 }}
+                onPress={navegaCadastroProduto}
+              >
+                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30} />
               </TouchableOpacity>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{}}>
-                    <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
-                  </View>
-                    
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '55%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.textBtn}>Quantidade:</Text>
-                        <Text style={styles.textElement}>15</Text>
-                      </View>
+                {prod.map(produto => (
+                  <View key={produto.id} style={styles.btn}>
+                    <View style={{}}>
+                      <Image
+                        source={{ uri: produto.imagens[0] }}
+                        style={{
+                          width: 70,
+                          height: 70,
+                          borderRadius: 5,
+                          margin: 5,
+                        }}
+                      />
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: 'flex-start', width: '100%'}}>
-                      <Text style={styles.textBtn}>Produto:</Text>
-                      <Text style={{}}>Pulseira Estrela e Lua</Text>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%'}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="file-circle-plus" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{}}>
-                    <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
-                  </View>
-                    
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '55%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
+                    <View
+                      style={{
+                        justifyContent: "center",
+                        alignItems: "center",
+                        width: "55%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
+                        <View>
+                          <Text style={styles.textBtn}>Categoria:</Text>
+                          <Text style={{}}>{produto.tipo}</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.textBtn}>Preço:</Text>
+                          <Text style={styles.textElement}>{produto.preco_promocional}</Text>
+                        </View>
                       </View>
-                      <View>
-                        <Text style={styles.textBtn}>Quantidade:</Text>
-                        <Text style={styles.textElement}>15</Text>
-                      </View>
-                    </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
+                      <View
+                        style={{
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#FAADD1",
+                          width: "100%",
+                        }}
+                      />
 
-                    <View style={{justifyContent: 'flex-start', width: '100%'}}>
-                      <Text style={styles.textBtn}>Produto:</Text>
-                      <Text style={{}}>Pulseira Estrela e Lua</Text>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%'}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="file-circle-plus" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{}}>
-                    <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
-                  </View>
-                    
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '55%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.textBtn}>Quantidade:</Text>
-                        <Text style={styles.textElement}>15</Text>
+                      <View
+                        style={{ justifyContent: "flex-start", width: "100%" }}
+                      >
+                        <Text style={styles.textBtn}>Produto:</Text>
+                        <Text style={{}}>{produto.nome_produto}</Text>
                       </View>
                     </View>
 
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: 'flex-start', width: '100%'}}>
-                      <Text style={styles.textBtn}>Produto:</Text>
-                      <Text style={{}}>Pulseira Estrela e Lua</Text>
-                    </View>
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                      }}
+                      onPress={pressBtnDetalhes}
+                    >
+                      <Text style={styles.textBtn}>Detalhes:</Text>
+                      <FontAwesome6
+                        name="file-circle-plus"
+                        color="#ae4b67"
+                        size={26}
+                      />
+                    </TouchableOpacity>
                   </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%'}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="file-circle-plus" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{}}>
-                    <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
-                  </View>
-                    
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '55%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.textBtn}>Quantidade:</Text>
-                        <Text style={styles.textElement}>15</Text>
-                      </View>
-                    </View>
-
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: 'flex-start', width: '100%'}}>
-                      <Text style={styles.textBtn}>Produto:</Text>
-                      <Text style={{}}>Pulseira Estrela e Lua</Text>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%'}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="file-circle-plus" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                <View style={styles.btn}>
-                  <View style={{}}>
-                    <Image  source={require("../../assets/img-brincos.jpeg")} style={{width: 70, height: 70, borderRadius: 5, margin: 5}}/>
-                  </View>
-                    
-                  <View style={{justifyContent: 'center', alignItems: 'center', width: '55%'}}>
-                    <View style={{justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%'}}>
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
-                      </View>
-                      <View>
-                        <Text style={styles.textBtn}>Quantidade:</Text>
-                        <Text style={styles.textElement}>15</Text>
-                      </View>
-                    </View>
-
-                    <View style={{borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%'}}/>
-
-                    <View style={{justifyContent: 'flex-start', width: '100%'}}>
-                      <Text style={styles.textBtn}>Produto:</Text>
-                      <Text style={{}}>Pulseira Estrela e Lua</Text>
-                    </View>
-                  </View>
-
-                  <TouchableOpacity style={{justifyContent: "flex-start", alignItems: 'center', height: '100%'}}>
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6 name="file-circle-plus" color="#ae4b67" size={26} />
-                  </TouchableOpacity>
-                  
-                </View>
-
-                
+                ))}
               </View>
             </ScrollView>
+            <Modal
+              animationType="slide"
+              transparent={true}
+              visible={modalVisible}
+              onRequestClose={() => {
+                setModalVisible(!modalVisible);
+              }}
+            >
+              <View style={styles.modalContainer}>
+                <View style={styles.modalContent}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      color: "#ae4b67",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Detalhes do Produto
+                  </Text>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Categoria:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Categoria"
+                      readOnly
+                    >Pulseira</TextInput>
+                  </View>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Produto:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Produto"
+                      readOnly
+                    >Pulseira Estrela e Lua</TextInput>
+                  </View>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Quantidade:</Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Insira uma quantidade Quantidade"
+                      readOnly
+                    ></TextInput>
+                  </View>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Imagens:</Text>
+                    <Text>Aqui será exibido as imagens</Text>
+                  </View>
 
-            
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "space-between",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      marginBottom: 5,
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={styles.btnModal}
+                      onPress={() => {
+                        saveProduto();
+                        setModalVisible(false);
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#FFF",
+                          fontSize: 20,
+                        }}
+                      >
+                        Cancelar
+                      </Text>
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={styles.btnModal}
+                      onPress={() => setModalVisible(false)}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#FFF",
+                          fontSize: 20,
+                        }}
+                      >
+                        Salvar
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+            </Modal>
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -345,18 +407,66 @@ const styles = StyleSheet.create({
     alignSelf: "flex-start",
     marginTop: 50,
   },
-  Inputs:{
-    width: '80%',
+  Inputs: {
+    width: "80%",
     height: 30,
     fontSize: 18,
-    fontFamily: 'EBGaramond_400Regular',
+    fontFamily: "EBGaramond_400Regular",
     borderRadius: 5,
-    backgroundColor: '#FFF6F2',
+    backgroundColor: "#FFF6F2",
     padding: 5,
-    color: '#000000',
-    fontWeight: 'bold',
+    color: "#000000",
+    fontWeight: "bold",
     borderWidth: 1,
-    borderColor: '#CF90A2',
+    borderColor: "#CF90A2",
     margin: 5,
+  },
+  modalContainer: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+    backgroundColor: "rgba(0, 0, 0, 0.7)",
+  },
+  modalContent: {
+    backgroundColor: "#fff",
+    borderRadius: 20,
+    padding: 10,
+    width: "95%",
+    height: "60%",
+    elevation: 5,
+    // shadowColor: '#000',
+    shadowOffset: {
+      width: 0,
+      height: 5,
+    },
+    shadowOpacity: 0.7,
+    shadowRadius: 5,
+    justifyContent: "space-evenly",
+    alignItems: "center",
+    borderWidth: 2,
+    borderColor: '#CF90A2'
+  },
+  inputModal: {
+    borderWidth: 2,
+    borderColor: "#CF90A2",
+    borderRadius: 10,
+    padding: 5,
+    marginBottom: 20,
+    width: "100%",
+    backgroundColor: "#FFF6f2",
+    color: "#ae4b67",
+    fontSize: 16,
+    fontWeight: "bold",
+    height: 45
+  },
+  btnModal: {
+    width: "45%",
+    backgroundColor: "#E5969C",
+    height: 40,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 10,
+    borderColor: "#9B5377",
+    borderWidth: 1,
   }
 });

@@ -15,27 +15,27 @@ const CadastroUsuario = {
             
             const verificaCampos = cPessoa.verificaCampos()
             if(!verificaCampos){
-                return res.status(500).json({ message: "Numero máximo de caracteres "})
+                return res.status(400).json({ error: "O número máximo de caracteres permitidos foi excedido." });
             }
             const validaCampos = cPessoa.validaCampos()
             if(!validaCampos){
-                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+                return res.status(400).json({ error: "Dados inválidos. Verifique os campos e tente novamente." });
             }
 
             const verificaCPF = cPessoa.validaCpf()
             if (!verificaCPF) {
-                return res.status(400).json({ message: "Erro CPF invalido" });
+                return res.status(400).json({ error: "CPF inválido. Verifique o número e tente novamente." });
             }
             const conversaoData = cPessoa.DataConvert()
             if (conversaoData == "Invalid Date") {
-                return res.status(400).json({ message: "Erro Data invalida" });
+                return res.status(400).json({ error: "Data inválida. Verifique o formato e tente novamente." });
             }
 
             cPessoa.Data_nasc = conversaoData;
 
             const verificarCPFBanco = await cPessoa.verificaCpf()
             if (verificarCPFBanco) {
-                return res.status(400).json({ message: "Erro CPF ja cadastrado" });
+                return res.status(400).json({ error: "CPF já cadastrado. Por favor, insira um CPF diferente." });
             }
 
             //Chamar o crud 
@@ -46,19 +46,19 @@ const CadastroUsuario = {
                 const VerificaLogin = cLogin.verificaCampos()
                 const validaLogin = cLogin.validaCamposADM()
                 if(!VerificaLogin){
-                    return res.status(500).json({ message: "Numero máximo de caracteres "})
+                    return res.status(400).json({ error: "O número máximo de caracteres permitidos foi excedido." });
                 }
                 if(!validaLogin){
-                    return res.status(400).json({ error: "Dados inválidos fornecidos." });
+                    return res.status(400).json({ error: "Dados inválidos. Verifique os campos e tente novamente." });
                 }
                 const verificaEmail = await cLogin.VerificaUsuario()
                 if (!verificaEmail) {
                     const deletarPessoa = cPessoa.DeletarPessoa()
-                    return res.status(400).json({ message: "Erro Usuario ja cadastrado" });
+                    return res.status(400).json({ error: "Usuario já cadastrado. Por favor, insira um CPF diferente." });
                 }
                 const verificaLog = await cLogin.VerificaUsuario()
                 if (!verificaLog) {
-                    return res.status(400).json({ message: "Erro email ja cadastrado" });
+                    return res.status(400).json({ error: "EMAIL já cadastrado. Por favor, insira um CPF diferente." });
                 }
                 
                 const insertLogin = await cLogin.CadastrarLogin();
@@ -77,12 +77,12 @@ const CadastroUsuario = {
                     
                             // Se a verificação falhar, retorna erro 500
                             if (!verificaTele) {
-                                return res.status(500).json({ message: "Número máximo de caracteres excedido." });
+                                return res.status(400).json({ error: "O número máximo de caracteres permitidos foi excedido." });
                             }
                     
                             // Se a validação falhar, retorna erro 400
                             if (!validaTele) {
-                                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+                                return res.status(400).json({ error: "Dados inválidos. Verifique os campos e tente novamente." });
                             }
                     
                             const insertTele = await novoTelefone.CadastrarTelefone();
@@ -91,18 +91,19 @@ const CadastroUsuario = {
                                     cLogin.DeletarLogin(),
                                     cPessoa.DeletarPessoa()
                                 ]);
-                                return res.status(400).json({ message: "Erro ao cadastrar número!" });
+                                return res.status(400).json({ error: "Erro ao cadastrar o número. Verifique os dados e tente novamente." });
                             }
                         }
                     }
                 } else {
                     console.log("teste")
                     const deletarPessoa = cPessoa.DeletarPessoa()
-                    return res.status(400).json({ message: "Erro ao cadastrar Login!" });
+                    return res.status(400).json({ error: "Erro ao cadastrar o login. Verifique os dados fornecidos e tente novamente." });
                 }
-                return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
+                return res.status(400).json({ error: "Erro ao cadastrar o usuario. Verifique os dados fornecidos e tente novamente." });
+
             } else {
-                return res.status(400).jsonXXXXXXXL({ message: "Erro ao cadastrar usuário!" });
+                return res.status(400).json({ error: "Erro ao cadastrar usuário!" });
             }
 
 

@@ -65,7 +65,7 @@ export default function Home() {
       setCate(response.data);
       console.log(response.data);
     } catch (error) {
-      console.error("Erro ao buscar as clientes:", error);
+      console.error("Erro ao buscar as categorias:", error);
     }
   };
 
@@ -82,40 +82,37 @@ export default function Home() {
 
     try {
       const token = await AsyncStorage.getItem('userToken');
-      
-      // Aqui você pode implementar o upload das imagens antes de criar o produto
-      // Exemplo:
       const formData = new FormData();
       imagens.forEach((imagem, index) => {
-        formData.append(`imagens[${index}]`, {
+        console.log(`URI da imagem ${index}:`, imagem);
+        formData.append("imagem", {
           uri: imagem,
-          type: 'image/jpeg', // ou o tipo correto da imagem
-          name: `imagem_${index}.jpg`, // nome da imagem
+          type: 'image/jpeg',
+          name: `imagem.jpg`, 
         });
       });
-      
       formData.append('produto', produto);
       formData.append('categoria', selectedCategory);
       formData.append('preco', preco);
       formData.append('descricao', descricao);
       console.log(formData)
       const response = await api.post('/CreateProduto', formData, {
-        
-          headers: {
-              'Content-Type': 'multipart/form-data',
-              'x-access-token': `${token}`, // Adiciona o token ao cabeçalho
-          },
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          'x-access-token': `${token}`, // O token JWT
+        },        
+
       });
 
       if (response.data.error) {
-          alert(response.data.error);
+        alert(response.data.error);
       } else {
-          alert("Produto criado com sucesso!");
-          setProduto("");
-          setDescricao("");
-          setPreco("");
-          setSelectedCategory("");
-          setImagens([]); // Limpa as imagens após o sucesso
+        alert("Produto criado com sucesso!");
+        setProduto("");
+        setDescricao("");
+        setPreco("");
+        setSelectedCategory("");
+        setImagens([]); // Limpa as imagens após o sucesso
       }
     } catch (error) {
       console.error("Erro ao criar o produto", error);
@@ -127,7 +124,7 @@ export default function Home() {
     const resultado = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
       allowsEditing: true,
-      aspect: [4, 3],
+      aspect: [150, 200],
       quality: 1,
       // Limite o número de imagens aqui se necessário
     });
@@ -143,6 +140,7 @@ export default function Home() {
   } else {
     return (
       <SafeAreaView style={styles.androidSafeArea}>
+
         <View style={styles.container}>
           <Image
             source={require("../../assets/ondas-rosa-header.png")}
@@ -167,7 +165,6 @@ export default function Home() {
 
               <Text style={styles.textTitle}>Cadastro de Produtos</Text>
             </View>
-
             <View style={styles.containerElements}>
               <View style={{ width: '100%', padding: 5 }}>
                 <Text style={styles.textElement}>Categoria:</Text>
@@ -181,7 +178,7 @@ export default function Home() {
                       <Picker.Item
                         key={category.id}
                         label={category.tipo}
-                        value={category.tipo}
+                        value={category.id}
                       />
                     ))}
                   </Picker>
@@ -247,6 +244,7 @@ export default function Home() {
             style={styles.imgFooter}
           />
         </View>
+
       </SafeAreaView>
     );
   }

@@ -1,6 +1,8 @@
 async function dados() {
     try {
         const token = localStorage.getItem('token');
+
+        //puxando promoçoes
         await axios.get(
             `${localStorage.getItem("ip")}SelecionaPromocao`,
             {
@@ -17,6 +19,7 @@ async function dados() {
             }).catch(error => {
                 console.log(error);
             });
+
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
@@ -51,9 +54,119 @@ function carregaPromos(responsePromo) {
         </tr>`;
     });
 
-
-
     document.getElementById('tbl-promo').innerHTML = table;
 
 }
 
+// utilizar somente numeros
+
+function somenteNumeros(e) {
+    var tecla = e.which || e.keyCode;
+
+    if ((tecla >= 48 && tecla <= 57) || tecla == 8) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+//Categoria_produto,Porcentagem,Id_categoria,Id_produto
+
+function criaDropProd(data) {
+    const selecionaProduto = document.getElementById('Id_produto');
+    data.forEach((item) => {
+        const opcao = document.createElement('option');
+        opcao.value = item.id;
+        opcao.text = item.tipo;
+        selecionaProduto.appendChild(opcao);
+    });
+}
+
+//puxando tabela de categorias do banco
+dados2();
+
+
+async function dados2() {
+    try {
+        const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
+        console.log(response.data);
+        criaDrop(response.data);
+    } catch (error) {
+        console.error('Erro ao buscar dados da API:', error);
+    }
+}
+
+function criaDrop(data) {
+    const selecionaElemento = document.getElementById('Id_produto');
+    data.forEach((item) => {
+        const opcao = document.createElement('option');
+        opcao.value = item.id;
+        opcao.text = item.tipo;
+        selecionaElemento.appendChild(opcao);
+    });
+}
+
+
+
+
+// async function dados2() {
+//     try {
+//         const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
+//         console.log(response.data);
+//         criaDrop(response.data);
+//     } catch (error) {
+//         console.error('Erro ao buscar dados da API:', error);
+//     }
+// }
+
+// function criaDrop(data) {
+//     const selecionaElemento = document.getElementById('Id_produto');
+//     data.forEach((item) => {
+//         const opcao = document.createElement('option');
+//         opcao.value = item.id;
+//         opcao.text = item.nome_produto;
+//         selecionaElemento.appendChild(opcao);
+//     });
+// }
+
+function createDropdown(id, name, labelText, options) {
+    // Cria o elemento label
+    const label = document.createElement('label');
+    label.setAttribute('for', id);
+    label.className = 'dropdown-button';
+    label.textContent = labelText;
+
+    // Cria o elemento select
+    const select = document.createElement('select');
+    select.className = 'form-control form-control-sm';
+    select.id = id;
+    select.name = name;
+
+    // Adiciona a opção vazia
+    const emptyOption = document.createElement('option');
+    emptyOption.value = '';
+    emptyOption.textContent = '';
+    select.appendChild(emptyOption);
+
+    // Adiciona as opções fornecidas
+    options.forEach(option => {
+        const opt = document.createElement('option');
+        opt.value = option.value;
+        opt.textContent = option.text;
+        select.appendChild(opt);
+    });
+
+    // Adiciona o label e o select ao container
+    const container = document.getElementById('dropdownContainer');
+    container.appendChild(label);
+    container.appendChild(select);
+}
+
+// Exemplo de uso da função
+const options = [
+    { value: 'categoria1', text: 'Categoria 1' },
+    { value: 'categoria2', text: 'Categoria 2' },
+    { value: 'categoria3', text: 'Categoria 3' }
+];
+
+createDropdown('Id_categoria', 'Id_categoria', 'Categoria: *', options);
