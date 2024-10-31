@@ -10,12 +10,9 @@ const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoaADM: async (req, res) => {
         try {
-            console.log(req.body)
-        
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Telefones,perfil } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
-            console.log(cPessoa)
-    
+            
             const verificaCampos = cPessoa.verificaCampos()
             if(!verificaCampos){
                 return res.status(500).json({ message: "Numero máximo de caracteres "})
@@ -29,10 +26,7 @@ const CadastroUsuario = {
             if (!verificaCPF) {
                 return res.status(400).json({ message: "Erro CPF invalido" });
             }
-
             const conversaoData = cPessoa.DataConvert()
-
-
             if (conversaoData == "Invalid Date") {
                 return res.status(400).json({ message: "Erro Data invalida" });
             }
@@ -40,7 +34,6 @@ const CadastroUsuario = {
             cPessoa.Data_nasc = conversaoData;
 
             const verificarCPFBanco = await cPessoa.verificaCpf()
-            console.log(verificarCPFBanco)
             if (verificarCPFBanco) {
                 return res.status(400).json({ message: "Erro CPF ja cadastrado" });
             }
@@ -67,10 +60,8 @@ const CadastroUsuario = {
                 if (!verificaLog) {
                     return res.status(400).json({ message: "Erro email ja cadastrado" });
                 }
-                console.log("teste1")
+                
                 const insertLogin = await cLogin.CadastrarLogin();
-                console.log("teste",insertLogin)
-                console.log("teste",insertLogin.error)
                 if (!insertLogin.error) {
                     if (Telefones.length > 0) {
                         console.log(Telefones);
