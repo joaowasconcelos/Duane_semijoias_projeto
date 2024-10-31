@@ -77,7 +77,8 @@ export default class Cupons {
     async SelecionaCupomDetalhes() {
         const bd = await obterConexaoDoPool();
         try {
-            const cupomResult = await bd.query(`    SELECT 
+            const cupomResult = await bd.query(`    
+                SELECT 
 		c.id,
 		c.codigo,
 		c.status,
@@ -98,7 +99,7 @@ export default class Cupons {
     }
 
     validaCampos() {
-        if (!this._codigo || !this._descricao || !this._quantidade|| !this._status|| !this._valor ) {
+        if (!this._codigo || !this._descricao || !this._quantidade|| !this._valor ) {
             return false
         }
         return true 

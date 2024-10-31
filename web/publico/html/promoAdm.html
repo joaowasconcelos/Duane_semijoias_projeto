@@ -69,7 +69,7 @@
 
                 <p id="titulo2">Cadastrar nova promoção:</p>
 
-                <form action="http://10.0.3.77:3000/CreatePromocao" method="POST" id="envia-form">
+                <form action="${localStorage.getItem("ip")}CreateCupom" method="POST" id="envia-form">
 
                     <label for="Valor">Desconto: * (em %)</label>
                     <input class="input" type="text" id="Valor" name="Valor" onkeydown="return somenteNumeros(event)">
@@ -132,7 +132,7 @@
                     </div>
 
 
-                    <form action="http://10.0.3.77:3000/CreateCategoria" method="POST" id="envia-form">
+                    <form action="${localStorage.getItem("ip")}CreateCategoria" method="POST" id="envia-form">
 
                         <div class="modal-body">
 

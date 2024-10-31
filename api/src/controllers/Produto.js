@@ -85,8 +85,7 @@ const ProdutoController = {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const editaPreco = await cPreco.CadastraPreco()
-            console.log(editaPreco)
-
+        
             if (insertPreco.error) {
                 return res.status(400).json({ message: "Erro ao cadastrar Produto!" });
             }
@@ -97,16 +96,14 @@ const ProdutoController = {
         }
     },
 
-
+//fazer validações
     Seleciona: async (req, res) => {
         try {
-           
             const selectProdutos = await Produto.SelectProduto()
             selectProdutos.forEach(produto => {
                 produto.imagens = produto.imagens.split(',').map(img => img.trim());
             });
             const ListarImg = await listAllFilesId(selectProdutos);
-            console.log("Resultado de listAllFilesId:", ListarImg);
             return res.json(selectProdutos)
 
         } catch (error) {

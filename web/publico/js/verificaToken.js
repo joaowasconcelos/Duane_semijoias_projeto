@@ -11,27 +11,55 @@ function parseJwt(token) {
 function isTokenExpired() {
     const tokenString = localStorage.getItem('token');
     if (!tokenString) {
-        window.location.href = '/publico/html/login.html'; 
+        window.location.href = '/publico/html/login.html';
     }
-
     const token = parseJwt(tokenString);
-    const currentTime = Math.floor(Date.now() / 1000); // Tempo atual em segundos
-    return currentTime >= token.exp; // Retorna true se o token expirou
+    const currentTime = Math.floor(Date.now() / 1000);
+    return currentTime >= token.exp;
 }
 
-function checkTokenPeriodically() {
-    const tokenString = localStorage.getItem('token');
-    if (!tokenString) {
-        showNotification("Faça o login para acessar");
-        window.location.href = '/publico/html/login.html'; 
+document.addEventListener('DOMContentLoaded', async () => {
+    console.log(localStorage.getItem('token') && isTokenValid(localStorage.getItem('token')))
+    if (localStorage.getItem('token') && isTokenValid(localStorage.getItem('token'))) {
+        const interval = setInterval(() => {
+            if (isTokenExpired()) {
+                clearInterval(interval);
+                showNotification("Sua sessão expirou. Redirecionando para a página de login.");
+                setTimeout(() => {
+                  //window.location.href = '/publico/html/login.html';
+                }, 3000);
+                return
+            }
+        }, 1); // Verifica a cada 1 minuto
+    } else {
+        console.log("Invalid token or no token found. Redirecting to login.");
+        //window.location.href = '/publico/html/login.html';
     }
-    const interval = setInterval(() => {
-        if (isTokenExpired()) {
-            clearInterval(interval);
-            showNotification("Sua sessão expirou. Redirecionando para a página de login.");
-            window.location.href = '/publico/html/login.html'; 
-        }
-    }, 60000); // Verifica a cada 1 minuto
+});
+
+function isTokenValid(token) {
+    if (!token) return false;
+    const payload = JSON.parse(atob(token.split('.')[1]));
+    const expiration = payload.exp;
+    const now = Math.floor(Date.now() / 1000);
+    return expiration > now;
 }
 
-checkTokenPeriodically();
+
+
+// function checkTokenPeriodically() {
+//     const tokenString = localStorage.getItem('token');
+//     if (!tokenString) {
+//         showNotification("Faça o login para acessar");
+//         window.location.href = '/publico/html/login.html';
+//     }
+//     const interval = setInterval(() => {
+//         if (isTokenExpired()) {
+//             clearInterval(interval);
+//             showNotification("Sua sessão expirou. Redirecionando para a página de login.");
+//             window.location.href = '/publico/html/login.html';
+//         }
+//     }, 60000); // Verifica a cada 1 minuto
+// }
+
+// checkTokenPeriodically();

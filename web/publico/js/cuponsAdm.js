@@ -1,10 +1,8 @@
-let responseCupom;
-
 async function dados() {
     try {
         const token = localStorage.getItem('token');
         await axios.get(
-            'http://10.0.3.77:3000/selecionaCupons',
+            `${localStorage.getItem("ip")}selecionaCupons`,
             {
                 headers: {
                     'x-access-token': token
