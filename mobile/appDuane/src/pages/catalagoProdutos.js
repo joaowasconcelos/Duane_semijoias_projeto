@@ -14,6 +14,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AppLoading from "expo-app-loading";
 import {
@@ -27,7 +28,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
@@ -44,6 +45,37 @@ export default function Home() {
 
   const saveProduto = () => {
     setModalVisible(false);
+  };
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      if (token) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  useEffect(() => {
+    getToken();
+    selecionaCate();
+  }, []);
+  const [prod, setProd] = useState([]);
+
+  const selecionaCate = async () => {
+    try {
+      const response = await api.get(
+        `/SelecionaProduto`
+      );
+      setProd(response.data); // Atualiza o estado com as categorias recebidas
+      console.log(response.data)
+    } catch (error) {
+      console.error("Erro ao buscar os produtos:", error);
+    }
   };
 
   let [fontsLoaded] = useFonts({
@@ -114,76 +146,78 @@ export default function Home() {
 
             <ScrollView>
               <View style={styles.containerElements}>
-                <View style={styles.btn}>
-                  <View style={{}}>
-                    <Image
-                      source={require("../../assets/img-brincos.jpeg")}
-                      style={{
-                        width: 70,
-                        height: 70,
-                        borderRadius: 5,
-                        margin: 5,
-                      }}
-                    />
-                  </View>
+                {prod.map(produto => (
+                  <View key={produto.id} style={styles.btn}>
+                    <View style={{}}>
+                      <Image
+                        source={{ uri: produto.imagens[0] }}
+                        style={{
+                          width: 70,
+                          height: 70,
+                          borderRadius: 5,
+                          margin: 5,
+                        }}
+                      />
+                    </View>
 
-                  <View
-                    style={{
-                      justifyContent: "center",
-                      alignItems: "center",
-                      width: "55%",
-                    }}
-                  >
                     <View
                       style={{
-                        justifyContent: "space-between",
+                        justifyContent: "center",
                         alignItems: "center",
-                        flexDirection: "row",
-                        width: "100%",
+                        width: "55%",
                       }}
                     >
-                      <View>
-                        <Text style={styles.textBtn}>Categoria:</Text>
-                        <Text style={{}}>Brinco</Text>
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
+                        <View>
+                          <Text style={styles.textBtn}>Categoria:</Text>
+                          <Text style={{}}>{produto.tipo}</Text>
+                        </View>
+                        <View>
+                          <Text style={styles.textBtn}>Preço:</Text>
+                          <Text style={styles.textElement}>{produto.preco_promocional}</Text>
+                        </View>
                       </View>
-                      <View>
-                        <Text style={styles.textBtn}>Quantidade:</Text>
-                        <Text style={styles.textElement}>15</Text>
+
+                      <View
+                        style={{
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#FAADD1",
+                          width: "100%",
+                        }}
+                      />
+
+                      <View
+                        style={{ justifyContent: "flex-start", width: "100%" }}
+                      >
+                        <Text style={styles.textBtn}>Produto:</Text>
+                        <Text style={{}}>{produto.nome_produto}</Text>
                       </View>
                     </View>
 
-                    <View
+                    <TouchableOpacity
                       style={{
-                        borderBottomWidth: 2,
-                        borderBottomColor: "#FAADD1",
-                        width: "100%",
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
                       }}
-                    />
-
-                    <View
-                      style={{ justifyContent: "flex-start", width: "100%" }}
+                      onPress={pressBtnDetalhes}
                     >
-                      <Text style={styles.textBtn}>Produto:</Text>
-                      <Text style={{}}>Pulseira Estrela e Lua</Text>
-                    </View>
+                      <Text style={styles.textBtn}>Detalhes:</Text>
+                      <FontAwesome6
+                        name="file-circle-plus"
+                        color="#ae4b67"
+                        size={26}
+                      />
+                    </TouchableOpacity>
                   </View>
-
-                  <TouchableOpacity
-                    style={{
-                      justifyContent: "flex-start",
-                      alignItems: "center",
-                      height: "100%",
-                    }}
-                    onPress={pressBtnDetalhes}
-                  >
-                    <Text style={styles.textBtn}>Detalhes:</Text>
-                    <FontAwesome6
-                      name="file-circle-plus"
-                      color="#ae4b67"
-                      size={26}
-                    />
-                  </TouchableOpacity>
-                </View>
+                ))}
               </View>
             </ScrollView>
             <Modal
@@ -206,8 +240,8 @@ export default function Home() {
                   >
                     Detalhes do Produto
                   </Text>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Categoria:</Text>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Categoria:</Text>
                     <TextInput
                       style={styles.inputModal}
                       //value={}
@@ -216,8 +250,8 @@ export default function Home() {
                       readOnly
                     >Pulseira</TextInput>
                   </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Produto:</Text>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Produto:</Text>
                     <TextInput
                       style={styles.inputModal}
                       //value={}
@@ -226,8 +260,8 @@ export default function Home() {
                       readOnly
                     >Pulseira Estrela e Lua</TextInput>
                   </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Quantidade:</Text>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Quantidade:</Text>
                     <TextInput
                       style={styles.inputModal}
                       //value={}
@@ -236,11 +270,11 @@ export default function Home() {
                       readOnly
                     ></TextInput>
                   </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Imagens:</Text>
+                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Imagens:</Text>
                     <Text>Aqui será exibido as imagens</Text>
                   </View>
-                  
+
                   <View
                     style={{
                       width: "100%",
@@ -425,7 +459,7 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     height: 45
   },
-  btnModal:{
+  btnModal: {
     width: "45%",
     backgroundColor: "#E5969C",
     height: 40,
