@@ -1,12 +1,29 @@
 /* Estilo básico da página */
-body {
-    font-family: Arial, sans-serif;
-    background-color: #f4f4f4;
+* {
     margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-weight: 700;
+    font-style: normal;
+    color: #AE4B67;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: 400;
+    font-style: normal;
+}
+
+main {
+    box-sizing: border-box;
+    flex: 1;
     padding: 0;
 }
 
-.container {
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+ .container {
     width: 90%;
     max-width: 800px;
     margin: 20px auto;
@@ -16,14 +33,16 @@ body {
     padding: 20px;
 }
 
-/* Cabeçalho */
+
+/* 
+Cabeçalho 
 h2 {
     font-size: 24px;
     color: #333;
     margin-bottom: 20px;
 }
 
-/* Estilo dos itens do carrinho */
+Estilo dos itens do carrinho 
 .cart-item {
     display: flex;
     justify-content: space-between;
@@ -71,7 +90,7 @@ h2 {
     text-align: center;
 }
 
-/* Resumo do pedido */
+ Resumo do pedido 
 .order-summary {
     margin-top: 20px;
     padding: 10px;
@@ -90,7 +109,7 @@ h2 {
     color: #333;
 }
 
-/* Formulário do cliente */
+Formulário do cliente 
 .customer-info {
     margin-top: 20px;
 }
@@ -111,7 +130,7 @@ h2 {
     font-size: 14px;
 }
 
-/* Botão de compra */
+Botão de compra 
 .btn-buy {
     display: block;
     width: 100%;
@@ -129,4 +148,4 @@ h2 {
 
 .btn-buy:hover {
     background-color: #218838;
-}
+} */
