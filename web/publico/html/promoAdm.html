@@ -71,28 +71,32 @@
 
                 <form action="http://10.0.3.77:3000/CreatePromocao" method="POST" id="envia-form">
 
-                    <div class="dropdown">
-                        <button class="dropdown-button">Selecione opções</button>
-                        <div class="dropdown-content">
-                            <label><input type="checkbox" value="opcao1"> Opção 1</label>
-                            <label><input type="checkbox" value="opcao2"> Opção 2</label>
-                            <label><input type="checkbox" value="opcao3"> Opção 3</label>
-                            <label><input type="checkbox" value="opcao4"> Opção 4</label>
+                    <label for="Valor">Desconto: * (em %)</label>
+                    <input class="input" type="text" id="Valor" name="Valor" onkeydown="return somenteNumeros(event)">
+
+                    <label for="Categoria_produto">Por *</label>
+                    <div class="contChecks">
+                        <div class="check">
+                            <input type="checkbox" value="P" id="Categoria_produto" name="Categoria_produto">
+                            <p class="p">Produto</p>
+                        </div>
+
+                        <div class="check">
+                            <input type="checkbox" value="C" id="Categoria_produto" name="Categoria_produto">
+                            <p class="p">Categoria</p>
                         </div>
                     </div>
-                    
-                    <label for="Codigo">Código: *</label>
-                    <input class="input" type="text" name="Codigo" id="Codigo">
 
-                    <label for="Descricao">Descrição: *</label>
-                    <input class="input" type="text" name="Descricao" id="Descricao">
+                    <div id="dropdownContainer"></div>
+                    <!-- <label for="Id_produto" class="dropdown-button">Produtos: *</label>
+                    <select class="form-control form-control-sm" id="Id_produto" name="Id_produto">
+                        <option></option>
+                    </select>
 
-                    <label for="Valor">Valor do desconto: *</label>
-                    <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
-                        onkeydown="return somenteNumeros(event)">
-
-                    <label for="Quantidade">Quantidade: *</label>
-                    <input class="input" type="number" name="Quantidade" id="Quantidade">
+                    <label for="Id_categoria" class="dropdown-button">Categoria: *</label>
+                    <select class="form-control form-control-sm" id="Id_categoria" name="Id_categoria">
+                        <option></option>
+                    </select> -->
 
                     <div id="btns">
 

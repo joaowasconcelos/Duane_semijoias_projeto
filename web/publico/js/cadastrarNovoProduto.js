@@ -48,6 +48,7 @@ $('#produto-form').on('submit', async function (event) {
     const formData = new FormData(this);
     console.log(formData)
     try {
+        console.log(formData)
         await axios.post('http://10.0.3.77:3000/CreateProduto', formData, {
             headers: {
                 'x-access-token': token,
@@ -88,7 +89,7 @@ function criaDrop(data) {
     data.forEach((item) => {
         const opcao = document.createElement('option');
         opcao.value = item.id;
-        opcao.text = item.tipo;  // Ensure 'tipo' is the correct property for the category name
+        opcao.text = item.tipo;
         selecionaElemento.appendChild(opcao);
     });
 }

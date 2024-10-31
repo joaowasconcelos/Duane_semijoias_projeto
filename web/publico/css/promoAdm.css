@@ -297,40 +297,25 @@ footer {
     /* position: absolute; */
 }
 
+/* checkbox */
 
-
-
-
-
-
-
-.dropdown {
-    position: relative;
-    display: inline-block;
+.check{
+    display: flex;
+    flex-direction: row;
+    width: 13%;
 }
-.dropdown-content {
-    display: none;
-    position: absolute;
-    background-color: #f9f9f9;
-    min-width: 200px;
-    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
-    z-index: 1;
+
+.contChecks {
+    display: flex;
+    flex-direction: row;
 }
-.dropdown-content label {
-    display: block;
-    padding: 8px 12px;
-    cursor: pointer;
+
+.p {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #633636;
 }
-.dropdown-content label:hover {
-    background-color: #f1f1f1;
-}
-.dropdown:hover .dropdown-content {
-    display: block;
-}
-.dropdown-button {
-    padding: 10px 20px;
-    background-color: #4CAF50;
-    color: white;
-    border: none;
-    cursor: pointer;
-}
+

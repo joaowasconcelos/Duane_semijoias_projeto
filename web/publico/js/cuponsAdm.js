@@ -95,18 +95,20 @@ function limparInput() {
     document.getElementById('Descricao').value = '';
     document.getElementById('Valor').value = '';
     document.getElementById('Quantidade').value = '';
-    window.location.reload(true);
 }
 
 //cadastrar cupom
 
-async function salvar() {
+async function salvar(event) {
+    event.preventDefault();
     const token = localStorage.getItem('token');
-    console.log(token)
+    console.log(token);
     const Codigo = document.getElementById("Codigo").value;
     const Descricao = document.getElementById("Descricao").value;
     const Valor = document.getElementById("Valor").value;
     const Quantidade = document.getElementById("Quantidade").value;
+
+    console.log(Codigo, Descricao, Valor, Quantidade)
 
     try {
         const response = await axios.post(
@@ -124,6 +126,9 @@ async function salvar() {
             }
         ).then(response => {
             console.log(response)
+            limparInput()
+            showNotification(response.data.message)
+          
         }).catch(error =>{
             console.log(error)
         })
