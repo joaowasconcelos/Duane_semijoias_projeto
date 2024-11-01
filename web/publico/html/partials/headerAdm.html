@@ -28,6 +28,7 @@
 </nav>
 
 <script>
+
     async function logout() {
         const token = localStorage.getItem('token');
         if (!token) {
@@ -35,7 +36,7 @@
             return;
         }
         try {
-            await axios.get('${localStorage.getItem("ip")}logout', {
+            await axios.get(`${localStorage.getItem("ip")}logout`, {
                 headers: {
                     'x-access-token': `${token}`
                 }
@@ -48,7 +49,7 @@
                     localStorage.removeItem('userProfile');
                     window.location.href = 'login.html';
                 }
-            }).catch(error=>{
+            }).catch(error => {
                 console.log(error)
             });
 
@@ -59,4 +60,12 @@
             window.location.href = 'login.html';
         }
     }
+
+    function apiIp() {
+        const ip = "http://10.0.3.77:3000/"
+        localStorage.setItem('ip', ip);
+    }
+
+    apiIp()
+
 </script>
