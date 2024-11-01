@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useRoute } from '@react-navigation/native';
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -30,7 +30,9 @@ import {
 import api from "../services/api/api"
 
 export default function Home() {
+  const route = useRoute();
   const navigation = useNavigation();
+  const {id} = route.params;
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -56,9 +58,23 @@ export default function Home() {
   const [detalhesCupom, setDetalhesCupom] = useState([]);
   const selecionaDetalhesCup = async () => {
     try {
-      const response = await api.get(`/selecionaCupons?${id}`);
-      setDetalhesCupom(response.data);
-      console.log(response.data)
+      const token = await AsyncStorage.getItem('userToken');
+      await api.get(`/selecionaCupons/${id}`,{
+        headers: {
+          'x-access-token': `${token}`,
+        }
+      })
+      .then(response=>{
+        setDetalhesCupom(response.data);
+        setId(response.data);
+        console.log(response.data);
+        
+      }).catch(
+        error => {
+          console.error("Erro ao recuperar os detalhes do cupom", error);
+        }
+      );
+      
     } catch (error) {
       console.error("Erro ao buscar as clientes:", error);
     }
@@ -131,7 +147,7 @@ export default function Home() {
                   </Text>
 
                   {detalhesCupom.map(detalhesCup => (
-                    <View
+                    <View key={id}
                     style={{
                       justifyContent: "center",
                       alignItems: "center",
@@ -142,7 +158,7 @@ export default function Home() {
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Código:</Text>
-                      <TextInput style={styles.Inputs}></TextInput>
+                      <TextInput style={styles.Inputs}>{}</TextInput>
                     </View>
 
                     <View

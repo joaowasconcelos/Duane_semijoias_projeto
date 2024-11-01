@@ -68,7 +68,14 @@ export default function Home() {
   const [funcionarios, setFuncionarios] = useState([]);
   const selecionaCate = async () => {
     try {
-      const response = await api.get(`/SelecionaFuncionarios`);
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await api.get(`/SelecionaFuncionarios`,
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
+        }
+      );
       setFuncionarios(response.data);
       console.log(response.data)
     } catch (error) {

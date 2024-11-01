@@ -261,7 +261,7 @@ export default function Home() {
                     >Pulseira Estrela e Lua</TextInput>
                   </View>
                   <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Quantidade:</Text>
+                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Preço:</Text>
                     <TextInput
                       style={styles.inputModal}
                       //value={}
