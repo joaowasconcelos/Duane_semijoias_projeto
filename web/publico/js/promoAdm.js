@@ -88,7 +88,7 @@ dados2();
 
 async function dados2() {
     try {
-        const response = await axios.get('http://10.0.3.77:3000/SelecionaCategoria');
+        const response = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
         console.log(response.data);
         criaDrop(response.data);
     } catch (error) {

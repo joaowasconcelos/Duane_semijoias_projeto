@@ -145,7 +145,7 @@ async function put() {
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
     try {
-        await axios.post(`http://${ip}:3000/ModificaCategoria/${id}`,
+        await axios.post(`${localStorage.getItem("ip")}ModificaCategoria/${id}`,
             {
                 tipo: tipo
             },
@@ -156,7 +156,6 @@ async function put() {
             }).then(response => {
                 showNotification(response.data.message)
                 document.getElementById('tipo').value = '';
-
                 fecharModal();
 
                 setTimeout(() => {
@@ -183,7 +182,7 @@ async function post() {
 
     try {
         const response = await axios.post(
-            `http://${ip}:3000/CreateCategoria`,
+            `${localStorage.getItem("ip")}CreateCategoria`,
             {
                 tipo: tipo
             },
@@ -228,7 +227,7 @@ function confirmarExclusao(link) {
 async function excluir(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.post(`http://${ip}:3000/InativaCategoria/${id}`,
+        await axios.post(`${localStorage.getItem("ip")}InativaCategoria/${id}`,
             {}, 
             {
                 headers: {
@@ -253,7 +252,7 @@ async function excluir(id) {
 async function DetalhesPedido(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.get(`http://${ip}:3000/MeuPedido/${id}`,
+        await axios.get(`${localStorage.getItem("ip")}MeuPedido/${id}`,
             {
                 headers: {
                     'x-access-token': token

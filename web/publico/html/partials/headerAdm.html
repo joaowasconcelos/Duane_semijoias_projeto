@@ -35,7 +35,7 @@
             return;
         }
         try {
-            await axios.get('${localStorage.getItem("ip")}logout', {
+            await axios.get(`${localStorage.getItem("ip")}logout`, {
                 headers: {
                     'x-access-token': `${token}`
                 }

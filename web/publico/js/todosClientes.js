@@ -9,6 +9,7 @@ async function dados() {
                 console.log(response);
                 criarTabela();
                 carregaDadosCli(response);
+                Filter(response.data)
             
             }).catch(error => {
                 console.log(error);

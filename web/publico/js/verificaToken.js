@@ -23,17 +23,15 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (localStorage.getItem('token') && isTokenValid(localStorage.getItem('token'))) {
         const interval = setInterval(() => {
             if (isTokenExpired()) {
-                clearInterval(interval);
-                showNotification("Sua sessão expirou. Redirecionando para a página de login.");
-                setTimeout(() => {
-                  //window.location.href = '/publico/html/login.html';
-                }, 3000);
-                return
+                clearInterval(interval)
+                window.location.href = '/publico/html/login.html';
+                alert("Sessão inspirada faça o login novamente");
             }
         }, 1); // Verifica a cada 1 minuto
     } else {
         console.log("Invalid token or no token found. Redirecting to login.");
-        //window.location.href = '/publico/html/login.html';
+        window.location.href = '/publico/html/login.html';
+        alert("Sessão inspirada faça o login novamente");
     }
 });
 
