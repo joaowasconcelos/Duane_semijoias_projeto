@@ -229,7 +229,7 @@ export default function Home() {
                 </View>
               </View>
 
-              <View style={{ width: '100%', justifyContent: "space-evenly", alignItems: 'center', flexDirection: 'row', marginBottom: 5 }}>
+              <View style={{ width: '100%', justifyContent: "space-evenly", alignItems: 'center', flexDirection: 'row', marginBottom: 10 }}>
                 <TouchableOpacity style={styles.btn} onPress={() => navigation.goBack()}>
                   <Text style={styles.textBtn}>Cancelar</Text>
                 </TouchableOpacity>
@@ -323,9 +323,10 @@ const styles = StyleSheet.create({
   },
   containerLogoTitle: {
     alignItems: "center",
-    margin: 20,
+    marginTop: 20,
     paddingTop: 10,
     position: "relative",
+    marginBottom: 5
   },
   btnLogOut: {
     position: "absolute",
