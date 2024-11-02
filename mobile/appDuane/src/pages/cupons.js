@@ -66,9 +66,22 @@ export default function Home() {
   const [cupons, setCupons] = useState([]);
   const selecionaCup = async () => {
     try {
-      const response = await api.get(`/selecionaCupons`);
-      setCupons(response.data);
-      console.log(response.data)
+      const token = await AsyncStorage.getItem('userToken');
+      await api.get(`/selecionaCupons`,
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
+        }
+      )
+      .then(response =>{
+        setCupons(response.data);
+        console.log(response.data)
+
+      })
+      .catch(error =>{
+        console.log(error)
+      });
     } catch (error) {
       console.error("Erro ao buscar os cupons:", error);
     }
@@ -194,7 +207,7 @@ export default function Home() {
                         marginTop: 40,
                       }}
 
-                      onPress={navegaDetalhesCupom}
+                      onPress={()=>navegaDetalhesCupom(cup.id)}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6

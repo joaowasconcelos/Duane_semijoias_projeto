@@ -2,63 +2,55 @@ async function dados() {
     try {
         const token = localStorage.getItem('token');
 
-        //puxando promoçoes
-        await axios.get(
+        // Puxando promoções
+        const responsePromo = await axios.get(
             `${localStorage.getItem("ip")}SelecionaPromocao`,
             {
                 headers: {
                     'x-access-token': token
                 }
-            }).then(response => {
-                responsePromo = response.data
-                console.log(responsePromo)
-                if (responsePromo != null || responsePromo != undefined) {
-                    criarTabela();
-                    carregaPromos(responsePromo); // 
-                }
-            }).catch(error => {
-                console.log(error);
             });
+        
+        if (responsePromo.data) {
+            console.log(responsePromo.data);
+            criarTabela();
+            carregaPromos(responsePromo.data);
+        }
 
-        //puxando categorias
-        await axios.get(
+        // Puxando categorias
+        const responseTipo = await axios.get(
             'http://10.0.3.77:3000/SelecionaCategoria',
             {
                 headers: {
                     'x-access-token': token
                 }
-            }).then(response => {
-                responseTipo = response.data
-                if (responseTipo != null || responseTipo != undefined) {
-                    console.log(responseTipo)
-                }
-            }).catch(error => {
-                console.log(error);
             });
+        
+        if (responseTipo.data) {
+            console.log(responseTipo.data);
+            criaDropCategorias(responseTipo.data); // Passa os dados para a função
+        }
 
-        //puxando categorias
-        await axios.get(
+        // Puxando produtos
+        const responseProd = await axios.get(
             'http://10.0.3.77:3000/SelecionaProduto',
             {
                 headers: {
                     'x-access-token': token
                 }
-            }).then(response => {
-                responseProd = response.data
-                if (responseProd != null || responseProd != undefined) {
-                    console.log(responseProd)
-                }
-            }).catch(error => {
-                console.log(error);
             });
-
-
+        
+        if (responseProd.data) {
+            console.log(responseProd.data);
+            criaDropProdutos(responseProd.data)
+        }
 
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
 }
 
+// Chama a função para buscar os dados
 dados();
 
 var table;
@@ -104,3 +96,23 @@ function somenteNumeros(e) {
     }
 }
 
+
+function criaDropCategorias(data) {
+    const selecionaElemento = document.getElementById('categoria');
+    data.forEach((item) => {
+        const opcao = document.createElement('option');
+        opcao.value = item.id;
+        opcao.text = item.tipo;
+        selecionaElemento.appendChild(opcao);
+    });
+}
+
+function criaDropProdutos(data) {
+    const selecionaElementoP = document.getElementById('nome_produto');
+    data.forEach((item) => {
+        const opcaoP = document.createElement('option');
+        opcaoP.value = item.id;
+        opcaoP.text = item.tipo;
+        selecionaElementoP.appendChild(opcaoP);
+    });
+}

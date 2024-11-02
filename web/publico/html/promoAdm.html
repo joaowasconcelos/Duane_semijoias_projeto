@@ -69,13 +69,15 @@
 
                 <p id="titulo2">Cadastrar nova promoção:</p>
 
-                <form action="${localStorage.getItem("ip")}CreateCupom" method="POST" id="envia-form">
+                <form action="${localStorage.getItem(" ip")}CreateCupom" method="POST" id="envia-form">
 
                     <label for="Valor">Desconto: * (em %)</label>
                     <input class="input" type="text" id="Valor" name="Valor" onkeydown="return somenteNumeros(event)">
 
                     <label for="Categoria_produto">Por *</label>
+
                     <div class="contChecks">
+
                         <div class="check">
                             <input type="checkbox" value="P" id="Categoria_produto" name="Categoria_produto">
                             <p class="p">Produto</p>
@@ -85,30 +87,27 @@
                             <input type="checkbox" value="C" id="Categoria_produto" name="Categoria_produto">
                             <p class="p">Categoria</p>
                         </div>
+
                     </div>
 
-                    <div id="selectContainer"></div>
+                    <!-- carrgar categoria -->
 
-
-
-
-
-
-
-                    <!-- <label for="Id_produto" class="dropdown-button">Produtos: *</label>
-                    <select class="form-control form-control-sm" id="Id_produto" name="Id_produto">
+                    <label for="tipo">Categoria: *</label>
+                    <select class="form-control form-control-sm" id="categoria" name="categoria">
                         <option></option>
                     </select>
 
-                    <label for="Id_categoria" class="dropdown-button">Categoria: *</label>
-                    <select class="form-control form-control-sm" id="Id_categoria" name="Id_categoria">
+                    <!-- carregar produtos -->
+                    <label for="nome_produto">Produtos: *</label>
+                    <select class="form-control form-control-sm" id="nome_produto" name="nome_produto">
                         <option></option>
-                    </select> -->
+                    </select>
 
                     <div id="btns">
 
                         <button type="button" class="btn btn-primary save-changes"
                             onclick="limparInput()">Cancelar</button>
+
                         <button type="submit" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
 
                     </div>
