@@ -19,7 +19,7 @@ const PedidoController = {
             }
             const verificaCampos = cPedido.verificaCampos()
             if(!verificaCampos){
-                return res.status(500).json({ message: "Numero máximo de caracteres "})
+                return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const insertPedido = await cPedido.CadastraPedido()
             const objItens = [];

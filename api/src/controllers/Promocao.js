@@ -15,7 +15,7 @@ const PromocaoController = {
             }
             const insertPromocao = await cPromocao.CadastraPromocao()
             if (insertPromocao.error) {
-                return res.status(500).json({message: "Erro ao cadastrar promoção!"});
+                return res.status(400).json({error: "Erro ao cadastrar promoção!"});
             }
             console.log(insertPromocao)
             return res.status(201).json({ message: "Promoção cadastrada com sucesso!" });
@@ -35,7 +35,7 @@ const PromocaoController = {
             }
             const modificaPromocao = await cPromocao.ModificaPromocao()
             if (modificaPromocao.error) {
-                return res.status(500).json({message: "Erro ao modificar promoção!"});
+                return res.status(400).json({error: "Erro ao modificar promoção!"});
             }
             return res.status(201).json({ message: "Promoção modificada com sucesso!" });
         }catch (error) {
@@ -50,7 +50,7 @@ const PromocaoController = {
             const DeletaPromocao = await cPromocao.DeletePromocao()
             console.log(DeletaPromocao)
             if (DeletaPromocao.error) {
-                return res.status(500).json({ message: "Erro ao deletar promoção!"});
+                return res.status(400).json({ error: "Erro ao deletar promoção!"});
             }
             return res.status(201).json({ message: "Promoção deletada com sucesso!" });
         }catch (error) {
@@ -62,7 +62,7 @@ const PromocaoController = {
         try {
             const selecionaPromocao = await Promocao.SelecionaPromocao()
             if (selecionaPromocao.error) {
-                return res.status(500).json({message: "Erro ao selecionar promoção!"})
+                return res.status(400).json({error: "Erro ao selecionar promoção!"})
             }
             return res.json(selecionaPromocao);
         } catch (error) {
@@ -74,7 +74,7 @@ const PromocaoController = {
         try {
             const selecionaPromocao = await Promocao.SelecionaPromocao()
             if (selecionaPromocao.error) {
-                return res.status(500).json({message: "Erro ao selecionar promoção!"})
+                return res.status(400).json({error: "Erro ao selecionar promoção!"})
             }
             return res.json(selecionaPromocao);
         } catch (error) {

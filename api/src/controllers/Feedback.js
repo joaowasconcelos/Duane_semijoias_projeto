@@ -12,7 +12,7 @@ const FeedbackController = {
             const cleanText = filter.clean(comentarios);
         
             if (filter.isProfane(comentarios)) {
-                return res.status(400).json({ message: "Comentário contém palavrões. Por favor, corrija." });
+                return res.status(400).json({ error: "Comentário contém palavrões. Por favor, corrija." });
             }
            
             const cFeedback = new Feedback(null, avaliacao, comentarios, id_produto, id)
@@ -22,11 +22,11 @@ const FeedbackController = {
             }
             const verificaCampos = cFeedback.verificaCampos()
             if (!verificaCampos) {
-                return res.status(500).json({ message: "Numero máximo de caracteres " })
+                return res.status(400).json({ error: "Numero máximo de caracteres " })
             }
             const insertFeedback = await cFeedback.CadastrarFeedback()
             if (insertFeedback.error) {
-                return res.status(500).json({message: "Erro ao registrar feedback!"});
+                return res.status(400).json({error: "Erro ao registrar feedback!"});
             }
             console.log(insertFeedback)
             return res.status(201).json({ message: "feedback cadastrado com sucesso!" });
@@ -45,7 +45,7 @@ const FeedbackController = {
             const cleanText = filter.clean(comentario);
         
             if (filter.isProfane(comentario)) {
-                return res.status(400).json({ message: "Comentário contém palavrões. Por favor, corrija." });
+                return res.status(400).json({ error: "Comentário contém palavrões. Por favor, corrija." });
             }
 
             const cFeedback = new Feedback(id_feedback, avaliacao, comentario, idProduto, id_pessoa);
@@ -57,12 +57,12 @@ const FeedbackController = {
             }
             const verificaCampos = cFeedback.verificaCampos()
             if (!verificaCampos) {
-                return res.status(500).json({ message: "Numero máximo de caracteres " })
+                return res.status(400).json({ error: "Numero máximo de caracteres " })
             }
 
             const modificaFeedback = await cFeedback.modificarFeedback();
             if (modificaFeedback.error) {
-                return res.status(500).json({ error: "Erro ao modificar feedback", details: modificaFeedback.details });
+                return res.status(400).json({ error: "Erro ao modificar feedback", details: modificaFeedback.details });
             }
             return res.status(200).json({ message: "Feedback modificado com sucesso!" });
         } catch (error) {
@@ -79,7 +79,7 @@ const FeedbackController = {
 
             const deletarFeedback = await feedback.deletarFeedback();
             if (deletarFeedback.error) {
-                return res.status(500).json({ error: "Erro ao deletar feedback", details: deletarFeedback.details });
+                return res.status(400).json({ error: "Erro ao deletar feedback", details: deletarFeedback.details });
             }
             return res.status(200).json({ message: "Feedback deletado com sucesso!" });
         } catch (error) {
@@ -93,7 +93,7 @@ const FeedbackController = {
             const { idProduto } = req.params; 
             const feedbacks = await Feedback.selecionarFeedbacksPorProduto(idProduto);
             if (feedbacks.error) {
-                return res.status(500).json({ error: "Erro ao buscar feedbacks por produto", details: feedbacks.details });
+                return res.status(400).json({ error: "Erro ao buscar feedbacks por produto", details: feedbacks.details });
             }
             return res.json(feedbacks);
         } catch (error) {
