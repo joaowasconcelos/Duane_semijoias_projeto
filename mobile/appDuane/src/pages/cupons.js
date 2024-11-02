@@ -14,7 +14,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import AsyncStorage from '@react-native-async-storage/async-storage';
-
+import { useRoute } from '@react-navigation/native';
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -32,15 +32,16 @@ import api from "../services/api/api"
 
 
 export default function Home() {
+  const route = useRoute();
   const navigation = useNavigation();
-
+  const [id, setId] = useState("");
 
   const navegaCadastroNovoCupom = () =>{
     navigation.navigate('CadastroNovoCupom')
   }
 
   const navegaDetalhesCupom = () =>{
-    navigation.navigate('DetalhesCupom')
+    navigation.navigate('DetalhesCupom',{id: id})
   }
 
   let [fontsLoaded] = useFonts({
@@ -66,9 +67,23 @@ export default function Home() {
   const [cupons, setCupons] = useState([]);
   const selecionaCup = async () => {
     try {
-      const response = await api.get(`/selecionaCupons`);
-      setCupons(response.data);
-      console.log(response.data)
+      const token = await AsyncStorage.getItem('userToken');
+      await api.get(`/selecionaCupons`,
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
+        }
+      )
+      .then(response =>{
+        setCupons(response.data);
+        console.log(response.data);
+        setId(response.data);
+
+      })
+      .catch(error =>{
+        console.log(error)
+      });
     } catch (error) {
       console.error("Erro ao buscar os cupons:", error);
     }
@@ -145,7 +160,8 @@ export default function Home() {
                         width: "70%",
                       }}
                     >
-                      <View key={cupons.id}
+                      <View 
+                        // key={cupons.id}
                         style={{
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -194,7 +210,7 @@ export default function Home() {
                         marginTop: 40,
                       }}
 
-                      onPress={navegaDetalhesCupom}
+                      onPress={()=>navegaDetalhesCupom(cup.id)}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6
