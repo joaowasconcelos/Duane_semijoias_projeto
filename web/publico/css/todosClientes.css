@@ -31,7 +31,7 @@ table {
     font-size: 15px;
     font-family: 'Roboto Mono', monospace;
     text-align: left;
-    overflow-y: auto; /* Adiciona scroll vertical se necessário */
+    overflow-y: auto;
 }
 
 thead {
@@ -206,7 +206,6 @@ tbody tr th {
     flex-direction: column;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
-    padding-left: 25px;
 }
 
 /* Bem-vinda + Nome */

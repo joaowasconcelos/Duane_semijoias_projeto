@@ -6,11 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&family=Parisienne&family=Petit+Formal+Script&display=swap');
-    </style>
-    <style>
         @import url('https://fonts.googleapis.com/css2?family=Cormorant+Upright:wght@300;400;500;600;700&display=swap');
-    </style>
-    <style>
         @import url('https://fonts.googleapis.com/css2?family=Kadwa:wght@400;700&display=swap');
     </style>
     <script src="https://code.jquery.com/jquery-3.7.1.js"
@@ -22,7 +18,6 @@
         integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
-    
     <link rel="stylesheet" href="../css/partials/header.css">
     <link rel="stylesheet" href="../css/partials/footer.css">
     <link rel="stylesheet" href="../css/home.css">
@@ -35,62 +30,92 @@
 </head>
 
 <body>
-    <header id="header"></header>
-    <main>
-        <div class="container1" id="links">
+    <header id="header">
 
+    </header>
+
+    <main>
+
+
+        <div class="container1" id="links">
+            <!-- Botão para abrir o carrinho (offcanvas) -->
+            <button data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling">
+                <svg id="icon" xmlns="http://www.w3.org/2000/svg" width="30" height="30" fill="currentColor"
+                    class="bi bi-cart-fill" viewBox="0 0 16 16">
+                    <path
+                        d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2" />
+                </svg></button>
+            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling"
+                aria-labelledby="offcanvasScrollingLabel">
+                <div class="offcanvas-header">
+                    <h5 id="offcanvasScrollingLabel">Carrinho de Compras</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+                </div>
+                <div class="offcanvas-body">
+                    <ul id="cart-list"></ul>
+                    <div>Total: R$ <span id="total">0.00</span></div>
+                </div>
+                <a id="bot" href="http://127.0.0.1:5500/web/publico/html/carrinho.html">Finalizar compras</a>
+            </div>
         </div>
 
         <div class="container2">
             <div id="filtro">
-                <!-- barra de pesquisa -->
+                <!-- Barra de pesquisa -->
                 <div class="input">
-                    <input id="procurar" type="Procurar" placeholder="Procurar" color="#633636">
+                    <input id="procurar" type="text" placeholder="Procurar">
                     <i id="lupa" class="fa-solid fa-magnifying-glass"></i>
                 </div>
-                <!-- Filtros precisa puxar select -->
-                <h3 id="filtros">Maior preço</h3>
-                <h3 id="filtros">Menor preço</h3>
-                <h3 id="filtros">Mais vendidos</h3>
-                <h3 id="filtros">Meus favoritos</h3>
+                <!-- Filtros -->
+                <h3 id="filtros" onclick="">Maior preço</h3>
+                <h3 id="filtros" onclick="">Menor preço</h3>
+                <h3 id="filtros" onclick="">Mais vendidos</h3>
+                <h3 id="filtros" onclick="">Meus favoritos</h3>
             </div>
-            <!-- card dos produtos -->
-            <div id="cardGrid2" style="display: block; width: 100%; overflow-y: scroll; height: 650px;" >
-                <div id="cardGrid" ></div>
+            <!-- Card dos produtos -->
+            <div id="cardGrid2" style="display: block; width: 100%; overflow-y: scroll; height: 650px;">
+                <div id="cardGrid"></div>
             </div>
         </div>
-        <div class="container3">
 
-            <div id="cart-modal" class="modal">
-                <div class="modal-content">
-                  <span class="close" onclick="closeCartModal()">&times;</span>
-                  <h2>Carrinho</h2>
-                  <ul id="cart-list"></ul>
-                  <p>Total: R$ <span id="total">0.00</span></p>
-                  <div class="offcanvas-body">
-                    <button data-bs-dismiss="offcanvas" aria-label="Close" onclick="closeCartModal()">
-                        <p>Continuar comprando</p>
-                    </button>
-                    <button onclick="finalizePurchase()">
-                        <p>Finalizar compra</p>
-                    </button>
-                </div>
-                </div>
-              </div>
-
+        <!-- Estrutura do Offcanvas do Carrinho -->
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling"
+            aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Carrinho de Compras</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <!-- Conteúdo do Carrinho no Offcanvas -->
+                <ul id="cart-list"></ul>
+                <p>Total: R$ <span id="total">0.00</span></p>
+            </div>
+        </div>
     </main>
-    <footer id="footer"></footer>
-    <script src="../js/home.js"></script>
-    <script defer>
-        $(function () {
-            $('#header').load("./partials/header.html");
-        });
 
-        $(function () {
+    <footer id="footer"></footer>
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+    <script src="../js/cart.js"></script>
+    <script>
+        // Carrega o header e então inicia o código do carrinho
+        document.addEventListener("DOMContentLoaded", function () {
+            // Carrega o header e adiciona o evento ao botão após o carregamento
+            $('#header').load("./partials/header.html", function () {
+                const btn = document.querySelector('[data-bs-toggle="offcanvas"]');
+                if (btn) {
+                    btn.addEventListener("click", function () {
+                        const offcanvasElement = document.getElementById('offcanvasScrolling');
+                        const offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
+                        offcanvasInstance.show();
+                    });
+                } else {
+                    console.warn("Botão do offcanvas não encontrado.");
+                }
+            });
             $('#footer').load("./partials/footer.html");
         });
     </script>
-
+    <script src="../js/home.js" defer></script>
 </body>
 
 </html>

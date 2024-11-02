@@ -153,6 +153,30 @@ main {
     color: #9B5377;
 }
 
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* textos */
+
+label {
+    font-family: Arial, sans-serif;
+    text-align: left;
+    font-weight: bold;
+    font-size: 18px;
+    color: #9B5377;
+    padding-top: 15px;
+}
+
+input {
+    background-color: #f6f4f1;
+    border: #e6c7d0 2px solid;
+    width: 500px;
+    height: 31px;
+    padding-left: 15px;
+}
+
 /* css da tabela */
 #tbl-categorias {
     display: block;
@@ -272,3 +296,26 @@ footer {
     height: 90px;
     /* position: absolute; */
 }
+
+/* checkbox */
+
+.check{
+    display: flex;
+    flex-direction: row;
+    width: 13%;
+}
+
+.contChecks {
+    display: flex;
+    flex-direction: row;
+}
+
+.p {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 16px;
+    color: #633636;
+}
+

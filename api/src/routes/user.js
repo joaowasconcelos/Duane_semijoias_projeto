@@ -26,6 +26,9 @@ routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaC
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
 routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
+routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
+routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
+routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 
 
 //Delete
@@ -34,14 +37,9 @@ routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array
 // routerUser.delete("/DeletePedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Deletar);
 // routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroUsuario.ExcluirPessoa);
 // routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroADM.ExcluirPessoa)// ADM
-// Por enquanto o administrador não poderá excluir um usuario pois isso altera algumas informações em nosso banco
-// routerUser.delete('/DeleteImage/:id',authenticateJWT,authenticatePerfil,UploadImagens.DeleteImage);
 routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
 
 //Update
-routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
-routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
-routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);//ADM
 routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);//ADM
 routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)//ADM
@@ -76,8 +74,8 @@ routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
 routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
 routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
 routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
-
-//Front-end
 routerUser.get("/logout",logout);
+
+
 export default routerUser;  
 

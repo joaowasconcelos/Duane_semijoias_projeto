@@ -73,7 +73,7 @@ $('#produto-form').on('submit', async function (event) {
 
 async function dados() {
     try {
-        const response = await axios.get(`http://${ip}:3000/SelecionaCategoria`);
+        const response = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
         console.log(response.data);
         criaDrop(response.data);
     } catch (error) {
@@ -86,7 +86,7 @@ function criaDrop(data) {
     data.forEach((item) => {
         const opcao = document.createElement('option');
         opcao.value = item.id;
-        opcao.text = item.tipo;  // Ensure 'tipo' is the correct property for the category name
+        opcao.text = item.tipo;
         selecionaElemento.appendChild(opcao);
     });
 }

@@ -172,7 +172,7 @@ async function salvar() {
     const Senha = document.getElementById("Senha").value;
 
     try {
-        await axios.post(`http://${ip}:3000/CreateUser`,
+        await axios.post(`${localStorage.getItem("ip")}CreateUser`,
             {
                 Nome: Nome,
                 Usuario: Usuario,
