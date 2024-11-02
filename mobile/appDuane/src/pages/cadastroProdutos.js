@@ -218,12 +218,12 @@ export default function Home() {
                 <TouchableOpacity onPress={escolherImagens}>
                   <FontAwesome6 name="file-image" color="#ae4b67" size={46} />
                 </TouchableOpacity>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 10 }}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 5}}>
                   {imagens.map((imagem, index) => (
                     <Image
                       key={index}
                       source={{ uri: imagem }}
-                      style={{ width: 50, height: 50, margin: 5 }}
+                      style={{ width: 50, height: 50, margin: 3, borderWidth: 1, borderColor: '#Faaad1', borderRadius: 10 }}
                     />
                   ))}
                 </View>

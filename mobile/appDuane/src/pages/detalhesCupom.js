@@ -54,6 +54,7 @@ export default function Home() {
   };
 
   const [detalhesCupom, setDetalhesCupom] = useState([]);
+
   const selecionaDetalhesCup = async () => {
     try {
       const response = await api.get(`/selecionaCupons?${id}`);
