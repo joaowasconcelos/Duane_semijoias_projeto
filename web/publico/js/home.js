@@ -37,12 +37,18 @@ document.addEventListener("DOMContentLoaded", function () {
           <div class="card h-100">
               <div class="card-img-top">
                   <img src="${element.imagens[0] || '../img/imgTest.jpeg'}" alt="Imagem do produto" class="product-image" id="productImage-${element.id}" />
-                  <button onclick="showPrevImage(${element.id})">Anterior</button>
-                  <button onclick="showNextImage(${element.id})">Próximo</button>
+                  <button id="set" onclick="showPrevImage(${element.id})"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+</svg></button>
+                  <button id="set" onclick="showNextImage(${element.id})"><svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+</svg></button>
               </div>
               <div class="card-body">
                   <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>
-                  <a href="/web/publico/html/cardItem.html/${element.id || '#'}">Ver mais</a>
+                  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#ExemploModalCentralizado">
+                    Ver mais
+                    </button>
               </div>
               <div class="card-footer">
                   <span class="text-title">R$ ${element.preco_normal}</span>
@@ -81,13 +87,13 @@ document.addEventListener("DOMContentLoaded", function () {
   // Controle de índice para exibir as imagens
   const imageIndices = {};
 
-  // Funções para exibir imagens anteriores e próximas
+  // Funções para exibir imagens anteriores e próximas - no escopo global
   window.showPrevImage = function (productId) {
     const product = products.find(item => item.id === productId);
     if (product) {
       if (!imageIndices[productId]) imageIndices[productId] = 0;
       imageIndices[productId] = (imageIndices[productId] - 1 + product.imagens.length) % product.imagens.length;
-      document.getElementById(productImage - { productId }).src = product.imagens[imageIndices[productId]];
+      document.getElementById(`productImage-${productId}`).src = product.imagens[imageIndices[productId]];
     }
   };
 
@@ -96,24 +102,17 @@ document.addEventListener("DOMContentLoaded", function () {
     if (product) {
       if (!imageIndices[productId]) imageIndices[productId] = 0;
       imageIndices[productId] = (imageIndices[productId] + 1) % product.imagens.length;
-      document.getElementById(productImage - { productId }).src = product.imagens[imageIndices[productId]];
+      document.getElementById(`productImage-${productId}`).src = product.imagens[imageIndices[productId]];
     }
   };
 
   fetchProducts();
 });
 
-<<<<<<< HEAD
 function apiIp() {
   const ip = "http://10.0.3.77:3000/"
     localStorage.setItem('ip', ip);
 }
 
 apiIp()
-=======
-apiIp()
-function apiIp() {
-  const ip = "http://10.0.3.77:3000/"
-    localStorage.setItem('ip', ip);
-}
->>>>>>> 7d8fa03d4e036c35ff0b93ef53121c2f04caf3aa
+

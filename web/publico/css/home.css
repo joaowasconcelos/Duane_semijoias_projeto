@@ -197,3 +197,10 @@ img.card-img-top {
     width: 140px;
     margin-bottom: 10px;
 }
+
+#set {
+    border: none;
+    background-color: #fff;
+    padding: 5px;
+    margin-left: 40px;
+}
