@@ -33,7 +33,7 @@ const LoginController = {
                 return res.status(202).json({ message: "Primeiro Login desse usuário, precisa redefinir a senha", })
             }
 
-            const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: 1 })
+            const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: 10 })
             return res.json({ auth: true, token: token })
 
         } catch (error) {

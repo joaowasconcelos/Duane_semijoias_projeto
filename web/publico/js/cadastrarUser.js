@@ -172,7 +172,7 @@ async function salvar() {
     const Senha = document.getElementById("Senha").value;
 
     try {
-        await axios.post(`http://${ip}:3000/CreateUser`,
+        await axios.post(`${localStorage.getItem("ip")}CreateUser`,
             {
                 Nome: Nome,
                 Usuario: Usuario,
@@ -181,19 +181,11 @@ async function salvar() {
                 Data_Nasc: Data_Nasc,
                 Telefones: Telefones,
                 Senha: Senha
-
-            }).then(response => {
-                showNotification(response.data.message);
-                limparInput()
-            }).catch(error => {
+            }).then(response =>{
+                console.log(response)
+            }).catch(error =>{
                 console.log(error)
-                if (error.response.data.message === "Erro CPF ja cadastrado")
-                    showNotification(error.response.data.message)
-
-                if (error.response.data.message === "Erro Usuario ja cadastrado")
-                    showNotification(error.response.data.message)
-            });
-
+            })
 
     } catch (error) {
         console.error('Erro ao cadastrar novo Usuario:', error);

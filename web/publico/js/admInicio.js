@@ -156,7 +156,6 @@ async function put() {
             }).then(response => {
                 showNotification(response.data.message)
                 document.getElementById('tipo').value = '';
-
                 fecharModal();
 
                 setTimeout(() => {

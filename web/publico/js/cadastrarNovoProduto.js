@@ -46,9 +46,7 @@ $('#produto-form').on('submit', async function (event) {
     const formData = new FormData(this);
     console.log(formData)
     try {
-
         await axios.post(`${localStorage.getItem("ip")}CreateProduto`, formData, {
-
             headers: {
                 'x-access-token': token,
             }
