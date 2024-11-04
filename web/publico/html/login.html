@@ -49,11 +49,16 @@
                     <a href="#" class="icon">
                         <i class="fa-brands fa-instagram"></i>
                     </a>
+
+                </div> -->
+
+                <button class="bot">Cadastrar-se<a href="/web/publico/html/cadastroUser.html"></a></button>
+
                 </div>
                  <button class="bot">Cadastrar-se</button>
-                -->
+             
 
-                
+               
             </form>
         </div>
 
@@ -132,6 +137,9 @@
                         senha: password
                     }
                 }).then(response => {
+                    console.log(response);
+                    console.log(response.data.token);
+
                     if (response.status === 202) {
                         console.log(response.data.message);
                         showNotification(response.data.message);
