@@ -117,7 +117,6 @@ main {
     text-align: justify;
     color: #633636;
     padding-top: 25px;
-    padding-left: 14px;
     margin-right: 25px;
     font-weight: bold;
 }
@@ -125,7 +124,7 @@ main {
 .container2 {
     display: flex;
     flex-direction: row;
-    gap: 40px;
+    gap: 25px;
     width: 100%;
 }
 
@@ -137,11 +136,15 @@ main {
     display: flex;
     flex-direction: column;
     height: 587px;
-    width: 1453px;
+    width: 80%;
     margin-top: 29px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
     padding-left: 25px;
+}
+
+#dropdownContainer {
+    width: 300px;
 }
 
 .icon {
@@ -156,6 +159,7 @@ main {
 form {
     display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 /* textos */
@@ -172,9 +176,18 @@ label {
 input {
     background-color: #f6f4f1;
     border: #e6c7d0 2px solid;
-    width: 500px;
+    width: 200px;
     height: 31px;
     padding-left: 15px;
+}
+
+#Categoria_produto {
+    transform: scale(1.9);
+    margin-right: 10px;
+}
+
+.form-control {
+    width: 350px !important;
 }
 
 /* css da tabela */
@@ -260,9 +273,8 @@ td {
 
 #btns {
     display: flex;
-    justify-content: center;
     align-items: center;
-
+    gap: 40px;
 }
 
 button {
@@ -270,8 +282,7 @@ button {
 }
 
 .btn-primary {
-    width: 195px;
-    margin: auto;
+    width: 155px;
 }
 
 .btn-primary {
@@ -308,6 +319,8 @@ footer {
 .contChecks {
     display: flex;
     flex-direction: row;
+    gap: 160px;
+    margin-left: 8px;
 }
 
 .p {
@@ -319,3 +332,6 @@ footer {
     color: #633636;
 }
 
+.p, .c {
+    margin-top: 3px;
+}

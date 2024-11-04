@@ -13,14 +13,14 @@ async function dados() {
                     'x-access-token': token
                 }
             }).then(response => {
-            responseTipo = response.data
-            if (responseTipo != null || responseTipo != undefined) {
-                criarTabela();
-                carregaDadosModalCategoria(responseTipo);
-            }
-        }).catch(error => {
-            console.log(error);
-        });
+                responseTipo = response.data
+                if (responseTipo != null || responseTipo != undefined) {
+                    criarTabela();
+                    carregaDadosModalCategoria(responseTipo);
+                }
+            }).catch(error => {
+                console.log(error);
+            });
 
 
         await axios.get(
@@ -145,7 +145,7 @@ async function put() {
     const tipo = document.getElementById("tipo").value;
     const id = document.getElementById("tipo").getAttribute('data-id');
     try {
-        await axios.post(`http://${ip}:3000/ModificaCategoria/${id}`,
+        await axios.post(`${localStorage.getItem("ip")}ModificaCategoria/${id}`,
             {
                 tipo: tipo
             },
@@ -161,7 +161,7 @@ async function put() {
 
                 setTimeout(() => {
                     window.location.reload(true);
-                }, 2000)
+                }, 4000)
             }).catch(error => {
                 showNotification(error.response.data.error)
             })
@@ -183,7 +183,7 @@ async function post() {
 
     try {
         const response = await axios.post(
-            `http://${ip}:3000/CreateCategoria`,
+            `${localStorage.getItem("ip")}CreateCategoria`,
             {
                 tipo: tipo
             },
@@ -212,7 +212,7 @@ async function post() {
 function Verdetalhes(link) {
     const id = link.getAttribute('data-id');
     DetalhesPedido(id)
-  
+
 }
 
 
@@ -228,8 +228,8 @@ function confirmarExclusao(link) {
 async function excluir(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.post(`http://${ip}:3000/InativaCategoria/${id}`,
-            {}, 
+        await axios.post(`${localStorage.getItem("ip")}InativaCategoria/${id}`,
+            {},
             {
                 headers: {
                     'x-access-token': token
@@ -253,16 +253,16 @@ async function excluir(id) {
 async function DetalhesPedido(id) {
     const token = localStorage.getItem('token');
     try {
-        await axios.get(`http://${ip}:3000/MeuPedido/${id}`,
+        await axios.get(`${localStorage.getItem("ip")}MeuPedido/${id}`,
             {
                 headers: {
                     'x-access-token': token
                 }
             }).then(response => {
-            console.log(response.data)
-        }).catch(error => {
-            console.log(error)
-        })
+                console.log(response.data)
+            }).catch(error => {
+                console.log(error)
+            })
 
     } catch (error) {
         console.error('Erro ao cadastrar nova Categoria:', error);
@@ -270,3 +270,9 @@ async function DetalhesPedido(id) {
     }
 }
 
+function apiIp() {
+    const ip = "http://10.0.3.77:3000/"
+    localStorage.setItem('ip', ip);
+}
+
+apiIp()

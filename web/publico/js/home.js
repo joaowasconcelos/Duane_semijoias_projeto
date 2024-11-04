@@ -103,8 +103,17 @@ document.addEventListener("DOMContentLoaded", function () {
   fetchProducts();
 });
 
+<<<<<<< HEAD
+function apiIp() {
+  const ip = "http://10.0.3.77:3000/"
+    localStorage.setItem('ip', ip);
+}
+
+apiIp()
+=======
 apiIp()
 function apiIp() {
   const ip = "http://10.0.3.77:3000/"
     localStorage.setItem('ip', ip);
 }
+>>>>>>> 7d8fa03d4e036c35ff0b93ef53121c2f04caf3aa

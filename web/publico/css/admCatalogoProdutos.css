@@ -29,7 +29,7 @@ footer {
 table {
     width: 100%;
     border-collapse: collapse;
-    margin: 25px 0;
+    margin: 20px 0;
     font-size: 15px;
     font-family: Arial, sans-serif;
     text-align: left;
@@ -79,7 +79,7 @@ tbody tr th {
 }
 
 #produto {
-    width: 50%;
+    width: 100%;
 }
 
 #link {
@@ -191,7 +191,7 @@ tbody th:last-child {
     right: 10px;
     font-size: 16px;
     z-index: 2;
-    color: #9B5377;
+    color: #eb0075;
 }
 
 #cadastrarNovo {
@@ -199,15 +199,8 @@ tbody th:last-child {
     font-weight: bold;
 }
 
-.fas {
-    color: #9b5377;
-    font-size: 16px;
-}
 
-#iconsTable {
-    justify-content: center;
-    align-items: center;
-}
+
 /* */
 
 #table {
@@ -217,7 +210,6 @@ tbody th:last-child {
     width: 1453px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
-    padding-left: 25px;
 }
 
 /* bem vinda + nome */

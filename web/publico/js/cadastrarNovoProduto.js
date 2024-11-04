@@ -75,7 +75,7 @@ $('#produto-form').on('submit', async function (event) {
 
 async function dados() {
     try {
-        const response = await axios.get(`http://${ip}:3000/SelecionaCategoria`);
+        const response = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
         console.log(response.data);
         criaDrop(response.data);
     } catch (error) {
