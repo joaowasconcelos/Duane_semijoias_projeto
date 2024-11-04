@@ -218,18 +218,18 @@ export default function Home() {
                 <TouchableOpacity onPress={escolherImagens}>
                   <FontAwesome6 name="file-image" color="#ae4b67" size={46} />
                 </TouchableOpacity>
-                <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 10 }}>
+                <View style={{ flexDirection: 'row', flexWrap: 'wrap', marginTop: 5}}>
                   {imagens.map((imagem, index) => (
                     <Image
                       key={index}
                       source={{ uri: imagem }}
-                      style={{ width: 50, height: 50, margin: 5 }}
+                      style={{ width: 50, height: 50, margin: 3, borderWidth: 1, borderColor: '#Faaad1', borderRadius: 10 }}
                     />
                   ))}
                 </View>
               </View>
 
-              <View style={{ width: '100%', justifyContent: "space-evenly", alignItems: 'center', flexDirection: 'row', marginBottom: 5 }}>
+              <View style={{ width: '100%', justifyContent: "space-evenly", alignItems: 'center', flexDirection: 'row', marginBottom: 10 }}>
                 <TouchableOpacity style={styles.btn} onPress={() => navigation.goBack()}>
                   <Text style={styles.textBtn}>Cancelar</Text>
                 </TouchableOpacity>
@@ -323,9 +323,10 @@ const styles = StyleSheet.create({
   },
   containerLogoTitle: {
     alignItems: "center",
-    margin: 20,
+    marginTop: 20,
     paddingTop: 10,
     position: "relative",
+    marginBottom: 5
   },
   btnLogOut: {
     position: "absolute",
