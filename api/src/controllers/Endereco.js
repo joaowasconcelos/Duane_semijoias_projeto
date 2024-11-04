@@ -39,8 +39,8 @@ const EnderecoController = {
             }
             const updateEndereco = await cEndereco.ModificaEndereco()
             if (updateEndereco.error) {
-                return res.status(500).json({
-                    message: "Erro ao editar um endereço",
+                return res.status(400).json({
+                    error: "Erro ao editar um endereço",
                     details: returnProduto.details
                 });
             }
@@ -55,8 +55,8 @@ const EnderecoController = {
         const cEndereco = new Endereco(id)
         const deletarEndereco = await cEndereco.DeletaEndereco()
         if (deletarEndereco.error) {
-            return res.status(500).json({
-                message: "Erro ao deletar um endereço",
+            return res.status(400).json({
+                error: "Erro ao deletar um endereço",
                 details: returnProduto.details
             });
         }

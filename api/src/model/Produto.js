@@ -138,6 +138,52 @@ GROUP BY
         }
     }
 
+    async selecProdutoUnico() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const produtoResult = await bd.query(`
+SELECT 
+    p.id,
+    p.nome_produto,
+    p.descricao,
+    FORMAT(MIN(pc.preco), 2, 'pt_BR') AS preco_normal,
+    FORMAT(
+        COALESCE(
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_prod.valor) / 100),
+            MIN(pc.preco) - (MIN(pc.preco) * MIN(pr_cat.valor) / 100),
+            MIN(pc.preco)
+        ), 
+        2, 'pt_BR'
+    ) AS preco_promocional,
+    c.tipo,
+    GROUP_CONCAT(p_img.id_img ORDER BY p_img.id SEPARATOR ', ') AS imagens
+FROM 
+    produto p
+JOIN 
+    preco pc ON pc.produto_id = p.id
+JOIN
+    produto_img p_img ON p_img.produto_id = p.id
+JOIN
+    categoria c ON c.id = p.categoria_id
+LEFT JOIN 
+    promocao pr_prod ON pr_prod.produto_id = p.id AND pr_prod.status = 1
+LEFT JOIN 
+    promocao pr_cat ON pr_cat.categoria_id = c.id AND pr_cat.status = 1
+WHERE 
+    p.status = 1 
+    AND pc.status = 1
+    and p.id = ?
+GROUP BY 
+    p.id, p.nome_produto, p.descricao, c.tipo;`, [this._id]);
+            return produtoResult[0]
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
     async SelectProdutoPorCategoria() {
         const bd = await obterConexaoDoPool();
         try {

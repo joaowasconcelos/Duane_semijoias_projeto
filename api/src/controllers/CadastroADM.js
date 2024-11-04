@@ -121,7 +121,7 @@ const CadastroUsuario = {
             const cPessoa = new Pessoa(id, Nome, Data_Nasc);
             const vericaCampos = cPessoa.verificaCamposADM()
             if(!vericaCampos){
-                return res.status(500).json({ message: "Numero máximo de caracteres "})
+                return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const validaCampos = cPessoa.validaCamposADM()
             if(!validaCampos){
@@ -130,7 +130,7 @@ const CadastroUsuario = {
 
             const conversaoData = cPessoa.DataConvert()
             if (conversaoData == "Invalid Date") {
-                return res.status(400).json({ message: "Erro Data invalida" });
+                return res.status(400).json({ error: "Erro Data invalida" });
             }
             cPessoa.Data_nasc = conversaoData;
             const modificaPessoa = await cPessoa.ModificaPessoaADM(conn);
@@ -139,7 +139,7 @@ const CadastroUsuario = {
                 const verificaTele = cTelefone.verificaCampos()
                 const validaTele = cTelefone.validaCampos()
                 if(!verificaTele){
-                    return res.status(500).json({ message: "Numero máximo de caracteres "})
+                    return res.status(400).json({ error: "Numero máximo de caracteres "})
                 }
                 if(!validaTele){
                     return res.status(400).json({ error: "Dados inválidos fornecidos." });
@@ -147,15 +147,15 @@ const CadastroUsuario = {
                 const modificaTelefone = await cTelefone.ModificaTelefone(conn);
                 if (modificaPessoa.error || modificaTelefone.error) {
                     await conn.rollback();
-                    return res.status(500).json({ message: 'Erro ao editar dados' })
+                    return res.status(400).json({ error: 'Erro ao editar dados' })
                 }
             }
             await conn.commit()
             return res.status(200).json({ message: 'Dados atualizados com sucesso!' });
         } catch (error) {
             await conn.rollback();
-            return res.status(500).json({ message: 'Erro ao editar dados' })
-        }
+            return res.status(500).json({ error: 'Erro ao editar dados' })
+        }       
     }
 }
 
