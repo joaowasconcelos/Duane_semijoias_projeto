@@ -23,6 +23,8 @@
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/notificacao.css">
     <script src="../js/notificacao.js"></script>
+    <script src="../js/verificaToken.js"></script>
+
 
     <title>Home</title>
 </head>
@@ -73,20 +75,6 @@
             <!-- Card dos produtos -->
             <div id="cardGrid2" style="display: block; width: 100%; overflow-y: scroll; height: 650px;">
                 <div id="cardGrid"></div>
-            </div>
-        </div>
-
-        <!-- Estrutura do Offcanvas do Carrinho -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling"
-            aria-labelledby="offcanvasScrollingLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Carrinho de Compras</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <!-- Conteúdo do Carrinho no Offcanvas -->
-                <ul id="cart-list"></ul>
-                <p>Total: R$ <span id="total">0.00</span></p>
             </div>
         </div>
     </main>

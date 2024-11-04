@@ -28,12 +28,12 @@ const LoginController = {
             if (verificaLogin === "Usuario Inativo") {
                 return res.status(500).json({ error: "Usuário inativado" })
             }
-            console.log(verificaLogin)
+           
             if (verificaLogin[0].primeiro_login === 1) {
                 return res.status(202).json({ message: "Primeiro Login desse usuário, precisa redefinir a senha", })
             }
 
-            const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
+            const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: 1 })
             return res.json({ auth: true, token: token })
 
         } catch (error) {

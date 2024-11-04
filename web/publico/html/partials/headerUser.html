@@ -29,7 +29,7 @@
             return;
         }
         try {
-            await axios.get('http://10.0.3.77:3000/logout', {
+            await axios.get('${localStorage.getItem("ip")}logout', {
                 headers: {
                     'x-access-token': `${token}`
                 }

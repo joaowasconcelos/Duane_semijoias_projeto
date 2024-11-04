@@ -108,7 +108,8 @@ export default class Promocao {
         p.descricao,
         pc.preco,
         c.tipo,
-        pm.valor
+        pm.valor,
+        pm.status
     FROM 
         produto p
     JOIN 
