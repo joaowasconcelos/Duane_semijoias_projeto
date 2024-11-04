@@ -1,4 +1,3 @@
-/* Estilo básico da página */
 * {
     margin: 0;
     padding: 0;
@@ -23,32 +22,67 @@ body {
     min-height: 100vh;
 }
 
- .container {
+.container {
     width: 90%;
     max-width: 800px;
     margin: 20px auto;
     background: #fff;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 5px #CF90A2;
     padding: 20px;
 }
 
-
-/* 
-Cabeçalho 
-h2 {
+#topo{
     font-size: 24px;
-    color: #333;
-    margin-bottom: 20px;
+    margin-left: 40%;
+    padding: 10px;
+    margin-top: 70px;
 }
 
-Estilo dos itens do carrinho 
+
+/* Cabeçalho  */
+h2 {
+    font-size: 30px;
+    color: #633636;
+    margin-bottom: 15px;
+    padding: 10px;
+}
+
+#geral {
+    display: flex;
+    flex-direction: row;
+    gap: 25%;
+    padding: 5px;
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+#resPedido{
+    padding-left: 25px;
+    height: 587px;
+    width: 500px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+    align-items: center;
+}
+
+#formulario{
+    padding-left: 25px;
+    height: 587px;
+    width: 500px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+}
+
+/* Estilo dos itens do carrinho  */
 .cart-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 10px 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #AE4B67;
 }
 
 .cart-item img {
@@ -58,13 +92,14 @@ Estilo dos itens do carrinho
     margin-right: 10px;
 }
 
+
 .cart-item-details {
     flex: 1;
 }
 
 .cart-item-details h4 {
     font-size: 18px;
-    color: #555;
+    color: #000000;
     margin: 0 0 5px;
 }
 
@@ -90,7 +125,7 @@ Estilo dos itens do carrinho
     text-align: center;
 }
 
- Resumo do pedido 
+/* Resumo do pedido  */
 .order-summary {
     margin-top: 20px;
     padding: 10px;
@@ -109,7 +144,7 @@ Estilo dos itens do carrinho
     color: #333;
 }
 
-Formulário do cliente 
+/* Formulário do cliente  */
 .customer-info {
     margin-top: 20px;
 }
@@ -118,19 +153,19 @@ Formulário do cliente
     display: block;
     margin: 10px 0 5px;
     font-size: 14px;
-    color: #555;
+    color: #AE4B67;
 }
 
 .customer-info input,
 .customer-info textarea {
     width: 100%;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid #CF90A2;
     border-radius: 5px;
     font-size: 14px;
 }
 
-Botão de compra 
+/* Botão de compra  */
 .btn-buy {
     display: block;
     width: 100%;
@@ -148,4 +183,17 @@ Botão de compra
 
 .btn-buy:hover {
     background-color: #218838;
-} */
+}
+
+footer {
+    width: 100%;
+}
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    left: 0;
+    padding: 0;
+}

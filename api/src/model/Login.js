@@ -2,6 +2,7 @@ import obterConexaoDoPool from "../config/mysql.js"
 import bcrypt from "bcrypt"
 
 
+
 export default class Login {
     _id
     _usuario

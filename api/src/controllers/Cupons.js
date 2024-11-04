@@ -19,7 +19,7 @@ const CuponsController = {
             const verificaCampos = cCupom.verificaCampos()
             console.log(verificaCampos)
             if(!verificaCampos){
-                return res.status(400).json({ message: "Numero máximo de caracteres "})
+                return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             console.log("aqui3")
             const insertCupom = await cCupom.CadastraCupom()
@@ -29,7 +29,7 @@ const CuponsController = {
             }
             return res.status(200).json({ message: "Cupom cadastrado com sucesso!" })
         } catch (error) {
-            res.status(500).json({ message: "Erro ao cadastrar cupom!" })
+            res.status(500).json({ error: "Erro ao cadastrar cupom!" })
         }
     },
 
@@ -44,7 +44,8 @@ const CuponsController = {
             }
             const verificaCampos = cCupom.verificaCampos()
             if(!verificaCampos){
-                return res.status(400).json({ message: "Numero máximo de caracteres "})
+
+                return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const updateCupom = await cCupom.ModificaCupom()
             console.log(updateCupom.error)
@@ -53,7 +54,7 @@ const CuponsController = {
             }
             return res.status(200).json({ message: "Cupom editado com sucesso!" })
         } catch (error) {
-            res.status(500).json({ message: "Erro ao editar cupom!" })
+            res.status(500).json({ error: "Erro ao editar cupom!" })
         }
     },
     Seleciona: async (req,res) => {

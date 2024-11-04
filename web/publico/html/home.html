@@ -77,21 +77,35 @@
                 <div id="cardGrid"></div>
             </div>
         </div>
+        <div id="modalInfos">
+            <!-- Modal -->
+            <div class="modal fade" id="ExemploModalCentralizado" tabindex="-1" role="dialog"
+                aria-labelledby="TituloModalCentralizado" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="TituloModalCentralizado">Mais detalhes</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Fechar">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                           <h2 id="nome_produto"></h2>
 
-        <!-- Estrutura do Offcanvas do Carrinho -->
-        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling"
-            aria-labelledby="offcanvasScrollingLabel">
-            <div class="offcanvas-header">
-                <h5 class="offcanvas-title" id="offcanvasScrollingLabel">Carrinho de Compras</h5>
-                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
-            </div>
-            <div class="offcanvas-body">
-                <!-- Conteúdo do Carrinho no Offcanvas -->
-                <ul id="cart-list"></ul>
-                <p>Total: R$ <span id="total">0.00</span></p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button"
+                                onclick="addToCart(`id: ${element.id}, nome_produto: ${element.nome_produto}, preco_normal: ${element.preco_normal.replace(',', '.')}`)"
+                                class="btn btn-secondary" data-dismiss="modal">Comprar</button>
+                            <button type="button" class="btn btn-primary">Salvar mudanças</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </main>
+
+
 
     <footer id="footer"></footer>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
@@ -112,6 +126,7 @@
                     console.warn("Botão do offcanvas não encontrado.");
                 }
             });
+            $('#meuModal').modal(options)
             $('#footer').load("./partials/footer.html");
         });
     </script>

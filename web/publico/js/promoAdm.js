@@ -2,29 +2,55 @@ async function dados() {
     try {
         const token = localStorage.getItem('token');
 
-        //puxando promoçoes
-        await axios.get(
+        // Puxando promoções
+        const responsePromo = await axios.get(
             `${localStorage.getItem("ip")}SelecionaPromocao`,
             {
                 headers: {
                     'x-access-token': token
                 }
-            }).then(response => {
-                responsePromo = response.data
-                console.log(responsePromo)
-                if (responsePromo != null || responsePromo != undefined) {
-                    criarTabela();
-                    carregaPromos(responsePromo); // 
-                }
-            }).catch(error => {
-                console.log(error);
             });
+        
+        if (responsePromo.data) {
+            console.log(responsePromo.data);
+            criarTabela();
+            carregaPromos(responsePromo.data);
+        }
+
+        // Puxando categorias
+        const responseTipo = await axios.get(
+            'http://10.0.3.77:3000/SelecionaCategoria',
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            });
+        
+        if (responseTipo.data) {
+            console.log(responseTipo.data);
+            criaDropCategorias(responseTipo.data); // Passa os dados para a função
+        }
+
+        // Puxando produtos
+        const responseProd = await axios.get(
+            'http://10.0.3.77:3000/SelecionaProduto',
+            {
+                headers: {
+                    'x-access-token': token
+                }
+            });
+        
+        if (responseProd.data) {
+            console.log(responseProd.data);
+            criaDropProdutos(responseProd.data)
+        }
 
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
 }
 
+// Chama a função para buscar os dados
 dados();
 
 var table;
@@ -70,34 +96,9 @@ function somenteNumeros(e) {
     }
 }
 
-//Categoria_produto,Porcentagem,Id_categoria,Id_produto
 
-function criaDropProd(data) {
-    const selecionaProduto = document.getElementById('Id_produto');
-    data.forEach((item) => {
-        const opcao = document.createElement('option');
-        opcao.value = item.id;
-        opcao.text = item.tipo;
-        selecionaProduto.appendChild(opcao);
-    });
-}
-
-//puxando tabela de categorias do banco
-dados2();
-
-
-async function dados2() {
-    try {
-        const response = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
-        console.log(response.data);
-        criaDrop(response.data);
-    } catch (error) {
-        console.error('Erro ao buscar dados da API:', error);
-    }
-}
-
-function criaDrop(data) {
-    const selecionaElemento = document.getElementById('Id_produto');
+function criaDropCategorias(data) {
+    const selecionaElemento = document.getElementById('categoria');
     data.forEach((item) => {
         const opcao = document.createElement('option');
         opcao.value = item.id;
@@ -106,67 +107,12 @@ function criaDrop(data) {
     });
 }
 
-
-
-
-// async function dados2() {
-//     try {
-//         const response = await axios.get('http://10.0.3.77:3000/SelecionaProduto');
-//         console.log(response.data);
-//         criaDrop(response.data);
-//     } catch (error) {
-//         console.error('Erro ao buscar dados da API:', error);
-//     }
-// }
-
-// function criaDrop(data) {
-//     const selecionaElemento = document.getElementById('Id_produto');
-//     data.forEach((item) => {
-//         const opcao = document.createElement('option');
-//         opcao.value = item.id;
-//         opcao.text = item.nome_produto;
-//         selecionaElemento.appendChild(opcao);
-//     });
-// }
-
-function createDropdown(id, name, labelText, options) {
-    // Cria o elemento label
-    const label = document.createElement('label');
-    label.setAttribute('for', id);
-    label.className = 'dropdown-button';
-    label.textContent = labelText;
-
-    // Cria o elemento select
-    const select = document.createElement('select');
-    select.className = 'form-control form-control-sm';
-    select.id = id;
-    select.name = name;
-
-    // Adiciona a opção vazia
-    const emptyOption = document.createElement('option');
-    emptyOption.value = '';
-    emptyOption.textContent = '';
-    select.appendChild(emptyOption);
-
-    // Adiciona as opções fornecidas
-    options.forEach(option => {
-        const opt = document.createElement('option');
-        opt.value = option.value;
-        opt.textContent = option.text;
-        select.appendChild(opt);
+function criaDropProdutos(data) {
+    const selecionaElementoP = document.getElementById('nome_produto');
+    data.forEach((item) => {
+        const opcaoP = document.createElement('option');
+        opcaoP.value = item.id;
+        opcaoP.text = item.tipo;
+        selecionaElementoP.appendChild(opcaoP);
     });
-
-    // Adiciona o label e o select ao container
-    const container = document.getElementById('dropdownContainer');
-    container.appendChild(label);
-    container.appendChild(select);
 }
-
-// Exemplo de uso da função
-const options = [
-    { value: 'categoria1', text: 'Categoria 1' },
-    { value: 'categoria2', text: 'Categoria 2' },
-    { value: 'categoria3', text: 'Categoria 3' }
-];
-
-createDropdown('Id_categoria', 'Id_categoria', 'Categoria: *', options);

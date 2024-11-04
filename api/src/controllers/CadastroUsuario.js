@@ -17,7 +17,7 @@ const CadastroUsuario = {
 
             const vericaCampos = cPessoa.verificaCampos()
             if(!vericaCampos){
-                return res.status(500).json({ message: "Numero máximo de caracteres "})
+                return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const validaCampos = cPessoa.validaCampos()
             if(!validaCampos){
@@ -27,19 +27,19 @@ const CadastroUsuario = {
             const verificaCPF = cPessoa.validaCpf()
             console.log(verificaCPF)
             if (!verificaCPF) {
-                return res.status(400).json({ message: "Erro CPF invalido" });
+                return res.status(400).json({ error: "Erro CPF invalido" });
             }
             const conversaoData = cPessoa.DataConvert()
 
             if (conversaoData == "Invalid Date") {
-                return res.status(400).json({ message: "Erro Data invalida" });
+                return res.status(400).json({ error: "Erro Data invalida" });
             }
             cPessoa.Data_nasc = conversaoData;
 
             const verificarCPFBanco = await cPessoa.verificaCpf()
             console.log(verificarCPFBanco)
             if (verificarCPFBanco) {
-                return res.status(400).json({ message: "Erro CPF ja cadastrado" });
+                return res.status(400).json({ error: "Erro CPF ja cadastrado" });
             }
 
             //Chamar o crud 
@@ -53,12 +53,12 @@ const CadastroUsuario = {
 
                 if (!verificaEmail) {
                     const deletarPessoa = cPessoa.DeletarPessoa()
-                    return res.status(400).json({ message: "Erro Usuario ja cadastrado" });
+                    return res.status(400).json({ error: "Erro Usuario ja cadastrado" });
                 }
                 const verificaLog = await cLogin.VerificaUsuario()
 
                 if (!verificaLog) {
-                    return res.status(400).json({ message: "Erro email ja cadastrado" });
+                    return res.status(400).json({ error: "Erro email ja cadastrado" });
                 }
                 const insertLogin = await cLogin.CadastrarLogin();
 
@@ -75,18 +75,18 @@ const CadastroUsuario = {
                             if (insertTele.error) {
                                 const deleteLogin = await cLogin.DeletarLogin();
                                 const deletarPessoa = await cPessoa.DeletarPessoa();
-                                return res.status(400).json({ message: "Erro ao cadastrar Numero!" });
+                                return res.status(400).json({ error: "Erro ao cadastrar Numero!" });
 
                             }
                         };
                     }
                 } else {
                     const deletarPessoa = cPessoa.DeletarPessoa()
-                    return res.status(400).json({ message: "Erro ao cadastrar Login!" });
+                    return res.status(400).json({ error: "Erro ao cadastrar Login!" });
                 }
                 return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
             } else {
-                return res.status(400).json({ message: "Erro ao cadastrar usuário!" });
+                return res.status(400).json({ error: "Erro ao cadastrar usuário!" });
             }
 
 
@@ -104,7 +104,7 @@ const CadastroUsuario = {
             const cPessoa = new Pessoa(id, Nome, Data_Nasc, null, Genero);
             const vericaCampos = cPessoa.verificaCamposEditarUsuario()
             if(!vericaCampos){
-                return res.status(500).json({ message: "Numero máximo de caracteres "})
+                return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const validaCampos = cPessoa.validaCamposEditarUsuario()
             if(!validaCampos){
@@ -113,7 +113,7 @@ const CadastroUsuario = {
 
             const conversaoData = cPessoa.DataConvert()
             if (conversaoData == "Invalid Date") {
-                return res.status(400).json({ message: "Erro Data invalida" });
+                return res.status(400).json({ error: "Erro Data invalida" });
             }
             cPessoa.Data_nasc = conversaoData;
             const modificaPessoa = await cPessoa.ModificaPessoa(conn);
@@ -123,7 +123,7 @@ const CadastroUsuario = {
         
                 if (modificaPessoa.error || modificaTelefone.error) {
                     await conn.rollback();
-                    return res.status(500).json({ message: 'Erro ao editar dados' })
+                    return res.status(400).json({ error: 'Erro ao editar dados' })
                 }
             }
 
@@ -132,7 +132,7 @@ const CadastroUsuario = {
         } catch (error) {
             console.error("Erro durante a edição:", error);
             await conn.rollback();
-            return res.status(500).json({ message: 'Erro ao editar dados' })
+            return res.status(500).json({ error: 'Erro ao editar dados' })
         }
     },
     Seleciona: async (req,res) => {
@@ -140,7 +140,7 @@ const CadastroUsuario = {
             const selectPessoa =  await Pessoa.Seleciona()
             return res.json(selectPessoa)
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao cadastrar produto!" })
+            return res.status(500).json({ error: "Erro ao cadastrar produto!" })
         }
     },
     SelecionaADM: async (req,res) => {
@@ -148,7 +148,7 @@ const CadastroUsuario = {
             const selectPessoa =  await Pessoa.SelecionaUsuariosAdm()
             return res.json(selectPessoa)
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao cadastrar produto!" })
+            return res.status(500).json({ error: "Erro ao cadastrar produto!" })
         }
     },
     SelecionaInfoId: async (req, res) => {
@@ -161,12 +161,12 @@ const CadastroUsuario = {
             console.log(selectPessoa);
     
             if (!selectPessoa) {
-                return res.status(404).json({ message: "Usuário não encontrado!" });
+                return res.status(404).json({ error: "Usuário não encontrado!" });
             }
     
             return res.json(selectPessoa); // Certifique-se de usar 'return' aqui
         } catch (error) {
-            return res.status(500).json({ message: "Erro ao selecionar informações do usuário!" }); // 'return' garante que a resposta só seja enviada uma vez
+            return res.status(500).json({ error: "Erro ao selecionar informações do usuário!" }); // 'return' garante que a resposta só seja enviada uma vez
         }
     }
     
