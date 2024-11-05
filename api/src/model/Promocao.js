@@ -119,7 +119,6 @@ export default class Promocao {
 	JOIN 
 		promocao pm on p.id = pm.produto_id
     WHERE p.status =1 AND pc.status = 1 AND pm.status =1;`);
-            console.log(promocaoResult);
             return promocaoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);

@@ -1,7 +1,7 @@
 import Produto from "../model/Produto.js";
 import Preco from "../model/Preco.js"
 import Produto_img from "../model/Produto_img.js"
-// import { listAllFilesId } from "../middleware/imagens.js";
+import { listAllFilesId } from "../middleware/imagens.js";
 
 const ProdutoController = {
     cadastro: async (req, res) => {
