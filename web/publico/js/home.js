@@ -19,9 +19,14 @@ document.addEventListener("DOMContentLoaded", function () {
   
     async function fetchProducts() {
         try {
-            const response = await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`);
-            products = response.data;
-            displayProducts(products);
+            await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`).then(response =>{
+                console.log(response)
+                products = response.data;
+                console.log(products)
+                displayProducts(products);
+            }).catch(error =>{
+                console.log(error)
+            })
         } catch (error) {
             console.error('Erro ao buscar produtos:', error);
         }
