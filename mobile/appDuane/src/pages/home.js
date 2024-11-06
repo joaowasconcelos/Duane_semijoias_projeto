@@ -205,10 +205,10 @@ const logout = async () => {
                   <FontAwesome6 name="coins" color="#ae4b67" size={26} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btn} onPress={navegaPromocoes}>
+                {/* <TouchableOpacity style={styles.btn} onPress={navegaPromocoes}>
                   <Text style={styles.textBtn}>Promoções</Text>
                   <FontAwesome6 name="gifts" color="#ae4b67" size={26} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 <TouchableOpacity style={styles.btn} onPress={navegaCategorias}>
                   <Text style={styles.textBtn}>Categorias</Text>

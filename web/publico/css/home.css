@@ -204,3 +204,47 @@ img.card-img-top {
     padding: 5px;
     margin-left: 40px;
 }
+
+/* Define a lista e os itens do carrinho */
+#cart-list {
+    list-style: none;
+    padding: 0;
+}
+
+.cart-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+/* Imagem do produto */
+.cart-item-img {
+    width: 50px;
+    height: 50px;
+    object-fit: cover;
+    margin-right: 10px;
+    border-radius: 4px;
+}
+
+/* Nome e preço do produto */
+.cart-item-info {
+    flex-grow: 1;
+}
+
+/* Input de quantidade */
+.cart-item-quantity {
+    width: 50px;
+    margin-right: 10px;
+}
+
+/* Botão de remover */
+.cart-item-remove {
+    background-color: #fb7575;
+    color: rgb(0, 0, 0);
+    border: none;
+    padding: 5px;
+    border-radius: 4px;
+    cursor: pointer;
+    width: 50px;
+    height: 50px;
+}
