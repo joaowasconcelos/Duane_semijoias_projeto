@@ -1,35 +1,41 @@
-async function RedefinirSenha() {
-    const login = document.getElementById("login").value
-    const senha = document.getElementById("senha").value
-    const comfirmSenha = document.getElementById("confirmSenha").value
+// Acesse a URL atual
+const urlParams = new URLSearchParams(window.location.search);
 
-    if(senha != comfirmSenha){
-        showNotification("As senhas precisam ser iguais ")  
-        return
+// Recupere o valor do parâmetro 'token'
+const token = urlParams.get('token');
+console.log("Opa",token)
+// Verifique se o token foi encontrado
+if (token) {
+    console.log("Token recebido:", token);
+    // Aqui você pode usar o token para enviar ao backend
+} else {
+    console.log("Token não encontrado na URL.");
+}
+
+async function RedefinirSenha() {
+    console.log("OOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOO")
+    const senha = document.getElementById("senha").value;
+    const confirmSenha = document.getElementById("confirmSenha").value;
+
+    if (senha !== confirmSenha) {
+        showNotification("As senhas precisam ser iguais");
+        return;
     }
 
     try {
-        await axios.post(`${localStorage.getItem("ip")}PrimeiroAcesso`,
-            {
-                login,
-                senha
-            }
-        ).then(response => {
-            console.log(response)
-            if(response.status ===200){
-                showNotification("Senha definida com sucesso!")
-                setTimeout(() => {
-                    window.location.href = "login.html"
-                }, 3000);
-                return 
-            }
-        }).catch(error => {
-            console.log(error)
-           if(error.response.data.message === "Usuario Inválido"){
-            showNotification("Usuário Inválido")
-           }
-        })
+        // Certifique-se de que o token seja enviado para o backend
+        const response = await axios.post(`${localStorage.getItem("ip")}/PrimeiroAcesso`, {
+            senha,
+            token  // Enviando o token na requisição
+        });
+
+        if (response.status === 200) {
+            showNotification("Senha redefinida com sucesso!");
+            setTimeout(() => {
+                window.location.href = "login.html";
+            }, 3000);
+        }
     } catch (error) {
-        console.error('Erro ao buscar dados da API:', error);
+        console.error('Erro ao redefinir senha:', error);
     }
 }
