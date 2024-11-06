@@ -23,9 +23,6 @@
     <link rel="stylesheet" href="../css/home.css">
     <link rel="stylesheet" href="../css/notificacao.css">
     <script src="../js/notificacao.js"></script>
-    <script src="../js/verificaToken.js"></script>
-
-
     <title>Home</title>
 </head>
 
@@ -55,7 +52,7 @@
                     <ul id="cart-list"></ul>
                     <div>Total: R$ <span id="total">0.00</span></div>
                 </div>
-                <a id="bot" href="http://127.0.0.1:5500/web/publico/html/carrinho.html">Finalizar compras</a>
+                <a id="bot" href="http://127.0.0.1:5501/publico/html/carrinho.html">Finalizar compras</a>
             </div>
         </div>
 
@@ -126,7 +123,8 @@
                     console.warn("Botão do offcanvas não encontrado.");
                 }
             });
-            $('#meuModal').modal(options)
+            //está dando erro nessa linha 
+            //$('#meuModal').modal(options)
             $('#footer').load("./partials/footer.html");
         });
     </script>

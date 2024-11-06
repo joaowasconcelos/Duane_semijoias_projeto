@@ -49,8 +49,7 @@ const CadastroUsuario = {
                 const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
 
                 const verificaEmail = await cLogin.VerificaUsuario()
-                console.log(verificaEmail)
-
+             
                 if (!verificaEmail) {
                     const deletarPessoa = cPessoa.DeletarPessoa()
                     return res.status(400).json({ error: "Erro Usuario ja cadastrado" });

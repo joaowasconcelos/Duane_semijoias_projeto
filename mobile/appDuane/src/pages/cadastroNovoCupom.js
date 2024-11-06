@@ -23,13 +23,19 @@ import {
   EBGaramond_700Bold,
   EBGaramond_800ExtraBold,
 } from "@expo-google-fonts/eb-garamond";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
+  const [descricao, setDescricao] = useState();
+  const [codigo, setCodigo] = useState();
+  const [quantidade, setQuantidade] = useState();
+  const [valor, setValor] = useState();
+  const [status, setStatus] = useState();
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -38,6 +44,55 @@ export default function Home() {
     EBGaramond_700Bold,
     EBGaramond_800ExtraBold,
   });
+
+  const getToken = async () => {
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      if (token !== null) {
+        console.log("Token recuperado:", token);
+      } else {
+        console.log("Nenhum token encontrado");
+      }
+    } catch (error) {
+      console.error("Erro ao recuperar o token", error);
+    }
+  };
+
+  const cadastraCupom = async ()=>{
+    if(!codigo || !descricao || !quantidade || !valor || !status === 0){
+      alert("Preencha todos os campos");
+      return;
+    }
+    try{
+      const token = await AsyncStorage.getItem('userToken');
+      const response = await api.post('/CreateCupom', 
+      {
+        descricao: descricao,
+        quantidade: quantidade,
+        valor: valor,
+        status: status,
+        codigo: codigo,
+      },
+        {headers:{
+          'x-acces-token': `${token}`,
+        }
+      });
+      console.log(response.data);
+      setCodigo(response.data);
+      setDescricao(response.data);
+      setQuantidade(response.data);
+      setValor(response.data);
+      setStatus(response.data);
+
+    }catch(error){
+      console.error("Erro ao cadastrar  o cupom", error);
+      alert("Erro ao cadastrar o cupom, tente novamente.");
+    }
+  }
+
+  useEffect(()=>{
+    getToken()
+  },[]);
 
   if (!fontsLoaded) {
   } else {
@@ -111,29 +166,24 @@ export default function Home() {
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Código:</Text>
-                      <TextInput style={styles.Inputs}></TextInput>
+                      <TextInput onChangeText={setCodigo} value={codigo} style={styles.Inputs}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Quantidade:</Text>
-                      <TextInput style={styles.Inputs}></TextInput>
+                      <TextInput onChangeText={setQuantidade} value={quantidade} style={styles.Inputs}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Descrição:</Text>
-                      <TextInput style={styles.Inputs}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setDescricao} value={descricao}></TextInput>
                     </View>
 
-                    <View
-                      style={{ width: "90%", justifyContent: "flex-start" }}
-                    >
-                      <Text style={styles.textBtn}>Validade:</Text>
-                      <TextInput style={styles.Inputs}></TextInput>
-                    </View>
+                    
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
@@ -141,7 +191,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setValor} value={valor}></TextInput>
                     </View>
 
                     <View
@@ -161,7 +211,7 @@ export default function Home() {
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.btn}
-                        onChangeText={() => {}}
+                        onPress={cadastraCupom}
                       >
                         <Text style={styles.textButton}>Salvar</Text>
                       </TouchableOpacity>

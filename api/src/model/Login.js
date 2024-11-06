@@ -205,7 +205,6 @@ export default class Login {
                 return true
             }
             return false
-
         }
         catch (error) {
             console.log('Erro na transação:', error);

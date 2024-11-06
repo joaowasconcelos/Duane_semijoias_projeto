@@ -16,6 +16,9 @@
     <link rel="stylesheet" href="../css/notificacao.css">
     <script src="../js/notificacao.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
 </head>
 
 <body>
@@ -72,26 +75,24 @@
                 <form action="${localStorage.getItem(" ip")}CreateCupom" method="POST" id="envia-form">
 
                     <label for="Valor">Desconto: * (em %)</label>
-                    <input class="input" type="text" id="Valor" name="Valor" onkeydown="return somenteNumeros(event)">
+                    <input class="input" type="text" id="Valor" name="Valor" onkeydown="return somenteNumeros(event)"
+                        placeholder="Apenas números inteiros">
 
                     <label for="Categoria_produto">Por *</label>
 
                     <div class="contChecks">
 
-                        <div class="check">
-                            <input type="checkbox" value="P" id="Categoria_produto" name="Categoria_produto">
-                            <p class="p">Produto</p>
-                        </div>
-
-                        <div class="check">
-                            <input type="checkbox" value="C" id="Categoria_produto" name="Categoria_produto">
-                            <p class="p">Categoria</p>
+                        <div class="btn-group-vertical" role="group" aria-label="Vertical radio toggle button group">
+                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio1" autocomplete="off"
+                                checked>
+                            <label class="btn btn-outline-danger" for="vbtn-radio1">Radio 1</label>
+                            <input type="radio" class="btn-check" name="vbtn-radio" id="vbtn-radio2" autocomplete="off">
+                            <label class="btn btn-outline-danger" for="vbtn-radio2">Radio 2</label>
                         </div>
 
                     </div>
 
                     <!-- carrgar categoria -->
-
                     <label for="tipo">Categoria: *</label>
                     <select class="form-control form-control-sm" id="categoria" name="categoria">
                         <option></option>
