@@ -14,7 +14,7 @@ import CuponsController from "../controllers/Cupons.js";
 import ProdutoController from "../controllers/Produto.js";
 import FeedbackController from "../controllers/Feedback.js";
 import { logout } from "../middleware/authenticateJWT.js";
-// import { upload,handleImageUpload} from "../middleware/imagens.js";
+import { upload,handleImageUpload} from "../middleware/imagens.js";
 
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
@@ -29,7 +29,6 @@ routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array
 routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
 routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
 routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
-// routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
 
 
 //Delete
@@ -73,8 +72,8 @@ routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
 routerUser.get("/SelecionaProdutoMaior",ProdutoController.SelecionaMaiorMenor);
 routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
 routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
-routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
-routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
+routerUser.get("/SelecionaProdutoCate/:id",ProdutoController.SelecionaCate);
+routerUser.get("/SelecionaProdutoCate/:id",ProdutoFavController.Seleciona);
 routerUser.get("/logout",logout);
 
 

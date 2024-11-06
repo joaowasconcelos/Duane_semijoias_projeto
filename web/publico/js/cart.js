@@ -1,3 +1,4 @@
+
 // Carrega o carrinho do localStorage, ou inicializa como um array vazio se não houver nada
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
