@@ -10,7 +10,6 @@
   <link rel="stylesheet" href="../css/notificacao.css">
   <link rel="stylesheet" href="../css/partials/header.css">
   <script src="../js/notificacao.js"></script>
-
 </head>
 
 <body>
@@ -20,14 +19,14 @@
 
       <div id="conteudoHeader">
 
-        <a href="/web/publico/html/home.html">
+        <a href="/publico/html/home.html">
           <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
         </a>
 
         <div id="boxHeader">
 
           <div id="icons">
-            <a href="/web/publico/html/login.html">
+            <a href="/publico/html/login.html">
               <span id="icon" class="fas fa-user fa-2x"></span>
             </a>
             <span id="icon" id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
@@ -36,48 +35,13 @@
         </div>
 
       </div>
-
       <hr>
-
     </nav>
 
-    <script>
-      async function logout() {
-        const token = localStorage.getItem('token');
-        if (!token) {
-          window.location.href = 'login.html';
-          return;
-        }
-        try {
-          await axios.get('http://192.168.3.9:3000/logout', {
-            headers: {
-              'x-access-token': `${token}`
-            }
-          }).then(response => {
-            console.log("aqui", response)
-            if (response.data.message === "Token inválido") {
-              console.log("aqui");
-
-              localStorage.removeItem('token');
-              localStorage.removeItem('userProfile');
-              window.location.href = 'login.html';
-            }
-          }).catch(error => {
-            console.log(error)
-          });
-
-        } catch (error) {
-          console.log("aqui error");
-
-          console.error('Erro ao verificar o token:', error);
-          window.location.href = 'login.html';
-        }
-      }
-    </script>
   </header>
   <main>
     <div id="topo">
-      <h1>Finalizar Compra</h1>
+      <h4>Finalizar Compra</h4>
     </div>
     <div id="geral">
       <div id="resPedido">
@@ -88,47 +52,15 @@
           <p>Total: R$ <span id="order-total">0.00</span></p>
         </section>
       </div>
-
-      <div id="formulario">
-        <!-- Formulário de Dados do Cliente -->
-        <section id="customer-info">
-          <h2>Dados do Cliente</h2>
-          <form id="checkout-form">
-            <div>
-              <label for="name">Nome:</label>
-              <input type="text" id="name" name="name" required>
-            </div>
-            <div>
-              <label for="email">Email:</label>
-              <input type="email" id="email" name="email" required>
-            </div>
-            <div>
-              <label for="address">Endereço:</label>
-              <input type="text" id="address" name="address" required>
-            </div>
-            <div>
-              <label for="payment-method">Método de Pagamento:</label>
-              <select id="payment-method" name="payment-method" required>
-                <option value="credit-card">Cartão de Crédito</option>
-                <option value="debit-card">Cartão de Débito</option>
-                <option value="boleto">Boleto</option>
-              </select>
-            </div>
-            <button type="submit">Confirmar Compra</button>
-          </form>
-        </section>
-      </div>
     </div>
   </main>
+
   <footer>
     <img id="ondasFooter" src="../img/ondas-footer.png" alt="">
   </footer>
 
   <script src="../js/checkout.js"></script>
   <script defer>
-    $(function () {
-      $('#header').load("./partials/header.html");
-    });
   </script>
 </body>
 

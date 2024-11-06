@@ -1,4 +1,4 @@
-// cart.js
+
 // Carrega o carrinho do localStorage, ou inicializa como um array vazio se não houver nada
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -50,7 +50,6 @@ function updateCart() {
 
 // Adiciona produto ao carrinho
 function addToCart(product) {
-    console.log( "oi");
     const cartItem = cart.find(item => item.id === product.id);
     
     if (cartItem) {

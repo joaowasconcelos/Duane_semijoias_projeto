@@ -116,6 +116,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function apiIp() {
   const ip = "http://10.0.3.77:3000/"
     localStorage.setItem('ip', ip);
+    console.log(ip)
 }
 
 apiIp()

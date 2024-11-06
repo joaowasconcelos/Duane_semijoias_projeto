@@ -1,199 +1,112 @@
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-weight: 700;
-    font-style: normal;
-    color: #AE4B67;
-    font-family: "Cormorant Garamond", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-main {
-    box-sizing: border-box;
-    flex: 1;
-    padding: 0;
-}
-
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #f8f8f8;
+    font-family: "Segoe UI", sans-serif;
+    color: #4B2D33;
+    margin: 0;
+    padding: 0;
+}
+
+main {
+    flex: 1;
+    padding: 40px 20px;
 }
 
 .container {
-    width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
+    max-width: 1000px;
+    margin: 0 auto;
     background: #fff;
-    border-radius: 8px;
-    box-shadow: 0 2px 5px #CF90A2;
-    padding: 20px;
+    border-radius: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    padding: 30px;
 }
 
-#topo{
-    font-size: 24px;
-    margin-left: 40%;
-    padding: 10px;
-    margin-top: 70px;
-}
-
-
-/* Cabeçalho  */
-h2 {
-    font-size: 30px;
-    color: #633636;
-    margin-bottom: 15px;
-    padding: 10px;
-}
-
-#geral {
-    display: flex;
-    flex-direction: row;
-    gap: 25%;
-    padding: 5px;
-    font-size: 16px;
-    margin-left: 20px;
-}
-
-#resPedido{
-    padding-left: 25px;
-    height: 587px;
-    width: 500px;
-    margin-top: 30px;
-    border-radius: 5px;
-    border: 1px solid #e6c7d0;
-    align-items: center;
-}
-
-#formulario{
-    padding-left: 25px;
-    height: 587px;
-    width: 500px;
-    margin-top: 30px;
-    border-radius: 5px;
-    border: 1px solid #e6c7d0;
-}
-
-/* Estilo dos itens do carrinho  */
-.cart-item {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 10px 0;
-    border-bottom: 1px solid #AE4B67;
-}
-
-.cart-item img {
-    width: 60px;
-    height: 60px;
-    border-radius: 4px;
-    margin-right: 10px;
-}
-
-
-.cart-item-details {
-    flex: 1;
-}
-
-.cart-item-details h4 {
-    font-size: 18px;
-    color: #000000;
-    margin: 0 0 5px;
-}
-
-.cart-item-details p {
-    font-size: 14px;
-    color: #888;
-}
-
-.cart-item-price {
-    font-size: 16px;
-    color: #333;
-}
-
-.cart-item-quantity {
-    display: flex;
-    align-items: center;
-}
-
-.cart-item-quantity input {
-    width: 50px;
-    padding: 5px;
-    margin: 0 5px;
+#topo {
     text-align: center;
+    font-size: 32px;
+    color: #AE4B67;
+    margin-bottom: 30px;
 }
 
-/* Resumo do pedido  */
-.order-summary {
+#resPedido {
+    background-color: #fefefe;
+    padding: 25px;
+    border-radius: 10px;
+    border: 1px solid #e0d4db;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
     margin-top: 20px;
-    padding: 10px;
-    background: #f9f9f9;
-    border-radius: 5px;
 }
 
-.order-summary p {
+#order-summary h2 {
+    font-size: 28px;
+    color: #633636;
+    border-bottom: 2px solid #AE4B67;
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+}
+
+.order-item {
     display: flex;
     justify-content: space-between;
-    margin: 5px 0;
-    font-size: 16px;
+    align-items: center;
+    padding: 15px;
+    background-color: #fdfdfd;
+    border-radius: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #e6c7d0;
+    transition: transform 0.2s, background-color 0.2s;
 }
 
-.order-summary p strong {
+.order-item:hover {
+    background-color: #f3f3f3;
+    transform: translateY(-2px);
+}
+
+.order-item p {
+    margin: 0;
+    font-size: 16px;
     color: #333;
 }
 
-/* Formulário do cliente  */
-.customer-info {
+#order-total {
+    font-size: 24px;
+    font-weight: bold;
+    color: #4B2D33;
+    text-align: right;
     margin-top: 20px;
 }
 
-.customer-info label {
-    display: block;
-    margin: 10px 0 5px;
-    font-size: 14px;
-    color: #AE4B67;
-}
-
-.customer-info input,
-.customer-info textarea {
-    width: 100%;
-    padding: 10px;
-    border: 1px solid #CF90A2;
-    border-radius: 5px;
-    font-size: 14px;
-}
-
-/* Botão de compra  */
 .btn-buy {
-    display: block;
+    display: inline-block;
     width: 100%;
     background-color: #28a745;
     color: #fff;
     padding: 15px;
     font-size: 18px;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
     margin-top: 20px;
     cursor: pointer;
     text-align: center;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .btn-buy:hover {
     background-color: #218838;
+    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
 }
 
 footer {
-    width: 100%;
+    margin-top: auto;
+    background-color: #f8f8f8;
+    text-align: center;
+    padding: 15px 0;
 }
 
 #ondasFooter {
     width: 100%;
-    bottom: 0;
     display: block;
     height: 90px;
-    left: 0;
-    padding: 0;
 }
