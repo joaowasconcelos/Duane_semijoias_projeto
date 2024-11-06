@@ -72,8 +72,8 @@ routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
 routerUser.get("/SelecionaProdutoMaior",ProdutoController.SelecionaMaiorMenor);
 routerUser.get("/SelecionaProdutoMenor",ProdutoController.SelecionaMenorMaior);
 routerUser.get("/SelecionaProdutoMaisVendido",ProdutoController.SelecionaMaisVendido);
-routerUser.get("/SelecionaProdutoCate/id:",ProdutoController.SelecionaCate);
-routerUser.get("/SelecionaProdutoCate/id:",ProdutoFavController.Seleciona);
+routerUser.get("/SelecionaProdutoCate/:id",ProdutoController.SelecionaCate);
+routerUser.get("/SelecionaProdutoCate/:id",ProdutoFavController.Seleciona);
 routerUser.get("/logout",logout);
 
 
