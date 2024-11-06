@@ -33,6 +33,11 @@ export default function Home() {
   const route = useRoute();
   const navigation = useNavigation();
   const [id, setId] = useState([]);
+  const [codigo, setCodigo] = useState([]);
+  const [status, setStatus] = useState([]);
+  const [quantidade, setQuantidade] = useState([]);
+  const [valor, setValor] = useState([]);
+  const [descricao, setDescricao] = useState([]);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -60,8 +65,13 @@ export default function Home() {
   const selecionaDetalhesCup = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/selecionaCupons/${id}`,{
+      await api.get(`/selecionaCupons/:id=${id}`,{
         id: id,
+        codigo: codigo,
+        status: status,
+        valor: valor,
+        descricao: descricao,
+        quantidade: quantidade,
         headers: {
           'x-access-token': `${token}`,
         }
@@ -69,6 +79,11 @@ export default function Home() {
       .then(response=>{
         setDetalhesCupom(response.data);
         setId(response.data);
+        setCodigo(response.data);
+        setStatus(response.data);
+        setQuantidade(response.data);
+        setDescricao(response.data);
+        setValor(response.data);
         console.log(response.data);
         
       }).catch(
@@ -187,7 +202,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs}></TextInput>
+                      <TextInput style={styles.Inputs}>{detalhesCup.valor}</TextInput>
                     </View>
 
                     <View
