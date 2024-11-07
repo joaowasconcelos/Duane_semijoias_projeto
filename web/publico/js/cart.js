@@ -63,6 +63,7 @@ function updateCart() {
 // Adiciona produto ao carrinho
 function addToCart(product) {
     const cartItem = cart.find(item => item.id === product.id);
+    showNotification('Produto adicionado ao carrinho');
     
     if (cartItem) {
         cartItem.quantity++;

@@ -19,7 +19,7 @@ async function dados() {
 
         // Puxando categorias
         const responseTipo = await axios.get(
-            'http://10.0.3.77:3000/SelecionaCategoria',
+            `${localStorage.getItem("ip")}SelecionaCategoria`,
             {
                 headers: {
                     'x-access-token': token
@@ -33,7 +33,7 @@ async function dados() {
 
         // Puxando produtos
         const responseProd = await axios.get(
-            'http://10.0.3.77:3000/SelecionaProduto',
+            `${localStorage.getItem("ip")}SelecionaProduto`,
             {
                 headers: {
                     'x-access-token': token
@@ -108,11 +108,11 @@ function criaDropCategorias(data) {
 }
 
 function criaDropProdutos(data) {
-    const selecionaElementoP = document.getElementById('nome_produto');
+    const selecionaElemento = document.getElementById('nome_produto');
     data.forEach((item) => {
-        const opcaoP = document.createElement('option');
-        opcaoP.value = item.id;
-        opcaoP.text = item.tipo;
-        selecionaElementoP.appendChild(opcaoP);
+        const opcao = document.createElement('option');
+        opcao.value = item.id;
+        opcao.text = item.nome_produto;
+        selecionaElemento.appendChild(opcao);
     });
 }

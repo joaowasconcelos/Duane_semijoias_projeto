@@ -39,13 +39,7 @@ export default function Home() {
   const [telefone1, setTelefone1] = useState("");
   const [telefone2, setTelefone2] = useState("");
   const [perfil, setPerfil] = useState([]);
-  const [selectedPerfil, setSelectedPerfil] = useState();
-  const [cep, setCep] = useState("");
-  const [Logradouro, setLogradouro] = useState([]);
-  const [bairro, setBairro] = useState([]);
-  const [estado, setEstado] = useState([]);
-  const [cidade, setCidades] = useState([]);
-  const [Complemento, setComplemento] = useState([]);
+
   
   
 
