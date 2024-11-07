@@ -1,0 +1,383 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Cormorant Garamond";
+    font-weight: 700;
+    font-style: normal;
+}
+
+h2 {
+    color: #633636;
+}
+
+#iconMap{
+    margin-top: 55px;
+    margin-left: -120px;
+}
+
+.userText {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    margin-top: 11%;
+    margin-left: 8%;
+    gap: 50%;
+    width: 90%;
+    height: 10%;
+}
+
+#tx {
+    display: flex;
+    flex-direction: row;
+    gap: 11px;
+    font-size: 23px;
+}
+
+#tx2 {
+    margin-left: 20%;
+    display: flex;
+    flex-direction: row;
+    gap: 11px;
+}
+
+.menu {
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+    margin-top: 15%;
+    width: 25%;
+    height: 60%;
+    margin-left: 5%;
+}
+
+.meio {
+    display: flex;
+    flex-direction: row;
+}
+
+#titulo {
+    margin-left: 40%;
+    margin-top: 2%;
+}
+
+#select {
+    color: #9B5377;
+    padding: 2%;
+    font-size: 95%;
+}
+
+#dados {
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+}
+
+label {
+    color: #9B5377;
+    font-size: 18px;
+}
+
+input {
+    background-color: #FBF1EB;
+    border: none;
+    outline: none;
+    width: 100%;
+    height: 30px;
+}
+
+input:focus {
+    border: none;
+    outline: none;
+}
+
+#btnEnd{
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+#btEdit {
+    background-color: #E5969C;
+    color: #fff;
+    border-color: #E5969C;
+    border-radius: 10px;
+    width: 10%;
+    height: 35px;
+    margin-left: 12%;
+    margin-top: 5%;
+    align-items: center;
+    justify-content: center;
+}
+
+.total {
+    display: flex;
+    flex-direction: row;
+}
+
+.container3 {
+    margin-left: 70%;
+    margin-top: 10%;
+    border-radius: 15px;
+}
+
+/* Estilos para o modal */
+.modal {
+    display: none;
+    /* Oculta o modal por padrão */
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 15px;
+    border: 2px;
+    border-color: #633636;
+}
+
+/* .modal[open] {
+    display: block;
+    Exibe o modal quando o atributo open é adicionado
+    border-radius: 15px;
+    border-radius: 15px;
+    border: 2px;
+    border-color: #633636;
+    gap: 10px;
+} */
+
+#btn {
+    padding: 10px;
+    gap: 10px !important;
+}
+
+
+@import url('https://fonts.googleapis.com/css2?family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Average&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    width: 95%;
+    margin: 0 auto;
+}
+
+#container1 {
+    display: flex;
+    flex-direction: row;
+    margin-top: 190px;
+    width: 100%;
+    align-items: center;
+}
+
+/* voltar ao inicio */
+
+#voltar {
+    margin-left:75%;
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    align-items: center;
+}
+
+#back {
+    font-weight: bold;
+    font-size: 19px;
+}
+
+/* bem vinda + nome */
+
+#bemVinda {
+    display: flex;
+    flex-direction: row;
+    gap: 5px;
+    margin-left: 10px;
+    align-items: center;
+}
+
+#bemVindaText {
+    font-weight: bold;
+    font-size: 19px;
+}
+/* Toda estilização dentro do menu do adm */
+#menuAdm {
+    display: flex;
+    flex-direction: row;
+    padding-left: 25px;
+    height: 587px;
+    width: 353px;
+    margin-top: 30px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+}
+
+#menuText {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    padding-bottom: 25px;
+}
+
+#titulo {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px;
+    text-align: center;
+    color: #633636;
+    padding-bottom: 25px;
+    padding-top: 25px;
+}
+
+/* navegadores */
+
+.navAdm {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-weight: bold;
+    text-decoration: none;
+    color: #9B5377;
+    padding-bottom: 25px;
+    text-align: justify;
+    font-size: 15px;
+    cursor: pointer;
+}
+
+#icon {
+    color: #9b5377;
+}
+
+/* container da tabela */
+
+#titulo2 {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px;
+    text-align: justify;
+    color: #633636;
+    padding-top: 25px;
+    padding-left: 14px;
+    margin-right: 25px;
+    border-bottom: 2px solid #AE4B67;
+}
+
+#linha {
+    border: none;
+    height: 2px;
+    background-color: #AE4B67;
+    box-shadow: 0 1px 3px 0px #AE4B67;
+    z-index: 3;
+    width: 100%;
+    position: absolute;
+    top: 180px;
+    left: 0;
+}
+
+.container2 {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+#table {
+    display: flex;
+    flex-direction: column;
+    height: 587px;
+    width: 1453px;
+    margin-top: 29px;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+    padding-left: 25px;
+}
+
+/* css da tabela */
+
+#dados {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+    padding: 50px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 25px 0;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    text-align: left;
+}
+
+thead {
+    color: #9B5377;
+}
+
+thead tr th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+thead th {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+tbody tr th,
+tbody tr td {
+    padding: 12px;
+    border-right: 2px solid #FAADD1;
+}
+
+tbody tr:hover {
+    background-color: #f1f1f1;
+}
+
+tbody tr th,
+tbody tr td {
+    padding: 12px;
+}
+
+tbody tr th {
+    font-weight: normal;
+    color: #333;
+}
+
+#dados {
+    font-family: 'Open Sans', sans-serif;
+    font-size: 15px;
+    font-weight: bold;
+}
+
+#link {
+    color: black;
+}
+
+thead th:last-child,
+tbody td:last-child,
+tbody th:last-child {
+    border-right: none;
+}
+
+footer {
+    width: 100%;
+}
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    left: 0;
+    padding: 0;
+}

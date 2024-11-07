@@ -199,7 +199,7 @@ export default class Login {
     async VerificaUsuario() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`SELECT usuario FROM login WHERE usuario=?;`, [this._usuario]);
+            const loginResul = await bd.query(`SELECT usuario id FROM login WHERE usuario=?;`, [this._usuario]);
             const usuarioResult = loginResul[0]
             if (usuarioResult == "") {
                 return true
@@ -275,6 +275,24 @@ export default class Login {
             bd.release();
         }
     }
+
+    async procuraID() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const [rows] = await bd.query(`SELECT id FROM login WHERE usuario=?;`, [this._usuario]);
+            if (rows.length > 0) {
+                return rows[0].id; // Retorna o 'id' da primeira linha encontrada
+            } else {
+                return null; // Retorna 'null' se não encontrar o usuário
+            }
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+    
 
 
     verificaCampos() {

@@ -233,6 +233,8 @@ tbody tr th {
 
 #link {
     color: black;
+    text-decoration: underline;
+    cursor: pointer;
 }
 
 thead th:last-child,
@@ -502,4 +504,11 @@ footer {
     display: block;
     height: 90px;
     /* position: absolute; */
+}
+
+/* modal de detalhes do produto */
+
+.socorro {
+    height: 500px;
+    margin-top: 20%;
 }

@@ -2,7 +2,6 @@
 let responseTipo;
 let responsePed;
 
-
 async function dados() {
     try {
         const token = localStorage.getItem('token');
@@ -30,18 +29,22 @@ async function dados() {
                     'x-access-token': token
                 }
             }
+
         ).then(response => {
             responsePed = response.data
             if (responsePed != null || responsePed != undefined) {
                 criarTabela2();
                 carregaDadosTabelaPedidos(responsePed)
+                console.log(responsePed)
             }
         }).catch(error => {
             console.log(error);
         });
+
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
+
 }
 
 dados();
@@ -94,7 +97,7 @@ function carregaDadosTabelaPedidos(responsePed) {
         <tr>
             <td id="codigo">${this['id']}</td>
             <td id="dtCompra" >${this['data_formatada']}</td>
-            <td><a href="#" id="link" data-id="${this['id']}" onclick="Verdetalhes(this)">Ver mais detalhes...</a></td>
+            <td><a class="link" data-id="${this['id']}" data-toggle="modal" data-target=".bd-example-modal-sm" onclick="pegaId('${this['id']}')">Ver mais detalhes...</a></td>
             <td id="status">${this['status']}</td>
         </tr>
         </tbody>`
@@ -126,6 +129,29 @@ function changeSubtitle(link) {
 
     return false;
 }
+
+///MeuPedido/:id
+
+async function pegaId(id) {
+    console.log('ID capturado:', id);
+    const token = localStorage.getItem('token');
+
+    try {
+        const response = await axios.get(`${localStorage.getItem("ip")}MeuPedido/${id}`, {
+            headers: {
+                'x-access-token': token
+            }
+        });
+        
+        console.log(response.data);
+
+    } catch (error) {
+        console.error('Erro ao buscar pedido:', error);
+        showNotification("Ocorreu um erro ao buscar os detalhes do pedido. Tente novamente.");
+    }
+}
+
+
 
 const btnSave = document.getElementById('salvando');
 
@@ -207,14 +233,6 @@ async function post() {
     }
 }
 
-
-function Verdetalhes(link) {
-    const id = link.getAttribute('data-id');
-    DetalhesPedido(id)
-
-}
-
-
 function confirmarExclusao(link) {
     const id = link.getAttribute('data-id');
     const confirmation = confirm("Você tem certeza que deseja excluir este item?");
@@ -259,6 +277,7 @@ async function DetalhesPedido(id) {
                 }
             }).then(response => {
                 console.log(response.data)
+
             }).catch(error => {
                 console.log(error)
             })
@@ -275,3 +294,13 @@ function apiIp() {
 }
 
 apiIp()
+
+
+
+
+// function Verdetalhes(link) {
+//     const id = link.getAttribute('data-id');
+//     DetalhesPedido(id)
+
+// }
+

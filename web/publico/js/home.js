@@ -132,15 +132,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Controle de índice para exibir as imagens
     const imageIndices = {};
-
-    // Funções para exibir imagens anteriores e próximas
     window.showPrevImage = function (productId) {
         const product = products.find(item => item.id === productId);
         if (product) {
             if (!imageIndices[productId]) imageIndices[productId] = 0;
             imageIndices[productId] = (imageIndices[productId] - 1 + product.imagens.length) % product.imagens.length;
             document.getElementById(`productImage-${productId}`).src = product.imagens[imageIndices[productId]];
-
         }
     };
 
@@ -149,10 +146,12 @@ document.addEventListener("DOMContentLoaded", function () {
         if (product) {
             if (!imageIndices[productId]) imageIndices[productId] = 0;
             imageIndices[productId] = (imageIndices[productId] + 1) % product.imagens.length;
-            document.getElementById(productImage - { productId }).src = product.imagens[imageIndices[productId]];
+            document.getElementById(`productImage-${productId}`).src = product.imagens[imageIndices[productId]];
         }
     };
 
     fetchProducts();
-});
+  });
+
+
 
