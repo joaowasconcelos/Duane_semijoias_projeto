@@ -1,4 +1,3 @@
-
 // Carrega o carrinho do localStorage, ou inicializa como um array vazio se não houver nada
 let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
@@ -13,24 +12,37 @@ function updateCart() {
     // Atualiza a lista de produtos no carrinho
     cart.forEach(item => {
         const li = document.createElement('li');
-        console.log(li);
-        
+        li.classList.add('cart-item');
+
         // Converte a vírgula por ponto para exibição
         const precoNormalFormatado = parseFloat((item.preco_normal || '0').toString().replace(',', '.')).toFixed(2);
 
-        li.textContent = `${item.nome_produto} - R$ ${precoNormalFormatado} - Quantidade: `;
+        // Imagem do produto
+        const imag = document.createElement('imag');
+        imag.src = Array.isArray(item.imagens) && item.imagens.length > 0 ? item.imagens[0] : '../img/imgTest.jpeg';
+        imag.alt = item.nome_produto;
+        imag.classList.add('cart-item-img');
+        li.appendChild(imag);
+
+        // Nome e preço do produto
+        const itemInfo = document.createElement('span');
+        itemInfo.textContent = `${item.nome_produto} - R$ ${precoNormalFormatado}`;
+        itemInfo.classList.add('cart-item-info');
+        li.appendChild(itemInfo);
 
         // Input para quantidade
         const input = document.createElement('input');
         input.type = 'number';
         input.value = item.quantity;
         input.min = 1;
+        input.classList.add('cart-item-quantity');
         input.onchange = (e) => updateQuantity(item.id, e.target.value);
         li.appendChild(input);
 
         // Botão para remover o item
         const removeButton = document.createElement('button');
-        removeButton.textContent = 'Remover';
+        removeButton.img = '../img/trash-fill-svgrepo-com.png';
+        removeButton.classList.add('cart-item-remove');
         removeButton.onclick = () => removeFromCart(item.id);
         li.appendChild(removeButton);
 
@@ -42,7 +54,7 @@ function updateCart() {
         const precoNormal = parseFloat((item.preco_normal || '0').toString().replace(',', '.'));
         return sum + precoNormal * item.quantity;
     }, 0);
-    document.getElementById('total').textContent = total.toFixed(2);
+    document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
 
     // Salva o carrinho no localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
@@ -51,6 +63,7 @@ function updateCart() {
 // Adiciona produto ao carrinho
 function addToCart(product) {
     const cartItem = cart.find(item => item.id === product.id);
+    showNotification('Produto adicionado ao carrinho');
     
     if (cartItem) {
         cartItem.quantity++;

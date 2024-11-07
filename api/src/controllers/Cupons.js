@@ -68,9 +68,11 @@ const CuponsController = {
     },
     SelecionaDetalhes: async (req,res) => {
         try {
+            console.log(req.params)
             const {id} = req.params
             const cCupons = new Cupons(id)
             const selecionaPessoas = await cCupons.SelecionaCupomDetalhes()
+            console.log(selecionaPessoas)
             return res.json(selecionaPessoas);
         } catch (error) {
             console.error(error);
