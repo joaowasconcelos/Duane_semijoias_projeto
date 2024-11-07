@@ -1,4 +1,8 @@
 document.addEventListener("DOMContentLoaded", function () {
+    let currentPage = 1; // Página inicial
+    const rowsPerPage = 4; // Quantidade de linhas por página
+    let totalRows = 0;
+
     const btn = document.querySelector('[data-bs-toggle="offcanvas"]');
     if (btn) {
         btn.addEventListener("click", function () {
@@ -9,39 +13,77 @@ document.addEventListener("DOMContentLoaded", function () {
     } else {
         console.warn("Botão do offcanvas não encontrado.");
     }
-  
+
     let products = [];
     apiIp()
     function apiIp() {
         const ip = `http://10.0.3.77:3000/`
         localStorage.setItem('ip', ip);
-      }
-  
+    }
+
+    $("#prevPage").click(function() {
+        if (currentPage > 1) {
+            currentPage--;
+            fetchProducts();
+        }
+    });
+
+    $("#nextPage").click(function() {
+        if (currentPage < Math.ceil(totalRows / rowsPerPage)) {
+            currentPage++;
+            fetchProducts();
+        }
+    });
+
+    // Configura eventos de clique para os botões de paginação
+    $("#prevPage").on("click", prevPage);
+    $("#nextPage").on("click", nextPage);
+
     async function fetchProducts() {
         try {
-            await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`).then(response =>{
-                console.log(response)
-                products = response.data;
-                console.log(products)
-                displayProducts(products);
-            }).catch(error =>{
-                console.log(error)
-            })
+            await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`)
+                .then(response => {
+                    const data = response.data; // Obtenha os dados da resposta
+                    totalRows = data.length; // Total de linhas no conjunto de dados
+                    const totalPages = Math.ceil(totalRows / rowsPerPage); // Número total de páginas
+
+                    const startIndex = (currentPage - 1) * rowsPerPage;
+                    const endIndex = startIndex + rowsPerPage;
+                    const paginatedData = data.slice(startIndex, endIndex); // Dados da página atual
+
+                    // products = response.data;
+                    console.log(products)
+                    // displayProducts(products);
+                    const productList = document.getElementById('cardGrid');
+                    productList.innerHTML = '';
+
+                    paginatedData.forEach(product => {
+                        const card = newCard(product);
+                        productList.innerHTML += card;
+                    });
+                    $("#pageInfo").text(`Página ${currentPage} de ${totalPages}`);
+
+                    // Habilita ou desabilita os botões de acordo com a página atual
+                    $("#prevPage").prop('disabled', currentPage === 1);
+                    $("#nextPage").prop('disabled', currentPage === totalPages);
+                }).catch(error => {
+                    console.log(error)
+                })
         } catch (error) {
             console.error('Erro ao buscar produtos:', error);
         }
     }
-  
-    function displayProducts(products) {
-        const productList = document.getElementById('cardGrid');
-        productList.innerHTML = '';
-  
-        products.forEach(product => {
-            const card = newCard(product);
-            productList.innerHTML += card;
-        });
-    }
-  
+
+    // function displayProducts(products) {
+    //     const productList = document.getElementById('cardGrid');
+    //     productList.innerHTML = '';
+
+    //     products.forEach(product => {
+    //         const card = newCard(product);
+    //         productList.innerHTML += card;
+    //     });
+    // }
+
     function newCard(element) {
         return `
             <div class="card h-100">
@@ -52,7 +94,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="card-body">
                     <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>
-                    <a href="/web/publico/html/cardItem.html/${element.id || '#'}">Ver mais</a>
+                    <a href="/publico/html/cardItem.html/${element.id || '#'}">Ver mais</a>
                 </div>
                 <div class="card-footer">
                     <span class="text-title">R$ ${element.preco_normal}</span>
@@ -87,37 +129,30 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
             </div>`;
     }
-  
+
     // Controle de índice para exibir as imagens
     const imageIndices = {};
-  
+
     // Funções para exibir imagens anteriores e próximas
     window.showPrevImage = function (productId) {
         const product = products.find(item => item.id === productId);
         if (product) {
             if (!imageIndices[productId]) imageIndices[productId] = 0;
             imageIndices[productId] = (imageIndices[productId] - 1 + product.imagens.length) % product.imagens.length;
-            document.getElementById(productImage-{productId}).src = product.imagens[imageIndices[productId]];
+            document.getElementById(`productImage-${productId}`).src = product.imagens[imageIndices[productId]];
+
         }
     };
-  
+
     window.showNextImage = function (productId) {
         const product = products.find(item => item.id === productId);
         if (product) {
             if (!imageIndices[productId]) imageIndices[productId] = 0;
             imageIndices[productId] = (imageIndices[productId] + 1) % product.imagens.length;
-            document.getElementById(productImage-{productId}).src = product.imagens[imageIndices[productId]];
+            document.getElementById(productImage - { productId }).src = product.imagens[imageIndices[productId]];
         }
     };
-  
+
     fetchProducts();
-  });
-
-function apiIp() {
-  const ip = "http://10.0.3.77:3000/"
-    localStorage.setItem('ip', ip);
-    console.log(ip)
-}
-
-apiIp()
+});
 

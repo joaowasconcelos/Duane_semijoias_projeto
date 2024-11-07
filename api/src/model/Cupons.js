@@ -89,7 +89,7 @@ export default class Cupons {
             cupons c 
 		WHERE
 			c.id = ?;` , [this._id])
-            return cupomResult
+            return cupomResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };
