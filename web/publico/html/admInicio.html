@@ -43,7 +43,7 @@
                 <!-- <a href="#" id="menuText" class="navAdm">Relatório de vendas</a> -->
                 <a href="../html/cadastrarNovoProduto.html" id="menuText" class="navAdm">Cadastro de produtos</a>
                 <a href="../html/admCatalogoProdutos.html" id="menuText" class="navAdm">Catálogo de produtos</a>
-                <a href="../html/promoAdm.html" id="menuText" class="navAdm">Controle de promoções</a>
+                <!-- <a href="../html/promoAdm.html" id="menuText" class="navAdm">Controle de promoções</a> -->
                 <a href="../html/cuponsAdm.html" id="menuText" class="navAdm">Gerenciamento de cupons</a>
                 <a href="../html/cadastrarNovoAdm.html" id="menuText" class="navAdm">Cadastrar novo usuário</a>
                 <a href="../html/todosClientes.html" id="menuText" class="navAdm">Clientes cadastrados</a>
@@ -84,7 +84,7 @@
                     </div>
 
 
-                    <form action="${localStorage.getItem("ip")}CreateCategoria" method="POST" id="envia-form">
+                    <form action="${localStorage.getItem(" ip")}CreateCategoria" method="POST" id="envia-form">
 
                         <div class="modal-body">
 
@@ -114,8 +114,39 @@
                             <button type="button" id="salvando" class="btn btn-primary save-changes">Salvar</button>
 
                         </div>
+
+
                     </form>
 
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- modal de detalhes do ultimo pedido -->
+        <div class="modal fade bd-example-modal-sm detalhesProd" tabindex="-1" role="dialog" aria-labelledby="mySmallModalLabel"
+            aria-hidden="true">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content socorro">
+
+                    <p>Nome do cliente:</p>
+                    <input type="text" disabled id="nome_cliente">
+
+                    <p>C.P.F:</p>
+                    <input type="text" disabled id="cpf">
+
+                    <p>Itens do pedido:</p>
+                    <input type="text" disabled id="itens_pedido">
+
+                    <p>Total da compra:</p>
+                    <input type="text" disabled id="total">
+
+                    <p>Status do pagamento:</p>
+                    <input type="text" disabled id="status">
+                    
                 </div>
 
             </div>
