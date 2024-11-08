@@ -1,6 +1,6 @@
 document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1; // Página inicial
-    const rowsPerPage = 4; // Quantidade de linhas por página
+    const rowsPerPage = 8; // Quantidade de linhas por página
     let totalRows = 0;
 
     const btn = document.querySelector('[data-bs-toggle="offcanvas"]');
@@ -132,6 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Controle de índice para exibir as imagens
     const imageIndices = {};
+
+    // Funções para exibir imagens anteriores e próximas - no escopo global
     window.showPrevImage = function (productId) {
         const product = products.find(item => item.id === productId);
         if (product) {
