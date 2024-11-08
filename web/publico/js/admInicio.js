@@ -55,7 +55,7 @@ function criarTabela() {
     table = `
     <thead>
         <tr>
-            <td id="desc" class="tituloD">Descrição</td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -67,8 +67,8 @@ function carregaDadosModalCategoria(responseTipo) {
         table +=
             `<tr>
             <td id="desc" class="selectIdProd" data-id="${this['id']}">${this['tipo']}</td>
-            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit">Editar</a></td>
-          <td class="btnMod"><a href="#" id="excluir" data-id="${this['id']}" onclick="confirmarExclusao(this)">Excluir</a></td>
+            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit" class="editexclui">Editar</a></td>
+          <td class="btnMod"><a href="#" id="excluir" data-id="${this['id']}" onclick="confirmarExclusao(this)" class="editexclui" >Excluir</a></td>
         </tr>`;
     });
 
@@ -105,7 +105,7 @@ function carregaDadosTabelaPedidos(responsePed) {
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }
 
-const form = document.getElementById('envia-form'); // Define `form` no escopo global
+const form = document.getElementById('envia-form');
 const elemento = document.getElementById('tipo');
 
 //função para alterar o formulário 
@@ -130,10 +130,10 @@ function changeSubtitle(link) {
     return false;
 }
 
-///MeuPedido/:id
+const cpf = document.getElementById('cpf');
 
 async function pegaId(id) {
-    console.log('ID capturado:', id);
+    console.log('ID:', id);
     const token = localStorage.getItem('token');
 
     try {
@@ -142,16 +142,38 @@ async function pegaId(id) {
                 'x-access-token': token
             }
         });
-        
+
         console.log(response.data);
+
+
+        const pedido = response.data[0];
+
+        const cpf_cliente = pedido.cpf_cliente;
+        const data_formatada = pedido.data_formatada;
+        const itens = pedido.itens;
+        const nome_cliente = pedido.nome_cliente;        
+        const valor_total = pedido.valor_total;
+        //const pedidos_id = pedido.pedidos_id;
+        //console.log(cpf_cliente, data_formatada, itens, nome_cliente, pedidos_id, valor_total)
+
+        document.getElementById("cpf").value = formatoCPF(cpf_cliente);
+        document.getElementById("data").value = data_formatada;
+        document.getElementById("nome_cliente").value = nome_cliente;
+        document.getElementById("itens").value = itens;
+        document.getElementById("total").value = valor_total;
+
+        function formatoCPF(cpf_cliente) {
+            const remove = cpf_cliente.replace(/\D/g, '');
+            const formatado = `***.${remove.slice(3, 6)}.${remove.slice(6, 9)}-**`;
+
+            return formatado;
+        }
 
     } catch (error) {
         console.error('Erro ao buscar pedido:', error);
         showNotification("Ocorreu um erro ao buscar os detalhes do pedido. Tente novamente.");
     }
 }
-
-
 
 const btnSave = document.getElementById('salvando');
 
@@ -163,7 +185,6 @@ btnSave.addEventListener('click', function (link) {
     } else {
         put();
     }
-
 });
 
 async function put() {

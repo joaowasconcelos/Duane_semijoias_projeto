@@ -63,29 +63,87 @@
                 </div>
             </div>
 
-            <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; margin-top: 7px;">
+            <div
+                style="display: flex; flex-direction: row; align-items: center; justify-content: center; margin-top: 7px;">
                 <a href="../html/cadastrarNovoProduto.html" style="text-decoration: none;">
                     <p id="cadastrarNovo">Cadastrar novo produto</p>
                 </a>
-                    <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
-                        style="color: #9B5377; margin-bottom: 15px; margin-left: 10px;" fill="currentColor"
-                        class="bi bi-plus-lg" viewBox="0 0 16 16">
-                        <path fill-rule="evenodd"
-                            d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
-                    </svg>
-                
+                <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26"
+                    style="color: #9B5377; margin-bottom: 15px; margin-left: 10px;" fill="currentColor"
+                    class="bi bi-plus-lg" viewBox="0 0 16 16">
+                    <path fill-rule="evenodd"
+                        d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2" />
+                </svg>
+
             </div>
-
-
 
         </div>
 
         <div id="table">
 
             <table id="tbl-produtos"></table>
-                
-            </table>
 
+
+        </div>
+
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <h5 class="modal-title" id="exampleModalLongTitle">Detalhes do produto:</h5>
+
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+
+                    </div>
+                    <div class="modal-body">
+
+
+                        <form id="produto-form" enctype="multipart/form-data" method="post">
+
+                            <div id="form">
+
+                                <div id="dados">
+
+                                    <label for="tipo">Categoria: *</label>
+                                    
+                                    <select class="form-control form-control-sm" id="categoria" name="categoria">
+                                        <option></option>
+                                    </select>
+
+                                    <label for="nome_produto">Produto: *</label>
+                                    <input class="input" type="text" name="produto" id="produto">
+
+                                    <label for="descricao">Descrição: *</label>
+                                    <input class="input" type="text" name="descricao" id="descricao">
+
+                                    <label for="preco">Preço: *</label>
+                                    <input class="input" type="text" id="preco" name="preco"
+                                        onInput="mascaraMoeda(event);" onkeydown="return somenteNumeros(event)">
+
+                                </div>
+
+                                <div id="addFotos">
+
+                                    <label class="picture" for="imagem">Foto do produto: *</label>
+
+                                </div>
+                            </div>
+
+                        </form>
+
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary">Save changes</button>
+                    </div>
+                </div>
+            </div>
         </div>
 
     </main>

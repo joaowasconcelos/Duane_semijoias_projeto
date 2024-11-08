@@ -363,6 +363,7 @@ tbody th:last-child {
     font-size: 25px;
     font-weight: bold;
     padding-left: 65px;
+    z-index: 1000;
 }
 
 #titleCadastradas {
@@ -465,6 +466,19 @@ tbody th:last-child {
     margin-top: 20px;
 }
 
+.editexclui {
+    color: #9B5377;
+}
+
+.link:hover {
+    text-decoration: underline;
+}
+
+.editexclui:hover {
+    color: #65354d;
+    cursor: pointer;
+}
+
 #btnsModal {
     display: flex;
     flex-direction: row;
@@ -508,7 +522,76 @@ footer {
 
 /* modal de detalhes do produto */
 
+.modal-content {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    width: 300px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    margin: auto;
+    position: relative;
+}
+
 .socorro {
-    height: 500px;
-    margin-top: 20%;
+    color: #333;
+    font-family: Arial, sans-serif;
+    margin-top: 10%;
+}
+
+.modal-content p {
+    margin: 10px 0 5px;
+    font-weight: bold;
+}
+
+.modal-content input[type="text"] {
+    width: 100%;
+    padding:4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #666;
+}
+
+.modal-content input[id="itens"] {
+    width: 100%;
+    padding:50px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    
+}
+
+.modal-content input[type="text"]:disabled {
+    background-color: #e9ecef;
+    color: #000000;
+}
+
+#titleDetalhes {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: bold;
+    padding-bottom: 15px;
+    color: #633636;
+    text-align: center;
+    padding-top: 15px;
+}
+
+.details {
+    width: 90%;
+    margin: auto;
+    padding-bottom: 40px;
+}
+
+#itens {
+    text-align: justify;
+    height: 170px;
+    width: 100%;
+    color: #000000;
+    resize: none;
+}
+
+#subDetails {
+    color: #633636
 }
