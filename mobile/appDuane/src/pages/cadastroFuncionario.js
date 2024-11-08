@@ -71,7 +71,7 @@ export default function Home() {
     }
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await api.post('/CreateADM',  {
+      await api.post('/CreateADM',  {
         Nome: nome,
         Data_Nasc: dataNasc,
         Usuario: usuario,
@@ -83,15 +83,20 @@ export default function Home() {
         headers: {
           'x-access-token': `${token}`,
         }
-      });
-      setNome(response.data);
-      setDataNasc(response.data);
-      setUsuario(response.data);
-      setCpf(response.data);
-      setGenero(response.data);
-      setPerfil(response.data);
-      setTelefone1(response.data);
-      console.log(response.data);
+      })
+      .then(response=>{
+        setNome(response.data);
+        setDataNasc(response.data);
+        setUsuario(response.data);
+        setCpf(response.data);
+        setGenero(response.data);
+        setPerfil(response.data);
+        setTelefone1(response.data);
+        console.log(response.data);
+      })
+      .catch(error=>{
+        console.error(error);
+      })
       if(response.data.error){
         alert(response.data.error);
       }else{

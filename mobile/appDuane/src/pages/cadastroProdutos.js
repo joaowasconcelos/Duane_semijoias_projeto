@@ -61,9 +61,15 @@ export default function Home() {
 
   const selecionaCate = async () => {
     try {
-      const response = await api.get(`/SelecionaCategoria`);
-      setCate(response.data);
-      console.log(response.data);
+      await api.get(`/SelecionaCategoria`)
+      .then(response => {
+        setCate(response.data);
+        console.log(response.data);
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+      
     } catch (error) {
       console.error("Erro ao buscar as categorias:", error);
     }

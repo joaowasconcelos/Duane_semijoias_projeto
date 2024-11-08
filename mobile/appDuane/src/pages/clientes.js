@@ -59,9 +59,15 @@ export default function Home() {
   const [clientes, setClientes] = useState([]);
   const selecionaCate = async () => {
     try {
-      const response = await api.get(`/SelecionaUsuarios`);
-      setClientes(response.data);
-      console.log(response.data)
+      await api.get(`/SelecionaUsuarios`)
+      .then(response=>{
+        setClientes(response.data);
+        console.log(response.data);
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+      
     } catch (error) {
       console.error("Erro ao buscar as clientes:", error);
     }

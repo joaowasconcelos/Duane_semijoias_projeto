@@ -52,10 +52,16 @@ export default function Home() {
 
   const selecionaCate = async () => {
     try {
-      const response = await api.get(
+      await api.get(
         `/SelecionaCategoria`
-      );
-      setCategories(response.data); // Atualiza o estado com as categorias recebidas
+      )
+      .then(response => {
+        setCategories(response.data);
+      })
+      .catch(error => {
+        console.error("Erro ao selecionar categorias", error);
+      })
+      // Atualiza o estado com as categorias recebidas
     } catch (error) {
       console.error("Erro ao buscar as categorias:", error);
     }
