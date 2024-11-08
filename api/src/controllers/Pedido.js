@@ -98,9 +98,7 @@ const PedidoController = {
     },
     SelecionaDetalhes: async (req,res) => {
         try {
-            console.log(req.params)
             const {id} = req.params
-            console.log(id)
             const cPedido = new Pedido(id)
             const selecionaMeuPedidos = await cPedido.SelecionaPedidoInfo()
             return res.json(selecionaMeuPedidos);

@@ -2,55 +2,77 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-weight: 700;
-    font-style: normal;
-    color: #AE4B67;
     font-family: "Cormorant Garamond", serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-main {
-    box-sizing: border-box;
-    flex: 1;
-    padding: 0;
+    color: #4D4D4D;
 }
 
 body {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
+    background-color: #f7f7f7;
 }
 
-#cardGrid {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 10px;
-    width: auto;
-
-}
-
-#links {
-    width: 50px;
-    height: 50px;
+main {
+    flex: 1;
+    padding: 20px;
 }
 
 #cardGrid {
     display: grid;
-    height: auto;
-    grid-template-columns: repeat(auto-fill, minmax(270px, 4fr));
-    gap: 10px;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 15px;
+    padding: 20px;
 }
 
 .card {
-    margin: 10px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s, box-shadow 0.2s;
+    overflow: hidden;
+    width: 90%; /* Reduz a largura do card */
+    margin: 0 auto; /* Centraliza o card */
 }
 
-
-#space {
-    padding: 100px;
+.card-img-top {
+    width: 100%;
+    height: 250px;
+    object-fit: cover;
+    border-bottom: 1px solid #e0e0e0;
 }
+
+.card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.card-body {
+    padding: 20px;
+    text-align: center;
+}
+
+.card-footer {
+    padding: 10px 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid #e0e0e0;
+    background-color: #fafafa;
+}
+
+.card-footer .card-button {
+    cursor: pointer;
+}
+
+.card-button svg {
+    transition: color 0.3s;
+}
+
+.card-button svg:hover {
+    color: #AE4B67;
+}
+
 
 #procurar {
     border-radius: 5px;
@@ -76,19 +98,29 @@ body {
     left: 300px;
 }
 
-#filtros {
-    font-family: "Cormorant Upright", serif;
-    font-weight: 600;
-    font-style: normal;
+#filtro {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
     padding: 10px;
-    color: black;
-    font-family: "Cormorant Upright", serif;
-    font-weight: 300;
-    font-style: normal;
-    margin: 12px;
-    font-size: 17px;
-    margin-left: 20px;
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
+
+#filtro h3 {
+    font-size: 18px;
+    margin: 0;
+    cursor: pointer;
+    color: #333;
+}
+
+#filtro h3:hover {
+    color: #AE4B67;
+    text-decoration: underline;
+}
+
 
 .card-img {
     max-width: 80%;
@@ -125,45 +157,34 @@ body {
 
 .container2 {
     display: flex;
-    flex-direction: row;
-    gap: 45px;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 150px;
     height: 1000px;
 }
 
 img.card-img-top {
-    width: 150px !important;
+    width: 200px !important;
     height: 200px !important;
 }
 
 /* carrinho */
 
-.modal {
-    display: none;
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0, 0, 0, 0.5);
-    justify-content: center;
-    align-items: center;
+.modal-content {
+    border-radius: 10px;
 }
 
-.modal-content {
-    background-color: #fff;
-    padding: 20px;
-    border-radius: 5px;
-    max-width: 500px;
-    width: 100%;
+.modal-header, .modal-footer {
+    background-color: #f9f9f9;
+    border-bottom: 1px solid #e0e0e0;
+    border-top: 1px solid #e0e0e0;
 }
 
 .close {
-    float: right;
     font-size: 24px;
+    color: #AE4B67;
     cursor: pointer;
 }
-
 .product-image {
     width: 100%;
     /* A imagem ocupará 100% da largura do contêiner */
@@ -175,6 +196,33 @@ img.card-img-top {
     /*arredonda os cantos da imagem */
     padding: 10px;
     margin-top: 10px;
+}
+
+#pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+}
+
+#pagination button {
+    padding: 8px 12px;
+    border: none;
+    border-radius: 5px;
+    background-color: #AE4B67;
+    color: #fff;
+    cursor: pointer;
+    transition: background-color 0.3s;
+}
+
+#pagination button:hover {
+    background-color: #922D4A;
+}
+
+#pagination button:disabled {
+    background-color: #e0e0e0;
+    color: #b3b3b3;
+    cursor: not-allowed;
 }
 
 #bot {
@@ -207,10 +255,10 @@ img.card-img-top {
 .cart-item {
     display: flex;
     align-items: center;
-    margin-bottom: 10px;
+    padding: 10px;
+    border-bottom: 1px solid #e0e0e0;
 }
 
-/* Imagem do produto */
 .cart-item-img {
     width: 50px;
     height: 50px;
@@ -219,25 +267,34 @@ img.card-img-top {
     border-radius: 4px;
 }
 
-/* Nome e preço do produto */
 .cart-item-info {
     flex-grow: 1;
+    font-size: 14px;
 }
 
-/* Input de quantidade */
-.cart-item-quantity {
-    width: 50px;
-    margin-right: 10px;
-}
-
-/* Botão de remover */
 .cart-item-remove {
     background-color: #fb7575;
-    color: rgb(0, 0, 0);
+    color: #fff;
     border: none;
     padding: 5px;
     border-radius: 4px;
     cursor: pointer;
-    width: 50px;
-    height: 50px;
+    transition: background-color 0.3s;
+}
+
+.cart-item-remove:hover {
+    background-color: #e04747;
+}
+
+/* Responsividade */
+@media (max-width: 500px) {
+    #cardGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 200px) {
+    #cardGrid {
+        grid-template-columns: 1fr;
+    }
 }
