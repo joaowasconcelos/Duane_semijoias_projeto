@@ -69,8 +69,6 @@ $('#produto-form').on('submit', async function (event) {
     }
 })
 
-
-
 //puxando tabela de categorias do banco
 
 async function dados() {
