@@ -69,15 +69,21 @@ export default function Home() {
   const selecionaCate = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await api.get(`/SelecionaFuncionarios`,
+      await api.get(`/SelecionaFuncionarios`,
         {
           headers: {
             'x-access-token': `${token}`,
           }
         }
-      );
-      setFuncionarios(response.data);
-      console.log(response.data)
+      )
+      .then(response=>{
+        setFuncionarios(response.data);
+        console.log(response.data);
+      })
+      .catch(error=>{
+        console.log(error);
+      })
+      
     } catch (error) {
       console.error("Erro ao buscar as clientes:", error);
     }

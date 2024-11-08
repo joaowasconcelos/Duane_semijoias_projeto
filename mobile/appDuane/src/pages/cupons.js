@@ -34,14 +34,14 @@ import api from "../services/api/api"
 export default function Home() {
   const route = useRoute();
   const navigation = useNavigation();
-  const [id, setId] = useState("");
+  // const [id, setId] = useState("");
 
   const navegaCadastroNovoCupom = () =>{
     navigation.navigate('CadastroNovoCupom')
   }
 
-  const navegaDetalhesCupom = () =>{
-    navigation.navigate('DetalhesCupom',{id: id})
+  const navegaDetalhesCupom = (id) =>{
+    navigation.navigate('DetalhesCupom',{id: id});
   }
 
   let [fontsLoaded] = useFonts({
@@ -79,7 +79,6 @@ export default function Home() {
         setCupons(response.data);
         console.log(response.data);
         setId(response.data);
-
       })
       .catch(error =>{
         console.log(error)
@@ -161,7 +160,7 @@ export default function Home() {
                       }}
                     >
                       <View 
-                        // key={cupons.id}
+                        
                         style={{
                           justifyContent: "space-between",
                           alignItems: "center",
@@ -209,7 +208,7 @@ export default function Home() {
                         height: "100%",
                         marginTop: 40,
                       }}
-
+                      
                       onPress={()=>navegaDetalhesCupom(cup.id)}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
