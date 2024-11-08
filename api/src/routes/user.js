@@ -26,7 +26,7 @@ routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.Cada
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
 routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
-// routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
+routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
 routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
 routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
 routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
@@ -78,7 +78,7 @@ routerUser.get("/SelecionaProdutoCate/:id",ProdutoFavController.Seleciona);
 routerUser.get("/logout",logout);
 
 //ResetSenha
-routerUser.get("/ResetSenha/:email",ResetControler.resetSenha);//USUARIO
+routerUser.post("/ResetSenha",ResetControler.resetSenha);//USUARIO
 
 export default routerUser;  
 

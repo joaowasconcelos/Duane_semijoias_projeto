@@ -44,7 +44,6 @@ const LoginController = {
     PrimeiroLogin: async (req, res) => {
         try {
             const { login, senha } = req.body; 
-        
             if (senha == null || senha === "undefined" || senha.length > 50) {
                 return res.status(400).json({ error: "Insira uma senha válida " })
             }
