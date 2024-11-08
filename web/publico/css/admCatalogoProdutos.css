@@ -207,7 +207,7 @@ tbody th:last-child {
     display: flex;
     flex-direction: column;
     height: 587px;
-    width: 1453px;
+    width: 100%;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
 }

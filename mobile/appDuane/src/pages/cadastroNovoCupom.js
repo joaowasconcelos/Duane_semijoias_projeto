@@ -31,11 +31,11 @@ import api from "../services/api/api"
 
 export default function Home() {
   const navigation = useNavigation();
-  const [descricao, setDescricao] = useState();
-  const [codigo, setCodigo] = useState();
-  const [quantidade, setQuantidade] = useState();
-  const [valor, setValor] = useState();
-  const [status, setStatus] = useState();
+  const [descricao, setDescricao] = useState("");
+  const [codigo, setCodigo] = useState("");
+  const [quantidade, setQuantidade] = useState("");
+  const [valor, setValor] = useState("");
+
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -59,31 +59,39 @@ export default function Home() {
   };
 
   const cadastraCupom = async ()=>{
-    if(!codigo || !descricao || !quantidade || !valor || !status === 0){
+    if(!codigo || !descricao || !quantidade || !valor === 0){
       alert("Preencha todos os campos");
       return;
     }
     try{
+      console.log("oii",descricao);
+      console.log(quantidade);
+      console.log(valor);
+      console.log(codigo);
       const token = await AsyncStorage.getItem('userToken');
-      const response = await api.post('/CreateCupom', 
+      await api.post("/CreateCupom", 
       {
         descricao: descricao,
         quantidade: quantidade,
         valor: valor,
-        status: status,
         codigo: codigo,
       },
-        {headers:{
-          'x-acces-token': `${token}`,
+      {
+        headers: {
+          'x-access-token': `${token}`,
         }
+      })
+      .then(response => {
+        setCodigo(response.data);
+        setDescricao(response.data);
+        setQuantidade(response.data);
+        setValor(response.data);
+        console.log(response.data);
+        alert("Cupom cadastrado com sucesso!")
+      })
+      .catch(error => {
+        console.log("algum tipo de erro",error);
       });
-      console.log(response.data);
-      setCodigo(response.data);
-      setDescricao(response.data);
-      setQuantidade(response.data);
-      setValor(response.data);
-      setStatus(response.data);
-
     }catch(error){
       console.error("Erro ao cadastrar  o cupom", error);
       alert("Erro ao cadastrar o cupom, tente novamente.");

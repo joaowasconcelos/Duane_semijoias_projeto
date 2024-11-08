@@ -15,7 +15,6 @@
     <script src="../js/verificaToken.js"></script>
     <link rel="stylesheet" href="../css/notificacao.css">
     <script src="../js/notificacao.js"></script>
-
 </head>
 
 <body>
@@ -43,11 +42,11 @@
                 <!-- <a href="#" id="menuText" class="navAdm">Relatório de vendas</a> -->
                 <a href="../html/cadastrarNovoProduto.html" id="menuText" class="navAdm">Cadastro de produtos</a>
                 <a href="../html/admCatalogoProdutos.html" id="menuText" class="navAdm">Catálogo de produtos</a>
-                <a href="../html/promoAdm.html" id="menuText" class="navAdm">Controle de promoções</a>
+                <!-- <a href="../html/promoAdm.html" id="menuText" class="navAdm">Controle de promoções</a> -->
                 <a href="../html/cuponsAdm.html" id="menuText" class="navAdm">Gerenciamento de cupons</a>
                 <a href="../html/cadastrarNovoAdm.html" id="menuText" class="navAdm">Cadastrar novo usuário</a>
                 <a href="../html/todosClientes.html" id="menuText" class="navAdm">Clientes cadastrados</a>
-                <a href="#" id="menuText" class="navAdm">Meus dados</a>
+                <!-- <a href="#" id="menuText" class="navAdm">Meus dados</a> -->
                 <a id="menuText" class="navAdm" type="button" class="btn btn-primary" data-toggle="modal"
                     data-target="#exampleModalCenter">Categorias
                     de produto</a>
@@ -114,7 +113,46 @@
                             <button type="button" id="salvando" class="btn btn-primary save-changes">Salvar</button>
 
                         </div>
+
+
                     </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- modal de detalhes do ultimo pedido -->
+        <div class="modal fade bd-example-modal-sm detalhesProd" tabindex="-1" role="dialog"
+            aria-labelledby="mySmallModalLabel" aria-hidden="true">
+
+            <div class="modal-dialog">
+
+                <div class="modal-content socorro">
+
+                    <p id="titleDetalhes">Detalhes do pedido:</p>
+
+                    <div class="details">
+
+                        <p id="subDetails">Nome do cliente:</p>
+                        <input class="inputDetalhes" type="text" disabled id="nome_cliente">
+
+                        <p id="subDetails">C.P.F:</p>
+                        <input class="inputDetalhes" type="text" disabled id="cpf">
+
+                        <p id="subDetails">Data da compra:</p>
+                        <input class="inputDetalhes" type="text" disabled id="data">
+
+                        <p id="subDetails">Itens do pedido:</p>
+                        <textarea rows="5" class="inputDetalhes" type="text" disabled id="itens" wrap="hard"></textarea>
+
+                        <p id="subDetails">Total da compra:</p>
+                        <input class="inputDetalhes" type="text" disabled id="total">
+
+                        <!-- <p>Status do pagamento:</p>
+                    <input type="text" disabled id="status"> -->
+                    </div>
 
                 </div>
 

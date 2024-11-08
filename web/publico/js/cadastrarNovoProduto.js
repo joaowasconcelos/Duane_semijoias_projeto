@@ -45,6 +45,8 @@ $('#produto-form').on('submit', async function (event) {
     const token = localStorage.getItem('token');
     const formData = new FormData(this);
     console.log(formData)
+    console.log(localStorage.getItem("ip"))
+    console.log(token)
     try {
         await axios.post(`${localStorage.getItem("ip")}CreateProduto`, formData, {
             headers: {
@@ -66,8 +68,6 @@ $('#produto-form').on('submit', async function (event) {
         showNotification("Ocorreu um erro ao criar o produto. Tente novamente.");
     }
 })
-
-
 
 //puxando tabela de categorias do banco
 

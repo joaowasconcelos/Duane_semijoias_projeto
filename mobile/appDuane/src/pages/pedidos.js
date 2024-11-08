@@ -57,12 +57,19 @@ export default function Home() {
   const selecionaPedid = async () => {
     try {
       const token = await AsyncStorage.getItem('userToken');
-      const response = await api.get(`/SelecionaPedido`, {
+      await api.get(`/SelecionaPedido`, {
         headers:{
           'x-access-token': `${token}`,
         }
+      })
+      .then(response => {
+        setPedidos(response.data);
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error("Erro ao selecionar o pedido", error);
       });
-      setPedidos(response.data);
+      
     } catch (error) {
       console.error("Erro ao buscar o pedido:", error);
     }
@@ -75,7 +82,6 @@ export default function Home() {
   }, []);
 
   useEffect(() => {
-    console.log("OIII")
     console.log(pedidos)
   }, [pedidos]);
 

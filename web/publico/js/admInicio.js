@@ -2,7 +2,6 @@
 let responseTipo;
 let responsePed;
 
-
 async function dados() {
     try {
         const token = localStorage.getItem('token');
@@ -30,18 +29,22 @@ async function dados() {
                     'x-access-token': token
                 }
             }
+
         ).then(response => {
             responsePed = response.data
             if (responsePed != null || responsePed != undefined) {
                 criarTabela2();
                 carregaDadosTabelaPedidos(responsePed)
+                console.log(responsePed)
             }
         }).catch(error => {
             console.log(error);
         });
+
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
     }
+
 }
 
 dados();
@@ -52,7 +55,7 @@ function criarTabela() {
     table = `
     <thead>
         <tr>
-            <td id="desc" class="tituloD">Descrição</td>
+            <td></td>
             <td></td>
             <td></td>
         </tr>
@@ -64,8 +67,8 @@ function carregaDadosModalCategoria(responseTipo) {
         table +=
             `<tr>
             <td id="desc" class="selectIdProd" data-id="${this['id']}">${this['tipo']}</td>
-            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit">Editar</a></td>
-          <td class="btnMod"><a href="#" id="excluir" data-id="${this['id']}" onclick="confirmarExclusao(this)">Excluir</a></td>
+            <td class="btnMod"><a href="#" onclick="changeSubtitle(this)" id="edit" class="editexclui">Editar</a></td>
+          <td class="btnMod"><a href="#" id="excluir" data-id="${this['id']}" onclick="confirmarExclusao(this)" class="editexclui" >Excluir</a></td>
         </tr>`;
     });
 
@@ -94,7 +97,7 @@ function carregaDadosTabelaPedidos(responsePed) {
         <tr>
             <td id="codigo">${this['id']}</td>
             <td id="dtCompra" >${this['data_formatada']}</td>
-            <td><a href="#" id="link" data-id="${this['id']}" onclick="Verdetalhes(this)">Ver mais detalhes...</a></td>
+            <td><a class="link" data-id="${this['id']}" data-toggle="modal" data-target=".bd-example-modal-sm" onclick="pegaId('${this['id']}')">Ver mais detalhes...</a></td>
             <td id="status">${this['status']}</td>
         </tr>
         </tbody>`
@@ -102,7 +105,7 @@ function carregaDadosTabelaPedidos(responsePed) {
     document.getElementById('tbl-pedidos').innerHTML = table2;
 }
 
-const form = document.getElementById('envia-form'); // Define `form` no escopo global
+const form = document.getElementById('envia-form');
 const elemento = document.getElementById('tipo');
 
 //função para alterar o formulário 
@@ -127,6 +130,51 @@ function changeSubtitle(link) {
     return false;
 }
 
+const cpf = document.getElementById('cpf');
+
+async function pegaId(id) {
+    console.log('ID:', id);
+    const token = localStorage.getItem('token');
+
+    try {
+        const response = await axios.get(`${localStorage.getItem("ip")}MeuPedido/${id}`, {
+            headers: {
+                'x-access-token': token
+            }
+        });
+
+        console.log(response.data);
+
+
+        const pedido = response.data[0];
+
+        const cpf_cliente = pedido.cpf_cliente;
+        const data_formatada = pedido.data_formatada;
+        const itens = pedido.itens;
+        const nome_cliente = pedido.nome_cliente;        
+        const valor_total = pedido.valor_total;
+        //const pedidos_id = pedido.pedidos_id;
+        //console.log(cpf_cliente, data_formatada, itens, nome_cliente, pedidos_id, valor_total)
+
+        document.getElementById("cpf").value = formatoCPF(cpf_cliente);
+        document.getElementById("data").value = data_formatada;
+        document.getElementById("nome_cliente").value = nome_cliente;
+        document.getElementById("itens").value = itens;
+        document.getElementById("total").value = valor_total;
+
+        function formatoCPF(cpf_cliente) {
+            const remove = cpf_cliente.replace(/\D/g, '');
+            const formatado = `***.${remove.slice(3, 6)}.${remove.slice(6, 9)}-**`;
+
+            return formatado;
+        }
+
+    } catch (error) {
+        console.error('Erro ao buscar pedido:', error);
+        showNotification("Ocorreu um erro ao buscar os detalhes do pedido. Tente novamente.");
+    }
+}
+
 const btnSave = document.getElementById('salvando');
 
 btnSave.addEventListener('click', function (link) {
@@ -137,7 +185,6 @@ btnSave.addEventListener('click', function (link) {
     } else {
         put();
     }
-
 });
 
 async function put() {
@@ -207,14 +254,6 @@ async function post() {
     }
 }
 
-
-function Verdetalhes(link) {
-    const id = link.getAttribute('data-id');
-    DetalhesPedido(id)
-
-}
-
-
 function confirmarExclusao(link) {
     const id = link.getAttribute('data-id');
     const confirmation = confirm("Você tem certeza que deseja excluir este item?");
@@ -259,6 +298,7 @@ async function DetalhesPedido(id) {
                 }
             }).then(response => {
                 console.log(response.data)
+
             }).catch(error => {
                 console.log(error)
             })
@@ -275,3 +315,13 @@ function apiIp() {
 }
 
 apiIp()
+
+
+
+
+// function Verdetalhes(link) {
+//     const id = link.getAttribute('data-id');
+//     DetalhesPedido(id)
+
+// }
+
