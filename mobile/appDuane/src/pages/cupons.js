@@ -78,7 +78,7 @@ export default function Home() {
       .then(response =>{
         setCupons(response.data);
         console.log(response.data);
-        setId(response.data);
+        // setId(response.data);
       })
       .catch(error =>{
         console.log(error)
@@ -151,7 +151,7 @@ export default function Home() {
                     Todos os Cupons:
                   </Text>
                   {cupons.map(cup =>(
-                    <View style={styles.btn}>
+                    <View style={styles.btn} key={cup.id}>
                     <View
                       style={{
                         justifyContent: "space-between",
