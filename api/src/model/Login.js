@@ -124,10 +124,10 @@ export default class Login {
         try {
             const loginResul = await bd.query(`SELECT senha FROM login WHERE pessoa_id = ?`, [this._id_pessoa]);
             const senhaResult = loginResul[0][0].senha;
-            
+
             const compare = await bcrypt.compare(this._nova_senha, senhaResult)
             const compareSenha = await bcrypt.compare(this._senha, senhaResult)
-            if(!compareSenha){
+            if (!compareSenha) {
                 return "Senha atual incorreta"
             }
             if (compare) {
@@ -166,7 +166,7 @@ export default class Login {
         }
     }
 
-        //PRECISA ADICIONAR UM VERIFICAÇÃO NA FUNÇÃO VERIFICA LOGIN PARA QUE SE O USUARIO FOR INATIVO RETORNAR
+    //PRECISA ADICIONAR UM VERIFICAÇÃO NA FUNÇÃO VERIFICA LOGIN PARA QUE SE O USUARIO FOR INATIVO RETORNAR
     async VerificaLogin() {
         const bd = await obterConexaoDoPool();
         try {
@@ -176,6 +176,9 @@ export default class Login {
             }
             const senhaResult = loginResul[0][0].senha;
             const compare = await bcrypt.compare(this._senha, senhaResult)
+            console.log(compare)
+            console.log(senhaResult)
+            console.log(this._senha)
             if (!compare) {
                 return false
             }
@@ -218,21 +221,17 @@ export default class Login {
     async primeiroLogin() {
         const bd = await obterConexaoDoPool();
         try {
-            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario =?;`,[this._usuario])
+            const loginResul = await bd.query(`SELECT * FROM login WHERE usuario =?;`, [this._usuario])
             const login = loginResul[0][0]
-            if(login === undefined){
+            if (login === undefined) {
                 return "User Invalid"
             }
-         
-            if(login.primeiro_login == 1){
-                const salt = await bcrypt.genSalt(12);
-                const passwordHash = await bcrypt.hash(this._senha, salt);
-                const updateSenha = await bd.query(`UPDATE login SET senha =? WHERE usuario =?;`, [passwordHash,this._usuario])
-                const updateStatus = await bd.query(`UPDATE login SET primeiro_login =? WHERE usuario =?;`, [this._p_log,this._usuario])
-                return true
-            }else{
-                return "Esse login não é o primeiro acesso"
-            }
+            const salt = await bcrypt.genSalt(12);
+            const passwordHash = await bcrypt.hash(this._senha, salt);
+            const updateSenha = await bd.query(`UPDATE login SET senha =? WHERE usuario =?;`, [passwordHash, this._usuario])
+            const updateStatus = await bd.query(`UPDATE login SET primeiro_login =? WHERE usuario =?;`, [this._p_log, this._usuario])
+            return true
+
 
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -292,7 +291,7 @@ export default class Login {
             bd.release();
         }
     }
-    
+
 
 
     verificaCampos() {
@@ -302,16 +301,16 @@ export default class Login {
         return true
     }
     validaCampos() {
-        console.log(!this._usuario || !this._senha ||!this._nova_senha)
-        console.log(this._usuario,this._senha,this._nova_senha)
+        console.log(!this._usuario || !this._senha || !this._nova_senha)
+        console.log(this._usuario, this._senha, this._nova_senha)
         console.log(this._id_pessoa)
-        if (!this._id_pessoa || !this._senha ||!this._nova_senha) {
+        if (!this._id_pessoa || !this._senha || !this._nova_senha) {
             return false
         }
         return true
     }
     validaCamposADM() {
-        if (!this._usuario || !this._senha || ! this._id_perfil) {
+        if (!this._usuario || !this._senha || !this._id_perfil) {
             return false
         }
         return true

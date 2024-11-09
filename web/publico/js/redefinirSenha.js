@@ -1,21 +1,22 @@
-
-
 // Acesse a URL atual
 const urlParams = new URLSearchParams(window.location.search);
 
 // Recupere o valor do parâmetro 'token'
 const token = urlParams.get('token');
-console.log("Opa", token)
+
 // Verifique se o token foi encontrado
 if (token) {
     console.log("Token recebido:", token);
     // Aqui você pode usar o token para enviar ao backend
+    localStorage.setItem("token", token);
 } else {
     console.log("Token não encontrado na URL.");
 }
 
 
 async function RedefinirSenha() {
+    isTokenExpired()
+    console.log("Abriu")
     const login = document.getElementById("login").value
     const senha = document.getElementById("senha").value;
     const confirmSenha = document.getElementById("confirmSenha").value;
