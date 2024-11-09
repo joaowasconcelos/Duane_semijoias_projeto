@@ -7,13 +7,11 @@ dotenv.config()
 const ResetControler = {
     resetSenha: async (req,res) => {
         try {
-            const {email} = req.params
-            console.log("TESTE",email)
+            console.log(req.body)
+            const {email} = req.body
             const oLog = new Login(null, email)
-             console.log("OIiiii",oLog)
             const ID = oLog.procuraID()
             const secretKey = process.env.SECRET_KEY;
-             console.log("Key Secreta",secretKey)
             const token = jwt.sign({ id: ID }, secretKey, { expiresIn: "1h" })
             console.log("Token di trem",token)
             const transporter = nodemailer.createTransport({
