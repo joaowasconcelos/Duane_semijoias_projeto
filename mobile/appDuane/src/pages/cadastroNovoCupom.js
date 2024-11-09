@@ -33,8 +33,8 @@ export default function Home() {
   const navigation = useNavigation();
   const [descricao, setDescricao] = useState("");
   const [codigo, setCodigo] = useState("");
-  const [quantidade, setQuantidade] = useState("");
-  const [valor, setValor] = useState("");
+  const [quantidade, setQuantidade] = useState(null);
+  const [valor, setValor] = useState(0);
 
 
   let [fontsLoaded] = useFonts({
@@ -64,17 +64,13 @@ export default function Home() {
       return;
     }
     try{
-      console.log("oii",descricao);
-      console.log(quantidade);
-      console.log(valor);
-      console.log(codigo);
       const token = await AsyncStorage.getItem('userToken');
       await api.post("/CreateCupom", 
       {
-        descricao: descricao,
-        quantidade: quantidade,
-        valor: valor,
-        codigo: codigo,
+        Descricao: descricao,
+        Quantidade: quantidade,
+        Valor: valor,
+        Codigo: codigo,
       },
       {
         headers: {
@@ -87,7 +83,7 @@ export default function Home() {
         setQuantidade(response.data);
         setValor(response.data);
         console.log(response.data);
-        alert("Cupom cadastrado com sucesso!")
+        alert("Cupom cadastrado com sucesso!");
       })
       .catch(error => {
         console.log("algum tipo de erro",error);
@@ -99,7 +95,8 @@ export default function Home() {
   }
 
   useEffect(()=>{
-    getToken()
+    getToken();
+    cadastraCupom();
   },[]);
 
   if (!fontsLoaded) {
@@ -213,13 +210,13 @@ export default function Home() {
                     >
                       <TouchableOpacity
                         style={styles.btn}
-                        onChangeText={() => {}}
+                        
                       >
                         <Text style={styles.textButton}>Cancelar</Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.btn}
-                        onPress={cadastraCupom}
+                        onPress={()=>cadastraCupom()}
                       >
                         <Text style={styles.textButton}>Salvar</Text>
                       </TouchableOpacity>
