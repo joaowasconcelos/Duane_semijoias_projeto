@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> 
 <html lang="pt-br">
 
 <head>
@@ -32,22 +32,24 @@
     <main>
 
 
-        <div class="container1" id="links">
-            <!-- Botão para abrir o carrinho (offcanvas) -->
-            
-            <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling"
-                aria-labelledby="offcanvasScrollingLabel">
-                <div class="offcanvas-header">
-                    <h5 id="offcanvasScrollingLabel">Carrinho de Compras</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        <div class="offcanvas offcanvas-end" tabindex="-1" id="offcanvasScrolling" aria-labelledby="offcanvasScrollingLabel">
+            <div class="offcanvas-header">
+                <h5 id="offcanvasScrollingLabel">Carrinho de Compras</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+            </div>
+            <div class="offcanvas-body">
+                <ul id="cart-list"></ul>
+                <div id="empty-cart-message" class="alert alert-info" style="display: none">
+                    Adicione itens ao carrinho
                 </div>
-                <div class="offcanvas-body">
-                    <ul id="cart-list"></ul>
-                    <div>Total: R$ <span id="total">0.00</span></div>
-                </div>
-                <a id="bot" href="http://127.0.0.1:5501/publico/html/carrinho.html">Finalizar compras</a>
+                <div>Total: R$ <span id="total">0.00</span></div>
+            </div>
+            <div class="offcanvas-footer">
+                <a id="bot" href="http://127.0.0.1:5501/publico/html/carrinho.html" onclick="verificarLogin(event)">Finalizar compras</a>
             </div>
         </div>
+        
+        
 
         <div class="container2">
             
@@ -58,7 +60,7 @@
                     <i id="lupa" class="fa-solid fa-magnifying-glass"></i>
                 </div>
                 <!-- Filtros -->
-                <h3 id="filtros" onclick="">Maior preço</h3>
+                <h3 id="filtros" onclick="MaiorValor()">Maior preço</h3>
                 <h3 id="filtros" onclick="">Menor preço</h3>
                 <h3 id="filtros" onclick="">Mais vendidos</h3>
                 <h3 id="filtros" onclick="">Meus favoritos</h3>

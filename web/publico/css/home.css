@@ -2,15 +2,14 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: "Cormorant Garamond", serif;
-    color: #4D4D4D;
 }
 
 body {
     display: flex;
     flex-direction: column;
-    min-height: 100vh;
     background-color: #f7f7f7;
+    width: 100%;
+    height: 100%;
 }
 
 main {
@@ -72,7 +71,6 @@ main {
 .card-button svg:hover {
     color: #AE4B67;
 }
-
 
 #procurar {
     border-radius: 5px;
@@ -225,19 +223,43 @@ img.card-img-top {
     cursor: not-allowed;
 }
 
-#bot {
+.offcanvas-footer {
+    position: relative;
     padding: 10px;
-    font-size: 17px;
-    margin-left: 150px;
-    border: 1px;
-    border-radius: 5px;
-    border-color: #AE4B67;
-    text-decoration: none;
-    color: #050505;
-    background-color: #AE4B67;
-    width: 140px;
-    margin-bottom: 10px;
+    text-align: center; 
 }
+
+#bot {
+    position: absolute; 
+    bottom: 0;
+    left: 50%; 
+    transform: translateX(-50%);
+    padding: 10px 20px;
+    font-size: 16px;
+    border: 2px solid #AE4B67;
+    border-radius: 8px;
+    color: #ffffff;
+    background-color: #AE4B67;
+    width: 250px;
+    text-align: center;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+
+#bot:hover {
+    background-color: #9c3e54; 
+    border-color: #9c3e54;
+    cursor: pointer; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+}
+
+
+#bot:focus {
+    outline: none; 
+    box-shadow: 0 0 5px 2px rgba(174, 75, 103, 0.5); 
+}
+
 
 #set {
     border: none;
@@ -255,8 +277,10 @@ img.card-img-top {
 .cart-item {
     display: flex;
     align-items: center;
-    padding: 10px;
+    width: 100%;
+    padding: 20px;
     border-bottom: 1px solid #e0e0e0;
+    position: relative;
 }
 
 .cart-item-img {
@@ -268,12 +292,43 @@ img.card-img-top {
 }
 
 .cart-item-info {
+    top: 0;
+    margin-left: 60px;
     flex-grow: 1;
-    font-size: 14px;
+    font-size: 15px;
+    position: absolute
 }
 
+.cart-item-quantity {
+    flex-grow: 1;
+    font-size: 14px;
+    padding: 5px 10px;  
+    border: 2px solid #ccc; 
+    border-radius: 4px;  /* Cantos arredondados */
+    background-color: #f8f8f8;  /* Cor de fundo mais clara */
+    transition: border-color 0.3s, background-color 0.3s; /* Transição suave nas mudanças */
+    text-align: center;  /* Centraliza o texto */
+    box-sizing: border-box;  /* Garante que o padding e a borda não aumentem a largura total */
+}
+.cart-item:hover {
+    background-color: #f9f9f9;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.cart-item-quantity:focus {
+    outline: none;  /* Remove o contorno padrão */
+    border-color: #007bff;  /* Borda azul ao focar */
+    background-color: #e6f7ff;  /* Cor de fundo azul claro ao focar */
+}
+
+.cart-item-quantity::-webkit-outer-spin-button,
+.cart-item-quantity::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+
 .cart-item-remove {
-    background-color: #fb7575;
     color: #fff;
     border: none;
     padding: 5px;
@@ -281,9 +336,13 @@ img.card-img-top {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+.cart-item-remove img {
+    width: 24px; 
+    height: 24px; 
+}
 
 .cart-item-remove:hover {
-    background-color: #e04747;
+    background-color: #c59b9b;
 }
 
 /* Responsividade */

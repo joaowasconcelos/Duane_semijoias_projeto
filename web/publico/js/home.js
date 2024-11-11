@@ -11,24 +11,32 @@ document.addEventListener("DOMContentLoaded", function () {
             offcanvasInstance.show();
         });
     } else {
-        console.warn("Botão do offcanvas não encontrado.");
+        console.log("Botão do offcanvas não encontrado.");
     }
+
+    // Adicionando o evento para garantir que a tela preta desapareça ao fechar
+    document.getElementById('offcanvasScrolling').addEventListener('hidden.bs.offcanvas', function () {
+        const overlay = document.querySelector('.offcanvas-backdrop');
+        if (overlay) {
+            overlay.remove(); // Remove o overlay
+        }
+    });
 
     let products = [];
     apiIp()
     function apiIp() {
-        const ip = `http://10.0.3.77:3000/`
+        const ip = `http://192.168.3.9:3000/`
         localStorage.setItem('ip', ip);
     }
 
-    $("#prevPage").click(function() {
+    $("#prevPage").click(function () {
         if (currentPage > 1) {
             currentPage--;
             fetchProducts();
         }
     });
 
-    $("#nextPage").click(function() {
+    $("#nextPage").click(function () {
         if (currentPage < Math.ceil(totalRows / rowsPerPage)) {
             currentPage++;
             fetchProducts();
@@ -74,21 +82,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    // function displayProducts(products) {
-    //     const productList = document.getElementById('cardGrid');
-    //     productList.innerHTML = '';
-
-    //     products.forEach(product => {
-    //         const card = newCard(product);
-    //         productList.innerHTML += card;
-    //     });
-    // }
 
     function newCard(element) {
         return `
             <div class="card h-100">
                 <div class="card-img-top">
-                    <img src="${element.imagens[0] || '../img/imgTest.jpeg'}" alt="Imagem do produto" class="product-image" id="productImage-${element.id}" />
+                    <img src="${element.imagens[0]}" alt="Imagem do produto" class="product-image" id="productImage-${element.id}" />
                     <button onclick="showPrevImage(${element.id})">Anterior</button>
                     <button onclick="showNextImage(${element.id})">Próximo</button>
                 </div>
@@ -106,7 +105,12 @@ document.addEventListener("DOMContentLoaded", function () {
                             fill="currentColor" 
                             class="bi bi-cart" 
                             viewBox="0 0 16 16"
-                            onclick="addToCart({ id: ${element.id}, nome_produto: '${element.nome_produto}', preco_normal: ${element.preco_normal.replace(',', '.')} })"
+                            onclick="addToCart({ 
+                                id: ${element.id}, 
+                                img: '${element.imagens[0]}', 
+                                nome_produto: '${element.nome_produto}', 
+                                preco_normal: '${element.preco_normal.replace(',', '.')}'
+                            })"
                             style="cursor: pointer;"
                         >
                             <path d="M0 1.5A.5.5 0 0 1 .5 1H2a.5.5 0 0 1 .485.379L2.89 3H14.5a.5.5 0 0 1 .491.592l-1.5 8A.5.5 0 0 1 13 12H4a.5.5 0 0 1-.491-.408L2.01 3.607 1.61 2H.5a.5.5 0 0 1-.5-.5M3.102 4l1.313 7h8.17l1.313-7zM5 12a2 2 0 1 0 0 4 2 2 0 0 0 0-4m7 0a2 2 0 1 0 0 4 2 2 0 0 0 0-4m-7 1a1 1 0 1 1 0 2 1 1 0 0 1 0-2m7 0a1 1 0 1 1 0 2 1 1 0 0 1 0-2"/>
@@ -153,7 +157,54 @@ document.addEventListener("DOMContentLoaded", function () {
     };
 
     fetchProducts();
-  });
+
+    // Adiciona evento à caixa de entrada de pesquisa
+    document.getElementById('procurar').addEventListener('input', function () {
+        const nomeParaFiltrar = this.value.toLowerCase();
+        Filter(nomeParaFiltrar);
+    });
 
 
+    async function Filter(nomeParaFiltrar) {
+        try {
+            const response = await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`);
+            const data = response.data; // Obtenha os dados da resposta
+            const dadosFiltrados = data.filter(item => item.nome_produto.toLowerCase().includes(nomeParaFiltrar));
+
+            const productList = document.getElementById('cardGrid');
+            productList.innerHTML = ''; // Limpa a lista de produtos exibida
+
+            dadosFiltrados.forEach(product => {
+                const card = newCard(product);
+                productList.innerHTML += card;
+            });
+        } catch (error) {
+            console.error('Erro ao buscar produtos:', error);
+        }
+    }
+
+
+
+    // async function MaiorValor() {
+    //     try {
+    //         const response = await axios.get(`${localStorage.getItem("ip")}SelecionaProdutoMaior`);
+    //         console.log(response);
+
+    //         const data = response.data;
+
+    //         const productList = document.getElementById('cardGrid');
+    //         productList.innerHTML = ''; 
+
+
+    //         data.forEach(item => {
+    //             const card = newCard(item); 
+    //             productList.appendChild(card); 
+    //         });
+
+    //     } catch (error) {
+    //         console.error('Erro ao buscar produtos:', error);
+    //     }
+    // }
+
+});
 
