@@ -15,7 +15,7 @@ import ProdutoController from "../controllers/Produto.js";
 import FeedbackController from "../controllers/Feedback.js";
 import ResetControler from "../controllers/ReqSenha.js";
 import { logout } from "../middleware/authenticateJWT.js";
-import { upload,handleImageUpload} from "../middleware/imagens.js";
+// import { upload,handleImageUpload} from "../middleware/imagens.js";
 
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
@@ -26,7 +26,7 @@ routerUser.post("/CreateADM",authenticateJWT,authenticatePerfil,CadastroADM.Cada
 routerUser.post("/CreateCategoria",authenticateJWT,authenticatePerfil,CategoriaController.Cadastro);//ADM
 // routerUser.post("/CreatePromocao",authenticateJWT,authenticatePerfil,PromocaoController.Cadastro);//ADM 
 routerUser.post("/CreateCupom",authenticateJWT,authenticatePerfil,CuponsController.CreateCupons)//ADM
-routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
+// routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array("imagem",5),handleImageUpload,ProdutoController.cadastro)//ADM
 routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
 routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
 routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO

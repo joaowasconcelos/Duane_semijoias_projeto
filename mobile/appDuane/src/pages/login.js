@@ -11,7 +11,7 @@ import {
   TextInput,
   Modal
 } from "react-native";
-import { useNavigation } from "@react-navigation/native";
+import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
@@ -31,15 +31,17 @@ import {
 import api from "../services/api/api"
 
 export default function Login() {
+  // const route = useRoute();
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  
 
   const redefinirSenha = ()=>{
     setModalVisible(true)
   }
 
-  const navigateHome = () => {
-    navigation.navigate("Home");
+  const navigateHome = (id) => {
+    navigation.navigate("Home", {id: id});
   };
 
   const [email, setEmail] = useState("");
@@ -157,7 +159,9 @@ export default function Login() {
                 </TouchableOpacity>
               </View>
 
-              <TouchableOpacity style={styles.btn} onPress={verificaUser}>
+              <TouchableOpacity style={styles.btn} onPress={
+                navigateHome
+              }>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>
             </View>
