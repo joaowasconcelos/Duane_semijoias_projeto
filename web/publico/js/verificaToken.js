@@ -44,20 +44,3 @@ function isTokenValid(token) {
 }
 
 
-
-// function checkTokenPeriodically() {
-//     const tokenString = localStorage.getItem('token');
-//     if (!tokenString) {
-//         showNotification("Faça o login para acessar");
-//         window.location.href = '/publico/html/login.html';
-//     }
-//     const interval = setInterval(() => {
-//         if (isTokenExpired()) {
-//             clearInterval(interval);
-//             showNotification("Sua sessão expirou. Redirecionando para a página de login.");
-//             window.location.href = '/publico/html/login.html';
-//         }
-//     }, 60000); // Verifica a cada 1 minuto
-// }
-
-// checkTokenPeriodically();
