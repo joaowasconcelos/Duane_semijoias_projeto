@@ -26,6 +26,7 @@ export default function Home() {
   const [categories, setCategories] = useState([]); // Estado para armazenar categorias
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [novaCate, setNovaCate] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -48,12 +49,19 @@ export default function Home() {
   useEffect(() => {
     getToken();
     selecionaCate();
+
   }, []);
 
   const selecionaCate = async () => {
     try {
+      const token = await AsyncStorage.getItem("userToken");
       await api.get(
-        `/SelecionaCategoria`
+        `/SelecionaCategoria`,
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
+        }
       )
       .then(response => {
         setCategories(response.data);
@@ -67,18 +75,48 @@ export default function Home() {
     }
   };
 
+  const createCate = async () =>{
+    if(!novaCate === ""){
+      alert("Preencha a nova Categoria!");
+      return;
+    }
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.post(
+        `/CreateCategoria`,
+        {
+          tipo: novaCate
+        },
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
+        }
+      )
+      .then(response => {
+        setNovaCate(response.data);
+        console.log(response.data);
+        alert("Categoria criada com sucesso!");
+        setModalVisible(false);
+      })
+      .catch(error => {
+        console.error("Erro ao criar categoria", error);
+      })
+    } catch (error) {
+      console.error("Erro ao criar nova categoria", error);
+    }
+  }
+
   if (!fontsLoaded) {
     return null; // ou um carregador
   }
 
   const handleAddCat = () => {
-    setCategories();
+    // setCategories();
     setModalVisible(true);
   };
 
-  const saveAddCat = () => {
-    setModalVisible(false);
-  };
+  
 
   return (
     <SafeAreaView style={styles.androidSafeArea}>
@@ -164,6 +202,8 @@ export default function Home() {
                 </Text>
                 <TextInput
                   style={styles.inputModal}
+                  onChangeText={setNovaCate}
+                  value={novaCate}
                   placeholder="Insira aqui a nova categoria"
                 />
                 <View
@@ -176,12 +216,14 @@ export default function Home() {
                   }}
                 >
                   <TouchableOpacity style={styles.btnModal} onPress={()=> {
-                    saveAddCat();
                     setModalVisible(false);
                   }}>
                     <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Cancelar</Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.btnModal} onPress={()=>setModalVisible(false)}>
+                  <TouchableOpacity style={styles.btnModal} onPress={()=>{
+                    createCate();
+                    
+                  }}>
                     <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Salvar</Text>
                   </TouchableOpacity>
                 </View>

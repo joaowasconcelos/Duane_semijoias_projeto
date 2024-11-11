@@ -7,13 +7,12 @@ dotenv.config();
 const LoginController = {
     VerificaLogin: async (req, res) => {
         try {
-
+            console.log("OIIIIIIIIIIII")
             const secretKey = process.env.SECRET_KEY;
             if (!secretKey) {
                 return res.status(401).send("Chave secreta não configurada.");
             }
             const { login, senha } = req.query
-
             const cLogin = new Login(null, login, senha)
             const verificaCampos = cLogin.verificaCampos()
             if (!verificaCampos) {
@@ -28,12 +27,12 @@ const LoginController = {
             if (verificaLogin === "Usuario Inativo") {
                 return res.status(500).json({ error: "Usuário inativado" })
             }
-           
+
             if (verificaLogin[0].primeiro_login === 1) {
                 return res.status(202).json({ message: "Primeiro Login desse usuário, precisa redefinir a senha", })
             }
 
-            
+
             const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
             console.log(token)
             return res.json({ auth: true, token: token })
@@ -45,16 +44,15 @@ const LoginController = {
 
     PrimeiroLogin: async (req, res) => {
         try {
-            const { login, senha } = req.body; 
-        
+            const { login, senha } = req.body;
             if (senha == null || senha === "undefined" || senha.length > 50) {
                 return res.status(400).json({ error: "Insira uma senha válida " })
             }
 
             const cLogin = new Login(null, login, senha, 0)
             const definirSenha = await cLogin.primeiroLogin()
-            if(definirSenha === "User Invalid"){
-                return res.status(401).json({error:"Usuario Inválido"})
+            if (definirSenha === "User Invalid") {
+                return res.status(401).json({ error: "Usuario Inválido" })
             }
             console.log(definirSenha)
             return res.json({ message: "Senha definida com sucesso!" })
@@ -129,14 +127,14 @@ const LoginController = {
         }
     },
 
-    RecuperarSenha: async (req,res) => {
+    RecuperarSenha: async (req, res) => {
         try {
-            
+
         } catch (error) {
-            
+
         }
     }
-      
+
 }
 
 export default LoginController

@@ -78,7 +78,7 @@ routerUser.get("/SelecionaProdutoCate/:id",ProdutoFavController.Seleciona);
 routerUser.get("/logout",logout);
 
 //ResetSenha
-routerUser.get("/ResetSenha/:email",ResetControler.resetSenha);//USUARIO
+routerUser.post("/ResetSenha",ResetControler.resetSenha);//USUARIO
 
 export default routerUser;  
 

@@ -262,3 +262,36 @@ body {
 .container button.bot2:hover{
     background-color: #F784B9;
 }
+/* Estilos para o fundo do modal */
+.modal {
+    display: none; /* O modal fica oculto inicialmente */
+    position: fixed;
+    z-index: 100000000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* Fundo transparente escuro */
+  }
+  
+  /* Estilos para o conteúdo do modal */
+  .modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 300px;
+    text-align: center;
+    position: relative;
+  }
+  
+  /* Botão de fechar o modal */
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    font-size: 20vh;
+    font-weight: bold;
+    cursor: pointer;
+  }
+  
