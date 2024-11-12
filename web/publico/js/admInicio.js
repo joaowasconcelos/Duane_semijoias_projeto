@@ -309,19 +309,3 @@ async function DetalhesPedido(id) {
     }
 }
 
-function apiIp() {
-    const ip = "http://10.0.3.77:3000/"
-    localStorage.setItem('ip', ip);
-}
-
-apiIp()
-
-
-
-
-// function Verdetalhes(link) {
-//     const id = link.getAttribute('data-id');
-//     DetalhesPedido(id)
-
-// }
-

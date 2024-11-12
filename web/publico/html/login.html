@@ -79,8 +79,7 @@
                 <span>ou use seu email e senha</span>
                 <input type="email" placeholder="Email" id="username">
                 <input type="password" placeholder="Senha" id="password">
-                <a href="#">Esqueceu sua senha?</a>
-                <!-- <div class="g-recaptcha" data-sitekey="SUA_SITE_KEY"></div> -->
+                <a href="#" onclick="abrirModal()">Esqueceu sua senha?</a>
                 <button id="acessar" class="bot">Acessar</button>
             </form>
         </div>
@@ -102,6 +101,16 @@
                         </button>
                     </a>
                 </div>
+            </div>
+        </div>
+        <!-- Modal -->
+        <div id="modal" class="modal">
+            <div class="modal-content">
+                <span class="close" onclick="fecharModal()">❌</span>
+                <h2>Redefinir Senha</h2>
+                <p>Insira seu e-mail para redefinir a senha.</p>
+                <input type="email" placeholder="Seu e-mail" id="email">
+                <button onclick="enviarEmail()">Enviar</button>
             </div>
         </div>
 
@@ -195,6 +204,49 @@
                 showNotification('Erro inesperado. Verifique a conexão e os dados de entrada.');
             }
         });
+
+        //MOdal
+        function abrirModal() {
+            document.getElementById("modal").style.display = "block";
+        }
+
+        function fecharModal() {
+            document.getElementById("modal").style.display = "none";
+        }
+
+        window.onclick = function (event) {
+            const modal = document.getElementById("modal");
+            if (event.target === modal) {
+                fecharModal();
+            }
+        };
+
+        async function enviarEmail() {
+            const email = document.getElementById('email').value;
+            if (!email) {
+                alert('Por favor, insira um e-mail.');
+                return;
+            }
+            try {
+                await axios.post(
+                    `http://10.0.3.94:3000/ResetSenha`, {
+                    email: email
+                }
+                ).then(response => {
+                    console.log(response)
+                    if (response.status === 200) {
+                        showNotification("Email enviado com sucesso!");
+                        fecharModal();
+                    }
+                }).catch(error => {
+                    showNotification("Erro ao mandar email");
+                    console.log(error)
+                })
+            } catch (error) {
+                console.log("OIII")
+            }
+        }
+
     </script>
 
 </body>

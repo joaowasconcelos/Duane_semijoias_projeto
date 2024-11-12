@@ -11,7 +11,7 @@ function parseJwt(token) {
 function isTokenExpired() {
     const tokenString = localStorage.getItem('token');
     if (!tokenString) {
-        window.location.href = '/publico/html/login.html';
+        window.location.href = 'web/publico/html/login.html';
     }
     const token = parseJwt(tokenString);
     const currentTime = Math.floor(Date.now() / 1000);
@@ -24,14 +24,14 @@ document.addEventListener('DOMContentLoaded', async () => {
         const interval = setInterval(() => {
             if (isTokenExpired()) {
                 clearInterval(interval)
-                window.location.href = '/publico/html/login.html';
-                alert("Sessão inspirada faça o login novamente");
+                window.location.href = '/web/publico/html/login.html';
+                alert("Sessão inspirada");
             }
         }, 1); // Verifica a cada 1 minuto
     } else {
         console.log("Invalid token or no token found. Redirecting to login.");
-        window.location.href = '/publico/html/login.html';
-        alert("Sessão inspirada faça o login novamente");
+        window.location.href = '/web/publico/html/login.html';
+        alert("Sessão inspirada ");
     }
 });
 
@@ -44,20 +44,3 @@ function isTokenValid(token) {
 }
 
 
-
-// function checkTokenPeriodically() {
-//     const tokenString = localStorage.getItem('token');
-//     if (!tokenString) {
-//         showNotification("Faça o login para acessar");
-//         window.location.href = '/publico/html/login.html';
-//     }
-//     const interval = setInterval(() => {
-//         if (isTokenExpired()) {
-//             clearInterval(interval);
-//             showNotification("Sua sessão expirou. Redirecionando para a página de login.");
-//             window.location.href = '/publico/html/login.html';
-//         }
-//     }, 60000); // Verifica a cada 1 minuto
-// }
-
-// checkTokenPeriodically();

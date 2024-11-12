@@ -1,8 +1,16 @@
-// Carrega o carrinho do localStorage, ou inicializa como um array vazio se não houver nada
-let cart = JSON.parse(localStorage.getItem('cart')) || [];
+let cart = localStorage.getItem('cart');
+if (cart && cart !== "undefined") {
+    try {
+        cart = JSON.parse(cart);
+    } catch (e) {
+        console.error("Erro ao fazer parse do cart do localStorage:", e);
+        cart = []; 
+    }
+} else {
+    cart = []; 
+}
+console.log(cart)
 
-// Salva o carrinho no localStorage
-localStorage.setItem('cart', JSON.stringify(cart));
 
 // Atualiza a exibição do carrinho
 function updateCart() {
@@ -18,8 +26,8 @@ function updateCart() {
         const precoNormalFormatado = parseFloat((item.preco_normal || '0').toString().replace(',', '.')).toFixed(2);
 
         // Imagem do produto
-        const imag = document.createElement('imag');
-        imag.src = Array.isArray(item.imagens) && item.imagens.length > 0 ? item.imagens[0] : '../img/imgTest.jpeg';
+        const imag = document.createElement('img');
+        imag.src = item.img || '../img/imgTest2.jpg';
         imag.alt = item.nome_produto;
         imag.classList.add('cart-item-img');
         li.appendChild(imag);
@@ -39,13 +47,14 @@ function updateCart() {
         input.onchange = (e) => updateQuantity(item.id, e.target.value);
         li.appendChild(input);
 
-        // Botão para remover o item
         const removeButton = document.createElement('button');
-        removeButton.img = '../img/trash-fill-svgrepo-com.png';
+        const removeIcon = document.createElement('img');
+        removeIcon.src = '../img/trash-fill-svgrepo-com.png'; 
+        removeIcon.alt = 'Remover item do carrinho';
+        removeButton.appendChild(removeIcon);
         removeButton.classList.add('cart-item-remove');
         removeButton.onclick = () => removeFromCart(item.id);
         li.appendChild(removeButton);
-
         cartList.appendChild(li);
     });
 
@@ -60,11 +69,10 @@ function updateCart() {
     localStorage.setItem('cart', JSON.stringify(cart));
 }
 
-// Adiciona produto ao carrinho
 function addToCart(product) {
     const cartItem = cart.find(item => item.id === product.id);
     showNotification('Produto adicionado ao carrinho');
-    
+
     if (cartItem) {
         cartItem.quantity++;
     } else {
@@ -91,4 +99,12 @@ function removeFromCart(productId) {
 // Chama esta função para exibir o carrinho ao abrir o offcanvas
 function openCart() {
     updateCart();
+}
+
+function verificarLogin(event) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showNotification('Você precisa estar logado para realizar uma compra!');
+        event.preventDefault();  // Impede a navegação
+    }
 }

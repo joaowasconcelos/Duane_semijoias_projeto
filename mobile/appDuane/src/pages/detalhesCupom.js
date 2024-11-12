@@ -60,11 +60,8 @@ export default function Home() {
   };
 
   const [detalhesCupom, setDetalhesCupom] = useState([]);
-
   const selecionaDetalhesCup = async () => {
-    try {
-      console.log( "id aqui", id);
-      
+    try {      
       const token = await AsyncStorage.getItem('userToken');
       await api.get(`/selecionaCupons/${id}`,{
         headers: {
@@ -73,14 +70,12 @@ export default function Home() {
       })
       .then(response=>{
         setDetalhesCupom(response.data);  
-        console.log("aqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqqq",response.data);
-        
+        console.log(response.data);
       })
       .catch((error) => {
           console.error("Erro ao recuperar os detalhes do cupom", error);
         }
       );
-      
     } catch (error) {
       console.error("Erro ao buscar as clientes:", error);
     }
