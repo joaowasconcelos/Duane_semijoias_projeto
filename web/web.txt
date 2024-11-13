@@ -21,3 +21,22 @@ Paginas a fazer para essa Sprint (web)
 
 MOBILE
 PAGINAS PRONTAS FALTA INTEGRAÇÃO COM A API
+
+**11/11 (O que falta)
+***Home e usuario
+-Filtros 
+-Pagamento 
+-Carrinho 
+-Feedback
+-Meus Favoritos
+-Meus dados 
+-Meus endereço(Validação de CEP)
+
+*** ADM
+-Catalogo de produto(Editar e excluir)
+-Cupons ADM(excluir e editar)
+-Todos clientes(Filtro e modal de detalhes)
+
+***MOBILE (toda aplicação está dando erro de token)
+-Não consegui cadastrar um produtos (campo valor trocar o formato(se eu digitar uma letra ele aceita?))
+-Cadastro de funcionario (campo data trocar o formato)(No campo de perfil precisa alterar para um chekbox)

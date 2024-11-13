@@ -110,26 +110,32 @@
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
     <script src="../js/cart.js"></script>
     <script>
-        // Carrega o header e então inicia o código do carrinho
         document.addEventListener("DOMContentLoaded", function () {
-            // Carrega o header e adiciona o evento ao botão após o carregamento
+            // Carrega o header e então inicia o código do carrinho
             $('#header').load("./partials/header.html", function () {
+                // Certifique-se de que o botão foi carregado corretamente
                 const btn = document.querySelector('[data-bs-toggle="offcanvas"]');
                 if (btn) {
+                    // Adiciona o evento de clique ao botão
                     btn.addEventListener("click", function () {
                         const offcanvasElement = document.getElementById('offcanvasScrolling');
-                        const offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
-                        offcanvasInstance.show();
+                        if (offcanvasElement) {
+                            const offcanvasInstance = new bootstrap.Offcanvas(offcanvasElement);
+                            offcanvasInstance.show();
+                        } else {
+                            console.warn("Elemento offcanvas não encontrado.");
+                        }
                     });
                 } else {
                     console.warn("Botão do offcanvas não encontrado.");
                 }
             });
-            //está dando erro nessa linha 
-            //$('#meuModal').modal(options)
+    
+            // Carrega o footer
             $('#footer').load("./partials/footer.html");
         });
     </script>
+    
     <script src="../js/home.js" defer></script>
 </body>
 

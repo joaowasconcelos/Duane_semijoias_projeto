@@ -9,14 +9,11 @@ if (cart && cart !== "undefined") {
 } else {
     cart = []; 
 }
-console.log(cart)
-
 
 // Atualiza a exibição do carrinho
 function updateCart() {
     const cartList = document.getElementById('cart-list');
     cartList.innerHTML = ''; // Limpa a lista atual
-
     // Atualiza a lista de produtos no carrinho
     cart.forEach(item => {
         const li = document.createElement('li');
@@ -47,6 +44,7 @@ function updateCart() {
         input.onchange = (e) => updateQuantity(item.id, e.target.value);
         li.appendChild(input);
 
+        // Botão para remover item do carrinho
         const removeButton = document.createElement('button');
         const removeIcon = document.createElement('img');
         removeIcon.src = '../img/trash-fill-svgrepo-com.png'; 
@@ -93,18 +91,11 @@ function updateQuantity(productId, newQuantity) {
 // Remove um produto do carrinho
 function removeFromCart(productId) {
     cart = cart.filter(item => item.id !== productId);
+    localStorage.setItem('cart', JSON.stringify(cart));
     updateCart();
 }
 
 // Chama esta função para exibir o carrinho ao abrir o offcanvas
 function openCart() {
     updateCart();
-}
-
-function verificarLogin(event) {
-    const token = localStorage.getItem('token');
-    if (!token) {
-        showNotification('Você precisa estar logado para realizar uma compra!');
-        event.preventDefault();  // Impede a navegação
-    }
 }
