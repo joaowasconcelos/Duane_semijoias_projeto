@@ -88,8 +88,8 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="card h-100">
                 <div class="card-img-top">
                     <img src="${element.imagens[0]}" alt="Imagem do produto" class="product-image" id="productImage-${element.id}" />
-                    <button onclick="showPrevImage(${element.id})">Anterior</button>
-                    <button onclick="showNextImage(${element.id})">Próximo</button>
+                    <button id="botao" onclick="showPrevImage(${element.id})">Anterior</button>
+                    <button id="botao" onclick="showNextImage(${element.id})">Próximo</button>
                 </div>
                 <div class="card-body">
                     <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>

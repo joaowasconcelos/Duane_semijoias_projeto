@@ -63,7 +63,7 @@ function updateCart() {
         const precoNormal = parseFloat((item.preco_normal || '0').toString().replace(',', '.'));
         return sum + precoNormal * item.quantity;
     }, 0);
-    document.getElementById('total').textContent = `R$ ${total.toFixed(2)}`;
+    document.getElementById('total').textContent = `R$ ${total}`;
 
     // Salva o carrinho no localStorage
     localStorage.setItem('cart', JSON.stringify(cart));

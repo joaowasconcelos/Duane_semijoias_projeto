@@ -183,13 +183,15 @@ async function salvar() {
                 Senha: Senha
             }).then(response =>{
                 console.log(response)
+                showNotification('Cadastro realizado com sucesso!');
             }).catch(error =>{
                 console.log(error)
             })
+           
 
     } catch (error) {
         console.error('Erro ao cadastrar novo Usuario:', error);
-        alert("Ocorreu um erro ao cadastrar novo Usuario. Tente novamente.");
+        showNotification("Ocorreu um erro ao cadastrar novo Usuario. Tente novamente.");
     }
 
     //window.location.reload(true);

@@ -11,6 +11,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <link rel="stylesheet" href="../css/notificacao.css">
     <script src="../js/notificacao.js"></script>
+    <link rel="stylesheet" href="../css/notificacao.css">
 
     <link
         href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600&family=Rubik&family=Secular+One&display=swap"
@@ -224,7 +225,7 @@
         async function enviarEmail() {
             const email = document.getElementById('email').value;
             if (!email) {
-                alert('Por favor, insira um e-mail.');
+                showNotification('Por favor, insira um e-mail.');
                 return;
             }
             try {
