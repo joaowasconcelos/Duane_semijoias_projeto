@@ -21,7 +21,6 @@ const CuponsController = {
             if(!verificaCampos){
                 return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
-            console.log("aqui3")
             const insertCupom = await cCupom.CadastraCupom()
             console.log(insertCupom.error)
             if(insertCupom.error){
