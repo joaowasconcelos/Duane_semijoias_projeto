@@ -37,6 +37,7 @@ export default function Home() {
   const [quantidade, setQuantidade] = useState("");
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
+  const [modCupom, setModCupom] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -85,6 +86,42 @@ export default function Home() {
     getToken(); // Chama a função para obter o token
     selecionaDetalhesCup();
   }, []);
+
+  const modificaCate = async ()=>{
+    if(!codigo || !descricao || !quantidade || !valor === 0){
+      alert("Preencha todos os campos");
+      return;
+    }
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await api.put(`/ModificaCupom/${id}`,
+      {
+        "codigo": codigo,
+        "descricao": descricao,
+        "quantidade": quantidade,
+        "valor": valor
+      },
+      {
+        headers: {
+          'x-access-token': `${token}`,
+        }
+      })
+      .then(response => {
+        setModCupom(response.data);
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Erro ao modificar o cupom", error);
+      })
+    } catch (error) {
+      console.log("Erro do try", error);
+    }
+  }
+  // /ModificaCategoria/:id
+
+  const inativaCupom = async ()=>{
+
+  }
 
   if (!fontsLoaded) {
   } else {
@@ -159,21 +196,21 @@ export default function Home() {
                       style={{ width: "90%", justifyContent: "flex-start", marginTop: 10 }}
                     >
                       <Text style={styles.textBtn}>Código:</Text>
-                      <TextInput style={styles.Inputs}>{detalhesCup.codigo}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setCodigo} >{detalhesCup.codigo}</TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Quantidade:</Text>
-                      <TextInput style={styles.Inputs}>{detalhesCup.quantidade}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} >{detalhesCup.quantidade}</TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Descrição:</Text>
-                      <TextInput style={styles.Inputs}>{detalhesCup.descricao}</TextInput>
+                      <TextInput style={styles.Inputs} onChange={setDescricao} >{detalhesCup.descricao}</TextInput>
                     </View>
 
                     
@@ -184,7 +221,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs}>{detalhesCup.valor}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setValor} >{detalhesCup.valor}</TextInput>
                     </View>
 
                     <View
