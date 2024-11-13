@@ -2,6 +2,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let currentPage = 1; // Página inicial
     const rowsPerPage = 8; // Quantidade de linhas por página
     let totalRows = 0;
+    let cart = localStorage.getItem('cart');
 
     const btn = document.querySelector('[data-bs-toggle="offcanvas"]');
     if (btn) {
@@ -23,9 +24,11 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     let products = [];
+
     apiIp()
+
     function apiIp() {
-        const ip = `http://10.0.3.94:3000/`
+        const ip = `http://10.0.3.77:3000/`
         localStorage.setItem('ip', ip);
     }
 
@@ -58,9 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const startIndex = (currentPage - 1) * rowsPerPage;
                     const endIndex = startIndex + rowsPerPage;
                     const paginatedData = data.slice(startIndex, endIndex); // Dados da página atual
-
-                    // products = response.data;
-                    console.log(products)
+                
                     // displayProducts(products);
                     const productList = document.getElementById('cardGrid');
                     productList.innerHTML = '';
@@ -207,4 +208,13 @@ document.addEventListener("DOMContentLoaded", function () {
     // }
 
 });
+
+
+function verificarLogin(event) {
+    const token = localStorage.getItem('token');
+    if (!token) {
+        showNotification('Você precisa estar logado para realizar uma compra!');
+        event.preventDefault();  // Impede a navegação
+    }
+}
 

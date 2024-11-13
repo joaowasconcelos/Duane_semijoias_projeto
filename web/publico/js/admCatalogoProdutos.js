@@ -10,7 +10,7 @@ async function dados() {
             console.log("123")
 
             //função para mostrar o produto selecionado no modal
-            console.log(responseProd.data[0])
+            console.log(responseProd.data)
         }
 
     } catch (error) {
