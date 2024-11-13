@@ -1,7 +1,7 @@
 import multer from "multer";
 import admin from "firebase-admin";
 import serviceAccount from "../config/firebase.js";
-// import serviceAccount from "../config/firebase.json" assert { type: 'json' };
+//import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 // Inicializa o Firebase Admin SDK
 const bucketName = "teste-firebase-b05a9.appspot.com";
@@ -76,10 +76,10 @@ export const handleImageUpload = async (req, res, next) => {
 
 
 export async function listAllFilesId(produtos) {
+    console.log(produtos)
     for (const produto of produtos) {
         const urlsImagens = await Promise.all(produto.imagens.map(async (idImagem) => {
             const arquivo = bucket.file(idImagem);
-
             try {
                 const [url] = await arquivo.getSignedUrl({
                     action: 'read',
@@ -89,11 +89,9 @@ export async function listAllFilesId(produtos) {
                 
             } catch (error) {
                 console.warn(`Imagem ${idImagem} não encontrada no Firebase.`);
-                return null; // Retorna null se a imagem não for encontrada
+                return null; 
             }
         }));
-
-        // Substitui os IDs das imagens pelos URLs válidos e ignora as URLs nulas
         produto.imagens = urlsImagens.filter(url => url);
     }
 

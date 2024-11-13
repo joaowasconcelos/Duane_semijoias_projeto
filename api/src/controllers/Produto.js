@@ -1,7 +1,7 @@
 import Produto from "../model/Produto.js";
 import Preco from "../model/Preco.js"
 import Produto_img from "../model/Produto_img.js"
-// import { listAllFilesId } from "../middleware/imagens.js";
+import { listAllFilesId } from "../middleware/imagens.js";
 
 const ProdutoController = {
     cadastro: async (req, res) => {
@@ -104,12 +104,25 @@ const ProdutoController = {
                 produto.imagens = produto.imagens.split(',').map(img => img.trim());
             });
             const ListarImg = await listAllFilesId(selectProdutos);
-            return res.json(selectProdutos)
+            return res.json(selectProdutos) 
 
         } catch (error) {
             return res.status(500).json({ error: "Erro ao vizualizar produto!" })
         }
     },
+    // SelecionaProdutoId: async (req, res) => {
+    //     try {
+    //         const selectProdutos = await Produto.SelectProduto()
+    //         selectProdutos.forEach(produto => {
+    //             produto.imagens = produto.imagens.split(',').map(img => img.trim());
+    //         });
+    //         const ListarImg = await listAllFilesId(selectProdutos);
+    //         return res.json(selectProdutos) 
+
+    //     } catch (error) {
+    //         return res.status(500).json({ error: "Erro ao vizualizar produto!" })
+    //     }
+    // },
     SelecionaCate: async (req, res) => {
         try {
             const id = req.params
