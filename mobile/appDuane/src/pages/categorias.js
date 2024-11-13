@@ -27,6 +27,7 @@ export default function Home() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
   const [novaCate, setNovaCate] = useState("");
+  const [id, setId] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -49,7 +50,6 @@ export default function Home() {
   useEffect(() => {
     getToken();
     selecionaCate();
-
   }, []);
 
   const selecionaCate = async () => {
@@ -65,6 +65,7 @@ export default function Home() {
       )
       .then(response => {
         setCategories(response.data);
+        console.log(response.data);
       })
       .catch(error => {
         console.error("Erro ao selecionar categorias", error);
@@ -116,6 +117,31 @@ export default function Home() {
     setModalVisible(true);
   };
 
+  const InativaCategoria = async (id) =>{
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.post(`/InativaCategoria/${id}`,
+        {
+          id: id, 
+        },
+        {
+        headers: {
+          'x-access-token': `${token}`,
+        }
+      })
+      .then(response=>{
+        setId(response.data)
+        console.log(response.data);
+        alert("Categoria inativada com sucesso!");
+      })
+      .catch(error => {
+        console.error("Erro ao inativar categoria", error);
+      })
+    } catch (error) {
+      console.log("Erro ao inativar categoria", error);
+    }
+  }
+
   
 
   return (
@@ -166,7 +192,7 @@ export default function Home() {
                     <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{category.tipo}</Text>
                   </View>
 
-                  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }}>
+                  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={()=>InativaCategoria(category.id)}>
                     <Text style={styles.textBtn}>Excluir:</Text>
                     <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
                   </TouchableOpacity>

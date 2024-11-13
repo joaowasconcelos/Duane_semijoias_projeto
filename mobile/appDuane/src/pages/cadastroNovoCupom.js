@@ -96,7 +96,6 @@ export default function Home() {
 
   useEffect(()=>{
     getToken();
-    cadastraCupom();
   },[]);
 
   if (!fontsLoaded) {
@@ -178,7 +177,7 @@ export default function Home() {
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Quantidade:</Text>
-                      <TextInput onChangeText={setQuantidade} value={quantidade} style={styles.Inputs}></TextInput>
+                      <TextInput onChangeText={setQuantidade} value={quantidade} keyboardType="numeric" style={styles.Inputs}></TextInput>
                     </View>
 
                     <View
@@ -196,7 +195,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs} onChangeText={setValor} value={valor}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setValor} keyboardType="numeric" value={valor}></TextInput>
                     </View>
 
                     <View
