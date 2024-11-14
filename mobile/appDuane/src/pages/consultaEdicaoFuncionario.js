@@ -9,12 +9,12 @@ import {
   Platform,
   ScrollView,
   TextInput,
-  Modal
+  Modal,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
-import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from "@react-native-async-storage/async-storage";
 
 import AppLoading from "expo-app-loading";
 import {
@@ -28,7 +28,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-import api from "../services/api/api"
+import api from "../services/api/api";
 
 export default function Home() {
   const navigation = useNavigation();
@@ -42,19 +42,17 @@ export default function Home() {
     EBGaramond_800ExtraBold,
   });
 
-
-  const pressDetails = () =>{
+  const pressDetails = () => {
     setModalVisible(true);
+  };
 
-  }
-
-  const navegaCadastroFuncionario = () =>{
-    navigation.navigate('CadastroFuncionario')
-  }
+  const navegaCadastroFuncionario = () => {
+    navigation.navigate("CadastroFuncionario");
+  };
 
   const getToken = async () => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
+      const token = await AsyncStorage.getItem("userToken");
       if (token !== null) {
         console.log("Token recuperado:", token);
       } else {
@@ -68,22 +66,20 @@ export default function Home() {
   const [funcionarios, setFuncionarios] = useState([]);
   const selecionaCate = async () => {
     try {
-      const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/SelecionaFuncionarios`,
-        {
+      const token = await AsyncStorage.getItem("userToken");
+      await api
+        .get(`/SelecionaFuncionarios`, {
           headers: {
-            'x-access-token': `${token}`,
-          }
-        }
-      )
-      .then(response=>{
-        setFuncionarios(response.data);
-        console.log(response.data);
-      })
-      .catch(error=>{
-        console.log(error);
-      })
-      
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((response) => {
+          setFuncionarios(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
     } catch (error) {
       console.error("Erro ao buscar as clientes:", error);
     }
@@ -94,6 +90,12 @@ export default function Home() {
     selecionaCate();
   }, []);
 
+  const [detalhesFuncionario, setDetalhesFuncionaro] = useState([]);
+  const buscaId = (id) => {
+    const item = funcionarios.find((item) => item.id === id);
+    setDetalhesFuncionaro([item]);
+    pressDetails();
+  };
 
   if (!fontsLoaded) {
   } else {
@@ -132,66 +134,123 @@ export default function Home() {
               <Text style={styles.textTitle}>Funcionários</Text>
             </View>
 
-            <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <TextInput placeholder='Pesquise pelo nome ou idade' style={styles.Inputs}>
-              </TextInput>
-              <TouchableOpacity style={{margin: 5}} onPress={navegaCadastroFuncionario}>
-                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30}/>
-
+            <View
+              style={{
+                width: "100%",
+                alignItems: "center",
+                justifyContent: "center",
+                flexDirection: "row",
+              }}
+            >
+              <TextInput
+                placeholder="Pesquise pelo nome ou idade"
+                style={styles.Inputs}
+              ></TextInput>
+              <TouchableOpacity
+                style={{ margin: 5 }}
+                onPress={navegaCadastroFuncionario}
+              >
+                <FontAwesome6 name="circle-plus" color="#ae4b67" size={30} />
               </TouchableOpacity>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-              {funcionarios.map(funci => (
+                {funcionarios.map((funci) => (
                   <View key={funci.id} style={styles.btn}>
-                    <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '60%' }}>
-                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                    <View
+                      style={{
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        width: "60%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
                         <View>
                           <Text style={styles.textBtn}>Nome:</Text>
                           <Text style={{}}>{funci.nome}</Text>
                         </View>
-
                       </View>
 
-                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
+                      <View
+                        style={{
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#FAADD1",
+                          width: "100%",
+                        }}
+                      />
 
-                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
                         <View style={{ marginRight: 40 }}>
                           <Text style={styles.textBtn}>Data nascimento:</Text>
                           <Text style={styles.textElement}>
-                            {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(funci.data_nasc))}
+                            {new Intl.DateTimeFormat("pt-BR", {
+                              day: "2-digit",
+                              month: "2-digit",
+                              year: "numeric",
+                            }).format(new Date(funci.data_nasc))}
                           </Text>
                         </View>
                       </View>
-                      <View style={{ borderBottomWidth: 2, borderBottomColor: '#FAADD1', width: '100%' }} />
-                      <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
+                      <View
+                        style={{
+                          borderBottomWidth: 2,
+                          borderBottomColor: "#FAADD1",
+                          width: "100%",
+                        }}
+                      />
+                      <View
+                        style={{
+                          justifyContent: "space-between",
+                          alignItems: "center",
+                          flexDirection: "row",
+                          width: "100%",
+                        }}
+                      >
                         <View style={{ marginRight: 40 }}>
                           <Text style={styles.textBtn}>Numero:</Text>
                           {funci.numeros ? (
-                            funci.numeros.split(',').map(num => (
-                              <Text>{num}</Text>
-                            ))
+                            funci.numeros
+                              .split(",")
+                              .map((num) => <Text>{num}</Text>)
                           ) : (
                             <Text>Número não disponível</Text>
                           )}
-
                         </View>
                       </View>
                     </View>
 
-                    <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 90 }} 
-                    onPress={()=>{pressDetails()}}
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                        marginTop: 90,
+                      }}
+                      onPress={() => buscaId(funci.id)}
                     >
-                      <FontAwesome6 name="person-circle-question" color="#ae4b67" size={40} />
+                      <FontAwesome6
+                        name="person-circle-question"
+                        color="#ae4b67"
+                        size={40}
+                      />
                     </TouchableOpacity>
-
                   </View>
-
                 ))}
-              
-
-                
               </View>
             </ScrollView>
             <Modal
@@ -202,97 +261,147 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 20,
-                      color: "#ae4b67",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Detalhes do Funcionário
-                  </Text>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Nome:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Categoria"
-                      readOnly
-                    >Kevin Moreira</TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Idade:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Produto"
-                      readOnly
-                    >23</TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Status:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Insira uma quantidade Quantidade"
-                      readOnly
-                    >Ativo</TextInput>
-                  </View>
-                  
-                  
-                  <View
-                    style={{
-                      width: "100%",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      flexDirection: "row",
-                      marginBottom: 5,
-                    }}
-                  >
-                    <TouchableOpacity
-                      style={styles.btnModal}
-                      onPress={() => {
-                        // saveProduto();
-                        setModalVisible(false);
+              {detalhesFuncionario.map((detalhesFunci) => {
+                <View style={styles.modalContainer} key={detalhesFunci.id}>
+                  <View style={styles.modalContent}>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 20,
+                        color: "#ae4b67",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Detalhes do Funcionário
+                    </Text>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
                       }}
                     >
                       <Text
                         style={{
+                          fontSize: 18,
                           fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#FFF",
-                          fontSize: 20,
+                          color: "#E5969C",
                         }}
                       >
-                        Cancelar
+                        Nome:
                       </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.btnModal}
-                      onPress={() => setModalVisible(false)}
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Categoria"
+                        readOnly
+                      >
+                        {detalhesFunci.nome}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
                     >
                       <Text
                         style={{
+                          fontSize: 18,
                           fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#FFF",
-                          fontSize: 20,
+                          color: "#E5969C",
                         }}
                       >
-                        Salvar
+                        Data de Nascimento:
                       </Text>
-                    </TouchableOpacity>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Produto"
+                        readOnly
+                      >
+                        {new Intl.DateTimeFormat("pt-BR", {
+                          day: "2-digit",
+                          month: "2-digit",
+                          year: "numeric",
+                        }).format(new Date(detalhesFunci.data_nasc))}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#E5969C",
+                        }}
+                      >
+                        Status:
+                      </Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="status"
+                        readOnly
+                      >
+                        Ativo
+                      </TextInput>
+                    </View>
+
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        marginBottom: 5,
+                      }}
+                    >
+                      <TouchableOpacity
+                        style={styles.btnModal}
+                        onPress={() => {
+                          // saveProduto();
+                          setModalVisible(false);
+                        }}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: "EBGaramond_800ExtraBold",
+                            color: "#FFF",
+                            fontSize: 20,
+                          }}
+                        >
+                          Cancelar
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btnModal}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: "EBGaramond_800ExtraBold",
+                            color: "#FFF",
+                            fontSize: 20,
+                          }}
+                        >
+                          Salvar
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
-                </View>
-
-              </View>
+                </View>;
+              })}
             </Modal>
-
-
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -360,7 +469,7 @@ const styles = StyleSheet.create({
     // fontFamily: "EBGaramond_400Regular",
     fontSize: 14,
     textAlign: "center",
-    marginRight: 40
+    marginRight: 40,
   },
   textTitle: {
     fontFamily: "EBGaramond_800ExtraBold",
@@ -383,17 +492,17 @@ const styles = StyleSheet.create({
     marginTop: 50,
   },
   Inputs: {
-    width: '80%',
+    width: "80%",
     height: 30,
     fontSize: 18,
-    fontFamily: 'EBGaramond_400Regular',
+    fontFamily: "EBGaramond_400Regular",
     borderRadius: 5,
-    backgroundColor: '#FFF6F2',
+    backgroundColor: "#FFF6F2",
     padding: 5,
-    color: '#000000',
-    fontWeight: 'bold',
+    color: "#000000",
+    fontWeight: "bold",
     borderWidth: 1,
-    borderColor: '#CF90A2',
+    borderColor: "#CF90A2",
     margin: 5,
   },
   modalContainer: {
@@ -419,7 +528,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     borderWidth: 2,
-    borderColor: '#CF90A2'
+    borderColor: "#CF90A2",
   },
   inputModal: {
     borderWidth: 2,
@@ -432,9 +541,9 @@ const styles = StyleSheet.create({
     color: "#ae4b67",
     fontSize: 16,
     fontWeight: "bold",
-    height: 45
+    height: 45,
   },
-  btnModal:{
+  btnModal: {
     width: "45%",
     backgroundColor: "#E5969C",
     height: 40,
@@ -443,5 +552,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#9B5377",
     borderWidth: 1,
-  }
+  },
 });

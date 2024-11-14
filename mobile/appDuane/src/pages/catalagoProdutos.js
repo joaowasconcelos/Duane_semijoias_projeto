@@ -43,10 +43,6 @@ export default function Home() {
     setModalVisible(true);
   };
 
-  const saveProduto = () => {
-    setModalVisible(false);
-  };
-
   const getToken = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -284,8 +280,6 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
                         placeholder="Categoria"
                         readOnly
                       >
@@ -310,8 +304,6 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
                         placeholder="Produto"
                         readOnly
                       >
@@ -336,8 +328,6 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
                         placeholder="Valor"
                         readOnly
                       >
@@ -362,8 +352,6 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
                         placeholder="Valor"
                         readOnly
                       >
@@ -388,8 +376,6 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
                         placeholder="Descrição"
                         readOnly
                       >
