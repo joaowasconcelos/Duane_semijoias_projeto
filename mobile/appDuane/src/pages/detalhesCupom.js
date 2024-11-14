@@ -196,21 +196,21 @@ export default function Home() {
                       style={{ width: "90%", justifyContent: "flex-start", marginTop: 10 }}
                     >
                       <Text style={styles.textBtn}>Código:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setCodigo} >{detalhesCup.codigo}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setCodigo} value={detalhesCup.codigo}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Quantidade:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} >{detalhesCup.quantidade}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} value={detalhesCup.quantidade}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Descrição:</Text>
-                      <TextInput style={styles.Inputs} onChange={setDescricao} >{detalhesCup.descricao}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setDescricao} value={detalhesCup.descricao}></TextInput>
                     </View>
 
                     
@@ -221,7 +221,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs} onChangeText={setValor} >{detalhesCup.valor}</TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setValor} value={detalhesCup.valor}></TextInput>
                     </View>
 
                     <View
@@ -238,7 +238,7 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={() => {}}
+                        onChangeText={modificaCate}
                       >
                         <FontAwesome6 name="pen" size={40} color="#ae4b67" />
                       </TouchableOpacity>
