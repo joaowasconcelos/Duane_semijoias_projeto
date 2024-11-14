@@ -76,8 +76,8 @@
 
                 <form action="${localStorage.getItem(" ip")}CreateCupom" method="POST" id="envia-form">
 
-                    <label for="codigo">Código: *</label>
-                    <input class="input" type="text" name="codigo" id="codigo" required>
+                    <label for="Codigo">Código: *</label>
+                    <input class="input" type="text" name="Codigo" id="Codigo" required>
 
                     <label for="Descricao">Descrição: *</label>
                     <input class="input" type="text" name="Descricao" id="Descricao" required>
@@ -126,8 +126,11 @@
 
                     <div class="modal-body">
 
-                        <label class="labelModal" for="Codigo">Código do cupom:</label>
-                        <input type="text" class="inputModal" name="Codigo" id="Codigo" disabled>
+                        <label class="labelModal" for="id">ID :</label>
+                        <input type="text" class="inputModal" name="id" id="id" disabled>
+
+                        <label class="labelModal" for="codigo">Código do cupom:</label>
+                        <input type="text" class="inputModal" name="codigo" id="codigo" disabled>
 
                         <label class="labelModal" for="descricao">Descrição:</label>
                         <input type="text" class="inputModal" name="descricao" id="descricao">
@@ -147,7 +150,7 @@
 
                         <div class="btns">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary">Salvar alterações</button>
+                            <button type="button" class="btn btn-primary" onclick="saveModal()">Salvar alterações</button>
                         </div>
 
                     </div>
