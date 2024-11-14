@@ -20,8 +20,13 @@ document.addEventListener("DOMContentLoaded", function () {
         const overlay = document.querySelector('.offcanvas-backdrop');
         if (overlay) {
             overlay.remove(); // Remove o overlay
+            document.body.style.overflow = '';
         }
     });
+
+    // document.querySelector('[data-bs-dismiss="offcanvas"]').addEventListener('click', function () {
+    //     document.body.style.overflow = '';  // Restaura o estilo de rolagem do body
+    // });
 
     let products = [];
     apiIp()
@@ -59,7 +64,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     const startIndex = (currentPage - 1) * rowsPerPage;
                     const endIndex = startIndex + rowsPerPage;
                     const paginatedData = data.slice(startIndex, endIndex); // Dados da página atual
-                
+
                     // displayProducts(products);
                     const productList = document.getElementById('cardGrid');
                     productList.innerHTML = '';
@@ -209,10 +214,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function verificarLogin(event) {
+    console.log("aquiuqiuqiuquqiuq")
     const token = localStorage.getItem('token');
+    console.log(token)
     if (!token) {
-        showNotification('Você precisa estar logado para realizar uma compra!');
-        event.preventDefault();  // Impede a navegação
+        event.preventDefault();
+        localStorage.setItem('urlDestino', window.location.href = "carrinho.html");
+        window.location.href = "login.html";
+    } else {
+        window.location.href = "carrinho.html";
     }
 }
 
