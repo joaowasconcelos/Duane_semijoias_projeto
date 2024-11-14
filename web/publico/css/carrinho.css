@@ -68,20 +68,18 @@ main {
     text-align: center;
     margin-bottom:15px;
     margin-left: 300px;
-    margin-top: 50px;
+    margin-top: -40px;
 }
 
 #resPedido {
     width: 50%;
-    display: flex;
     justify-content: space-between;
     background-color: #ffffff;
     padding: 25px;
     border-radius: 12px;
     box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: box-shadow 0.3s ease;
-    display: flex;
-    flex-direction: row;
+    height: 60%;
 }
 
 #resPedido:hover {
@@ -94,15 +92,17 @@ main {
     color: #4B2D33;
     border-bottom: 3px solid #AE4B67;
     padding-bottom: 8px;
-    margin-bottom: 20px;
+    margin-bottom: 10px;
+   
 }
 
 /* Order Summary - Price */
 #order-items {
     list-style-type: none;
-    padding: 0;
-    display: flex;
-    flex-direction: row;
+    padding: 5px;
+    overflow-y: scroll;
+    max-height: 450px;
+    display: block;
 }
 /* dentro*/
 .order-item {
@@ -128,21 +128,25 @@ main {
 }
 
 .product-name {
-    font-size: 18px;
+    display: flex;
+    font-size: 15px;
+    width: 90px;
     color: #4B2D33;
     font-weight: 600;
+    margin-left: 5px;
 }
 
 /* Ajuste do preço */
 .price {
     display: flex;
     align-items: center;
+    margin-right: 20px;
 }
 
 .currency {
     font-size: 16px;
     color: #AE4B67;
-    margin-right: 5px;
+   padding: 5px;
 }
 
 .item-price {
@@ -156,6 +160,7 @@ main {
     display: flex;
     align-items: center;
     gap: 15px;
+    margin-right: 30px;
 }
 
 .quantity-control button {
@@ -185,8 +190,7 @@ main {
     font-size: 26px;
     font-weight: bold;
     color: #4B2D33;
-    margin-top: 20px;
-    border-top: 2px solid #e0e0e0;
+    margin-top: 30px;
     padding-top: 20px;
 }
 
@@ -211,10 +215,12 @@ main {
 
 .footer{
 position: relative;
+
 }
 
 #ondasFooter {
     position: absolute;
+    height: 40px;
     width: 100%;
     bottom: 0;
 }
@@ -250,19 +256,51 @@ position: relative;
     }
 }
 
-.product-image {
+#cart-list {
+    list-style: none;
+    padding: 0;
+    display: flex;
+    align-items: center;
     width: 100%;
+    border-bottom: 1px solid #e0e0e0;
+    position: relative;
+}
+
+
+.product-image {
+    width: 100px;
     /* A imagem ocupará 100% da largura do contêiner */
-    height: 200px;
+    height: 100px;
     /* Altura fixa para as imagens */
     object-fit: cover;
     /* Ajusta a imagem sem distorcer, cortando se necessário */
     border-radius: 8px;
     /*arredonda os cantos da imagem */
-    margin-top: -80px;
 }
 
 #Pbaixo {
     margin-top: 280px;
     margin-left: -150px;
+    text-align: center;
+}
+
+#pagamento {
+    display: flex;
+    flex-direction: row;
+    gap: 20px;
+}
+
+#PagePagamento {
+    background-color: #AE4B67;
+    /* color: #4B2D33; */
+    border: none;
+    border-radius: 10px;
+    font-size: 15px;
+    width: 50%;
+}
+
+#PagePagamento:hover {
+    background-color: #8b3a52;
+    color: #f5f5f5;
+    transform: scale(1.05);
 }

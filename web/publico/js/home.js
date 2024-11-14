@@ -85,6 +85,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     function newCard(element) {
+        console.log(element);
+        
         return `
             <div class="card h-100">
                 <div class="card-img-top">
