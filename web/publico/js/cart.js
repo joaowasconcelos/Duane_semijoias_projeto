@@ -99,3 +99,5 @@ function removeFromCart(productId) {
 function openCart() {
     updateCart();
 }
+
+updateCart();
