@@ -28,12 +28,12 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-import api from "../services/api/api"
+import api from "../services/api/api";
 
 export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
-  const [quantidade, setQuantidade] = useState([]);
+  const [id, setId] = useState("");
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -62,26 +62,43 @@ export default function Home() {
 
   useEffect(() => {
     getToken();
-    selecionaCate();
+    selecionaProduto();
   }, []);
   const [prod, setProd] = useState([]);
 
-  const selecionaCate = async () => {
+  const selecionaProduto = async () => {
     try {
-      await api.get(
-        `/SelecionaProduto`
-      )
-      .then(response=>{
-        setProd(response.data); // Atualiza o estado com as categorias recebidas
-        console.log(response.data)
-      })
-      .catch(error=>{
-        console.log("Erro ao selecionar categorias", error)
-      })
-      
+      const token = await AsyncStorage.getItem("userToken");
+      await api
+        .get(`/SelecionaProduto`, {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((response) => {
+          setProd(response.data); // Atualiza o estado com os produtos recebidos
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log("Erro ao selecionar categorias", error);
+        });
     } catch (error) {
       console.error("Erro ao buscar os produtos:", error);
     }
+  };
+
+  // useEffect(()=>{
+  //   return(
+      
+  //   )
+  // },[detalhesProduto]);
+  const [detalhesProduto, setDetalhesProduto] = useState([]);
+  const buscaId = (id) => {
+    const item = prod.find((item) => item.id === id);
+    console.log("qwerty: ",item);
+    setDetalhesProduto([item]);
+    pressBtnDetalhes();
+    console.log("set aqui", setDetalhesProduto);
   };
 
   let [fontsLoaded] = useFonts({
@@ -152,7 +169,7 @@ export default function Home() {
 
             <ScrollView>
               <View style={styles.containerElements}>
-                {prod.map(produto => (
+                {prod.map((produto) => (
                   <View key={produto.id} style={styles.btn}>
                     <View style={{}}>
                       <Image
@@ -187,7 +204,9 @@ export default function Home() {
                         </View>
                         <View>
                           <Text style={styles.textBtn}>Preço:</Text>
-                          <Text style={styles.textElement}>{produto.preco_promocional}</Text>
+                          <Text style={styles.textElement}>
+                            {produto.preco_promocional}
+                          </Text>
                         </View>
                       </View>
 
@@ -213,7 +232,7 @@ export default function Home() {
                         alignItems: "center",
                         height: "100%",
                       }}
-                      onPress={pressBtnDetalhes}
+                      onPress={() => buscaId(produto.id)}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6
@@ -234,97 +253,205 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.modalContainer}>
-                <View style={styles.modalContent}>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 20,
-                      color: "#ae4b67",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Detalhes do Produto
-                  </Text>
-                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Categoria:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Categoria"
-                      readOnly
-                    >Pulseira</TextInput>
-                  </View>
-                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Produto:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Produto"
-                      readOnly
-                    >Pulseira Estrela e Lua</TextInput>
-                  </View>
-                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Preço:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Insira uma quantidade Quantidade"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  <View style={{ width: '100%', justifyContent: 'center', alignItems: 'flex-start' }}>
-                    <Text style={{ fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C' }}>Imagens:</Text>
-                    <Text>Aqui será exibido as imagens</Text>
-                  </View>
-
-                  <View
-                    style={{
-                      width: "100%",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      flexDirection: "row",
-                      marginBottom: 5,
-                    }}
-                  >
-                    <TouchableOpacity
-                      style={styles.btnModal}
-                      onPress={() => {
-                        saveProduto();
-                        setModalVisible(false);
+              {detalhesProduto.map((detalhesProd) => (
+                <View style={styles.modalContainer} key={detalhesProd.id}>
+                  <View style={styles.modalContent}>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 20,
+                        color: "#ae4b67",
+                        fontWeight: "bold",
+                      }}
+                    >
+                      Detalhes do Produto
+                    </Text>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
                       }}
                     >
                       <Text
                         style={{
+                          fontSize: 18,
                           fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#FFF",
-                          fontSize: 20,
+                          color: "#E5969C",
                         }}
                       >
-                        Cancelar
+                        Categoria:
                       </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.btnModal}
-                      onPress={() => setModalVisible(false)}
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Categoria"
+                        readOnly
+                      >
+                        {detalhesProd.tipo}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
                     >
                       <Text
                         style={{
+                          fontSize: 18,
                           fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#FFF",
-                          fontSize: 20,
+                          color: "#E5969C",
                         }}
                       >
-                        Salvar
+                        Produto:
                       </Text>
-                    </TouchableOpacity>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Produto"
+                        readOnly
+                      >
+                        {detalhesProd.nome_produto}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#E5969C",
+                        }}
+                      >
+                        Preço Normal:
+                      </Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Valor"
+                        readOnly
+                      >
+                        {detalhesProd.preco_normal}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#E5969C",
+                        }}
+                      >
+                        Preço Promocional:
+                      </Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Valor"
+                        readOnly
+                      >
+                        {detalhesProd.preco_promocional}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#E5969C",
+                        }}
+                      >
+                        Descrição:
+                      </Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Descrição"
+                        readOnly
+                      >
+                        {detalhesProd.descricao}
+                      </TextInput>
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "flex-start",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontSize: 18,
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#E5969C",
+                        }}
+                      >
+                        Imagens:
+                      </Text>
+                      <Image
+                        source={{ uri: detalhesProd.imagens[0] }}
+                        style={{
+                          width: 70,
+                          height: 70,
+                          borderRadius: 5,
+                          margin: 5,
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "center",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        marginBottom: 5,
+                      }}
+                    >
+                      
+                      <TouchableOpacity
+                        style={styles.btnModal}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: "EBGaramond_800ExtraBold",
+                            color: "#FFF",
+                            fontSize: 20,
+                          }}
+                        >
+                          Fechar
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
                 </View>
-              </View>
+              ))}
             </Modal>
+            
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}
@@ -438,7 +565,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     width: "95%",
-    height: "60%",
+    height: "90%",
     elevation: 5,
     // shadowColor: '#000',
     shadowOffset: {
@@ -450,7 +577,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     borderWidth: 2,
-    borderColor: '#CF90A2'
+    borderColor: "#CF90A2",
   },
   inputModal: {
     borderWidth: 2,
@@ -463,7 +590,7 @@ const styles = StyleSheet.create({
     color: "#ae4b67",
     fontSize: 16,
     fontWeight: "bold",
-    height: 45
+    height: 45,
   },
   btnModal: {
     width: "45%",
@@ -474,5 +601,5 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     borderColor: "#9B5377",
     borderWidth: 1,
-  }
+  },
 });
