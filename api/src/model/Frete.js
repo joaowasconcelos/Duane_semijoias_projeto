@@ -37,7 +37,6 @@ export default class Frete {
             const freteResult = await bd.query(`INSERT INTO pessoa (acompanhamento,pedidos_id) VALUES (?, ?)`,
                 [this._acompanhamento, this._id_pedido]);
             const freteId = freteResult[0].insertId;
-            console.log('ID do frete', freteId);
             return freteId;
         } catch (error) {
             console.log('Erro na transação:', error);

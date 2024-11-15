@@ -76,7 +76,6 @@ export const handleImageUpload = async (req, res, next) => {
 
 
 export async function listAllFilesId(produtos) {
-    console.log(produtos)
     for (const produto of produtos) {
         const urlsImagens = await Promise.all(produto.imagens.map(async (idImagem) => {
             const arquivo = bucket.file(idImagem);

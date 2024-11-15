@@ -64,10 +64,7 @@ const CadastroUsuario = {
                 const insertLogin = await cLogin.CadastrarLogin();
                 if (!insertLogin.error) {
                     if (Telefones.length > 0) {
-                        console.log(Telefones);
                         for (const numeroTelefone of Telefones) {
-                            console.log(numeroTelefone);
-                            
                             // Cria uma nova instância da classe Telefone
                             const novoTelefone = new Telefone(null, numeroTelefone, insertPessoa);
                             
@@ -96,7 +93,6 @@ const CadastroUsuario = {
                         }
                     }
                 } else {
-                    console.log("teste")
                     const deletarPessoa = cPessoa.DeletarPessoa()
                     return res.status(400).json({ error: "Erro ao cadastrar o login. Verifique os dados fornecidos e tente novamente." });
                 }

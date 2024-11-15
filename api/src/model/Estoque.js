@@ -21,7 +21,7 @@ export default class Estoque {
         try {
           const estoqueResult = await bd.query(`INSERT INTO estoque (quantidade,produto_id) VALUES (?,?);`,[this._quantidade,this._idProduto])
           const estoqueId = estoqueResult[0].insertId;
-          console.log('ID do Estoque:', estoqueId);
+
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -49,7 +49,6 @@ export default class Estoque {
         const bd = await obterConexaoDoPool();
         try {
           const estoqueResult = await bd.query(`SELECT * FROM estoque;`)
-          console.log(estoqueResult);
         }
         catch (error) {
             console.log('Erro na transação:', error);

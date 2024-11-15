@@ -36,7 +36,6 @@ export default class Produto_Fav {
         try {
             const produtoFavResult = await bd.query(`INSERT INTO produtos_favoritos(produto_id,pessoa_id) VALUES (?,?);`, [this._id_produto, this._id_produto]);
             const produtoFavId = produtoFavResult[0].insertId;
-            console.log('ID do produto_favorito:', produtoFavId);
             return produtoFavId
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -49,9 +48,7 @@ export default class Produto_Fav {
     async DeleteProdutoFav() {
         const bd = await obterConexaoDoPool();
         try {
-            console.log(this._id_produto, this._id_pessoa)
             const produtoFavResult = await bd.query(`DELETE FROM produtos_favoritos WHERE produto_id =? AND pessoa_id = ?;`, [this._id_produto, this._id_pessoa]);
-            console.log(produtoFavResult);
             return produtoFavResult
         } catch (error) {
             console.log('Erro na transação:', error);

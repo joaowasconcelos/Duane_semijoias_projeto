@@ -90,11 +90,13 @@ export default function Home() {
     selecionaCate();
   }, []);
 
-  const [detalhesFuncionario, setDetalhesFuncionaro] = useState([]);
+  const [detalhesFuncionario, setDetalhesFuncionario] = useState([]);
   const buscaId = (id) => {
     const item = funcionarios.find((item) => item.id === id);
-    setDetalhesFuncionaro([item]);
+    console.log("item aqui", item);
+    setDetalhesFuncionario([item]);
     pressDetails();
+    console.log("set aqui",detalhesFuncionario);
   };
 
   if (!fontsLoaded) {
@@ -261,146 +263,207 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              {detalhesFuncionario.map((detalhesFunci) => {
+              {detalhesFuncionario.map((detalhesFunci)=>(
                 <View style={styles.modalContainer} key={detalhesFunci.id}>
-                  <View style={styles.modalContent}>
+                <View style={styles.modalContent}>
+                  <Text
+                    style={{
+                      textAlign: "center",
+                      fontSize: 20,
+                      color: "#ae4b67",
+                      fontWeight: "bold",
+                    }}
+                  >
+                    Detalhes do Funcionário
+                  </Text>
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                    }}
+                  >
                     <Text
                       style={{
-                        textAlign: "center",
-                        fontSize: 20,
-                        color: "#ae4b67",
-                        fontWeight: "bold",
+                        fontSize: 18,
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#E5969C",
                       }}
                     >
-                      Detalhes do Funcionário
+                      Nome:
                     </Text>
-                    <View
-                      style={{
-                        width: "100%",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder=""
+                      readOnly
                     >
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#E5969C",
-                        }}
-                      >
-                        Nome:
-                      </Text>
-                      <TextInput
-                        style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
-                        placeholder="Categoria"
-                        readOnly
-                      >
-                        {detalhesFunci.nome}
-                      </TextInput>
-                    </View>
-                    <View
-                      style={{
-                        width: "100%",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#E5969C",
-                        }}
-                      >
-                        Data de Nascimento:
-                      </Text>
-                      <TextInput
-                        style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
-                        placeholder="Produto"
-                        readOnly
-                      >
-                        {new Intl.DateTimeFormat("pt-BR", {
-                          day: "2-digit",
-                          month: "2-digit",
-                          year: "numeric",
-                        }).format(new Date(detalhesFunci.data_nasc))}
-                      </TextInput>
-                    </View>
-                    <View
-                      style={{
-                        width: "100%",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#E5969C",
-                        }}
-                      >
-                        Status:
-                      </Text>
-                      <TextInput
-                        style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
-                        placeholder="status"
-                        readOnly
-                      >
-                        Ativo
-                      </TextInput>
-                    </View>
-
-                    <View
-                      style={{
-                        width: "100%",
-                        justifyContent: "space-between",
-                        alignItems: "center",
-                        flexDirection: "row",
-                        marginBottom: 5,
-                      }}
-                    >
-                      <TouchableOpacity
-                        style={styles.btnModal}
-                        onPress={() => {
-                          // saveProduto();
-                          setModalVisible(false);
-                        }}
-                      >
-                        <Text
-                          style={{
-                            fontFamily: "EBGaramond_800ExtraBold",
-                            color: "#FFF",
-                            fontSize: 20,
-                          }}
-                        >
-                          Cancelar
-                        </Text>
-                      </TouchableOpacity>
-                      <TouchableOpacity
-                        style={styles.btnModal}
-                        onPress={() => setModalVisible(false)}
-                      >
-                        <Text
-                          style={{
-                            fontFamily: "EBGaramond_800ExtraBold",
-                            color: "#FFF",
-                            fontSize: 20,
-                          }}
-                        >
-                          Salvar
-                        </Text>
-                      </TouchableOpacity>
-                    </View>
+                      {detalhesFunci.nome}
+                    </TextInput>
                   </View>
-                </View>;
-              })}
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#E5969C",
+                      }}
+                    >
+                      CPF:
+                    </Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="status"
+                      readOnly
+                    >
+                      {detalhesFunci.cpf}
+                    </TextInput>
+                  </View>
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#E5969C",
+                      }}
+                    >
+                      Tipo:
+                    </Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="status"
+                      readOnly
+                    >
+                      {detalhesFunci.usuario}
+                    </TextInput>
+                  </View>
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#E5969C",
+                      }}
+                    >
+                      Data de Nascimento:
+                    </Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="Produto"
+                      readOnly
+                    >
+                      {new Intl.DateTimeFormat("pt-BR", {
+                        day: "2-digit",
+                        month: "2-digit",
+                        year: "numeric",
+                      }).format(new Date(detalhesFunci.data_nasc))}
+                    </TextInput>
+                  </View>
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#E5969C",
+                      }}
+                    >
+                      Telefones:
+                    </Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="status"
+                      readOnly
+                    >
+                      {detalhesFunci.numeros}
+                    </TextInput>
+                  </View>
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "flex-start",
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontSize: 18,
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#E5969C",
+                      }}
+                    >
+                      Tipo:
+                    </Text>
+                    <TextInput
+                      style={styles.inputModal}
+                      //value={}
+                      //onChangeText={}
+                      placeholder="status"
+                      readOnly
+                    >
+                      {detalhesFunci.tipo}
+                    </TextInput>
+                  </View>
+
+                  <View
+                    style={{
+                      width: "100%",
+                      justifyContent: "center",
+                      alignItems: "center",
+                      flexDirection: "row",
+                      marginBottom: 5,
+                    }}
+                  >
+                    <TouchableOpacity
+                      style={styles.btnModal}
+                      onPress={() => setModalVisible(false)}
+                    >
+                      <Text
+                        style={{
+                          fontFamily: "EBGaramond_800ExtraBold",
+                          color: "#FFF",
+                          fontSize: 20,
+                        }}
+                      >
+                        Salvar
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              </View>
+              ))}
             </Modal>
           </View>
           <Image
@@ -512,11 +575,12 @@ const styles = StyleSheet.create({
     backgroundColor: "rgba(0, 0, 0, 0.7)",
   },
   modalContent: {
-    backgroundColor: "#fff",
+
+    backgroundColor: "#FFF",
     borderRadius: 20,
     padding: 10,
     width: "95%",
-    height: "60%",
+    height: "80%",
     elevation: 5,
     // shadowColor: '#000',
     shadowOffset: {

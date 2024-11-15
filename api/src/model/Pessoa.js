@@ -57,7 +57,6 @@ export default class Pessoa {
             const pessoaResult = await bd.query(`INSERT INTO pessoa (nome, data_nasc, cpf, genero, data_cad) VALUES (?, ?, ?, ?, CURRENT_TIMESTAMP)`,
                 [this._nome, this._data_nasc, this._cpf, this._genero]);
             const pessoaId = pessoaResult[0].insertId;
-            console.log('ID da Pessoa:', pessoaId);
             this._id = pessoaId;
             return pessoaId;
         } catch (error) {
@@ -133,7 +132,6 @@ export default class Pessoa {
             GROUP BY 
                 p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
             LIMIT 0, 1000;`,[this._id]);
-            console.log(pessoaResult)
             return pessoaResult[0]
 
         } catch (error) {

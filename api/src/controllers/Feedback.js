@@ -28,7 +28,7 @@ const FeedbackController = {
             if (insertFeedback.error) {
                 return res.status(400).json({error: "Erro ao registrar feedback!"});
             }
-            console.log(insertFeedback)
+
             return res.status(201).json({ message: "feedback cadastrado com sucesso!" });
         } catch (error) {
             console.error(error);
@@ -49,8 +49,7 @@ const FeedbackController = {
             }
 
             const cFeedback = new Feedback(id_feedback, avaliacao, comentario, idProduto, id_pessoa);
-            console.log(cFeedback)
-    
+         
             const validaCampos = cFeedback.validaCampos()
             if (!validaCampos) {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });

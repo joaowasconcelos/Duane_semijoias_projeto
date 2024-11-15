@@ -17,7 +17,7 @@ const PromocaoController = {
             if (insertPromocao.error) {
                 return res.status(400).json({error: "Erro ao cadastrar promoção!"});
             }
-            console.log(insertPromocao)
+
             return res.status(201).json({ message: "Promoção cadastrada com sucesso!" });
         }catch (error) {
             console.error(error);
@@ -48,7 +48,6 @@ const PromocaoController = {
             const {id} = req.params
             const cPromocao = new Promocao(id);
             const DeletaPromocao = await cPromocao.DeletePromocao()
-            console.log(DeletaPromocao)
             if (DeletaPromocao.error) {
                 return res.status(400).json({ error: "Erro ao deletar promoção!"});
             }

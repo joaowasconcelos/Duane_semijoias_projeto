@@ -55,7 +55,6 @@ export default class Itens {
             const itensResult = await bd.query(`INSERT INTO itens (produto_id,quantidade,pedidos_id,preco_id) VALUES (?,?,?,?);`,
                 [this._ID_Produto,this._Quantidade,this._ID_Pedido,this._ID_Preço]);
             const itemId = itensResult[0].insertId;
-            console.log('ID do Item:', itemId);
             return itemId
         }
         catch (error) {

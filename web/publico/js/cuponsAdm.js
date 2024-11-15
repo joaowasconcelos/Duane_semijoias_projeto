@@ -112,6 +112,7 @@ async function salvar(event) {
     const Valor = document.getElementById("Valor").value;
     const Quantidade = document.getElementById("Quantidade").value;
 
+
     console.log(Codigo, Descricao, Valor, Quantidade)
 
     try {

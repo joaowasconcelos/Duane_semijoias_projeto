@@ -34,10 +34,7 @@
                     'x-access-token': `${token}`
                 }
             }).then(response => {
-                console.log("aqui", response)
                 if (response.data.message === "Token inválido") {
-                    console.log("aqui");
-
                     localStorage.removeItem('token');
                     localStorage.removeItem('userProfile');
                     window.location.href = 'login.html';
@@ -45,7 +42,6 @@
             }).catch(error=>{
                 console.log(error)
             });
-
         } catch (error) {
             console.log("aqui error");
             console.error('Erro ao verificar o token:', error);

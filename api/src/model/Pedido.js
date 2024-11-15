@@ -51,11 +51,9 @@ export default class Pedido {
     async CadastraPedido() {
         const bd = await obterConexaoDoPool();
         try {
-            console.log(this._id_pessoa, this._status, this._valor_total, this._id_cupons)
             const pedidoResult = await bd.query(`INSERT INTO pedidos (pessoa_id,status,valor_total,data_cad,cupons_id) VALUES (?, ?, ?,CURRENT_TIMESTAMP,?);`,
                 [this._id_pessoa, this._status, this._valor_total, this._id_cupons]);
             const pedidoId = pedidoResult[0].insertId;
-            console.log('ID do pedido:', pedidoId);
             return pedidoId
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -70,7 +68,6 @@ export default class Pedido {
         try {
             const pedidoResult = await bd.query(`UPDATE pedidos SET status =? WHERE id = ?;`,
                 [this._status, this._id]);
-            console.log(pedidoResult);
             return pedidoResult
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -85,7 +82,6 @@ export default class Pedido {
         try {
             const pedidoResult = await bd.query(`DELETE FROM pedidos WHERE id = ?;`,
                 [this._id]);
-            console.log(pedidoResult);
             return pedidoResult
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -99,7 +95,6 @@ export default class Pedido {
         const bd = await obterConexaoDoPool();
         try {
             const pedidoResult = await bd.query(`SELECT * FROM pedidos WHERE pessoa_id = ?;`, [this._id_pessoa]);
-            console.log(pedidoResult);
             return pedidoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);

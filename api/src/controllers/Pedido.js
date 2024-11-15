@@ -36,8 +36,7 @@ const PedidoController = {
 
                     const insertItens = await cItem.CadastraItens()
                     objItens.push(cItem);
-                    console.log(cItem);
-                    console.log(insertItens);
+
                 }));
             }
             const insertItem = await cItem.CadastraItens()
@@ -68,7 +67,6 @@ const PedidoController = {
             const {id} = req.params
             const cPedido = new Pedido(id)
             const DeletaPedido = await cPedido.DeletaPedido()
-            console.log(DeletaPedido)
             return res.status(201).json({ message: "Pedido deletado com sucesso!" });
         }catch (error) {
             console.error(error);
