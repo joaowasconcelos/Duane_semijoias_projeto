@@ -87,7 +87,22 @@ export default function Home() {
 
   const pressDetails = () =>{
     setModalVisible(true);
+  }
 
+  const [detalhesPedido, setDetalhesPedido] = useState([]);
+  const detalhesDoPedido = async ()=>{
+    try {
+      const token = await AsyncStorage.getItem('userToken');
+      await api.get(`/MeuPedido`,{
+        headers:{'x-access-token': `${token}`,}
+      })
+      .then(response => {
+        setDetalhesPedido(response.data);
+        console.log(response.data);
+      })
+    } catch (error) {
+      
+    }
   }
 
 
