@@ -155,7 +155,6 @@ export default class Login {
             const passwordHash = await bcrypt.hash(this._nova_senha, salt);
 
             const modificaSenha = await bd.query(`UPDATE login SET senha = ? WHERE id= ?`, [passwordHash, idResult])
-            console.log(modificaSenha)
             return "senha alterada com sucesso"
         }
         catch (error) {
@@ -176,9 +175,6 @@ export default class Login {
             }
             const senhaResult = loginResul[0][0].senha;
             const compare = await bcrypt.compare(this._senha, senhaResult)
-            console.log(compare)
-            console.log(senhaResult)
-            console.log(this._senha)
             if (!compare) {
                 return false
             }
@@ -248,7 +244,6 @@ export default class Login {
         const bd = await obterConexaoDoPool();
         try {
             const loginResul = await bd.query(`UPDATE login SET ativo = ? WHERE pessoa_id = ?;`, [0, this._id_pessoa]);
-            console.log(loginResul)
             return "Usuario Inativado"
         }
         catch (error) {
@@ -264,7 +259,6 @@ export default class Login {
         const bd = await obterConexaoDoPool();
         try {
             const loginResul = await bd.query(`UPDATE login SET ativo = ? WHERE pessoa_id = ?;`, [1, this._id_pessoa]);
-            console.log(loginResul)
             return "Usuario Ativado"
         }
         catch (error) {
@@ -301,9 +295,6 @@ export default class Login {
         return true
     }
     validaCampos() {
-        console.log(!this._usuario || !this._senha || !this._nova_senha)
-        console.log(this._usuario, this._senha, this._nova_senha)
-        console.log(this._id_pessoa)
         if (!this._id_pessoa || !this._senha || !this._nova_senha) {
             return false
         }

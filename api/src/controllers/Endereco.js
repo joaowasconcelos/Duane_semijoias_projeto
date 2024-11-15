@@ -12,7 +12,6 @@ const EnderecoController = {
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const insertEndereco = await cEndereco.CadastrarEndereco()
-            console.log(insertEndereco)
             if (insertEndereco.error) {
                 return res.status(500).json({
                     message: "Erro ao cadastrar um endereço",

@@ -85,7 +85,7 @@ const ProdutoController = {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const editaPreco = await cPreco.CadastraPreco()
-        
+
             if (insertPreco.error) {
                 return res.status(400).json({ message: "Erro ao cadastrar Produto!" });
             }
@@ -96,7 +96,7 @@ const ProdutoController = {
         }
     },
 
-//fazer validações
+    //fazer validações
     Seleciona: async (req, res) => {
         try {
             const selectProdutos = await Produto.SelectProduto()
@@ -104,25 +104,25 @@ const ProdutoController = {
                 produto.imagens = produto.imagens.split(',').map(img => img.trim());
             });
             const ListarImg = await listAllFilesId(selectProdutos);
-            return res.json(selectProdutos) 
+            return res.json(selectProdutos)
 
         } catch (error) {
             return res.status(500).json({ error: "Erro ao vizualizar produto!" })
         }
     },
-    // SelecionaProdutoId: async (req, res) => {
-    //     try {
-    //         const selectProdutos = await Produto.SelectProduto()
-    //         selectProdutos.forEach(produto => {
-    //             produto.imagens = produto.imagens.split(',').map(img => img.trim());
-    //         });
-    //         const ListarImg = await listAllFilesId(selectProdutos);
-    //         return res.json(selectProdutos) 
-
-    //     } catch (error) {
-    //         return res.status(500).json({ error: "Erro ao vizualizar produto!" })
-    //     }
-    // },
+    Deleta: async (req, res) => {
+        try {
+            const { id } = req.params
+            if (id === 0 || !id || id === '') {
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const cProduto = new Produto(id,null,0)
+            const InativaProduto = await cProduto.InativaProduto()
+            return res.status(200).json({ message: "Produto deletado com sucesso!" })
+        } catch (error) {
+            return res.status(500).json({ error: "Erro ao vizualizar produto!" })
+        }
+    },
     SelecionaCate: async (req, res) => {
         try {
             const id = req.params
@@ -157,7 +157,7 @@ const ProdutoController = {
             return res.status(500).json({ error: "Erro ao vizualizar produto!" })
         }
     },
-    selecionUmProduto: async (req,res) => {
+    selecionUmProduto: async (req, res) => {
         try {
             const id = req.params
             const cProduto = new Produto(id)

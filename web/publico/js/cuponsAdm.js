@@ -102,8 +102,11 @@ async function salvar(event) {
     event.preventDefault();
 
     const token = localStorage.getItem('token');
+    const Codigo = document.getElementById("Codigo").value;
+    const Descricao = document.getElementById("Descricao").value;
+    const Valor = document.getElementById("Valor").value;
+    const Quantidade = document.getElementById("Quantidade").value;
 
-    console.log(token);
 
     console.log(Codigo, Descricao, Valor, Quantidade)
 

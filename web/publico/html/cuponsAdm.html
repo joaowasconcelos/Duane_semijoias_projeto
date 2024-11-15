@@ -73,8 +73,8 @@
 
                 <p id="titulo2">Cadastrar novo cupom:</p>
 
+                <form action=`${localStorage.getItem("ip")}CreateCupom` method="POST" id="envia-form">
 
-                <form action="${localStorage.getItem(" ip")}CreateCupom" method="POST" id="envia-form">
 
                     <label for="Codigo">Código: *</label>
                     <input class="input" type="text" name="Codigo" id="Codigo" required>

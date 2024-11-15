@@ -91,7 +91,6 @@ export default class Endereco {
             const enderecoResult = await bd.query(`INSERT INTO endereco (cep,cidade,estado,logradouro,numero_endereco,complemento) VALUES (?,?,?,?,?,?);`,
                 [this._cep, this._cidade, this._estado, this._logradouro, this._numero, this._complemento]);
             const enderecoId = enderecoResult[0].insertId;
-            console.log('ID do Endereço:', enderecoId);
 
             const endereco_has_pessoa = await bd.query(`INSERT INTO endereco_has_pessoa (endereco_id,pessoa_id) VALUES (?,?);`, [enderecoId, this._id_pessoa])
             console.log(endereco_has_pessoa);
@@ -109,7 +108,6 @@ export default class Endereco {
         try {
             const enderecoResult = await bd.query(`UPDATE endereco SET cep=?, cidade=?,estado=?,logradouro=?,numero_endereco=?,complemento=?;`,
                 [this._cep, this._cidade, this._estado, this._logradouro, this._numero, this._complemento]);
-            console.log(enderecoResult);
         }
         catch (error) {
             console.log('Erro na transação:', error);

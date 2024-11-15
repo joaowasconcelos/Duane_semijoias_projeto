@@ -10,22 +10,19 @@ const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoa: async (req, res) => {
         try {
-            console.log(req.body)
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
-            console.log(Telefones)
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
 
             const vericaCampos = cPessoa.verificaCampos()
-            if(!vericaCampos){
-                return res.status(400).json({ error: "Numero máximo de caracteres "})
+            if (!vericaCampos) {
+                return res.status(400).json({ error: "Numero máximo de caracteres " })
             }
             const validaCampos = cPessoa.validaCampos()
-            if(!validaCampos){
+            if (!validaCampos) {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
 
             const verificaCPF = cPessoa.validaCpf()
-            console.log(verificaCPF)
             if (!verificaCPF) {
                 return res.status(400).json({ error: "Erro CPF invalido" });
             }
@@ -37,7 +34,7 @@ const CadastroUsuario = {
             cPessoa.Data_nasc = conversaoData;
 
             const verificarCPFBanco = await cPessoa.verificaCpf()
-            console.log(verificarCPFBanco)
+
             if (verificarCPFBanco) {
                 return res.status(400).json({ error: "Erro CPF ja cadastrado" });
             }
@@ -49,7 +46,7 @@ const CadastroUsuario = {
                 const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
 
                 const verificaEmail = await cLogin.VerificaUsuario()
-             
+
                 if (!verificaEmail) {
                     const deletarPessoa = cPessoa.DeletarPessoa()
                     return res.status(400).json({ error: "Erro Usuario ja cadastrado" });
@@ -61,14 +58,9 @@ const CadastroUsuario = {
                 }
                 const insertLogin = await cLogin.CadastrarLogin();
 
-                console.log(Telefones)
                 if (!insertLogin.error) {
-                    console.log("entrei")
-                    console.log(Telefones)
                     if (Telefones.length > 0) {
-                        console.log(Telefones)
                         for (const numeroTelefone of Telefones) {
-                            console.log("numeroTelefone",numeroTelefone)
                             const novoTelefone = new Telefone(null, numeroTelefone, insertPessoa);
                             insertTele = await novoTelefone.CadastrarTelefone();
                             if (insertTele.error) {
@@ -102,11 +94,11 @@ const CadastroUsuario = {
             const { Nome, Data_Nasc, Genero, Telefones } = req.body;
             const cPessoa = new Pessoa(id, Nome, Data_Nasc, null, Genero);
             const vericaCampos = cPessoa.verificaCamposEditarUsuario()
-            if(!vericaCampos){
-                return res.status(400).json({ error: "Numero máximo de caracteres "})
+            if (!vericaCampos) {
+                return res.status(400).json({ error: "Numero máximo de caracteres " })
             }
             const validaCampos = cPessoa.validaCamposEditarUsuario()
-            if(!validaCampos){
+            if (!validaCampos) {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
 
@@ -119,7 +111,7 @@ const CadastroUsuario = {
             for (const item of Telefones) {
                 const cTelefone = new Telefone(item.id, item.Numero);
                 const modificaTelefone = await cTelefone.ModificaTelefone(conn);
-        
+
                 if (modificaPessoa.error || modificaTelefone.error) {
                     await conn.rollback();
                     return res.status(400).json({ error: 'Erro ao editar dados' })
@@ -134,17 +126,17 @@ const CadastroUsuario = {
             return res.status(500).json({ error: 'Erro ao editar dados' })
         }
     },
-    Seleciona: async (req,res) => {
+    Seleciona: async (req, res) => {
         try {
-            const selectPessoa =  await Pessoa.Seleciona()
+            const selectPessoa = await Pessoa.Seleciona()
             return res.json(selectPessoa)
         } catch (error) {
             return res.status(500).json({ error: "Erro ao cadastrar produto!" })
         }
     },
-    SelecionaADM: async (req,res) => {
+    SelecionaADM: async (req, res) => {
         try {
-            const selectPessoa =  await Pessoa.SelecionaUsuariosAdm()
+            const selectPessoa = await Pessoa.SelecionaUsuariosAdm()
             return res.json(selectPessoa)
         } catch (error) {
             return res.status(500).json({ error: "Erro ao cadastrar produto!" })
@@ -152,23 +144,20 @@ const CadastroUsuario = {
     },
     SelecionaInfoId: async (req, res) => {
         try {
-            console.log("aqui")
             const id = req.id;
-            console.log(id);
             const cPessoa = new Pessoa(id);
             const selectPessoa = await cPessoa.SelecionaUsuarios();
-            console.log(selectPessoa);
-    
+
             if (!selectPessoa) {
                 return res.status(404).json({ error: "Usuário não encontrado!" });
             }
-    
+
             return res.json(selectPessoa); // Certifique-se de usar 'return' aqui
         } catch (error) {
             return res.status(500).json({ error: "Erro ao selecionar informações do usuário!" }); // 'return' garante que a resposta só seja enviada uma vez
         }
     }
-    
+
 }
 
 

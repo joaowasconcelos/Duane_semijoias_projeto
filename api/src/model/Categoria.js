@@ -37,7 +37,6 @@ export default class Categoria {
         try {
             const categoriaResult = await bd.query(`INSERT INTO categoria (tipo,status) VALUES (?,?)`,[this._tipo,this.status]);
             const categoriaId = categoriaResult[0].insertId;
-            console.log('ID da categoria:', categoriaId);
             return categoriaId
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -51,7 +50,7 @@ export default class Categoria {
         const bd = await obterConexaoDoPool();
         try {
             const categoriaResult = await bd.query(`UPDATE categoria SET tipo = ? WHERE id = ?`,[this._tipo,this._id]);
-            console.log(categoriaResult);
+    
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

@@ -65,7 +65,9 @@ export default class Cupons {
 		c.codigo,
 		c.status
         FROM 
-            cupons c;`)
+            cupons c
+        WHERE 
+        c.status =1;`)
             return cupomResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -97,6 +99,20 @@ export default class Cupons {
             bd.release();
         }
     }
+
+    async InativaCupom() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const cupomResult = await bd.query(`UPDATE cupons SET status=? WHERE id = ?` , [this._status,this._id])
+            return cupomResult[0]
+        } catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
 
     validaCampos() {
         if (!this._codigo || !this._descricao || !this._quantidade|| !this._valor ) {

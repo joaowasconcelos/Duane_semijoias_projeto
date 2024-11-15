@@ -12,17 +12,17 @@ const CuponsController = {
             const cCupom  = new Cupons(null,Codigo,Descricao,Quantidade,valor,1)
             
             const validaCampos = cCupom.validaCampos()
-            console.log(validaCampos)
+          
             if(!validaCampos){
                 return res.status(400).json({ message: "Dados inválidos fornecidos." });
             }
             const verificaCampos = cCupom.verificaCampos()
-            console.log(verificaCampos)
+      
             if(!verificaCampos){
                 return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const insertCupom = await cCupom.CadastraCupom()
-            console.log(insertCupom.error)
+       
             if(insertCupom.error){
                 return error
             }
@@ -31,7 +31,6 @@ const CuponsController = {
             res.status(500).json({ error: "Erro ao cadastrar cupom!" })
         }
     },
-
     Edita: async(req,res)=>{
         try {
             const {Descricao,Codigo,Quantidade,Valor,Status} = req.body
@@ -47,7 +46,7 @@ const CuponsController = {
                 return res.status(400).json({ error: "Numero máximo de caracteres "})
             }
             const updateCupom = await cCupom.ModificaCupom()
-            console.log(updateCupom.error)
+
             if(updateCupom.error){
                 return error
             }
@@ -67,15 +66,27 @@ const CuponsController = {
     },
     SelecionaDetalhes: async (req,res) => {
         try {
-            console.log(req.params)
             const {id} = req.params
             const cCupons = new Cupons(id)
             const selecionaPessoas = await cCupons.SelecionaCupomDetalhes()
-            console.log(selecionaPessoas)
             return res.json(selecionaPessoas);
         } catch (error) {
             console.error(error);
             res.status(500).json({ error: "Erro ao selecionar detalhes do cupons" });
+        }
+    },
+    Deletar:async(req,res)=>{
+        try {
+            const {id} = req.params
+            if(id === 0 || !id || id === ''){
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const cCupom = new Cupons(id,null,null,null,null,0)
+            const inativaCupom = await cCupom.InativaCupom()
+            return res.status(200).json({ message: "Cupom deletado com sucesso!" })
+        } catch (error) {
+            console.log(error)
+            return res.status(500).json({ error: "Erro ao excluir uma categoria" });
         }
     }
 }
