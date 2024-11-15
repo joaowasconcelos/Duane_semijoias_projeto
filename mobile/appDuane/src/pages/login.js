@@ -160,7 +160,7 @@ export default function Login() {
               </View>
 
               <TouchableOpacity style={styles.btn} onPress={
-                navigateHome
+                verificaUser
               }>
                 <Text style={styles.textBtn}>Entrar</Text>
               </TouchableOpacity>

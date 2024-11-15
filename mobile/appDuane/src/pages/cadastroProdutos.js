@@ -215,6 +215,7 @@ export default function Home() {
                   onChangeText={setPreco}
                   value={preco}
                   placeholder="Insira o preço"
+                  keyboardType="numeric"
                 />
               </View>
               <View style={{ width: '100%', padding: 3 }}>

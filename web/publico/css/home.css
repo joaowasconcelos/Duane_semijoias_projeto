@@ -357,3 +357,8 @@ img.card-img-top {
         grid-template-columns: 1fr;
     }
 }
+
+#botao {
+    align-items: center;
+    margin-left: 65px;
+}

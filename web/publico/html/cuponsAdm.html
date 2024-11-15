@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="../css/partials/headerAdm.css">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-    
+
     <script src="https://code.jquery.com/jquery-3.7.1.js"
         integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4=" crossorigin="anonymous"></script>
     <script src="../js/checkUserProfile.js"></script>
@@ -73,27 +73,27 @@
 
                 <p id="titulo2">Cadastrar novo cupom:</p>
 
-
                 <form action=`${localStorage.getItem("ip")}CreateCupom` method="POST" id="envia-form">
 
+
                     <label for="Codigo">Código: *</label>
-                    <input class="input" type="text" name="Codigo" id="Codigo">
+                    <input class="input" type="text" name="Codigo" id="Codigo" required>
 
                     <label for="Descricao">Descrição: *</label>
-                    <input class="input" type="text" name="Descricao" id="Descricao">
+                    <input class="input" type="text" name="Descricao" id="Descricao" required>
 
                     <label for="Valor">Valor do desconto: *</label>
                     <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
-                        onkeydown="return somenteNumeros(event)">
+                        onkeydown="return somenteNumeros(event)" required>
 
                     <label for="Quantidade">Quantidade: *</label>
-                    <input class="input" type="number" name="Quantidade" id="Quantidade">
+                    <input class="input" type="number" name="Quantidade" id="Quantidade" required>
 
                     <div id="btns">
 
-                        <button type="button" class="btn btn-primary save-changes"
-                            onclick="limparInput()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary save-changes" onclick="salvar(event)">Salvar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+
+                        <button type="submit" id="salvar" class="btn btn-primary save-changes" onclick="salvar(event); ">Salvar</button>
 
                     </div>
 
@@ -101,6 +101,62 @@
 
             </div>
 
+        </div>
+
+        <!-- Modal detalhes do cupom -->
+
+        <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog"
+            aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered" role="document">
+                <div class="modal-content">
+
+                    <div class="modal-header">
+
+                        <div class="elementosModal">
+
+                            <h5 class="modal-title" id="exampleModalLongTitle">Detalhes do cupom</h5>
+
+                            <button type="button" id="close" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                    <div class="modal-body">
+
+                        <label class="labelModal" for="id">ID :</label>
+                        <input type="text" class="inputModal" name="id" id="id" disabled>
+
+                        <label class="labelModal" for="codigo">Código do cupom:</label>
+                        <input type="text" class="inputModal" name="codigo" id="codigo" disabled>
+
+                        <label class="labelModal" for="descricao">Descrição:</label>
+                        <input type="text" class="inputModal" name="descricao" id="descricao">
+
+                        <label class="labelModal" for="quantidade">Quantidade:</label>
+                        <input type="text" class="inputModal" name="quantidade" id="quantidade">
+
+                        <label class="labelModal" for="valor">Valor:</label>
+                        <input type="text" class="inputModal" name="valor" id="valor">
+
+                        <label class="labelModal" for="status">Status:</label>
+                        <input type="text" class="inputModal" name="status" id="status">
+
+                    </div>
+
+                    <div class="modal-footer">
+
+                        <div class="btns">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                            <button type="button" class="btn btn-primary" onclick="saveModal()">Salvar alterações</button>
+                        </div>
+
+                    </div>
+
+                </div>
+            </div>
         </div>
 
 
