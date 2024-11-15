@@ -100,7 +100,6 @@ function limparInput() {
 async function salvar(event) {
     event.preventDefault();
     const token = localStorage.getItem('token');
-    console.log(token);
     const Codigo = document.getElementById("Codigo").value;
     const Descricao = document.getElementById("Descricao").value;
     const Valor = document.getElementById("Valor").value;
