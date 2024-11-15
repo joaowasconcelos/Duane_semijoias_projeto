@@ -7,13 +7,13 @@ dotenv.config()
 const ResetControler = {
     resetSenha: async (req,res) => {
         try {
-            console.log(req.body)
+    
             const {email} = req.body
             const oLog = new Login(null, email)
             const ID = oLog.procuraID()
             const secretKey = process.env.SECRET_KEY;
             const token = jwt.sign({ id: ID }, secretKey, { expiresIn: "1h" })
-            console.log("Token di trem",token)
+
             const transporter = nodemailer.createTransport({
                 host: "smtp.gmail.com",
                 port: 587,
@@ -34,7 +34,7 @@ const ResetControler = {
                 text: `Você solicitou mas n vai funcionar e so um teste a redefinição de sua senha. Use este link para redefinir sua senha: http://127.0.0.1:5500/web/publico/html/redefinirSenha.html?token=${token} `,
             })
 
-            console.log("EMAIL ENVIADO")
+           
             return res.status(200).json({ message: "Email Enviado" })
         } catch (error) {
             console.log("Erro ao enviar email", error)

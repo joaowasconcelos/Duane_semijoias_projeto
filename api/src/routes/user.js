@@ -33,7 +33,6 @@ routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 
 
 //Delete
-// routerUser.delete("/DeleteCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Deletar);
 // routerUser.delete("/DeletePromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Deletar);
 // routerUser.delete("/DeletePedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Deletar);
 // routerUser.delete("/DeleteUser/:id",authenticateJWT,authenticatePerfil,CadastroUsuario.ExcluirPessoa);
@@ -41,6 +40,8 @@ routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
 routerUser.delete("/DeleteProdutoFav/:id",authenticateJWT,authenticatePerfil,ProdutoFavController.Delete);
 
 //Update
+routerUser.put("/InativaProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.Deleta);
+routerUser.put("/DeletaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Deletar);
 routerUser.put("/ModificaPromocao/:id",authenticateJWT,authenticatePerfil,PromocaoController.Modifica);//ADM
 routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoController.Modifica);//ADM
 routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)//ADM

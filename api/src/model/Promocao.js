@@ -53,7 +53,6 @@ export default class Promocao {
         const bd = await obterConexaoDoPool();
         try {
             const selecionaPromocao = await bd.query(`SELECT * FROM promocao WHERE produto_id=?;`,[this._id_produto])
-            console.log(selecionaPromocao[0])
             if(selecionaPromocao[0] != ''){
                 const editaPromocao = await bd.query(`UPDATE promocao set status=? WHERE produto_id =? ;`,[0,this._id_produto])
             }
@@ -74,7 +73,6 @@ export default class Promocao {
         try {
             const promocaoResult = await bd.query(`UPDATE promocao SET categoria_produto = ?, porcentagem =?, categoria_id=?, produto_id=? WHERE id = ?;`,
                 [this._categoria_produto,this._porcentagem,this._id_categoria,this._id_produto,this._id]);
-            console.log(promocaoResult);
             return promocaoResult
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -86,7 +84,6 @@ export default class Promocao {
 
     async DeletePromocao() {
         const bd = await obterConexaoDoPool();
-        console.log(this._id)
         try {
             const promocaoResult = await bd.query(`DELETE FROM promocao WHERE id = ?;`,[this._id]);
             return promocaoResult

@@ -46,12 +46,10 @@ export default class Preco {
             const preco = precoSelect[0].Id
             if(!preco == 0){
                 const precoModifica = await bd.query(`UPDATE preco SET status = ? WHERE id = ?;`,[this._status,preco])
-                console.log(precoModifica)
                 return precoModifica
             }
             const precoResult = await bd.query(`INSERT INTO preco (preco,status,produto_id,data_cad) VALUES (?,?,?,CURRENT_TIMESTAMP);`,[this._preco,this._status,this._id_produto]);
             const precoId = precoResult[0].insertId;
-            console.log('ID do preco:', precoId);
             return precoId
         } catch (error) {
             console.log('Erro na transação:', error);

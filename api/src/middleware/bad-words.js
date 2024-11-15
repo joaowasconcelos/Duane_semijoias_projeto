@@ -38,4 +38,4 @@ const createFilter = () => {
 export default createFilter;
 
 
-// console.log(filter.clean("Seu corno inútil!"));  
+

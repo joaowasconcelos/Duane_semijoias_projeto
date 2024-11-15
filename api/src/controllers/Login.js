@@ -7,7 +7,7 @@ dotenv.config();
 const LoginController = {
     VerificaLogin: async (req, res) => {
         try {
-            console.log("OIIIIIIIIIIII")
+
             const secretKey = process.env.SECRET_KEY;
             if (!secretKey) {
                 return res.status(401).send("Chave secreta não configurada.");
@@ -34,7 +34,6 @@ const LoginController = {
 
 
             const token = jwt.sign({ id: verificaLogin[0].pessoa_id, user: verificaLogin[0].usuario, perfil: verificaLogin[0].perfis_id }, secretKey, { expiresIn: "1h" })
-            console.log(token)
             return res.json({ auth: true, token: token })
 
         } catch (error) {
@@ -54,7 +53,6 @@ const LoginController = {
             if (definirSenha === "User Invalid") {
                 return res.status(401).json({ error: "Usuario Inválido" })
             }
-            console.log(definirSenha)
             return res.json({ message: "Senha definida com sucesso!" })
 
         } catch (error) {
@@ -93,7 +91,7 @@ const LoginController = {
             if (esqueciSenha.error) {
                 return res.status(400).json({ error: "Erro ao registrar nova senha!" });
             }
-            console.log(esqueciSenha)
+     
             return res.status(200).json({ message: "Senha alterada com sucesso!" })
 
         } catch (error) {
@@ -108,15 +106,13 @@ const LoginController = {
             if (senhaAtual === novaSenha) {
                 return res.status(401).json({ error: "Senhas iguais, forneça senhas diferentes" })
             }
-            console.log("aqui", senhaAtual, novaSenha, id)
             const cLogin = new Login(null, null, senhaAtual, null, null, null, id, novaSenha)
             const validaCampos = cLogin.validaCampos()
-            console.log(validaCampos)
             if (!validaCampos) {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
             const AlterarSenha = await cLogin.AlterarSenha()
-            console.log(AlterarSenha)
+            
             if (AlterarSenha === "Senha atual incorreta") {
                 return res.status(401).json({ error: "Senha atual incorreta!" })
             }

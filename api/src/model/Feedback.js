@@ -57,7 +57,6 @@ export default class Feedback {
             const feedbackResult = await bd.query(`INSERT INTO comentarios (comentarios,produto_id,pessoa_id,avaliacao) VALUES (?,?,?,?);`,
                 [this._comentario,this._id_produto,this._id_pessoa,this._avaliacao]);
             const feedbackId = feedbackResult[0].insertId;
-            console.log('ID do feedback', feedbackId);
             return feedbackId;
         } catch (error) {
             console.log('Erro na transação:', error);

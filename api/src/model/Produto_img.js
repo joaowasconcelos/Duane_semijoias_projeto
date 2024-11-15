@@ -50,7 +50,6 @@ export default class Produto_Img {
         const bd = await obterConexaoDoPool();
         try {
             const produtoImgResult = await bd.query(`DELETE FROM produto_img WHERE id_img = ?;`,[this._id_img]);
-            console.log(produtoImgResult)
             return produtoImgResult
         } catch (error) {
             console.log('Erro na transação:', error);
