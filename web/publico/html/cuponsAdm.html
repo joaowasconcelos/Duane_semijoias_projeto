@@ -74,26 +74,26 @@
                 <p id="titulo2">Cadastrar novo cupom:</p>
 
 
-                <form action="${localStorage.getItem(" ip")}CreateCupom" method="POST" id="envia-form">
+                <form action=${localStorage.getItem("ip")}CreateCupom method="POST" id="envia-form">
 
                     <label for="Codigo">Código: *</label>
-                    <input class="input" type="text" name="Codigo" id="Codigo" required>
+                    <input class="input" type="text" name="Codigo" id="Codigo">
 
                     <label for="Descricao">Descrição: *</label>
-                    <input class="input" type="text" name="Descricao" id="Descricao" required>
+                    <input class="input" type="text" name="Descricao" id="Descricao">
 
                     <label for="Valor">Valor do desconto: *</label>
                     <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
-                        onkeydown="return somenteNumeros(event)" required>
+                        onkeydown="return somenteNumeros(event)">
 
                     <label for="Quantidade">Quantidade: *</label>
-                    <input class="input" type="number" name="Quantidade" id="Quantidade" required>
+                    <input class="input" type="number" name="Quantidade" id="Quantidade">
 
                     <div id="btns">
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-
-                        <button type="submit" id="salvar" class="btn btn-primary save-changes" onclick="salvar(event); ">Salvar</button>
+                        <button type="button" class="btn btn-primary delete-changes"
+                            onclick="limparInput()">Cancelar</button>
+                        <button type="submit" class="btn btn-primary save-changes" onclick="salvar(event)">Salvar</button>
 
                     </div>
 
@@ -150,7 +150,8 @@
 
                         <div class="btns">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                            <button type="button" class="btn btn-primary" onclick="saveModal()">Salvar alterações</button>
+                            <button type="button" class="btn btn-primary" onclick="saveModal()">Salvar
+                                alterações</button>
                         </div>
 
                     </div>
