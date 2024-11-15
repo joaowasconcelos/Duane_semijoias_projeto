@@ -252,8 +252,8 @@ footer {
     width: 100%;
 }
 
-.labelModal {
-    color: #633636
+label {
+    width: 100%;
 }
 
 #exampleModalLongTitle {
@@ -264,10 +264,6 @@ footer {
     font-weight: bold;
     color: #633636;
     /* padding-top: 40px; */
-}
-
-.modal-header {
-    height: 70px !important;
 }
 
 .elementosModal {
@@ -324,4 +320,8 @@ button {
 
 .cancel {
     background-color: #5a6268 !important;
+}
+
+svg {
+    cursor: pointer;
 }

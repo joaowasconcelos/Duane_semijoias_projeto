@@ -12,6 +12,7 @@ async function dados() {
             //função para mostrar o produto selecionado no modal
             console.log(responseProd.data)
         }
+        return responseProd.data
 
     } catch (error) {
         console.error('Erro ao buscar dados da API:', error);
@@ -101,3 +102,22 @@ function carregaDadosProd() {
 
 //puxando detalhes do pedido
 
+async function dadosPedido(id) {
+
+
+    try {
+        const dadosP = await dados()
+        const produto = dadosP.filter(produto => produto.id === id)
+        console.log(produto.id)
+    } catch (error) {
+        console.error('Erro ao buscar produto:', error);
+        showNotification("Ocorreu um erro ao buscar o produto. Tente novamente.");
+    }
+
+
+    //categoria, produto, descricao, id, tipo, preco_normal, preco_normal, imagens
+
+    //document.getElementById("id").value = produto.id;
+}
+
+///ModificarProduto/:id
