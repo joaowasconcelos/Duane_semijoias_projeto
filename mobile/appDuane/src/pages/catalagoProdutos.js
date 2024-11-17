@@ -34,6 +34,13 @@ export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const [id, setId] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [status, setStatus] = useState("");
+  const [nomeProduto, setNomeProduto] = useState("");
+  const [valor, setValor] = useState("");
+  const [idCate, setIdCate] = useState("");
+  const [statusPreco, setStatusPreco] = useState("");
+  
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -60,8 +67,8 @@ export default function Home() {
     getToken();
     selecionaProduto();
   }, []);
-  const [prod, setProd] = useState([]);
 
+  const [prod, setProd] = useState([]);
   const selecionaProduto = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -96,6 +103,62 @@ export default function Home() {
     pressBtnDetalhes();
     console.log("set aqui", setDetalhesProduto);
   };
+
+
+
+  
+  const InativaProduto = async (id) =>{
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.post(`/InativaProduto/${id}`,
+        {
+          id: id, 
+        },
+        {
+        headers: {
+          'x-access-token': `${token}`,
+        }
+      })
+      .then(response=>{
+        setId(response.data)
+        console.log(response.data);
+        alert("Produto inativado com sucesso!");
+      })
+      .catch(error => {
+        console.error("Erro ao inativar produto", error);
+      })
+    } catch (error) {
+      console.log("Erro ao inativar produto", error);
+    }
+  }
+
+  const modificaProd = async ()=>{
+    if(!descricao || nomeProduto || !valor === 0){
+      alert("Preencha todos os campos!");
+    }
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.put(`/ModificarProduto/${id}`,{
+        descricao: Descricao,
+        nomeProduto: NomeProduto,
+        valor: Valor,
+      },
+      {
+          headers:{
+            'x-access-token': `${token}`
+          }
+        
+      })
+      .then(response=>{
+        setDescricao(response.data);
+        setNomeProduto(response.data);
+        setValor(response.data);
+        console.log(response.data);
+      })
+    } catch (error) {
+      
+    }
+  }
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -233,6 +296,21 @@ export default function Home() {
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6
                         name="file-circle-plus"
+                        color="#ae4b67"
+                        size={26}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                      }}
+                      onPress={() => InativaProduto(produto.id)}
+                    >
+                      <Text style={styles.textBtn}>Excluir:</Text>
+                      <FontAwesome6
+                        name="trash-can"
                         color="#ae4b67"
                         size={26}
                       />

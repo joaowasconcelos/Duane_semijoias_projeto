@@ -37,6 +37,9 @@ export default function Home() {
   // const [id, setId] = useState(route.params?.id);
   const [modalVisible, setModalVisible] = useState(false);
   const [detalhesMeusDados, setDetalhesMeusDados] = useState([]);
+  const [nome, setNome] = useState("");
+  const [dataNasc, setDataNasc] = useState("");
+  const [telefones, setTelefones] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -142,7 +145,37 @@ export default function Home() {
         console.log("erro na seleção dos dados de usuário",error);
       })
     } catch (error) {
+      console.log("Erro com a conexão com a rota ");
       
+    }
+  }
+
+  const modificaMeusDados = async ()=>{
+    if(!nome || !dataNasc || !telefones === 0){
+      alert("Preencha todos os campos");
+    }
+    try {
+      const token = AsyncStorage.getItem("userToken");
+      await api.put(`/ModificarPessoaADM/${id}`, {
+        Nome: nome,
+        Data_Nasc: dataNasc,
+        Telefones: telefones
+      },{
+        headers: {
+          'x-access-token': `${token}`
+        }
+      })
+      .then(response=>{
+        setNome(response.data);
+        setDataNasc(response.data);
+        setTelefones(response.data);
+        console.log(response.data);
+      })
+      .catch(error=>{
+        console.log("Erro ao modificar dados",error);
+      })
+    } catch (error) {
+      console.log("Erro ao enviar os dado na rota", error);
     }
   }
 

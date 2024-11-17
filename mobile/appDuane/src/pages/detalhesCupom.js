@@ -38,6 +38,7 @@ export default function Home() {
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
   const [modCupom, setModCupom] = useState("");
+  const [cupomId, setCupomId] = useState("")
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -117,10 +118,30 @@ export default function Home() {
       console.log("Erro do try", error);
     }
   }
-  // /ModificaCategoria/:id
 
-  const inativaCupom = async ()=>{
 
+  const inativaCupom = async (id)=>{
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.get(`/DeletaCupom/${id}`,
+        {
+          id: id,
+        },
+        {
+          headers:{
+            'x-access-token': `${token}`
+          }
+        }
+      ).then(response=>{
+        setCupomId(response.data);
+        console.log(response.data);
+        alert("Cupom Inativado com sucesso!")
+      }).catch(error=>{
+        console.error("Erro ao inativar o cupom", error); 
+      })
+    } catch (error) {
+      console.log("Erro do try", error);
+    }
   }
 
   if (!fontsLoaded) {
@@ -191,6 +212,7 @@ export default function Home() {
                       alignItems: "center",
                       width: "100%",
                     }}
+                    key={detalhesCup.id}
                   >
                     <View
                       style={{ width: "90%", justifyContent: "flex-start", marginTop: 10 }}
@@ -247,7 +269,7 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={() => {}}
+                        onChangeText={() => inativaCupom(detalhesCup.id)}
                       >
                         <FontAwesome6
                           name="trash-can"
