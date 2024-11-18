@@ -93,15 +93,18 @@ export default function Home() {
   const detalhesDoPedido = async ()=>{
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/MeuPedido`,{
+      await api.get(`/MeuPedido/${id}`,{
         headers:{'x-access-token': `${token}`,}
       })
       .then(response => {
         setDetalhesPedido(response.data);
         console.log(response.data);
       })
+      .catch(error=>{
+        console.error("Erro ao buscar os detalhes do pedido", error);
+      })
     } catch (error) {
-      
+      console.log("Erro ao acessar a rota", error);
     }
   }
 
