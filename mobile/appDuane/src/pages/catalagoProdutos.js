@@ -110,7 +110,7 @@ export default function Home() {
   const InativaProduto = async (id) =>{
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.post(`/InativaProduto/${id}`,
+      await api.put(`/InativaProduto/${id}`,
         {
           id: id, 
         },
@@ -285,6 +285,7 @@ export default function Home() {
                       </View>
                     </View>
 
+                    <View style={{width: '20%', height: '50%', justifyContent: 'center'}}>
                     <TouchableOpacity
                       style={{
                         justifyContent: "flex-start",
@@ -297,7 +298,7 @@ export default function Home() {
                       <FontAwesome6
                         name="file-circle-plus"
                         color="#ae4b67"
-                        size={26}
+                        size={20}
                       />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -312,9 +313,10 @@ export default function Home() {
                       <FontAwesome6
                         name="trash-can"
                         color="#ae4b67"
-                        size={26}
+                        size={20}
                       />
                     </TouchableOpacity>
+                    </View>
                   </View>
                 ))}
               </View>
@@ -552,7 +554,7 @@ const styles = StyleSheet.create({
   btn: {
     width: "95%",
     backgroundColor: "#FFFFFF",
-    height: 85,
+    height: 90,
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
@@ -563,7 +565,7 @@ const styles = StyleSheet.create({
   },
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
-    fontSize: 17,
+    fontSize: 15,
     color: "#ae4b67",
     paddingRight: 5,
   },
