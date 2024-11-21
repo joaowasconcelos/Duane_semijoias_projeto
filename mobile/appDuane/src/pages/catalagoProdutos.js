@@ -40,7 +40,8 @@ export default function Home() {
   const [valor, setValor] = useState("");
   const [idCate, setIdCate] = useState("");
   const [statusPreco, setStatusPreco] = useState("");
-  
+  const [prodFiltro, setProdFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -80,6 +81,7 @@ export default function Home() {
         })
         .then((response) => {
           setProd(response.data); // Atualiza o estado com os produtos recebidos
+          setProdFiltro(response.data);
           console.log(response.data);
         })
         .catch((error) => {
@@ -133,7 +135,7 @@ export default function Home() {
   }
 
   const modificaProd = async ()=>{
-    if(!descricao || nomeProduto || !valor === 0){
+    if(!descricao || !nomeProduto || !valor === 0){
       alert("Preencha todos os campos!");
     }
     try {
@@ -159,6 +161,21 @@ export default function Home() {
       
     }
   }
+
+  const handleSearch = (query) =>{
+    setSearchQuery(query);
+    if(query){
+      const filtro = prod.filter((item)=>{
+        return (
+          item.nome_produto.toLowerCase().includes(query.toLowerCase()) ||
+          item.tipo.toLowerCase().includes(query.toLowerCase())
+        )
+      });
+      setProdFiltro(filtro);
+    }else{
+      setProdFiltro(prod);
+    }
+  };
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -217,7 +234,9 @@ export default function Home() {
               <TextInput
                 placeholder="Pesquise por produto ou categoria"
                 style={styles.Inputs}
-              ></TextInput>
+                onChangeText={handleSearch}
+                value={searchQuery}
+              />
               <TouchableOpacity
                 style={{ margin: 5 }}
                 onPress={navegaCadastroProduto}
