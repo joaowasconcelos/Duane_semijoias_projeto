@@ -16,6 +16,7 @@ import FeedbackController from "../controllers/Feedback.js";
 import ResetControler from "../controllers/ReqSenha.js";
 import { logout } from "../middleware/authenticateJWT.js";
 import { upload,handleImageUpload} from "../middleware/imagens.js";
+import EnderecoController from "../controllers/Endereco.js";
 
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
@@ -47,6 +48,7 @@ routerUser.put("/ModificaPedido/:id",authenticateJWT,authenticatePerfil,PedidoCo
 routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,ProdutoController.editar)//ADM
 routerUser.put("/ModificarPessoaADM/:id",authenticateJWT,authenticatePerfil,CadastroADM.EditarPessoaADM)//ADM
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);//ADM
+routerUser.put("/ModificaCate/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica)
 routerUser.put("/ModificarPessoa",authenticateJWT,CadastroUsuario.EditarPessoa)//USUARIO
 routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)//USUARIO
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)//USUARIO
@@ -68,6 +70,7 @@ routerUser.get('/selecionaCupons',authenticateJWT,authenticatePerfil,CuponsContr
 routerUser.get('/selecionaCupons/:id',authenticateJWT,authenticatePerfil,CuponsController.SelecionaDetalhes)
 routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
 routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)
+routerUser.get('/MeuEnde/:id',authenticateJWT,EnderecoController.seleciona)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
