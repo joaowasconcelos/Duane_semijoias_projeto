@@ -151,15 +151,15 @@ export default function Home() {
             </View>
 
             
-            <ScrollView style={{width: '100%', marginBottom: 60}}>
-              <View style={{width: '100%', justifyContent: 'center', alignItems: 'center'}}>
+            <ScrollView style={{width: '100%', marginBottom: 40, height: '100%'}}>
+              <View style={{width: '100%', justifyContent: 'space-evenly', alignItems: 'center', height: '100%'}}>
                   <TextInput placeholder="Nome Completo" onChangeText={setNome} value={nome} style={styles.Inputs}></TextInput>
-                  <TextInput placeholder="Data de nascimento" style={styles.Inputs} onChangeText={setDataNasc} value={dataNasc}></TextInput>
-                  <TextInput placeholder="C.P.F" style={styles.Inputs} onChangeText={setCpf} value={cpf}></TextInput>
+                  <TextInput placeholder="Data de nascimento" style={styles.Inputs}  onChangeText={setDataNasc} value={dataNasc}></TextInput>
+                  <TextInput placeholder="C.P.F" style={styles.Inputs} keyboardType="numeric" onChangeText={setCpf} value={cpf}></TextInput>
                   <TextInput placeholder="Gênero" style={styles.Inputs} onChangeText={setGenero} value={genero}></TextInput>
                   <TextInput placeholder="Email" style={styles.Inputs} onChangeText={setUsuario} value={usuario}></TextInput>
-                  <TextInput placeholder="Telefone 1" style={styles.Inputs} onChangeText={setTelefone1} value={telefone1}></TextInput>
-                  <TextInput placeholder="Telefone 2 (opcional)" style={styles.Inputs} onChangeText={setTelefone2} value={telefone2}></TextInput>
+                  <TextInput placeholder="Telefone 1" style={styles.Inputs} keyboardType="numeric" onChangeText={setTelefone1} value={telefone1}></TextInput>
+                  <TextInput placeholder="Telefone 2 (opcional)" keyboardType="numeric" style={styles.Inputs} onChangeText={setTelefone2} value={telefone2}></TextInput>
                   <TextInput placeholder="perfil" style={styles.Inputs} onChangeText={setPerfil} value={perfil}></TextInput>
                   {/* <TouchableOpacity style={{ height: 35, backgroundColor: '#FFFF', justifyContent: 'center', borderRadius: 5, borderWidth: 1, borderColor: '#FAADD1', fontWeight: 'bold', width: '85%', textAlign: 'center' }}>
                     <Picker 

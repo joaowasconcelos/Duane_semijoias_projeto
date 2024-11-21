@@ -12,6 +12,7 @@ async function dados() {
                     'x-access-token': token
                 }
             }).then(response => {
+                console.log(response)
                 responseTipo = response.data
                 if (responseTipo != null || responseTipo != undefined) {
                     criarTabela();
@@ -133,6 +134,7 @@ function changeSubtitle(link) {
 const cpf = document.getElementById('cpf');
 
 async function pegaId(id) {
+
     console.log('ID:', id);
     const token = localStorage.getItem('token');
 
@@ -145,13 +147,12 @@ async function pegaId(id) {
 
         console.log(response.data);
 
-
         const pedido = response.data[0];
 
         const cpf_cliente = pedido.cpf_cliente;
         const data_formatada = pedido.data_formatada;
         const itens = pedido.itens;
-        const nome_cliente = pedido.nome_cliente;        
+        const nome_cliente = pedido.nome_cliente;
         const valor_total = pedido.valor_total;
         //const pedidos_id = pedido.pedidos_id;
         //console.log(cpf_cliente, data_formatada, itens, nome_cliente, pedidos_id, valor_total)
@@ -165,7 +166,6 @@ async function pegaId(id) {
         function formatoCPF(cpf_cliente) {
             const remove = cpf_cliente.replace(/\D/g, '');
             const formatado = `***.${remove.slice(3, 6)}.${remove.slice(6, 9)}-**`;
-
             return formatado;
         }
 
@@ -224,6 +224,7 @@ function fecharModal() {
 
 //função para cadastrar
 async function post() {
+
     const token = localStorage.getItem('token');
     const tipo = document.getElementById("tipo").value;
 

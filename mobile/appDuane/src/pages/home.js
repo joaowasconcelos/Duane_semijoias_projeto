@@ -34,7 +34,7 @@ import {
 export default function Home() {
   const route = useRoute();
   const navigation = useNavigation();
-  const [id, setId] = useState(route.params?.id);
+  // const [id, setId] = useState(route.params?.id);
   const [modalVisible, setModalVisible] = useState(false);
   const [detalhesMeusDados, setDetalhesMeusDados] = useState([]);
 
@@ -266,8 +266,8 @@ export default function Home() {
               }}
             >
               <View style={styles.modalContainer}>
-                {detalhesMeusDados.map(detalhesDados =>(
-                  <View style={styles.modalContent}>
+
+              <View style={styles.modalContent}>
                   <Text
                     style={{
                       textAlign: "center",
@@ -286,7 +286,7 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Categoria"
                       readOnly
-                    >{detalhesDados.nome}</TextInput>
+                    ></TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data de Nascimento:</Text>
@@ -296,7 +296,9 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="data de nascimento"
                       readOnly
-                    >{new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(detalhesDados.data_nasc))}</TextInput>
+                    >
+                      {/* {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(detalhesDados.data_nasc))} */}
+                      </TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>CPF:</Text>
@@ -392,7 +394,10 @@ export default function Home() {
                     </TouchableOpacity>
                   </View>
                 </View>
-                ))}
+
+                {/* {detalhesMeusDados.map(detalhesDados =>(
+                  
+                ))} */}
 
               </View>
             </Modal>
