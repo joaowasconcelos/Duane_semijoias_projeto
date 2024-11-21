@@ -40,7 +40,8 @@ export default function Home() {
   const [valor, setValor] = useState("");
   const [idCate, setIdCate] = useState("");
   const [statusPreco, setStatusPreco] = useState("");
-  
+  const [prodFiltro, setProdFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -80,6 +81,7 @@ export default function Home() {
         })
         .then((response) => {
           setProd(response.data); // Atualiza o estado com os produtos recebidos
+          setProdFiltro(response.data);
           console.log(response.data);
         })
         .catch((error) => {
@@ -110,7 +112,7 @@ export default function Home() {
   const InativaProduto = async (id) =>{
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.post(`/InativaProduto/${id}`,
+      await api.put(`/InativaProduto/${id}`,
         {
           id: id, 
         },
@@ -133,7 +135,7 @@ export default function Home() {
   }
 
   const modificaProd = async ()=>{
-    if(!descricao || nomeProduto || !valor === 0){
+    if(!descricao || !nomeProduto || !valor === 0){
       alert("Preencha todos os campos!");
     }
     try {
@@ -159,6 +161,21 @@ export default function Home() {
       
     }
   }
+
+  const handleSearch = (query) =>{
+    setSearchQuery(query);
+    if(query){
+      const filtro = prod.filter((item)=>{
+        return (
+          item.nome_produto.toLowerCase().includes(query.toLowerCase()) ||
+          item.tipo.toLowerCase().includes(query.toLowerCase())
+        )
+      });
+      setProdFiltro(filtro);
+    }else{
+      setProdFiltro(prod);
+    }
+  };
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -217,7 +234,9 @@ export default function Home() {
               <TextInput
                 placeholder="Pesquise por produto ou categoria"
                 style={styles.Inputs}
-              ></TextInput>
+                onChangeText={handleSearch}
+                value={searchQuery}
+              />
               <TouchableOpacity
                 style={{ margin: 5 }}
                 onPress={navegaCadastroProduto}
@@ -285,6 +304,7 @@ export default function Home() {
                       </View>
                     </View>
 
+                    <View style={{width: '20%', height: '50%', justifyContent: 'center'}}>
                     <TouchableOpacity
                       style={{
                         justifyContent: "flex-start",
@@ -297,7 +317,7 @@ export default function Home() {
                       <FontAwesome6
                         name="file-circle-plus"
                         color="#ae4b67"
-                        size={26}
+                        size={20}
                       />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -312,9 +332,10 @@ export default function Home() {
                       <FontAwesome6
                         name="trash-can"
                         color="#ae4b67"
-                        size={26}
+                        size={20}
                       />
                     </TouchableOpacity>
+                    </View>
                   </View>
                 ))}
               </View>
@@ -552,7 +573,7 @@ const styles = StyleSheet.create({
   btn: {
     width: "95%",
     backgroundColor: "#FFFFFF",
-    height: 85,
+    height: 90,
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
@@ -563,7 +584,7 @@ const styles = StyleSheet.create({
   },
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
-    fontSize: 17,
+    fontSize: 15,
     color: "#ae4b67",
     paddingRight: 5,
   },
