@@ -35,6 +35,7 @@ export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
 
 
+
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
     EBGaramond_500Medium,
@@ -80,6 +81,12 @@ export default function Home() {
   
   const pressDetails = ()=>{
     setModalVisible(true);
+  }
+  const [detalhesCliente, setDetalhesClientes] = useState([]);
+  const buscaId = (id)=>{
+    const item = clientes.find((item)=>item.id === id);
+    setDetalhesClientes([item]);
+    pressDetails();
   }
 
   if (!fontsLoaded) {
@@ -162,7 +169,7 @@ export default function Home() {
                     </View>
 
                     <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40 }} 
-                    onPress={()=>pressDetails()}
+                    onPress={()=>buscaId(client.id)}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
@@ -185,7 +192,8 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.modalContainer}>
+              {detalhesCliente.map((detalhesClient)=>(
+                <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                   <Text
                     style={{
@@ -194,6 +202,7 @@ export default function Home() {
                       color: "#ae4b67",
                       fontWeight: "bold",
                     }}
+                    key={detalhesClient.id}
                   >
                     Detalhes do cliente
                   </Text>
@@ -205,7 +214,7 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Nome do cliente"
                       readOnly
-                    ></TextInput>
+                    >{detalhesClient.nome}</TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data de Nascimento:</Text>
@@ -215,7 +224,9 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Data de nascimento"
                       readOnly
-                    ></TextInput>
+                    >
+                      {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(detalhesClient.data_nasc))}
+                    </TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Usuário:</Text>
@@ -225,7 +236,9 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="usuário"
                       readOnly
-                    ></TextInput>
+                    >
+                      {detalhesClient.usuario}
+                    </TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
@@ -267,6 +280,7 @@ export default function Home() {
                 </View>
 
               </View>
+              ))}
             </Modal>
 
 

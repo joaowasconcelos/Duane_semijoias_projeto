@@ -34,6 +34,14 @@ export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const navigation = useNavigation();
   const [id, setId] = useState("");
+  const [descricao, setDescricao] = useState("");
+  const [status, setStatus] = useState("");
+  const [nomeProduto, setNomeProduto] = useState("");
+  const [valor, setValor] = useState("");
+  const [idCate, setIdCate] = useState("");
+  const [statusPreco, setStatusPreco] = useState("");
+  const [prodFiltro, setProdFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -60,8 +68,8 @@ export default function Home() {
     getToken();
     selecionaProduto();
   }, []);
-  const [prod, setProd] = useState([]);
 
+  const [prod, setProd] = useState([]);
   const selecionaProduto = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -73,6 +81,7 @@ export default function Home() {
         })
         .then((response) => {
           setProd(response.data); // Atualiza o estado com os produtos recebidos
+          setProdFiltro(response.data);
           console.log(response.data);
         })
         .catch((error) => {
@@ -95,6 +104,77 @@ export default function Home() {
     setDetalhesProduto([item]);
     pressBtnDetalhes();
     console.log("set aqui", setDetalhesProduto);
+  };
+
+
+
+  
+  const InativaProduto = async (id) =>{
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.put(`/InativaProduto/${id}`,
+        {
+          id: id, 
+        },
+        {
+        headers: {
+          'x-access-token': `${token}`,
+        }
+      })
+      .then(response=>{
+        setId(response.data)
+        console.log(response.data);
+        alert("Produto inativado com sucesso!");
+      })
+      .catch(error => {
+        console.error("Erro ao inativar produto", error);
+      })
+    } catch (error) {
+      console.log("Erro ao inativar produto", error);
+    }
+  }
+
+  const modificaProd = async ()=>{
+    if(!descricao || !nomeProduto || !valor === 0){
+      alert("Preencha todos os campos!");
+    }
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.put(`/ModificarProduto/${id}`,{
+        descricao: Descricao,
+        nomeProduto: NomeProduto,
+        valor: Valor,
+      },
+      {
+          headers:{
+            'x-access-token': `${token}`
+          }
+        
+      })
+      .then(response=>{
+        setDescricao(response.data);
+        setNomeProduto(response.data);
+        setValor(response.data);
+        console.log(response.data);
+      })
+    } catch (error) {
+      
+    }
+  }
+
+  const handleSearch = (query) =>{
+    setSearchQuery(query);
+    if(query){
+      const filtro = prod.filter((item)=>{
+        return (
+          item.nome_produto.toLowerCase().includes(query.toLowerCase()) ||
+          item.tipo.toLowerCase().includes(query.toLowerCase())
+        )
+      });
+      setProdFiltro(filtro);
+    }else{
+      setProdFiltro(prod);
+    }
   };
 
   let [fontsLoaded] = useFonts({
@@ -154,7 +234,9 @@ export default function Home() {
               <TextInput
                 placeholder="Pesquise por produto ou categoria"
                 style={styles.Inputs}
-              ></TextInput>
+                onChangeText={handleSearch}
+                value={searchQuery}
+              />
               <TouchableOpacity
                 style={{ margin: 5 }}
                 onPress={navegaCadastroProduto}
@@ -222,6 +304,7 @@ export default function Home() {
                       </View>
                     </View>
 
+                    <View style={{width: '20%', height: '50%', justifyContent: 'center'}}>
                     <TouchableOpacity
                       style={{
                         justifyContent: "flex-start",
@@ -234,9 +317,25 @@ export default function Home() {
                       <FontAwesome6
                         name="file-circle-plus"
                         color="#ae4b67"
-                        size={26}
+                        size={20}
                       />
                     </TouchableOpacity>
+                    <TouchableOpacity
+                      style={{
+                        justifyContent: "flex-start",
+                        alignItems: "center",
+                        height: "100%",
+                      }}
+                      onPress={() => InativaProduto(produto.id)}
+                    >
+                      <Text style={styles.textBtn}>Excluir:</Text>
+                      <FontAwesome6
+                        name="trash-can"
+                        color="#ae4b67"
+                        size={20}
+                      />
+                    </TouchableOpacity>
+                    </View>
                   </View>
                 ))}
               </View>
@@ -474,7 +573,7 @@ const styles = StyleSheet.create({
   btn: {
     width: "95%",
     backgroundColor: "#FFFFFF",
-    height: 85,
+    height: 90,
     justifyContent: "space-between",
     alignItems: "center",
     marginTop: 20,
@@ -485,7 +584,7 @@ const styles = StyleSheet.create({
   },
   textBtn: {
     fontFamily: "EBGaramond_800ExtraBold",
-    fontSize: 17,
+    fontSize: 15,
     color: "#ae4b67",
     paddingRight: 5,
   },
