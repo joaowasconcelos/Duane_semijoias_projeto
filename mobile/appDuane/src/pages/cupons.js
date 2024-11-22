@@ -77,6 +77,7 @@ export default function Home() {
       )
       .then(response =>{
         setCupons(response.data);
+        setCupFiltro(response.data);
         console.log(response.data);
         // setId(response.data);
       })
@@ -92,6 +93,23 @@ export default function Home() {
     getToken(); // Chama a função para obter o token
     selecionaCup();
   }, []);
+
+  const [cupFiltro, setCupFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = cupons.filter((item) => {
+        return (
+          item.nome_produto.toLowerCase().includes(query.toLowerCase()) ||
+          item.tipo.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setCupFiltro(filtro);
+    } else {
+      setCupFiltro(cupons);
+    }
+  };
 
 
   if (!fontsLoaded) {

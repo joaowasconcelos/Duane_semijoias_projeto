@@ -29,6 +29,8 @@ export default function Home() {
   const [novaCate, setNovaCate] = useState("");
   const [id, setId] = useState("");
   const [modCat, setModCat] = useState("");
+  const [cateFiltro, setCateFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -64,6 +66,7 @@ export default function Home() {
         })
         .then((response) => {
           setCategories(response.data);
+          setCateFiltro(response.data);
           console.log(response.data);
         })
         .catch((error) => {
@@ -105,6 +108,20 @@ export default function Home() {
         });
     } catch (error) {
       console.error("Erro ao criar nova categoria", error);
+    }
+  };
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = categories.filter((item) => {
+        return (
+          item.tipo.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setCateFiltro(filtro);
+    } else {
+      setCateFiltro(categories);
     }
   };
 
@@ -206,6 +223,8 @@ export default function Home() {
             <TextInput
               placeholder="Pesquise uma categoria"
               style={styles.Inputs}
+              onChangeText={handleSearch}
+              value={searchQuery}
             />
             <TouchableOpacity
               style={{ margin: 5 }}
@@ -217,7 +236,7 @@ export default function Home() {
 
           <ScrollView>
             <View style={styles.containerElements}>
-              {categories.map((category) => (
+              {(cateFiltro.length>0 ? cateFiltro : categories).map((category) => (
                 <View key={category.id} style={styles.contentElements}>
                   <View style={{ marginLeft: 10, marginBottom: 7 }}>
                     <Text style={styles.textBtn}>Categoria:</Text>

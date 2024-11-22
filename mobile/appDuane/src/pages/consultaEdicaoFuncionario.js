@@ -75,6 +75,7 @@ export default function Home() {
         })
         .then((response) => {
           setFuncionarios(response.data);
+          setFunciFiltro(response.data);
           console.log(response.data);
         })
         .catch((error) => {
@@ -98,6 +99,23 @@ export default function Home() {
     pressDetails();
     console.log("set aqui",detalhesFuncionario);
   };
+
+  const [funciFiltro, setFunciFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = funcionarios.filter((item) => {
+        return (
+          item.nome.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setFunciFiltro(filtro);
+    } else {
+      setFunciFiltro(funcionarios);
+    }
+  };
+
 
   if (!fontsLoaded) {
   } else {
@@ -145,7 +163,9 @@ export default function Home() {
               }}
             >
               <TextInput
-                placeholder="Pesquise pelo nome ou idade"
+                placeholder="Pesquise pelo nome"
+                onChangeText={handleSearch}
+                value={searchQuery}
                 style={styles.Inputs}
               ></TextInput>
               <TouchableOpacity
@@ -158,7 +178,7 @@ export default function Home() {
 
             <ScrollView>
               <View style={styles.containerElements}>
-                {funcionarios.map((funci) => (
+                {(funciFiltro.length > 0 ? funciFiltro : funcionarios).map((funci) => (
                   <View key={funci.id} style={styles.btn}>
                     <View
                       style={{
@@ -374,7 +394,7 @@ export default function Home() {
                       style={styles.inputModal}
                       //value={}
                       //onChangeText={}
-                      placeholder="Produto"
+                      placeholder="Data de Nascimento"
                       readOnly
                     >
                       {new Intl.DateTimeFormat("pt-BR", {

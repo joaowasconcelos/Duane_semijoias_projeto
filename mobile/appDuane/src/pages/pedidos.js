@@ -64,6 +64,7 @@ export default function Home() {
       })
       .then(response => {
         setPedidos(response.data);
+        setPedidoFiltro(response.data);
         console.log(response.data);
       })
       .catch(error => {
@@ -108,6 +109,23 @@ export default function Home() {
     }
   }
 
+  const [pedidoFiltro, setPedidoFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = pedidos.filter((item) => {
+        return (
+          item.id.toLowerCase().includes(query.toLowerCase()) ||
+          item.status.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setPedidoFiltro(filtro);
+    } else {
+      setPedidoFiltro(pedidos);
+    }
+  };
+
 
 
   if (!fontsLoaded) {
@@ -151,13 +169,13 @@ export default function Home() {
 
 
             <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
+              <TextInput placeholder='Pesquise pelo código ou status' value={searchQuery} onChangeText={handleSearch} style={styles.Inputs}>
               </TextInput>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-                {pedidos.map(pedid => (
+                {(pedidoFiltro.length > 0 ? pedidoFiltro : pedidos).map(pedid => (
                   <View key={pedid.id} style={styles.btn}>
                     <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '70%' }}>
                       <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>

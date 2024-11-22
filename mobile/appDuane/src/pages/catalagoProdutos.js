@@ -103,7 +103,7 @@ export default function Home() {
     console.log("qwerty: ", item);
     setDetalhesProduto([item]);
     pressBtnDetalhes();
-    console.log("set aqui", setDetalhesProduto);
+    console.log("set aqui", detalhesProduto);
   };
 
   useEffect(()=>{
