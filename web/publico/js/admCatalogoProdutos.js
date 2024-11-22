@@ -1,30 +1,30 @@
 async function dados() {
+
     try {
-        // Fazendo a requisição com axios.get
         responseProd = await axios.get(`${localStorage.getItem("ip")}SelecionaProduto`);
-        console.log(responseProd.data)
+        console.log("qqq",responseProd.data)
 
         if (responseProd != null || responseProd != undefined) {
             criarTabela();
             carregaDadosProd();
-            console.log("123")
 
-            //função para mostrar o produto selecionado no modal
-            console.log(responseProd.data)
+            try {
+                const response = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
+                console.log(response.data,"não estou entendendo ");
+                //criaDrop(response.data);
+
+            } catch (error) {
+                console.error('Erro ao buscar dados da API:', error);
+            }
+
+            //console.log(responseProd.data)
         }
         return responseProd.data
 
-    } catch (error) {
+    } catch (error) {   
         console.error('Erro ao buscar dados da API:', error);
     }
 
-    try {
-        const response = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
-        console.log(response.data);
-        criaDrop(response.data);
-    } catch (error) {
-        console.error('Erro ao buscar dados da API:', error);
-    }
 }
 
 dados();
@@ -37,6 +37,7 @@ async function pegaId(id) {
 
 function criaDrop(data) {
     const selecionaElemento = document.getElementById('categoria');
+    selecionaElemento.innerHTML = ""
     data.forEach((item) => {
         const opcao = document.createElement('option');
         opcao.value = item.id;
@@ -57,7 +58,6 @@ function criarTabela() {
                 <th id="qtdeCat">Categoria</th>
                 <th id="produto">Produto</th>
                 <th id="preco">Preço normal:</th>
-                <th id="preco">Preço promocional:</th>
                 <th id="iconesTh"></th>
                 <th id="iconesTh"></th>
             </tr>
@@ -75,7 +75,6 @@ function carregaDadosProd() {
                 <td id="dados" class="centralizar">${this['tipo']}</td>
                 <td id="dados">${this['nome_produto']}</td>
                 <td id="dados" class="centralizar">${this['preco_normal']}</td>
-                <td id="dados" class="centralizar">${this['preco_promocional']}</td>
                 <td>
                     <svg data-toggle="modal" data-target="#exampleModalCenter" xmlns="http://www.w3.org/2000/svg" width="22" height="22"
                                     style="color: #9B5377" fill="currentColor" class="bi bi-pencil-fill" 
@@ -104,20 +103,64 @@ function carregaDadosProd() {
 
 async function dadosPedido(id) {
 
-
     try {
-        const dadosP = await dados()
+        
+        const dadosP = await dados();
+        const dadosCat = await axios.get(`${localStorage.getItem("ip")}SelecionaCategoria`);
+
+        //console.log("aaaaaaaaa",dadosP)
+        //console.log("aaaaaaaaa",dadosCat)
+        criaDrop(dadosCat.data);
+
         const produto = dadosP.filter(produto => produto.id === id)
-        console.log(produto.id)
+        produto.innerHTML = ""
+
+        if (produto.length > 0) {
+
+            const item = produto[0];
+            document.getElementById('id').value = item.id;
+            document.getElementById('categoria').value = item.tipo;
+            document.getElementById('item').value = item.nome_produto;
+            document.getElementById('descricao').value = item.descricao;
+            document.getElementById('valor').value = item.preco_normal;
+
+            const imagem = item.imagens;
+            console.log(imagem)
+
+            const divDados = document.getElementById('imagens-container');
+
+            // Limpa as imagens existentes antes de adicionar as novas
+            divDados.innerHTML = "";
+            
+            // Adiciona as novas imagens
+            imagem.forEach((url) => {
+                const imgElement = document.createElement('img');
+                imgElement.src = url;
+                imgElement.style.marginRight = "10px"; // Exemplo de estilo para espaçamento
+                imgElement.style.width = "100px"; // Ajusta o tamanho, se necessário
+            
+                // Adiciona evento para exibir a imagem em destaque no modal, se necessário
+                imgElement.addEventListener('click', () => {
+                    exibirImagemNoModal(url);
+                });
+            
+                divDados.appendChild(imgElement);
+            });
+            
+
+        } else {
+            console.warn("Produto com o ID fornecido não foi encontrado.");
+        }
+
+        console.log(produto);
+
     } catch (error) {
+
         console.error('Erro ao buscar produto:', error);
         showNotification("Ocorreu um erro ao buscar o produto. Tente novamente.");
+
     }
 
-
-    //categoria, produto, descricao, id, tipo, preco_normal, preco_normal, imagens
-
-    //document.getElementById("id").value = produto.id;
 }
 
 ///ModificarProduto/:id
