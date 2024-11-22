@@ -1,4 +1,4 @@
-import Endereco from "../model/Endereco"
+import Endereco from "../model/Endereco.js"
 
 const EnderecoController = {
     cadastro: async (req, res) => {
@@ -60,6 +60,20 @@ const EnderecoController = {
             });
         }
         return res.status(201).json({ message: "Endereço deletado com sucesso!" });
+    },
+
+    seleciona: async (req, res) => {
+        const id = req.params.id
+        const cEndereco = new Endereco(id)
+        const endereco = await cEndereco.SelecionaEndereco()
+        if (endereco.error) {
+            return res.status(400).json({
+                error: "Erro ao selecionar um endereço",
+                details: returnProduto.details
+            });
+        }
+        return res.status(201).json({ message: "Endereço selecionado com sucesso!" })
+
     }
 
 
