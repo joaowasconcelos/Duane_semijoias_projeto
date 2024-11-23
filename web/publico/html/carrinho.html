@@ -4,58 +4,59 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <title>Finalizar Compra</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
   <link rel="stylesheet" href="../css/carrinho.css">
   <link rel="stylesheet" href="../css/notificacao.css">
   <link rel="stylesheet" href="../css/partials/header.css">
-  <script src="../js/notificacao.js"></script>
+  <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
 
 <body>
   <header id="header"><img id="ondas-rosa" src="../img/ondas-rosa.png">
-
     <nav>
-
       <div id="conteudoHeader">
-
         <a href="/web/publico/html/home.html">
           <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
         </a>
-
         <div id="boxHeader">
-
           <div id="icons">
             <a href="/web/publico/html/login.html">
               <span id="icon" class="fas fa-user fa-2x"></span>
             </a>
             <span id="icon" id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
           </div>
-
         </div>
-
       </div>
       <hr>
     </nav>
-
   </header>
+
   <main>
     <div id="topo">
       <h4>Finalizar Compra</h4>
     </div>
+
     <div id="geral">
       <div id="resPedido">
         <!-- Resumo do Pedido -->
         <section id="order-summary">
           <h2>Resumo do Pedido</h2>
-          <ul id="order-items"></ul>
+          <ul id="order-items">
+            <!-- Aqui o JavaScript vai preencher com os itens do pedido -->
+          </ul>
           <div id="pagamento">
             <p>Total: R$ <span id="order-total">0.00</span></p>
           </div>
         </section>
       </div>
-      
     </div>
+
+    <div id="wallet_container"></div>
+    <!-- O MercadoPago renderizará o botão de pagamento aqui -->
+    <div id="button-checkout"><button onclick="getPreferenceId()">CLIQUE AQUI</button></div>
+
   </main>
 
   <footer class="footer">
@@ -63,7 +64,46 @@
   </footer>
 
   <script src="../js/checkout.js"></script>
-  <script defer>
+
+  <script>
+const mp = new MercadoPago('TEST-065036b7-85ca-4b17-819a-10820121b7b5', {
+  locale: 'pt-BR',
+});
+
+// Função para obter a preferenceId do backend
+async function getPreferenceId() {
+  console.log("caiu aqui")
+  try {
+   await axios.post(`${localStorage.getItem("ip")}Pagamento`)
+   .then(response =>{
+    console.log("caiu aqui2",response)
+   }).catch(error =>{
+    console.log("error",error)
+   })
+    return response.data.preferenceId;
+  } catch (error) {
+    console.error('Erro ao obter a preferenceId:', error);
+  }
+}
+
+// Função para inicializar o pagamento
+async function initializePayment() {
+  try {
+    const preferenceId = await getPreferenceId();  // Obtém a preferenceId do backend
+
+    mp.bricks().create("wallet", "wallet_container", {
+      initialization: {
+        preferenceId: preferenceId,
+      },
+    });
+  } catch (error) {
+    console.error('Erro ao inicializar o pagamento:', error);
+  }
+}
+
+// Inicialize o pagamento quando a página estiver pronta
+initializePayment();
+
   </script>
 </body>
 

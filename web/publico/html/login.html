@@ -178,9 +178,9 @@
                         window.location.href = rota
                         localStorage.removeItem('urlDestino')
                     }else if(decodedToken.perfil === 1) {
-                        window.location.href = 'http://127.0.0.1:5501/publico/html/admInicio.html';
+                        window.location.href = 'admInicio.html';
                     } else if (decodedToken.perfil === 2) {
-                        window.location.href = 'http://127.0.0.1:5501/publico/html/perfilUser.html';
+                        window.location.href = 'perfilUser.html';
                     } else {
                         console.log('Usuário não autorizado!');
                         showNotification('Usuário não autorizado!');
