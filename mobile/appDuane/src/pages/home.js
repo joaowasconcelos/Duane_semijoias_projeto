@@ -29,7 +29,7 @@ import {
 
 // import {getStatusBarHeight} from "react-native-status-bar-height";
 
-// import api from "../services/api/api"
+import api from "../services/api/api";
 
 export default function Home() {
   const route = useRoute();
@@ -124,13 +124,14 @@ export default function Home() {
   
   useEffect(() => {
     getToken(); // Chama a função para obter o token
+    selecionaDetalhesMeusDados();
   }, []); // O array vazio [] garante que o useEffect rode apenas uma vez quando o componente for montado
 
 
   const selecionaDetalhesMeusDados = async ()=>{
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/SelecionaFuncionarios${id}`,
+      await api.get(`/SelecionaInfoUsers`,
         {
           headers: {
             'x-access-token': `${token}`,
@@ -145,8 +146,7 @@ export default function Home() {
         console.log("erro na seleção dos dados de usuário",error);
       })
     } catch (error) {
-      console.log("Erro com a conexão com a rota ");
-      
+      console.log("Erro com a conexão da rota ", error);
     }
   }
 
@@ -298,141 +298,140 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.modalContainer}>
+              {detalhesMeusDados.map((detalhesMeuDads)=>(
+                <View style={styles.modalContainer} key={detalhesMeuDads.id}>
 
-              <View style={styles.modalContent}>
-                  <Text
-                    style={{
-                      textAlign: "center",
-                      fontSize: 20,
-                      color: "#ae4b67",
-                      fontWeight: "bold",
-                    }}
-                  >
-                    Meus dados
-                  </Text>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Nome:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Categoria"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data de Nascimento:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="data de nascimento"
-                      readOnly
-                    >
-                      {/* {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(detalhesDados.data_nasc))} */}
-                      </TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>CPF:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="CPF"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Genero:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Genero"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Usuário:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Usuário"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Telefones"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Perfil:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder="Perfil"
-                      readOnly
-                    ></TextInput>
-                  </View>
-                  
-                  
-                  <View
-                    style={{
-                      width: "100%",
-                      justifyContent: "space-between",
-                      alignItems: "center",
-                      flexDirection: "row",
-                      marginBottom: 5,
-                    }}
-                  >
-                    <TouchableOpacity
-                      style={styles.btnModal}
-                      onPress={() => {
-                        // saveProduto();
-                        setModalVisible(false);
+                <View style={styles.modalContent}>
+                    <Text
+                      style={{
+                        textAlign: "center",
+                        fontSize: 20,
+                        color: "#ae4b67",
+                        fontWeight: "bold",
                       }}
                     >
-                      <Text
-                        style={{
-                          fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#FFF",
-                          fontSize: 20,
-                        }}
+                      Meus dados
+                    </Text>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                      <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Nome:</Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Nome"
+                        readOnly
+                      >{detalhesMeuDads.nome}</TextInput>
+                    </View>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                      <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data de Nascimento:</Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="data de nascimento"
+                        readOnly
                       >
-                        Editar
-                      </Text>
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={styles.btnModal}
-                      onPress={() => setModalVisible(false)}
+                        {detalhesMeuDads.data_nasc}
+                        </TextInput>
+                    </View>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                      <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>CPF:</Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="CPF"
+                        readOnly
+                      >{detalhesMeuDads.cpf}</TextInput>
+                    </View>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                      <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Genero:</Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Tipo"
+                        readOnly
+                      >{detalhesMeuDads.tipo}</TextInput>
+                    </View>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                      <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Usuário:</Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Usuário"
+                        readOnly
+                      >{detalhesMeuDads.usuario}</TextInput>
+                    </View>
+                    <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
+                      <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
+                      <TextInput
+                        style={styles.inputModal}
+                        //value={}
+                        //onChangeText={}
+                        placeholder="Telefones"
+                        readOnly
+                      >
+                        {detalhesMeuDads.numeros ? (
+                            detalhesMeuDads.numeros
+                              .split(",")
+                              .map((num) => <Text>{num}</Text>)
+                          ) : (
+                            <Text>Número não disponível</Text>
+                          )}
+                      </TextInput>
+                    </View>                
+                    
+                    <View
+                      style={{
+                        width: "100%",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                        flexDirection: "row",
+                        marginBottom: 5,
+                      }}
                     >
-                      <Text
-                        style={{
-                          fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#FFF",
-                          fontSize: 20,
+                      <TouchableOpacity
+                        style={styles.btnModal}
+                        onPress={() => {
+                          // saveProduto();
+                          setModalVisible(false);
                         }}
                       >
-                        Salvar
-                      </Text>
-                    </TouchableOpacity>
+                        <Text
+                          style={{
+                            fontFamily: "EBGaramond_800ExtraBold",
+                            color: "#FFF",
+                            fontSize: 20,
+                          }}
+                        >
+                          Editar
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btnModal}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: "EBGaramond_800ExtraBold",
+                            color: "#FFF",
+                            fontSize: 20,
+                          }}
+                        >
+                          Salvar
+                        </Text>
+                      </TouchableOpacity>
+                    </View>
                   </View>
+  
+                  {/* {detalhesMeusDados.map(detalhesDados =>(
+                    
+                  ))} */}
+  
                 </View>
-
-                {/* {detalhesMeusDados.map(detalhesDados =>(
-                  
-                ))} */}
-
-              </View>
+              ))}
             </Modal>
           </View>
           <Image
