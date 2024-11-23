@@ -247,7 +247,23 @@ export default function Home() {
 
                   <TouchableOpacity
                     style={{ justifyContent: "center", alignItems: "center" }}
-                    onPress={() => InativaCategoria(category.id)}
+                    onPress={() => {
+                      Alert.alert(
+                        "Atenção",
+                        "Deseja excluir a categoria?",
+                        [
+                          {
+                            text: "Sim",
+                            onPress: () => InativaCategoria(category.id)
+                          },
+                          {
+                            text: "Não",
+                            onPres: ()=>{return},
+                            style: 'cancel',
+                          }
+                        ]
+                      )
+                    }}
                   >
                     <Text style={styles.textBtn}>Excluir:</Text>
                     <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />

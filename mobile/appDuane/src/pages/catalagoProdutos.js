@@ -361,7 +361,23 @@ export default function Home() {
                           alignItems: "center",
                           height: "100%",
                         }}
-                        onPress={() => InativaProduto(produto.id)}
+                        onPress={() => {
+                          Alert.alert(
+                            "Atenção",
+                            "Você deseja excluir o produto?",
+                            [
+                              {
+                                text: "Sim",
+                                onPress:() => InativaProduto(produto.id)
+                              },
+                              {
+                                text: "Não",
+                                onPress: () => { return },
+                                style: 'cancel',
+                              }
+                            ]
+                          )
+                        }}
                       >
                         <Text style={styles.textBtn}>Excluir:</Text>
                         <FontAwesome6

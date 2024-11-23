@@ -269,7 +269,24 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={() => inativaCupom(detalhesCup.id)}
+                        onChangeText={() => {
+                          Alert.alert(
+                            "Atenção",
+                            "Você deseja excluir a cupom?",
+                            [
+                              {
+                                text: "Sim",
+                                onPress: () => inativaCupom(detalhesCup.id),
+
+                              },
+                              {
+                                text: "Não",
+                                onPress: ()=>{return},
+                                style: 'cancel',
+                              }
+                            ]
+                          )
+                        }}
                       >
                         <FontAwesome6
                           name="trash-can"
