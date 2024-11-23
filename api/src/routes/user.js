@@ -16,6 +16,7 @@ import FeedbackController from "../controllers/Feedback.js";
 import ResetControler from "../controllers/ReqSenha.js";
 import { logout } from "../middleware/authenticateJWT.js";
 import { upload,handleImageUpload} from "../middleware/imagens.js";
+import Pagamento from "../api/mercadopago.js";
 
 //Insert
 routerUser.post("/CreateUser",CadastroUsuario.CadastroPessoa);//USUARIO
@@ -30,6 +31,7 @@ routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array
 routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
 routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
 routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
+routerUser.post("/Pagamento",Pagamento.PagamentoMP);//USUARIO
 
 
 //Delete
