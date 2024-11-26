@@ -80,6 +80,7 @@ export default function Home() {
   useEffect(() => {
     getToken(); // Chama a função para obter o token
     selecionaPedid();
+    detalhesDoPedido();
   }, []);
 
   useEffect(() => {
@@ -225,7 +226,8 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.modalContainer}>
+              {detalhesPedido.map((detalhesPedid)=>(
+                <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                   <Text
                     style={{
@@ -245,7 +247,7 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Código"
                       readOnly
-                    ></TextInput>
+                    >{detalhesPedid.nome_cliente}</TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data do pedido:</Text>
@@ -255,7 +257,7 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Data do pedido"
                       readOnly
-                    ></TextInput>
+                    >{detalhesPedid.data}</TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Status:</Text>
@@ -307,6 +309,7 @@ export default function Home() {
                 </View>
 
               </View>
+              ))}
             </Modal>
 
 
