@@ -40,6 +40,7 @@ export default function Home() {
   const [nome, setNome] = useState("");
   const [dataNasc, setDataNasc] = useState("");
   const [telefones, setTelefones] = useState("");
+  const [selectedUserId, setSelectedUserId] = useState(null);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -131,7 +132,7 @@ export default function Home() {
   const selecionaDetalhesMeusDados = async ()=>{
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/SelecionaInfoUsers`,
+      await api.get(`/SelecionaInfoUsers/${id}`,
         {
           headers: {
             'x-access-token': `${token}`,
@@ -140,6 +141,9 @@ export default function Home() {
       )
       .then(response=>{
         setDetalhesMeusDados(response.data);
+        setNome(response.data.nome);
+        setTelefones(response.data.telefones);
+        setSelectedUserId(response.data.id);
         console.log(response.data);
       })
       .catch(error=>{
@@ -156,7 +160,7 @@ export default function Home() {
     }
     try {
       const token = AsyncStorage.getItem("userToken");
-      await api.put(`/ModificarPessoaADM/${id}`, {
+      await api.put(`/ModificarPessoaADM/${selectedUserId}`, {
         Nome: nome,
         Data_Nasc: dataNasc,
         Telefones: telefones
@@ -166,9 +170,9 @@ export default function Home() {
         }
       })
       .then(response=>{
-        setNome(response.data);
-        setDataNasc(response.data);
-        setTelefones(response.data);
+        alert("Dados modificados com sucesso", response.data);
+        setModalVisible(false);
+        selecionaDetalhesMeusDados(selectedUserId);
         console.log(response.data);
       })
       .catch(error=>{
@@ -316,22 +320,22 @@ export default function Home() {
                       <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Nome:</Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
+                        value={nome}
+                        onChangeText={setNome}
                         placeholder="Nome"
-                        readOnly
-                      >{detalhesMeuDads.nome}</TextInput>
+                        
+                      ></TextInput>
                     </View>
                     <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                       <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data de Nascimento:</Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
+                        value={dataNasc}
+                        onChangeText={setDataNasc}
                         placeholder="data de nascimento"
-                        readOnly
+                        
                       >
-                        {detalhesMeuDads.data_nasc}
+                        
                         </TextInput>
                     </View>
                     <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
@@ -406,12 +410,12 @@ export default function Home() {
                             fontSize: 20,
                           }}
                         >
-                          Editar
+                          cancelar
                         </Text>
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.btnModal}
-                        onPress={() => setModalVisible(false)}
+                        onPress={modificaMeusDados}
                       >
                         <Text
                           style={{
