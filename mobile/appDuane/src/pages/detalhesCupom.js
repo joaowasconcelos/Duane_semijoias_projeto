@@ -88,7 +88,7 @@ export default function Home() {
     selecionaDetalhesCup();
   }, []);
 
-  const modificaCate = async ()=>{
+  const modificaCup = async ()=>{
     if(!codigo || !descricao || !quantidade || !valor === 0){
       alert("Preencha todos os campos");
       return;
@@ -260,7 +260,7 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={modificaCate}
+                        onChangeText={modificaCup}
                       >
                         <FontAwesome6 name="pen" size={40} color="#ae4b67" />
                       </TouchableOpacity>

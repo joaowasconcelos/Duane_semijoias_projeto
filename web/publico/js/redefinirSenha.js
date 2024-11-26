@@ -26,7 +26,6 @@ async function RedefinirSenha() {
     }
     console.log("OPLS")
     try {
-        console.log("entrou no try")
         // Certifique-se de que o token seja enviado para o backend
         await axios.post(
             `http://10.0.3.77:3000/PrimeiroAcesso`, {

@@ -53,9 +53,11 @@ const LoginController = {
             if (definirSenha === "User Invalid") {
                 return res.status(401).json({ error: "Usuario Inválido" })
             }
+           
             return res.json({ message: "Senha definida com sucesso!" })
 
         } catch (error) {
+
             return res.status(500).json({ error: "Erro ao cadastrar senha!" })
         }
     },
