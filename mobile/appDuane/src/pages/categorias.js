@@ -31,6 +31,7 @@ export default function Home() {
   const [modCat, setModCat] = useState("");
   const [cateFiltro, setCateFiltro] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -67,6 +68,8 @@ export default function Home() {
         .then((response) => {
           setCategories(response.data);
           setCateFiltro(response.data);
+          setModCat(response.data.tipo);
+          setId(response.data.id);
           console.log(response.data);
         })
         .catch((error) => {
@@ -171,7 +174,6 @@ export default function Home() {
       await api.put(
           `/ModificaCate/${id}`,
           {
-            id: id,
             tipo: modCat,
           },
           {
@@ -180,9 +182,9 @@ export default function Home() {
             },
           }
       )
-        .then((response) => {
-          setId(response.data);
-          setModCat(response.data);
+        .then(response => {
+          
+          
           console.log(response.data);
         })
         .catch(error => {
