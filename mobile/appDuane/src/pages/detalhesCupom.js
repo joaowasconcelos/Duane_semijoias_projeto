@@ -38,7 +38,7 @@ export default function Home() {
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
   const [modCupom, setModCupom] = useState("");
-  const [cupomId, setCupomId] = useState("")
+  const [cupomId, setCupomId] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -71,7 +71,12 @@ export default function Home() {
         }
       })
       .then(response=>{
-        setDetalhesCupom(response.data);  
+        setDetalhesCupom(response.data);
+        setCodigo(response.data.codigo);
+        setDescricao(response.data.descricao);
+        setQuantidade(response.data.quantidade);
+        setValor(response.data.valor);
+        setId(response.data.id);
         console.log(response.data);
       })
       .catch((error) => {
@@ -108,7 +113,7 @@ export default function Home() {
         }
       })
       .then(response => {
-        setModCupom(response.data);
+        setModCupom(id);
         console.log(response.data);
       })
       .catch((error) => {
@@ -218,21 +223,21 @@ export default function Home() {
                       style={{ width: "90%", justifyContent: "flex-start", marginTop: 10 }}
                     >
                       <Text style={styles.textBtn}>Código:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setCodigo} value={detalhesCup.codigo}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setCodigo} value={codigo}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Quantidade:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} value={detalhesCup.quantidade}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} value={quantidade}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Descrição:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setDescricao} value={detalhesCup.descricao}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setDescricao} value={descricao}></TextInput>
                     </View>
 
                     
@@ -243,7 +248,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs} onChangeText={setValor} value={detalhesCup.valor}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setValor} value={valor}></TextInput>
                     </View>
 
                     <View
