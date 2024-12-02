@@ -272,10 +272,10 @@ export default function Home() {
                   <FontAwesome6 name="gift" color="#ae4b67" size={26} />
                 </TouchableOpacity>
 
-                <TouchableOpacity style={styles.btn} onPress={navegaRelatoriosVendas}>
+                {/* <TouchableOpacity style={styles.btn} onPress={navegaRelatoriosVendas}>
                   <Text style={styles.textBtn}>Relatórios de Vendas</Text>
                   <FontAwesome6 name="coins" color="#ae4b67" size={26} />
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
                 {/* <TouchableOpacity style={styles.btn} onPress={navegaPromocoes}>
                   <Text style={styles.textBtn}>Promoções</Text>

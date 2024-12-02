@@ -130,6 +130,32 @@ export default class Endereco {
             bd.release();
         }
     }
+
+    async SelecionaEndereco() {
+        const bd = await obterConexaoDoPool();
+        try {
+            const enderecoResult = await bd.query(`SELECT 
+    e.* 
+FROM 
+    pessoa p
+JOIN 
+    endereco_has_pessoa ehp ON p.id = ehp.pessoa_id
+JOIN 
+    endereco e ON ehp.endereco_id = e.id
+WHERE 
+    p.id = ?
+;`, [
+                this._id
+            ]);
+            return enderecoResult
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
     verificaCampos() {
         if (this._cep.length > 10 ||
             this._cidade.length > 100 ||
@@ -158,7 +184,7 @@ export default class Endereco {
 }
 
 
-    
- 
+
+
 
 

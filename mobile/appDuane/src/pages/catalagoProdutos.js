@@ -15,6 +15,7 @@ import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { Picker } from '@react-native-picker/picker';
 
 import AppLoading from "expo-app-loading";
 import {
@@ -35,10 +36,12 @@ export default function Home() {
   const navigation = useNavigation();
   const [id, setId] = useState("");
   const [descricao, setDescricao] = useState("");
-  const [status, setStatus] = useState("");
   const [nomeProduto, setNomeProduto] = useState("");
   const [valor, setValor] = useState("");
+  const [status, setStatus] = useState("");
   const [idCate, setIdCate] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [cate, setCate] = useState([]);
   const [statusPreco, setStatusPreco] = useState("");
   const [prodFiltro, setProdFiltro] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
@@ -67,6 +70,7 @@ export default function Home() {
   useEffect(() => {
     getToken();
     selecionaProduto();
+    selecionaCate();
   }, []);
 
   const [prod, setProd] = useState([]);
@@ -92,88 +96,113 @@ export default function Home() {
     }
   };
 
-  // useEffect(()=>{
-  //   return(
-      
-  //   )
-  // },[detalhesProduto]);
+  
   const [detalhesProduto, setDetalhesProduto] = useState([]);
   const buscaId = (id) => {
     const item = prod.find((item) => item.id === id);
-    console.log("qwerty: ",item);
+    console.log("qwerty: ", item);
     setDetalhesProduto([item]);
     pressBtnDetalhes();
-    console.log("set aqui", setDetalhesProduto);
+    console.log("set aqui", detalhesProduto);
   };
 
+  useEffect(()=>{
+    setSelectedCategory(detalhesProduto.tipo);
+    console.log("categoria selecionada", detalhesProduto.tipo);
+  },[detalhesProduto]);
 
-
-  
-  const InativaProduto = async (id) =>{
+  const InativaProduto = async (id) => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.put(`/InativaProduto/${id}`,
-        {
-          id: id, 
-        },
-        {
-        headers: {
-          'x-access-token': `${token}`,
-        }
-      })
-      .then(response=>{
-        setId(response.data)
-        console.log(response.data);
-        alert("Produto inativado com sucesso!");
-      })
-      .catch(error => {
-        console.error("Erro ao inativar produto", error);
-      })
+      await api
+        .put(
+          `/InativaProduto/${id}`,
+          {
+            id: id,
+          },
+          {
+            headers: {
+              "x-access-token": `${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          setId(response.data);
+          console.log(response.data);
+          alert("Produto inativado com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao inativar produto", error);
+        });
     } catch (error) {
       console.log("Erro ao inativar produto", error);
     }
-  }
+  };
 
-  const modificaProd = async ()=>{
-    if(!descricao || !nomeProduto || !valor === 0){
+  const modificaProd = async () => {
+    if (!descricao || !nomeProduto || !valor === 0) {
       alert("Preencha todos os campos!");
     }
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.put(`/ModificarProduto/${id}`,{
-        descricao: Descricao,
-        nomeProduto: NomeProduto,
-        valor: Valor,
-      },
-      {
-          headers:{
-            'x-access-token': `${token}`
+      await api
+        .put(
+          `/ModificarProduto/${id}`,
+          {
+            Descricao: descricao,
+            NomeProduto: nomeProduto,
+            Valor: valor,
+            Status: status,
+            ID_Categoria: idCate,
+          },
+          {
+            headers: {
+              "x-access-token": `${token}`,
+            },
           }
-        
-      })
-      .then(response=>{
-        setDescricao(response.data);
-        setNomeProduto(response.data);
-        setValor(response.data);
-        console.log(response.data);
-      })
+        )
+        .then((response) => {
+          setDescricao(response.data);
+          setNomeProduto(response.data);
+          setValor(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao modificar produto", error);
+        });
     } catch (error) {
-      
+      console.log("Erro ao acessar a rota de modificar produto", error);
     }
-  }
+  };
 
-  const handleSearch = (query) =>{
+  const handleSearch = (query) => {
     setSearchQuery(query);
-    if(query){
-      const filtro = prod.filter((item)=>{
+    if (query) {
+      const filtro = prod.filter((item) => {
         return (
           item.nome_produto.toLowerCase().includes(query.toLowerCase()) ||
           item.tipo.toLowerCase().includes(query.toLowerCase())
-        )
+        );
       });
       setProdFiltro(filtro);
-    }else{
+    } else {
       setProdFiltro(prod);
+    }
+  };
+
+  const selecionaCate = async () => {
+    try {
+      await api
+        .get(`/SelecionaCategoria`)
+        .then((response) => {
+          setCate(response.data);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error("Erro ao buscar as categorias:", error);
     }
   };
 
@@ -247,7 +276,7 @@ export default function Home() {
 
             <ScrollView>
               <View style={styles.containerElements}>
-                {prod.map((produto) => (
+                {(prodFiltro.length > 0 ? prodFiltro : prod).map((produto) => (
                   <View key={produto.id} style={styles.btn}>
                     <View style={{}}>
                       <Image
@@ -283,7 +312,7 @@ export default function Home() {
                         <View>
                           <Text style={styles.textBtn}>Preço:</Text>
                           <Text style={styles.textElement}>
-                            {produto.preco_promocional}
+                            {produto.preco_normal}
                           </Text>
                         </View>
                       </View>
@@ -304,37 +333,43 @@ export default function Home() {
                       </View>
                     </View>
 
-                    <View style={{width: '20%', height: '50%', justifyContent: 'center'}}>
-                    <TouchableOpacity
+                    <View
                       style={{
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        height: "100%",
+                        width: "20%",
+                        height: "50%",
+                        justifyContent: "center",
                       }}
-                      onPress={() => buscaId(produto.id)}
                     >
-                      <Text style={styles.textBtn}>Detalhes:</Text>
-                      <FontAwesome6
-                        name="file-circle-plus"
-                        color="#ae4b67"
-                        size={20}
-                      />
-                    </TouchableOpacity>
-                    <TouchableOpacity
-                      style={{
-                        justifyContent: "flex-start",
-                        alignItems: "center",
-                        height: "100%",
-                      }}
-                      onPress={() => InativaProduto(produto.id)}
-                    >
-                      <Text style={styles.textBtn}>Excluir:</Text>
-                      <FontAwesome6
-                        name="trash-can"
-                        color="#ae4b67"
-                        size={20}
-                      />
-                    </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          height: "100%",
+                        }}
+                        onPress={() => buscaId(produto.id)}
+                      >
+                        <Text style={styles.textBtn}>Detalhes:</Text>
+                        <FontAwesome6
+                          name="file-circle-plus"
+                          color="#ae4b67"
+                          size={20}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={{
+                          justifyContent: "flex-start",
+                          alignItems: "center",
+                          height: "100%",
+                        }}
+                        onPress={() => InativaProduto(produto.id)}
+                      >
+                        <Text style={styles.textBtn}>Excluir:</Text>
+                        <FontAwesome6
+                          name="trash-can"
+                          color="#ae4b67"
+                          size={20}
+                        />
+                      </TouchableOpacity>
                     </View>
                   </View>
                 ))}
@@ -377,13 +412,34 @@ export default function Home() {
                       >
                         Categoria:
                       </Text>
-                      <TextInput
-                        style={styles.inputModal}
-                        placeholder="Categoria"
-                        readOnly
+                      <TouchableOpacity
+                        style={{
+                          height: 35,
+                          backgroundColor: "#FFF6F2",
+                          justifyContent: "center",
+                          borderRadius: 5,
+                          borderWidth: 1,
+                          borderColor: "#9B5377",
+                          fontWeight: "bold",
+                          width: '100%'
+                        }}
                       >
-                        {detalhesProd.tipo}
-                      </TextInput>
+                        <Picker
+                          selectedValue={"Brincos"}
+                          onValueChange={(itemValue) =>
+                            setSelectedCategory(itemValue)
+                          }
+                        >
+                          <Picker.Item label="Selecione a Categoria" value="" />
+                          {cate.map((category) => (
+                            <Picker.Item
+                              key={category.id}
+                              label={category.tipo}
+                              value={category.id.toString()}
+                            />
+                          ))}
+                        </Picker>
+                      </TouchableOpacity>
                     </View>
                     <View
                       style={{
@@ -404,7 +460,6 @@ export default function Home() {
                       <TextInput
                         style={styles.inputModal}
                         placeholder="Produto"
-                        readOnly
                       >
                         {detalhesProd.nome_produto}
                       </TextInput>
@@ -425,38 +480,11 @@ export default function Home() {
                       >
                         Preço Normal:
                       </Text>
-                      <TextInput
-                        style={styles.inputModal}
-                        placeholder="Valor"
-                        readOnly
-                      >
+                      <TextInput style={styles.inputModal} placeholder="Valor">
                         {detalhesProd.preco_normal}
                       </TextInput>
                     </View>
-                    <View
-                      style={{
-                        width: "100%",
-                        justifyContent: "center",
-                        alignItems: "flex-start",
-                      }}
-                    >
-                      <Text
-                        style={{
-                          fontSize: 18,
-                          fontFamily: "EBGaramond_800ExtraBold",
-                          color: "#E5969C",
-                        }}
-                      >
-                        Preço Promocional:
-                      </Text>
-                      <TextInput
-                        style={styles.inputModal}
-                        placeholder="Valor"
-                        readOnly
-                      >
-                        {detalhesProd.preco_promocional}
-                      </TextInput>
-                    </View>
+
                     <View
                       style={{
                         width: "100%",
@@ -476,7 +504,6 @@ export default function Home() {
                       <TextInput
                         style={styles.inputModal}
                         placeholder="Descrição"
-                        readOnly
                       >
                         {detalhesProd.descricao}
                       </TextInput>
@@ -510,13 +537,12 @@ export default function Home() {
                     <View
                       style={{
                         width: "100%",
-                        justifyContent: "center",
+                        justifyContent: "space-evenly",
                         alignItems: "center",
                         flexDirection: "row",
                         marginBottom: 5,
                       }}
                     >
-                      
                       <TouchableOpacity
                         style={styles.btnModal}
                         onPress={() => setModalVisible(false)}
@@ -528,7 +554,21 @@ export default function Home() {
                             fontSize: 20,
                           }}
                         >
-                          Fechar
+                          Cancelar
+                        </Text>
+                      </TouchableOpacity>
+                      <TouchableOpacity
+                        style={styles.btnModal}
+                        onPress={() => setModalVisible(false)}
+                      >
+                        <Text
+                          style={{
+                            fontFamily: "EBGaramond_800ExtraBold",
+                            color: "#FFF",
+                            fontSize: 20,
+                          }}
+                        >
+                          Editar
                         </Text>
                       </TouchableOpacity>
                     </View>
@@ -536,7 +576,6 @@ export default function Home() {
                 </View>
               ))}
             </Modal>
-            
           </View>
           <Image
             source={require("../../assets/ondas-rosa-footer.png")}

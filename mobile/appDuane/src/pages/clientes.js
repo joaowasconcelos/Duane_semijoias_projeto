@@ -33,6 +33,8 @@ import api from "../services/api/api"
 export default function Home() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [clienteFiltro, setClienteFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
 
 
 
@@ -89,6 +91,21 @@ export default function Home() {
     pressDetails();
   }
 
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = clientes.filter((item) => {
+        return (
+          item.nome.toLowerCase().includes(query.toLowerCase()) ||
+          item.usuario.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setClienteFiltro(filtro);
+    } else {
+      setClienteFiltro(clientes);
+    }
+  };
+
   if (!fontsLoaded) {
   } else {
     return (
@@ -129,13 +146,13 @@ export default function Home() {
             </View>
 
             <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
+              <TextInput onChangeText={handleSearch} value={searchQuery} placeholder='Pesquise pelo nome ou usuário' style={styles.Inputs}>
               </TextInput>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-                {clientes.map(client => (
+                {(clienteFiltro.length>0 ? clienteFiltro : clientes).map(client => (
                   <View key={client.id} style={styles.btn}>
                     <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '70%' }}>
                       <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
