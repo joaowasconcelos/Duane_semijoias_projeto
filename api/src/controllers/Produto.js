@@ -166,6 +166,40 @@ const ProdutoController = {
         } catch (error) {
             return res.status(500).json({ error: "Erro ao vizualizar produto!" })
         }
+    },
+    atualizarProduto: async (req, res) => {
+        const { idProduto, dadosAtualizados, imagensExistentes } = req.body;
+        const novasImagens = req.files; // Novas imagens enviadas pelo cliente
+    
+        try {
+            // Obter o produto do banco
+            const produto = await Produto.findById(idProduto);
+            if (!produto) {
+                return res.status(404).json({ mensagem: 'Produto não encontrado.' });
+            }
+    
+            // Validar imagens existentes no Firebase
+            const imagensValidas = await validateExistingImages(imagensExistentes);
+    
+            // Atualizar imagens no Firebase
+            const imagensAtualizadas = await updateImagesInFirebase(novasImagens, imagensValidas);
+    
+            // Atualizar os dados do produto no banco
+            produto.nome = dadosAtualizados.nome || produto.nome;
+            produto.descricao = dadosAtualizados.descricao || produto.descricao;
+            produto.preco = dadosAtualizados.preco || produto.preco;
+            produto.imagens = imagensAtualizadas;
+    
+            await produto.save();
+    
+            return res.status(200).json({
+                mensagem: 'Produto atualizado com sucesso!',
+                produto,
+            });
+        } catch (error) {
+            console.error('Erro ao atualizar produto:', error);
+            res.status(500).json({ mensagem: 'Erro ao atualizar produto.' });
+        }
     }
 }
 
