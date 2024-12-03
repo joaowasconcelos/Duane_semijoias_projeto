@@ -31,7 +31,7 @@ export default function Home() {
   const [modCat, setModCat] = useState("");
   const [cateFiltro, setCateFiltro] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [isEdit, setIsEdit] = useState(false);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -133,7 +133,8 @@ export default function Home() {
   }
 
   const handleAddCat = () => {
-    // setCategories();
+    setNovaCate(""); // limpa o input para a nova categoria
+    setIsEdit(false);
     setModalVisible(true);
   };
 
@@ -165,8 +166,23 @@ export default function Home() {
     }
   };
 
+  const handleEditCat = (category) => {
+    setNovaCate(category.tipo); // preenche o input com a categoria selecionada
+    setId(category.id); // Armazena o id da categoria que está sendo editada
+    setIsEdit(true); // Seta o modo de edição
+    setModalVisible(true);
+  };
+
+  const handleSave = async ()=>{
+    if(isEdit){
+      await modificaCate();
+    }else{
+      await createCate();
+    }
+  }
+
   const modificaCate = async () => {
-    if (!modCat === 0) {
+    if (!novaCate === 0) {
       alert("Preencha o campo para modificar a categoria");
     }
     try {
@@ -174,7 +190,7 @@ export default function Home() {
       await api.put(
           `/ModificaCate/${id}`,
           {
-            tipo: modCat,
+            tipo: novaCate,
           },
           {
             headers: {
@@ -183,8 +199,10 @@ export default function Home() {
           }
       )
         .then(response => {
-          
-          
+          alert("Dados modificados com sucesso", response.data);
+          setCategories(prevCategories => 
+            prevCategories.map(cat => (cat.id === id ? { ...cat, tipo: novaCate } : cat))
+          ); 
           console.log(response.data);
         })
         .catch(error => {
@@ -278,6 +296,7 @@ export default function Home() {
                       height: "100%",
                       marginRight: 10,
                     }}
+                    onPress={() => handleEditCat(category.id)}
                   >
                     <Text style={styles.textBtn}>Editar:</Text>
                     <FontAwesome6
@@ -345,7 +364,7 @@ export default function Home() {
                   <TouchableOpacity
                     style={styles.btnModal}
                     onPress={() => {
-                      createCate();
+                      handleSave
                     }}
                   >
                     <Text
