@@ -29,31 +29,23 @@
     <main>
 
         <div id="container1">
-            <div id="bemVinda">
-                <svg xmlns="http://www.w3.org/2000/svg" style="margin-top: 14px;" width="26" height="26"
-                    fill="currentColor" class="bi bi-person-fill" viewBox="0 0 16 16">
-                    <path d="M3 14s-1 0-1-1 1-4 6-4 6 3 6 4-1 1-1 1zm5-6a3 3 0 1 0 0-6 3 3 0 0 0 0 6" />
-                </svg>
-                <p id="bemVindaText">Bem vinda!</p>
-            </div>
 
-            <div id="voltar"></div>
+            <p id="titulo22">Gerenciamento de cupons</p>
+
             <a href="#" style="text-decoration: none;" onclick="history.back()">
-                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p>
+                <p id="back" style="cursor: pointer;">Voltar ao inicio!</p> <span id="icon"
+                    class="fas fa-home fa"></span>
             </a>
             <svg xmlns="http://www.w3.org/2000/svg" width="26" height="26" fill="currentColor"
-                class="bi home bi-house-fill" viewBox="0 0 16 16" id="icon">
+                class="bi home bi-house-fill" viewBox="0 0 16 16">
                 <path
                     d="M8.707 1.5a1 1 0 0 0-1.414 0L.646 8.146a.5.5 0 0 0 .708.708L8 2.207l6.646 6.647a.5.5 0 0 0 .708-.708L13 5.793V2.5a.5.5 0 0 0-.5-.5h-1a.5.5 0 0 0-.5.5v1.293z" />
                 <path d="m8 3.293 6 6V13.5a1.5 1.5 0 0 1-1.5 1.5h-9A1.5 1.5 0 0 1 2 13.5V9.293z" />
             </svg>
-        </div>
-
-        <div id="container2">
-
-            <p id="titulo2">Gerenciamento de cupons</p>
 
         </div>
+
+
 
         <!-- Menu -->
 
@@ -75,24 +67,26 @@
 
                 <form action=`${localStorage.getItem("ip")}CreateCupom` method="POST" id="envia-form">
 
-                    <label for="Codigo">Código: *</label>
-                    <input class="input" type="text" name="Codigo" id="Codigo">
+                    <div class="formCup">
+                        <label for="Codigo">Código: *</label>
+                        <input class="input" type="text" name="Codigo" id="Codigo" required>
 
-                    <label for="Descricao">Descrição: *</label>
-                    <input class="input" type="text" name="Descricao" id="Descricao">
+                        <label for="Descricao">Descrição: *</label>
+                        <input class="input" type="text" name="Descricao" id="Descricao" required>
 
-                    <label for="Valor">Valor do desconto: *</label>
-                    <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
-                        onkeydown="return somenteNumeros(event)">
+                        <label for="Valor">Valor do desconto: *</label>
+                        <input class="input" type="text" id="Valor" name="Valor" onInput="mascaraMoeda(event);"
+                            onkeydown="return somenteNumeros(event)" required>
 
-                    <label for="Quantidade">Quantidade: *</label>
-                    <input class="input" type="number" name="Quantidade" id="Quantidade">
+                        <label for="Quantidade">Quantidade: *</label>
+                        <input class="input" type="number" name="Quantidade" id="Quantidade" required>
+                    </div>
 
                     <div id="btns">
-
-                        <button type="button" class="btn btn-primary delete-changes"
+                        <button type="button" class="btn btn-secondary delete-changes"
                             onclick="limparInput()">Cancelar</button>
-                        <button type="submit" class="btn btn-primary save-changes" onclick="salvar(event)">Salvar</button>
+                        <button type="submit" class="btn btn-primary save-changes"
+                            onclick="salvar(event)">Salvar</button>
 
                     </div>
 

@@ -15,8 +15,13 @@ main {
 #container1 {
     display: flex;
     flex-direction: row;
-    justify-content: space-between;
-    margin-top: 180px;
+    justify-content:flex-end;
+    margin-top: 160px;
+    gap: 10px;
+}
+
+.home {
+    margin-top: 10px;
 }
 
 /* voltar ao inicio */
@@ -36,26 +41,11 @@ main {
     padding-left: 10px;
 }
 
-/* bem vinda + nome */
-#bemVinda {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
-}
-
-#bemVindaText {
-    padding-top: 15px;
-    font-weight: bold;
-    font-size: 19px;
-}
-
 /* Toda estilização dentro do menu do adm */
 #menuAdm {
     display: flex;
     flex-direction: column;
-    height: 587px;
-    width: 353px;
-    margin-top: 30px;
+    height: 440px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
 }
@@ -115,33 +105,34 @@ main {
     font-size: 20px;
     text-align: justify;
     color: #633636;
-    padding-top: 25px;
-    margin-right: 25px;
     font-weight: bold;
+    margin-top: 10px;
+    width: auto;
+}
+
+#titulo22 {
+    font-family: "Roboto Mono", monospace;
+    font-optical-sizing: auto;
+    font-style: normal;
+    font-size: 20px;
+    text-align: justify;
+    color: #633636;
+    font-weight: bold;
+    margin-top: 10px;
+    width: auto;
+    padding-right: 68%;
 }
 
 .container2 {
     display: flex;
     flex-direction: row;
-    gap: 20%;
+    gap: 10%;
     width: 100%;
 }
 
 #container2 {
     height: 40px;
 }
-
-#table {
-    display: flex;
-    flex-direction: column;
-    height: 587px;
-    width: 40%;
-    margin-top: 29px;
-    border-radius: 5px;
-    border: 1px solid #e6c7d0;
-    padding-left: 25px;
-}
-
 .icon {
     position: absolute;
     top: 10px;
@@ -153,7 +144,13 @@ main {
 
 form {
     display: flex;
+    flex-direction: row;
+}
+
+.formCup{
+    display: flex;
     flex-direction: column;
+    width: 50%;
 }
 
 /* textos */
@@ -164,7 +161,6 @@ label {
     font-weight: bold;
     font-size: 18px;
     color: #9B5377;
-    padding-top: 15px;
 }
 
 input {
@@ -184,14 +180,6 @@ input[type=number]::-webkit-inner-spin-button {
     display: block;
     overflow-y: scroll;
     height: 600px;
-}
-
-table {
-    width: 100%;
-    border-collapse: collapse;
-    font-size: 15px;
-    font-family: Arial, sans-serif;
-    text-align: left;
 }
 
 #desc {
@@ -281,24 +269,39 @@ td {
     display: flex;
     justify-content: center;
     align-items: center;
-    width: 95%;
-    margin-top: 50px;
+    margin-top: 25%;
+    width: 50%;
 }
 
 button {
-    margin-top: 30px !important;
-
+    width: 200px !important;
 }
 
+.btn,
+.btn-secondary,
 .btn-primary {
     width: 195px;
     margin: auto;
+}
+
+.btn-primary {
     background-color: #AE4B67 !important;
     border: none !important;
 }
 
-.btn-primary:hover {
-    background-color: #88394f !important;
+.btn-primary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(174, 75, 103, 0.446) !important;
+    border-color: rgba(255, 0, 0, 0.5) !important;
+}
+
+.btn-secondary:focus {
+    box-shadow: 0 0 0 0.2rem rgba(41, 31, 34, 0.446) !important;
+    border-color: rgba(145, 123, 123, 0.5) !important;
+}
+
+.btn-secondary {
+    background-color: #484445 !important;
+    border: none !important;
 }
 
 .cancel {
@@ -344,7 +347,7 @@ footer {
     width: 100%;
     bottom: 0;
     display: block;
-    height: 90px;
+    height: 55px;
     /* position: absolute; */
 }
 
