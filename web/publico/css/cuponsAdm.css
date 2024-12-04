@@ -133,6 +133,18 @@ main {
 #container2 {
     height: 40px;
 }
+
+#table {
+    display: flex;
+    flex-direction: column;
+    height: 440px;
+    width: 100%;
+    border-radius: 5px;
+    border: 1px solid #e6c7d0;
+    padding-left: 40px;
+    padding-top: 20px;
+}
+
 .icon {
     position: absolute;
     top: 10px;
@@ -180,6 +192,14 @@ input[type=number]::-webkit-inner-spin-button {
     display: block;
     overflow-y: scroll;
     height: 600px;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 15px;
+    font-family: Arial, sans-serif;
+    text-align: left;
 }
 
 #desc {
@@ -274,6 +294,7 @@ td {
 }
 
 button {
+    margin-top: 30px !important;
     width: 200px !important;
 }
 

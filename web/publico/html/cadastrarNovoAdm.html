@@ -23,7 +23,7 @@
     <header id="headerAdm"></header>
 
     <main>
-        
+
         <div id="container1">
 
             <p id="titulo22">Cadastrar novo usuário</p>
@@ -42,7 +42,7 @@
 
         <div id="table">
 
-            <form action="${localStorage.getItem("ip")}CreateADM" method="POST" id="envia-form">
+            <form action="${localStorage.getItem(" ip")}CreateADM" method="POST" id="envia-form">
 
                 <div id="form">
 
@@ -52,7 +52,8 @@
                         <input class="input" type="text" name="Nome" id="Nome" required>
 
                         <label for="CPF">C.P.F: *</label>
-                        <input  type="text" id="CPF" placeholder="###.###.###-##" onkeyup="mascara('###.###.###-##',this,event,true)" maxlength="14" required>
+                        <input type="text" id="CPF" placeholder="###.###.###-##"
+                            onkeyup="mascara('###.###.###-##',this,event,true)" maxlength="14" required>
 
                         <label for="Genero">Gênero: *</label>
                         <select id="Genero" name="Genero" required>
@@ -70,12 +71,13 @@
                     </div>
 
                     <div id="dados">
-                        
+
                         <label for="Telefones">Telefone: </label>
                         <input class="input Telefone2" type="text" name="Telefones" id="Telefones2">
 
                         <label for="Usuario">Email: * </label><span id="text"></span>
-                        <input type="text" name="Usuario" id="Usuario" autocomplete="Usuario" onkeydown="validando()" required>
+                        <input type="text" name="Usuario" id="Usuario" autocomplete="Usuario" onkeydown="validando()"
+                            required>
 
                         <label for="perfil">Tipo: *</label>
                         <select id="perfil" name="perfil" required>
@@ -89,17 +91,19 @@
                         <p>**Confira se todos os dados estão devidamente preenchidos <br>
                             antes de finalizar o cadastro.</p>
                         <p>**Todos os campos marcados com “ * ” são obrigatórios.</p>
+                        
+                        <div id="btns">
+                            <button type="button" class="btn btn-primary save-changes"
+                                onclick="limparInput()">Cancelar</button>
+                            <button type="button" class="btn btn-primary save-changes"
+                                onclick="salvar()">Salvar</button>
+                        </div>
 
                     </div>
 
                 </div>
 
-                <div id="btns">
 
-                    <button type="button" class="btn btn-primary save-changes" onclick="limparInput()">Cancelar</button>
-                    <button type="button" class="btn btn-primary save-changes" onclick="salvar()">Salvar</button>
-
-                </div>
 
             </form>
 

@@ -22,7 +22,7 @@ footer {
     bottom: 0;
     display: block;
     height: 90px;
-    /* position: absolute; */
+    position: absolute;
 }
 
 /* Parte de cima */
@@ -89,7 +89,7 @@ footer {
 #table {
     display: flex;
     flex-direction: column;
-    height: 530px;
+    height: 405px;
     width: 100%;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
@@ -140,7 +140,7 @@ label {
     font-weight: bold;
     font-size: 18px;
     color: #9B5377;
-    padding-top: 15px;
+    padding-top: 8x;
 }
 
 input{
@@ -185,12 +185,8 @@ select {
     display: flex;
     justify-content: center;
     align-items: center;
-
 }
 
-button {
-    margin-top: 30px !important;
-}
 
 .btn-primary {
     width: 195px;
