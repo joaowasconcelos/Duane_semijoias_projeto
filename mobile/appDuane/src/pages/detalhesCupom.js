@@ -72,10 +72,10 @@ export default function Home() {
       })
       .then(response=>{
         setDetalhesCupom(response.data);
-        setCodigo(response.data.codigo);
-        setDescricao(response.data.descricao);
-        setQuantidade(response.data.quantidade);
-        setValor(response.data.valor);
+        setCodigo(response.data[0].codigo);
+        setDescricao(response.data[0].descricao);
+        setQuantidade(response.data[0].quantidade);
+        setValor(response.data[0].valor);
         setId(response.data.id);
         console.log(response.data);
       })
@@ -102,10 +102,10 @@ export default function Home() {
       const token = await AsyncStorage.getItem('userToken');
       await api.put(`/ModificaCupom/${id}`,
       {
-        "codigo": codigo,
-        "descricao": descricao,
-        "quantidade": quantidade,
-        "valor": valor
+        Codigo: codigo,
+        Descricao: descricao,
+        Quantidade: quantidade,
+        Valor: valor
       },
       {
         headers: {

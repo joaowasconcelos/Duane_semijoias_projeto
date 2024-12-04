@@ -68,7 +68,7 @@ export default function Home() {
         .then((response) => {
           setCategories(response.data);
           setCateFiltro(response.data);
-          setModCat(response.data.tipo);
+          setNovaCate(response.data[0].tipo);
           setId(response.data.id);
           console.log(response.data);
         })
@@ -92,7 +92,7 @@ export default function Home() {
         .post(
           `/CreateCategoria`,
           {
-            tipo: novaCate,
+            tipo: novaCate.trim(),
           },
           {
             headers: {
@@ -101,7 +101,7 @@ export default function Home() {
           }
         )
         .then((response) => {
-          setNovaCate(response.data);
+          setCategories([...categories, response.data]);
           console.log(response.data);
           alert("Categoria criada com sucesso!");
           setModalVisible(false);
@@ -167,19 +167,27 @@ export default function Home() {
   };
 
   const handleEditCat = (category) => {
-    setNovaCate(category.tipo); // preenche o input com a categoria selecionada
-    setId(category.id); // Armazena o id da categoria que está sendo editada
-    setIsEdit(true); // Seta o modo de edição
-    setModalVisible(true);
+    setNovaCate(category.tipo); // Preenche o campo com o tipo da categoria
+    setId(category.id); // Armazena o ID da categoria para edição
+    setIsEdit(true); // Habilita o modo de edição
+    setModalVisible(true); // Abre o modal
   };
 
-  const handleSave = async ()=>{
-    if(isEdit){
-      await modificaCate();
-    }else{
-      await createCate();
+  const handleSave = async () => {
+    if (novaCate.trim() === "") {
+      alert("O campo de categoria não pode estar vazio!");
+      return;
     }
-  }
+    
+    if (isEdit) {
+      await modificaCate(); // Edita categoria existente
+    } else {
+      await createCate(); // Cria uma nova categoria
+    }
+  
+    setModalVisible(false); // Fecha o modal após salvar
+    selecionaCate(); // Atualiza a lista de categorias
+  };
 
   const modificaCate = async () => {
     if (!novaCate === 0) {
@@ -190,7 +198,7 @@ export default function Home() {
       await api.put(
           `/ModificaCate/${id}`,
           {
-            tipo: novaCate,
+            tipo: novaCate.trim(),
           },
           {
             headers: {
@@ -200,9 +208,9 @@ export default function Home() {
       )
         .then(response => {
           alert("Dados modificados com sucesso", response.data);
-          setCategories(prevCategories => 
-            prevCategories.map(cat => (cat.id === id ? { ...cat, tipo: novaCate } : cat))
-          ); 
+          setCategories(categories.map(cat => 
+            cat.id === id ? { ...cat, tipo: novaCate.trim() } : cat
+          )); 
           console.log(response.data);
         })
         .catch(error => {
@@ -328,7 +336,7 @@ export default function Home() {
                     fontWeight: "bold",
                   }}
                 >
-                  Cadastre a nova categoria
+                  {isEdit ? "Editar Categoria" : "Cadastrar Nova Categoria"}
                 </Text>
                 <TextInput
                   style={styles.inputModal}

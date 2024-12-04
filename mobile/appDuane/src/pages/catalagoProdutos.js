@@ -10,6 +10,7 @@ import {
   ScrollView,
   TextInput,
   Modal,
+  Alert
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -108,7 +109,7 @@ export default function Home() {
 
   useEffect(()=>{
     setSelectedCategory(detalhesProduto.tipo);
-    console.log("categoria selecionada", detalhesProduto.tipo);
+    // console.log("categoria selecionada", detalhesProduto[0].tipo);
   },[detalhesProduto]);
 
   const InativaProduto = async (id) => {
@@ -166,6 +167,8 @@ export default function Home() {
           setNomeProduto(response.data);
           setValor(response.data);
           console.log(response.data);
+          setModalVisible(false);
+          Alert("Produto Alterado com sucesso")
         })
         .catch((error) => {
           console.error("Erro ao modificar produto", error);
@@ -451,7 +454,8 @@ export default function Home() {
                             <Picker.Item
                               key={category.id}
                               label={category.tipo}
-                              value={category.id.toString()}
+                              value={category.tipo}
+                              
                             />
                           ))}
                         </Picker>
@@ -475,9 +479,10 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
+                        value={nomeProduto}
+                        onChangeText={setNomeProduto}
                         placeholder="Produto"
-                      >
-                        {detalhesProd.nome_produto}
+                      >                        
                       </TextInput>
                     </View>
                     <View
@@ -496,8 +501,7 @@ export default function Home() {
                       >
                         Preço Normal:
                       </Text>
-                      <TextInput style={styles.inputModal} placeholder="Valor">
-                        {detalhesProd.preco_normal}
+                      <TextInput style={styles.inputModal} value={valor} onChangeText={setValor} placeholder="Valor">
                       </TextInput>
                     </View>
 
@@ -519,9 +523,10 @@ export default function Home() {
                       </Text>
                       <TextInput
                         style={styles.inputModal}
+                        value={descricao}
+                        onChangeText={setDescricao}
                         placeholder="Descrição"
                       >
-                        {detalhesProd.descricao}
                       </TextInput>
                     </View>
                     <View
@@ -575,7 +580,7 @@ export default function Home() {
                       </TouchableOpacity>
                       <TouchableOpacity
                         style={styles.btnModal}
-                        onPress={() => setModalVisible(false)}
+                        onPress={modificaProd}
                       >
                         <Text
                           style={{
