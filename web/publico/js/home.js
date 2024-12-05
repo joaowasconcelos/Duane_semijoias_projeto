@@ -7,7 +7,8 @@ document.addEventListener("DOMContentLoaded", function () {
     let cart = localStorage.getItem('cart');
 
     // Configuração inicial da API e URL
-    const ip = "http://192.168.88.3:3000/";
+    const ip = "http://10.0.3.94:3000/";
+
     localStorage.setItem('ip', ip);
 
     // Carrega os produtos inicialmente ao carregar a página
@@ -60,8 +61,12 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="card h-100">
                 <div class="card-img-top">
                     <img src="${element.imagens[0]}" alt="Imagem do produto" class="product-image" id="productImage-${element.id}" />
-                    <button onclick="showPrevImage(${element.id})">Anterior</button>
-                    <button onclick="showNextImage(${element.id})">Próximo</button>
+                    <button onclick="showPrevImage(${element.id})"><svg id="icon" class="icons" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                      </svg></a></button>
+                    <button onclick="showNextImage(${element.id})"><svg id="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+</svg></button>
                 </div>
                 <div class="card-body">
                     <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>

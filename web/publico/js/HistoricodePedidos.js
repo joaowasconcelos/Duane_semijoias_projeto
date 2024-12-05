@@ -1,7 +1,7 @@
 async function dados() {
     try {
         // Fazendo a requisição com axios.get
-        responsePed = await axios.get(`${localStorage.getItem("ip")}`);
+        responsePed = await axios.get(`${localStorage.getItem("ip")}/MeuEnde/:id`);
         console.log(responsePed.data)
 
         if(responsePed != null || responsePed != undefined){

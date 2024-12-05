@@ -134,6 +134,7 @@ export default class Endereco {
     async SelecionaEndereco() {
         const bd = await obterConexaoDoPool();
         try {
+
             const enderecoResult = await bd.query(`
         SELECT 
             e.* 
@@ -145,6 +146,7 @@ export default class Endereco {
             endereco e ON ehp.endereco_id = e.id
         WHERE 
              p.id = ?;`, [this._id]);
+
             return enderecoResult
         }
         catch (error) {

@@ -17,6 +17,14 @@ main {
     padding: 20px;
 }
 
+#icon {
+    border: none;
+    align-items: center;
+    justify-content: center;
+    margin-left: 80px;
+    gap: 5px;
+}
+
 #cardGrid {
     display: grid;
     grid-template-columns: repeat(4, 1fr);
@@ -30,15 +38,16 @@ main {
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.2s, box-shadow 0.2s;
     overflow: hidden;
-    width: 90%; /* Reduz a largura do card */
-    margin: 0 auto; /* Centraliza o card */
+    width: 90%;
+    /* Reduz a largura do card */
+    margin: 0 auto;
+    /* Centraliza o card */
 }
 
 .card-img-top {
     width: 100%;
     height: 250px;
     object-fit: cover;
-    border-bottom: 1px solid #e0e0e0;
 }
 
 .card:hover {
@@ -131,7 +140,12 @@ main {
     height: 8000px;
     justify-content: center;
     align-items: center;
+    border: none;
+    border: none;
+  outline: none;
 }
+
+
 
 .card-footer {
     width: 100%;
@@ -172,7 +186,8 @@ img.card-img-top {
     border-radius: 10px;
 }
 
-.modal-header, .modal-footer {
+.modal-header,
+.modal-footer {
     background-color: #f9f9f9;
     border-bottom: 1px solid #e0e0e0;
     border-top: 1px solid #e0e0e0;
@@ -183,6 +198,7 @@ img.card-img-top {
     color: #AE4B67;
     cursor: pointer;
 }
+
 .product-image {
     width: 100%;
     /* A imagem ocupará 100% da largura do contêiner */
@@ -226,13 +242,13 @@ img.card-img-top {
 .offcanvas-footer {
     position: relative;
     padding: 10px;
-    text-align: center; 
+    text-align: center;
 }
 
 #bot {
-    position: absolute; 
+    position: absolute;
     bottom: 0;
-    left: 50%; 
+    left: 50%;
     transform: translateX(-50%);
     padding: 10px 20px;
     font-size: 16px;
@@ -248,16 +264,16 @@ img.card-img-top {
 
 
 #bot:hover {
-    background-color: #9c3e54; 
+    background-color: #9c3e54;
     border-color: #9c3e54;
-    cursor: pointer; 
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+    cursor: pointer;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
 
 #bot:focus {
-    outline: none; 
-    box-shadow: 0 0 5px 2px rgba(174, 75, 103, 0.5); 
+    outline: none;
+    box-shadow: 0 0 5px 2px rgba(174, 75, 103, 0.5);
 }
 
 
@@ -302,23 +318,32 @@ img.card-img-top {
 .cart-item-quantity {
     flex-grow: 1;
     font-size: 14px;
-    padding: 5px 10px;  
-    border: 2px solid #ccc; 
-    border-radius: 4px;  /* Cantos arredondados */
-    background-color: #f8f8f8;  /* Cor de fundo mais clara */
-    transition: border-color 0.3s, background-color 0.3s; /* Transição suave nas mudanças */
-    text-align: center;  /* Centraliza o texto */
-    box-sizing: border-box;  /* Garante que o padding e a borda não aumentem a largura total */
+    padding: 5px 10px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    /* Cantos arredondados */
+    background-color: #f8f8f8;
+    /* Cor de fundo mais clara */
+    transition: border-color 0.3s, background-color 0.3s;
+    /* Transição suave nas mudanças */
+    text-align: center;
+    /* Centraliza o texto */
+    box-sizing: border-box;
+    /* Garante que o padding e a borda não aumentem a largura total */
 }
+
 .cart-item:hover {
     background-color: #f9f9f9;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 .cart-item-quantity:focus {
-    outline: none;  /* Remove o contorno padrão */
-    border-color: #007bff;  /* Borda azul ao focar */
-    background-color: #e6f7ff;  /* Cor de fundo azul claro ao focar */
+    outline: none;
+    /* Remove o contorno padrão */
+    border-color: #007bff;
+    /* Borda azul ao focar */
+    background-color: #e6f7ff;
+    /* Cor de fundo azul claro ao focar */
 }
 
 .cart-item-quantity::-webkit-outer-spin-button,
@@ -336,9 +361,10 @@ img.card-img-top {
     cursor: pointer;
     transition: background-color 0.3s;
 }
+
 .cart-item-remove img {
-    width: 24px; 
-    height: 24px; 
+    width: 24px;
+    height: 24px;
 }
 
 .cart-item-remove:hover {
@@ -362,3 +388,26 @@ img.card-img-top {
     align-items: center;
     margin-left: 65px;
 }
+
+/* Estilo para o botão */
+button {
+    background-color: transparent; /* Fundo transparente */
+    border: none; /* Remove bordas */
+    cursor: pointer; /* Indica que o elemento é clicável */
+    padding: 10px; /* Espaçamento interno */
+    border-radius: 50%; /* Deixa o botão circular */
+    transition: background-color 0.3s ease; /* Animação suave */
+  }
+  
+ 
+  
+  /* Estilo para o ícone SVG */
+  .icons {
+    transition: fill 0.3s ease; /* Transição suave da cor */
+  }
+  
+  /* Efeito no ícone ao passar o mouse */
+  button:hover .icons {
+    fill: #922D4A; /* Cor do ícone ao passar o mouse (azul) */
+  }
+  

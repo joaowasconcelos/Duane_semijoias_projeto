@@ -82,10 +82,10 @@ export default function Home() {
         // setId(response.data);
       })
       .catch(error =>{
-        console.log(error)
+        console.log("Erro ao buscar os cupons na rota:", error)
       });
     } catch (error) {
-      console.error("Erro ao buscar os cupons:", error);
+      console.error("Erro ao buscar os cupons na rota:", error);
     }
   };
 
