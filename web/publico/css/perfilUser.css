@@ -7,6 +7,26 @@
     font-style: normal;
 }
 
+.close {
+    gap: 5px;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    position: absolute;
+    width: 75%;
+}
+
+#btClose {
+    background-color: #E5969C;
+    color:#333;
+    border-color:#AE4B67;
+    border-radius: 10px;
+    width: 65%;
+    margin-left: 12%;
+    margin-top: 5%;
+}
+
 h2 {
     color: #633636;
 }
@@ -183,17 +203,16 @@ main {
     flex-direction: row;
     margin-top: 190px;
     width: 100%;
-    align-items: center;
+    height: 60px;
 }
 
 /* voltar ao inicio */
 
 #voltar {
-    margin-left:75%;
+    margin-left:80%;
     display: flex;
     flex-direction: row;
     gap: 5px;
-    align-items: center;
 }
 
 #back {
@@ -206,14 +225,14 @@ main {
 #bemVinda {
     display: flex;
     flex-direction: row;
-    gap: 5px;
+    gap: 7px;
     margin-left: 10px;
-    align-items: center;
 }
 
 #bemVindaText {
     font-weight: bold;
     font-size: 19px;
+    margin-top: -5px;
 }
 /* Toda estilização dentro do menu do adm */
 #menuAdm {
