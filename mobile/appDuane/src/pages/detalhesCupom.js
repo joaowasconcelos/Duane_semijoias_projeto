@@ -63,66 +63,91 @@ export default function Home() {
 
   const [detalhesCupom, setDetalhesCupom] = useState([]);
   const selecionaDetalhesCup = async () => {
-    try {      
+    try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/selecionaCupons/${id}`,{
+      api.get(`/selecionaCupons/${id}`, {
         headers: {
           'x-access-token': `${token}`,
         }
       })
-      .then(response=>{
-        setDetalhesCupom(response.data);
-        setCodigo(response.data.codigo);
-        setDescricao(response.data.descricao);
-        setQuantidade(response.data.quantidade);
-        setValor(response.data.valor);
-        setId(response.data.id);
-        console.log(response.data);
-      })
-      .catch((error) => {
+        .then((response) => {
+          if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+            const detalhes = response.data[0]; // Acessa o primeiro item do array
+            setDetalhesCupom(response.data);
+            setCodigo(detalhes.codigo || ""); // Valor padrão vazio se não existir
+            setDescricao(detalhes.descricao || "");
+            setQuantidade(detalhes.quantidade || "");
+            setValor(detalhes.valor || "");
+            setId(detalhes.id || "");
+            console.log("Cupom recuperado com sucesso:", detalhes);
+          } else {
+            console.error("Resposta inesperada da API:", response.data);
+            alert("Nenhum cupom encontrado.");
+          }
+        })
+        .catch((error) => {
           console.error("Erro ao recuperar os detalhes do cupom", error);
-        }
-      );
+          alert("Erro ao buscar os detalhes do cupom.");
+        });
     } catch (error) {
-      console.error("Erro ao buscar as clientes:", error);
+      console.error("Erro geral na função selecionaDetalhesCup:", error);
     }
   };
+  
 
   useEffect(() => {
     getToken(); // Chama a função para obter o token
     selecionaDetalhesCup();
   }, []);
 
-  const modificaCup = async ()=>{
-    if(!codigo || !descricao || !quantidade || !valor === 0){
+  const modificaCup = async () => {
+    if (!codigo || !descricao || !quantidade || valor === 0) {
       alert("Preencha todos os campos");
       return;
     }
+  
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.put(`/ModificaCupom/${id}`,
-      {
-        "codigo": codigo,
-        "descricao": descricao,
-        "quantidade": quantidade,
-        "valor": valor
-      },
-      {
-        headers: {
-          'x-access-token': `${token}`,
+      api.put(
+        `/ModificaCupom/${id}`,
+        {
+          Codigo: codigo,
+          Descricao: descricao,
+          Quantidade: quantidade,
+          Valor: valor,
+        },
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
         }
-      })
-      .then(response => {
-        setModCupom(id);
-        console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao modificar o cupom", error);
-      })
+      )
+        .then((response) => {
+          alert("Cupom Alterado com sucesso!");
+          setModCupom(id);
+          console.log("Resposta da API:", response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            // Resposta recebida, mas com erro no status HTTP
+            console.error("Erro no servidor:", error.response.data);
+            console.error("Status:", error.response.status);
+            alert(`Erro no servidor: ${error.response.data.error || "Erro desconhecido"}`);
+          } else if (error.request) {
+            // Nenhuma resposta do servidor
+            console.error("Sem resposta do servidor:", error.request);
+            alert("Erro: Não foi possível conectar ao servidor.");
+          } else {
+            // Erro na configuração da requisição
+            console.error("Erro na requisição:", error.message);
+            alert("Erro na requisição.");
+          }
+        });
     } catch (error) {
-      console.log("Erro do try", error);
+      console.error("Erro geral na função modificaCup:", error);
     }
-  }
+  };
+  
 
 
   const inativaCupom = async (id)=>{
@@ -265,7 +290,7 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={modificaCup}
+                        onPress={modificaCup}
                       >
                         <FontAwesome6 name="pen" size={40} color="#ae4b67" />
                       </TouchableOpacity>

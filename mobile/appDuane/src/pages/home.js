@@ -9,7 +9,9 @@ import {
   Platform,
   ScrollView,
   TextInput,
-  Modal
+  Modal,
+  Alert,
+  alert
 } from "react-native";
 import { useNavigation, useRoute } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
@@ -132,7 +134,7 @@ export default function Home() {
   const selecionaDetalhesMeusDados = async ()=>{
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/SelecionaInfoUsers/${id}`,
+      await api.get(`/SelecionaInfoUsers`,
         {
           headers: {
             'x-access-token': `${token}`,
@@ -141,8 +143,9 @@ export default function Home() {
       )
       .then(response=>{
         setDetalhesMeusDados(response.data);
-        setNome(response.data.nome);
-        setTelefones(response.data.telefones);
+        setNome(response.data[0].nome);
+        setTelefones(response.data[0].numeros);
+        setDataNasc(response.data[0].data_nasc);
         setSelectedUserId(response.data.id);
         console.log(response.data);
       })
@@ -154,34 +157,47 @@ export default function Home() {
     }
   }
 
-  const modificaMeusDados = async ()=>{
-    if(!nome || !dataNasc || !telefones === 0){
-      alert("Preencha todos os campos");
+  const modificaMeusDados = async () => {
+    if (!nome || !dataNasc || !telefones) {
+      Alert.alert("Preencha todos os campos");
+      return;
     }
+  
     try {
-      const token = AsyncStorage.getItem("userToken");
+      const token = await AsyncStorage.getItem("userToken");
       await api.put(`/ModificarPessoaADM/${selectedUserId}`, {
         Nome: nome,
         Data_Nasc: dataNasc,
-        Telefones: telefones
-      },{
+        Telefones: telefones,
+      }, {
         headers: {
-          'x-access-token': `${token}`
-        }
+          'x-access-token': `${token}`,
+        },
       })
-      .then(response=>{
-        alert("Dados modificados com sucesso", response.data);
-        setModalVisible(false);
-        selecionaDetalhesMeusDados(selectedUserId);
+      .then(response => {
+        Alert.alert("Dados modificados com sucesso", response.data);
         console.log(response.data);
+        selecionaDetalhesMeusDados();        
+        setModalVisible(false);
       })
-      .catch(error=>{
-        console.log("Erro ao modificar dados",error);
-      })
+      .catch(error => {
+        if (error.response) {
+          console.error("Erro na resposta do servidor:", error.response.data);
+          console.error("Status:", error.response.status);
+          console.error("Headers:", error.response.headers);
+        } else if (error.request) {
+          console.error("Nenhuma resposta do servidor:", error.request);
+        } else {
+          console.error("Erro ao configurar a requisição:", error.message);
+        }
+        Alert.alert("Erro", "Erro ao modificar dados. Tente novamente mais tarde.");
+      });
     } catch (error) {
-      console.log("Erro ao enviar os dado na rota", error);
+      console.error("Erro ao enviar os dados para a rota:", error);
     }
-  }
+  };
+  
+  
 
   if (!fontsLoaded) {
   } else {
@@ -253,7 +269,7 @@ export default function Home() {
                 </TouchableOpacity>
 
                 <TouchableOpacity style={styles.btn} onPress={navegaConsultaEdicaoFuncionario}>
-                  <Text style={styles.textBtn}>Consulta/Edição de Funcionários</Text>
+                  <Text style={styles.textBtn}>Consulta de Funcionários</Text>
                   <FontAwesome6
                     name="magnifying-glass"
                     color="#ae4b67"
@@ -304,7 +320,6 @@ export default function Home() {
             >
               {detalhesMeusDados.map((detalhesMeuDads)=>(
                 <View style={styles.modalContainer} key={detalhesMeuDads.id}>
-
                 <View style={styles.modalContent}>
                     <Text
                       style={{
@@ -323,7 +338,6 @@ export default function Home() {
                         value={nome}
                         onChangeText={setNome}
                         placeholder="Nome"
-                        
                       ></TextInput>
                     </View>
                     <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
@@ -332,8 +346,7 @@ export default function Home() {
                         style={styles.inputModal}
                         value={dataNasc}
                         onChangeText={setDataNasc}
-                        placeholder="data de nascimento"
-                        
+                        placeholder="data de nascimento" 
                       >
                         
                         </TextInput>
@@ -372,18 +385,18 @@ export default function Home() {
                       <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
+                        value={telefones}
+                        onChangeText={setTelefones}
                         placeholder="Telefones"
-                        readOnly
+                        
                       >
-                        {detalhesMeuDads.numeros ? (
+                        {/* {detalhesMeuDads.numeros ? (
                             detalhesMeuDads.numeros
                               .split(",")
                               .map((num) => <Text>{num}</Text>)
                           ) : (
                             <Text>Número não disponível</Text>
-                          )}
+                          )} */}
                       </TextInput>
                     </View>                
                     

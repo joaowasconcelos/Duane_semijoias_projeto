@@ -10,6 +10,7 @@ import {
   Modal,
   Picker,
   Button,
+  Alert
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -31,7 +32,7 @@ export default function Home() {
   const [modCat, setModCat] = useState("");
   const [cateFiltro, setCateFiltro] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
-  
+  const [isEdit, setIsEdit] = useState(false);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -56,6 +57,12 @@ export default function Home() {
     selecionaCate();
   }, []);
 
+  useEffect(() => {
+    if (isEdit && modalVisible) {
+      console.log("Edição ativada para a categoria:", novaCate);
+    }
+  }, [isEdit, modalVisible, novaCate]);
+
   const selecionaCate = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -68,7 +75,7 @@ export default function Home() {
         .then((response) => {
           setCategories(response.data);
           setCateFiltro(response.data);
-          setModCat(response.data.tipo);
+          setNovaCate(response.data[0].tipo);
           setId(response.data.id);
           console.log(response.data);
         })
@@ -82,18 +89,17 @@ export default function Home() {
   };
 
   const createCate = async () => {
-    if (!novaCate === "") {
+    if (novaCate.trim() === "") {
       alert("Preencha a nova Categoria!");
       return;
     }
+  
     try {
       const token = await AsyncStorage.getItem("userToken");
       await api
         .post(
           `/CreateCategoria`,
-          {
-            tipo: novaCate,
-          },
+          { tipo: novaCate.trim() },
           {
             headers: {
               "x-access-token": `${token}`,
@@ -101,19 +107,18 @@ export default function Home() {
           }
         )
         .then((response) => {
-          setNovaCate(response.data);
-          console.log(response.data);
+          setCategories([...categories, response.data]);
           alert("Categoria criada com sucesso!");
           setModalVisible(false);
         })
         .catch((error) => {
           console.error("Erro ao criar categoria", error);
+          alert("Erro ao criar categoria.");
         });
     } catch (error) {
       console.error("Erro ao criar nova categoria", error);
     }
   };
-
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
@@ -133,7 +138,8 @@ export default function Home() {
   }
 
   const handleAddCat = () => {
-    // setCategories();
+    setNovaCate(""); // limpa o input para a nova categoria
+    setIsEdit(false);
     setModalVisible(true);
   };
 
@@ -165,36 +171,68 @@ export default function Home() {
     }
   };
 
-  const modificaCate = async () => {
-    if (!modCat === 0) {
-      alert("Preencha o campo para modificar a categoria");
-    }
-    try {
-      const token = await AsyncStorage.getItem("userToken");
-      await api.put(
-          `/ModificaCate/${id}`,
-          {
-            tipo: modCat,
-          },
-          {
-            headers: {
-              "x-access-token": `${token}`,
-            },
-          }
-      )
-        .then(response => {
-          
-          
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error("Erro ao modificar categoria", error);
-        })
-    } catch (error) {
-      console.log("Erro ao acessar a rota de modificação da categoria", error);
-    }
+  const handleEditCat = (category) => {
+    setNovaCate(category.tipo); // Atualiza o campo com o tipo da categoria selecionada
+    setId(category.id); // Define o ID da categoria a ser editada
+    setIsEdit(true); // Ativa o modo de edição
+    setModalVisible(true); // Abre o modal
   };
 
+  
+
+  const handleSave = async () => {
+    if (novaCate.trim() === "") {
+      alert("O campo de categoria não pode estar vazio!");
+      return;
+    }
+  
+    if (isEdit) {
+      await modificaCate();
+    } else {
+      await createCate();
+    }
+  
+    selecionaCate(); // Atualiza a lista de categorias
+  };
+
+  const modificaCate = async () => {
+  if (novaCate.trim() === "") {
+    alert("Preencha o campo para modificar a categoria!");
+    return;
+  }
+
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+    await api
+      .put(
+        `/ModificaCate/${id}`,
+        { tipo: novaCate.trim() },
+        {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        alert("Categoria modificada com sucesso!");
+        setCategories(
+          categories.map((cat) =>
+            cat.id === id ? { ...cat, tipo: novaCate.trim() } : cat
+          )
+        );
+        setModalVisible(false); // Fecha o modal
+      })
+      .catch((error) => {
+        console.error("Erro ao modificar categoria", error);
+        alert("Erro ao modificar categoria.");
+      });
+  } catch (error) {
+    console.error("Erro ao acessar a rota de modificação da categoria", error);
+  }
+};
+
+
+  
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
@@ -278,6 +316,7 @@ export default function Home() {
                       height: "100%",
                       marginRight: 10,
                     }}
+                    onPress={() => handleEditCat(category)}
                   >
                     <Text style={styles.textBtn}>Editar:</Text>
                     <FontAwesome6
@@ -309,7 +348,7 @@ export default function Home() {
                     fontWeight: "bold",
                   }}
                 >
-                  Cadastre a nova categoria
+                  {isEdit ? "Editar Categoria" : "Cadastrar Nova Categoria"}
                 </Text>
                 <TextInput
                   style={styles.inputModal}
@@ -344,9 +383,7 @@ export default function Home() {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.btnModal}
-                    onPress={() => {
-                      createCate();
-                    }}
+                    onPress={handleSave}
                   >
                     <Text
                       style={{

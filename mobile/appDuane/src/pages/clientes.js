@@ -195,10 +195,6 @@ export default function Home() {
                   </View>
                 ))}
 
-
-
-
-
               </View>
             </ScrollView>
             <Modal
@@ -257,16 +253,7 @@ export default function Home() {
                       {detalhesClient.usuario}
                     </TextInput>
                   </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder=""
-                      readOnly
-                    ></TextInput>
-                  </View>
+                  
                   
                   
                   <View
@@ -416,7 +403,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     width: "95%",
-    height: "65%",
+    height: "55%",
     elevation: 5,
     // shadowColor: '#000',
     shadowOffset: {
