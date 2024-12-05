@@ -7,6 +7,8 @@
   <title>Finalizar Compra</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
   <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+  <script src="https://code.jquery.com/jquery-3.7.1.js" integrity="sha256-eKhayi8LEQwp4NKxN+CfCh+3qOVUtJn3QNZ0TciWLP4="
+    crossorigin="anonymous"></script>
   <link rel="stylesheet" href="../css/carrinho.css">
   <link rel="stylesheet" href="../css/notificacao.css">
   <link rel="stylesheet" href="../css/partials/header.css">
@@ -17,12 +19,12 @@
   <header id="header"><img id="ondas-rosa" src="../img/ondas-rosa.png">
     <nav>
       <div id="conteudoHeader">
-        <a href="/web/publico/html/home.html">
+        <a href="home.html">
           <div id="logo"><img id="logoD" src="../img/Duane.png" alt="DuaneSemijoias"></div>
         </a>
         <div id="boxHeader">
           <div id="icons">
-            <a href="/web/publico/html/login.html">
+            <a href="login.html">
               <span id="icon" class="fas fa-user fa-2x"></span>
             </a>
             <span id="icon" id="logout" class="fas fa-sign-out-alt fa-2x" onclick="logout()"></span>
@@ -40,22 +42,42 @@
 
     <div id="geral">
       <div id="resPedido">
-        <!-- Resumo do Pedido -->
         <section id="order-summary">
           <h2>Resumo do Pedido</h2>
           <ul id="order-items">
-            <!-- Aqui o JavaScript vai preencher com os itens do pedido -->
           </ul>
           <div id="pagamento">
             <p>Total: R$ <span id="order-total">0.00</span></p>
           </div>
         </section>
       </div>
+
+      <div><button onclick="verificaProducts()">Verifica</button></div>
     </div>
 
     <div id="wallet_container"></div>
-    <!-- O MercadoPago renderizará o botão de pagamento aqui -->
-    <div id="button-checkout"><button onclick="getPreferenceId()">CLIQUE AQUI</button></div>
+
+
+    <div id="enderecos">
+      <!-- Os endereços serão listados aqui dinamicamente -->
+    </div>
+
+    <form id="endereco">
+      <label>Cep:
+        <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);"
+          required /></label><br />
+      <label>Rua:
+        <input name="rua" type="text" id="rua" size="60" required /></label><br />
+      <label>Bairro:
+        <input name="bairro" type="text" id="bairro" size="40" required /></label><br />
+      <label>Cidade:
+        <input name="cidade" type="text" id="cidade" size="40" required /></label><br />
+      <label>Estado:
+        <input name="uf" type="text" id="uf" size="2" required /></label><br />
+      <label>Numero:
+        <input name="numero" type="text" id="numero" size="8" required /></label><br />
+      <button type="submit">CADASTRAR ENDEREÇO</button>
+    </form>
 
   </main>
 
@@ -66,43 +88,127 @@
   <script src="../js/checkout.js"></script>
 
   <script>
-const mp = new MercadoPago('TEST-065036b7-85ca-4b17-819a-10820121b7b5', {
-  locale: 'pt-BR',
-});
 
-// Função para obter a preferenceId do backend
-async function getPreferenceId() {
-  console.log("caiu aqui")
-  try {
-   await axios.post(`${localStorage.getItem("ip")}Pagamento`)
-   .then(response =>{
-    console.log("caiu aqui2",response)
-   }).catch(error =>{
-    console.log("error",error)
-   })
-    return response.data.preferenceId;
-  } catch (error) {
-    console.error('Erro ao obter a preferenceId:', error);
-  }
-}
+    function verificaProducts() {
+      const cartAtualizado = localStorage.getItem('cart')
+      initializePayment(cartAtualizado)
 
-// Função para inicializar o pagamento
-async function initializePayment() {
-  try {
-    const preferenceId = await getPreferenceId();  // Obtém a preferenceId do backend
+    }
 
-    mp.bricks().create("wallet", "wallet_container", {
-      initialization: {
-        preferenceId: preferenceId,
-      },
+
+    const mp = new MercadoPago('TEST-065036b7-85ca-4b17-819a-10820121b7b5', {
+      locale: 'pt-BR',
     });
-  } catch (error) {
-    console.error('Erro ao inicializar o pagamento:', error);
-  }
-}
 
-// Inicialize o pagamento quando a página estiver pronta
-initializePayment();
+    // Função para inicializar o pagamento
+    async function initializePayment(cart) {
+      try {
+        const idEndereço = obterEnderecoSelecionado()
+        const token = localStorage.getItem('token');
+        await axios.post(`${localStorage.getItem("ip")}Pagamento`,
+          { cart, idEndereço },
+          {
+            headers: {
+              'x-access-token': token,
+            }
+          })
+          .then(response => {
+            const id = response.data.id;
+
+            mp.bricks().create("wallet", "wallet_container", {
+              initialization: {
+                preferenceId: id,
+              },
+              configuration: {
+                back_urls: {
+                  success: "http://127.0.0.1:5501/publico/html/pedidoFinalizado.html", 
+                  failure: "https://seusite.com/failure",  
+                  pending: "https://seusite.com/pending"   
+                }
+              }
+            });
+
+          }).catch(error => {
+            console.log("error", error)
+          })
+
+      } catch (error) {
+        console.error('Erro ao inicializar o pagamento:', error);
+      }
+    }
+
+  </script>
+
+  <script>
+
+    function limpa_formulário_cep() {
+      document.getElementById('cep').value = ("");
+      document.getElementById('rua').value = ("");
+      document.getElementById('bairro').value = ("");
+      document.getElementById('cidade').value = ("");
+      document.getElementById('uf').value = ("");
+      document.getElementById('numero').value = ("");
+
+    }
+
+    function meu_callback(conteudo) {
+      if (!("erro" in conteudo)) {
+        //Atualiza os campos com os valores.
+        document.getElementById('rua').value = (conteudo.logradouro);
+        document.getElementById('bairro').value = (conteudo.bairro);
+        document.getElementById('cidade').value = (conteudo.localidade);
+        document.getElementById('uf').value = (conteudo.uf);
+
+      } //end if.
+      else {
+        //CEP não Encontrado.
+        limpa_formulário_cep();
+        alert("CEP não encontrado.");
+      }
+    }
+
+    function pesquisacep(valor) {
+
+      //Nova variável "cep" somente com dígitos.
+      var cep = valor.replace(/\D/g, '');
+
+      //Verifica se campo cep possui valor informado.
+      if (cep != "") {
+
+        //Expressão regular para validar o CEP.
+        var validacep = /^[0-9]{8}$/;
+
+        //Valida o formato do CEP.
+        if (validacep.test(cep)) {
+
+          //Preenche os campos com "..." enquanto consulta webservice.
+          document.getElementById('rua').value = "...";
+          document.getElementById('bairro').value = "...";
+          document.getElementById('cidade').value = "...";
+          document.getElementById('uf').value = "...";
+
+
+          //Cria um elemento javascript.
+          var script = document.createElement('script');
+
+          //Sincroniza com o callback.
+          script.src = 'https://viacep.com.br/ws/' + cep + '/json/?callback=meu_callback';
+
+          //Insere script no documento e carrega o conteúdo.
+          document.body.appendChild(script);
+
+        } //end if.
+        else {
+          //cep é inválido.
+          limpa_formulário_cep();
+          alert("Formato de CEP inválido.");
+        }
+      } //end if.
+      else {
+        //cep sem valor, limpa formulário.
+        limpa_formulário_cep();
+      }
+    };
 
   </script>
 </body>
