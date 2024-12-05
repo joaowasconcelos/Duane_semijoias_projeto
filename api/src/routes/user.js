@@ -73,7 +73,7 @@ routerUser.get('/selecionaCupons',authenticateJWT,authenticatePerfil,CuponsContr
 routerUser.get('/selecionaCupons/:id',authenticateJWT,authenticatePerfil,CuponsController.SelecionaDetalhes)
 routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
 routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)
-routerUser.get('/MeuEnde/:id',authenticateJWT,EnderecoController.seleciona)
+routerUser.get('/MeuEnde',authenticateJWT,EnderecoController.seleciona)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);
