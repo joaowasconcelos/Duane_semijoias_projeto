@@ -181,13 +181,6 @@ select {
 
 /* btn */
 
-#btns {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-
 .btn-primary {
     width: 195px;
     margin: auto;

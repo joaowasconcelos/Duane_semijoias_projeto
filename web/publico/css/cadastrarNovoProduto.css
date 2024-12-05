@@ -138,12 +138,19 @@ input {
     padding-left: 15px;
 }
 
-p {
+#titulo22 {
     font-family: "Roboto Mono", monospace;
     font-optical-sizing: auto;
     font-style: normal;
+    font-size: 20px;
+    text-align: justify;
+    color: #633636;
     font-weight: bold;
+    margin-top: 10px;
+    width: auto;
+    padding-right: 69.5%;
 }
+
 
 .escolha {
     padding-left: 0;

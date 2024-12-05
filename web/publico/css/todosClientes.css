@@ -27,7 +27,7 @@ footer {
 
 /* Tabela */
 table {
-    width: 100%; 
+    width: 100%;
     border-collapse: collapse;
     font-size: 15px;
     font-family: 'Roboto Mono', monospace;
@@ -64,13 +64,15 @@ tbody tr:hover {
     background-color: #f0e2e5;
 }
 
-tbody td, tbody th {
+tbody td,
+tbody th {
     padding: 12px;
     border-right: 1px solid #FAADD1;
     color: #333;
 }
 
-tbody td:last-child, tbody th:last-child {
+tbody td:last-child,
+tbody th:last-child {
     border-right: none;
 }
 
@@ -84,7 +86,8 @@ tbody tr th {
     width: 120px;
 }
 
-#qtdeCat, #preco {
+#qtdeCat,
+#preco {
     width: 130px;
     text-align: center;
 }
@@ -97,7 +100,8 @@ tbody tr th {
 }
 
 /* Estilos para as fontes */
-#dados, #titulo {
+#dados,
+#titulo {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: bold;
@@ -213,3 +217,5 @@ tbody tr th {
 .email {
     width: 100%;
 }
+
+/* btn */
