@@ -141,13 +141,13 @@ export const getImagensAntigas = async (produtoImg) => {
     const pool = await obterConexaoDoPool();
     try {
         const query = `
-            SELECT id_img 
-            FROM produto_img 
-            WHERE produto_img = ?;
+            select id_img from produto_img where produto_id = ?
         `;
-
+        console.log(query)
+        console.log(produtoImg)
         const [rows] = await pool.execute(query, [produtoImg]); // Executa a query com o valor de produtoImg
-
+        console.log(rows)
+        console.log("AQUIIIIIIIIIIIIIIIIIIIIIIIIIIIIII")
         // Retorna os IDs das imagens, caso existam
         return rows.map(row => row.id_img);
     } catch (error) {
@@ -159,8 +159,8 @@ export const getImagensAntigas = async (produtoImg) => {
 // Função para gerenciar o upload e exclusão das imagens
 export const manageImagesUpload = async (req, res, next) => {
     try {
-        const { produtoImg } = req.body; // Obtém o produto_img do corpo da requisição (do frontend)
-        
+        console.log("aqwertyui")
+        const { produtoImg } = req.params; // Obtém o produto_img do corpo da requisição (do frontend)
         // Chama a função para buscar as imagens antigas no banco
         const imagensAntigas = await getImagensAntigas(produtoImg);
         const todasImagens = req.files || []; // Todas as imagens recebidas (novas + antigas)
@@ -168,18 +168,22 @@ export const manageImagesUpload = async (req, res, next) => {
         // Vamos separar as imagens em novas e antigas
         const novasImagens = [];
         const antigasImagens = [...imagensAntigas]; // Começa com as imagens antigas que já estavam no banco
+        const antigasContinua = []
 
         // Verificar cada imagem recebida
         for (const file of todasImagens) {
             const nomeArquivo = file.originalname; // Nome original da imagem enviada pelo frontend
-            const arquivo = bucket.file(nomeArquivo);
-
+            const nomeArquivoSemExtensao = nomeArquivo.substring(0, nomeArquivo.lastIndexOf('.'));
+            const arquivo = bucket.file(nomeArquivoSemExtensao);
             // Verifica se a imagem já existe no Firebase
             const [exists] = await arquivo.exists();
+            console.log(exists)
             if (exists) {
+                console.log("EXISTEEEE")
                 // Se a imagem já existir no Firebase, é uma imagem antiga
-                antigasImagens.push(nomeArquivo);
+                antigasContinua.push(nomeArquivoSemExtensao);
             } else {
+                console.log("NAO EXISTE")
                 // Se a imagem não existir, é uma nova imagem
                 novasImagens.push(file);
             }
@@ -193,20 +197,31 @@ export const manageImagesUpload = async (req, res, next) => {
                 await uploadSingleImageToFirebase(file, nomeArquivo); // Envia a imagem para o Firebase
                 uploadedImages.push(nomeArquivo); // Salva o nome da imagem enviada
             });
-
+           
             // Espera o upload de todas as novas imagens
             await Promise.all(uploadedImagePromises);
-        }
-
+        } 
         // Mescla as imagens antigas com as novas
         const updatedImages = [...antigasImagens, ...uploadedImages];
-
+        console.log("TESTE")
+        console.log(updatedImages)
+    console.log(imagensAntigas)
+    console.log(updatedImages)
+    console.log(antigasContinua)
+    console.log("TESTE")
         // Remove imagens antigas que não estão mais na lista enviada
         const imagensParaRemover = imagensAntigas.filter(
-            (imagemAntiga) => !updatedImages.includes(imagemAntiga)
+            (imagemAntiga) => !antigasContinua.includes(imagemAntiga)
         );
 
+        const imagensQueFicaram = updatedImages.filter(
+            (imagemAntiga) => !imagensParaRemover.includes(imagemAntiga)
+        );
+        console.log("imagens para ficar",imagensQueFicaram)
+        console.log("AIIIII")
+        console.log(imagensParaRemover)
         if (imagensParaRemover.length > 0) {
+            console.log("ENTREIII")
             await Promise.all(
                 imagensParaRemover.map(async (idImagem) => {
                     const arquivo = bucket.file(idImagem);
@@ -221,7 +236,7 @@ export const manageImagesUpload = async (req, res, next) => {
         }
 
         // Atualiza a requisição com as imagens válidas (novas e antigas)
-        req.imageUrls = updatedImages;
+        req.imageUrls = imagensQueFicaram;
 
         next(); // Passa para o controlador
     } catch (error) {

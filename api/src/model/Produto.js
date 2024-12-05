@@ -89,11 +89,11 @@ export default class Produto {
             bd.release();
         }
     }
-    
+
     async InativaProduto() {
         const bd = await obterConexaoDoPool();
         try {
-            const produtoResult = await bd.query(`UPDATE produto SET status =? WHERE id = ?;`, [this._status,this._id]);
+            const produtoResult = await bd.query(`UPDATE produto SET status =? WHERE id = ?;`, [this._status, this._id]);
             return produtoResult
         } catch (error) {
             console.log('Erro na transação:', error);
@@ -409,4 +409,5 @@ ORDER BY
         }
         return true
     }
+    
 }

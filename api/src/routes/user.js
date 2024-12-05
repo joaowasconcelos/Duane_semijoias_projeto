@@ -53,7 +53,7 @@ routerUser.put("/ModificarPessoaADM/:id",authenticateJWT,authenticatePerfil,Cada
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);//ADM
 routerUser.put("/ModificaCate/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica)
 routerUser.post(
-    '/UpdateProduto',
+    '/UpdateProduto/:produtoImg',
     authenticateJWT,         // Middleware de autenticação do JWT
     authenticatePerfil,       // Middleware para verificar o perfil do usuário (ex: administrador)
     upload.array('imagem', 5), // Permite o upload de até 5 imagens
