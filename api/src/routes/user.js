@@ -15,7 +15,7 @@ import ProdutoController from "../controllers/Produto.js";
 import FeedbackController from "../controllers/Feedback.js";
 import ResetControler from "../controllers/ReqSenha.js";
 import { logout } from "../middleware/authenticateJWT.js";
-import { upload,handleImageUpload} from "../middleware/imagens.js";
+import { upload,handleImageUpload,manageImagesUpload} from "../middleware/imagens.js";
 import Pagamento from "../api/mercadopago.js";
 import EnderecoController from "../controllers/Endereco.js";
 
@@ -52,6 +52,14 @@ routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,Produt
 routerUser.put("/ModificarPessoaADM/:id",authenticateJWT,authenticatePerfil,CadastroADM.EditarPessoaADM)//ADM
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);//ADM
 routerUser.put("/ModificaCate/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica)
+routerUser.post(
+    '/UpdateProduto/:produtoImg',
+    authenticateJWT,         // Middleware de autenticação do JWT
+    authenticatePerfil,       // Middleware para verificar o perfil do usuário (ex: administrador)
+    upload.array('imagem', 5), // Permite o upload de até 5 imagens
+    manageImagesUpload,       // Função personalizada para gerenciar o upload de imagens (novas e antigas)
+    ProdutoController.atualizarProduto // Controlador para atualizar o produto no banco de dados
+);
 routerUser.put("/ModificarPessoa",authenticateJWT,CadastroUsuario.EditarPessoa)//USUARIO
 routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)//USUARIO
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)//USUARIO
