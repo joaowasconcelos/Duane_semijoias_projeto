@@ -31,7 +31,7 @@ const ResetControler = {
                 from: process.env.SMTP_USER,
                 to: email,
                 subject: 'Redefinir Senha',
-                text: `Você solicitou mas n vai funcionar e so um teste a redefinição de sua senha. Use este link para redefinir sua senha: http://127.0.0.1:5500/web/publico/html/redefinirSenha.html?token=${token} `,
+                text: `Você solicitou mas n vai funcionar e so um teste a redefinição de sua senha. Use este link para redefinir sua senha: http://127.0.0.1:5501/redefinirSenha.html?token=${token} `,
             })
 
            

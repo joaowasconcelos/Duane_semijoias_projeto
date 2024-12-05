@@ -47,7 +47,9 @@
                 if (response.data.message === "Token inválido") {
                     localStorage.removeItem('token');
                     localStorage.removeItem('userProfile');
-                    // window.location.href = '/home.html';
+                    localStorage.removeItem('cart');
+                    window.location.href = 'home.html';
+
                 }
             }).catch(error => {
                 console.log(error)

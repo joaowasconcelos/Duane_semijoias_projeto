@@ -23,11 +23,12 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (localStorage.getItem('token') && isTokenValid(localStorage.getItem('token'))) {
         const interval = setInterval(() => {
             if (isTokenExpired()) {
+                localStorage.removeItem("cart")
                 clearInterval(interval)
                 window.location.href = 'login.html';
                 alert("Sessão inspirada");
             }
-        }, 1); // Verifica a cada 1 minuto
+        }, 1); 
     } else {
         console.log("Invalid token or no token found. Redirecting to login.");
         window.location.href = 'login.html';

@@ -3,7 +3,9 @@ let cart = JSON.parse(localStorage.getItem('cart')) || [];
 
 // Função para atualizar o carrinho no localStorage
 function updateCart() {
+  localStorage.removeItem('cart');
   localStorage.setItem('cart', JSON.stringify(cart));
+  window.location.reload()
 }
 
 // Função para carregar o resumo do pedido
@@ -34,8 +36,6 @@ function loadOrderSummary() {
      </div>
     `;
 
-    console.log(item);
-    
 
     // Controle de índice para exibir as imagens
     const imageIndices = {};
@@ -64,6 +64,7 @@ function loadOrderSummary() {
   });
 
   orderTotalElement.textContent = total.toFixed(2);
+  selectsEndereços()
 }
 
 // Função para aumentar a quantidade
@@ -78,78 +79,112 @@ function decreaseQuantity(index) {
   if (cart[index].quantity > 1) {
     cart[index].quantity--;
   } else {
-    // Remover o item do carrinho se a quantidade for 0
     cart.splice(index, 1);
   }
   updateCart();
   loadOrderSummary();
 }
 
+
+$("#endereco").submit(function (event) {
+  event.preventDefault();
+  const cep = $("#cep").val();
+  const rua = $("#rua").val();
+  const bairro = $("#bairro").val();
+  const cidade = $("#cidade").val();
+  const uf = $("#uf").val();
+  const numero = $("#numero").val()
+  const token = localStorage.getItem('token');
+
+  axios.post(`${localStorage.getItem("ip")}CreateEndereco`, {
+    cep: cep,
+    logradouro: rua,
+    bairro: bairro,
+    cidade: cidade,
+    uf: uf,
+    numero: numero
+  }, {
+    headers: {
+      'x-access-token': token
+    }
+  })
+    .then(response => {
+      console.log("Endereço cadastrado com sucesso:", response.data);
+      alert("Endereço cadastrado com sucesso!");
+      limpa_formulário_cep()
+    })
+    .catch(error => {
+      console.log("Erro ao cadastrar endereço:", error);
+      alert("Erro ao cadastrar endereço. Tente novamente!");
+    });
+
+})
+
+function selectsEndereços() {
+  const token = localStorage.getItem('token');
+  try {
+    axios.get(`${localStorage.getItem("ip")}MeuEnde`, {
+      headers: {
+        'x-access-token': token
+      }
+    })
+      .then(response => {
+        const enderecos = response.data.endereco[0];
+        const enderecosContainer = document.getElementById('enderecos');
+        enderecosContainer.innerHTML = ''; // Limpa os endereços exibidos
+
+        if (enderecos.length > 0) {
+          enderecos.forEach(endereco => {
+            const enderecoDiv = document.createElement('div');
+            enderecoDiv.classList.add('endereco');
+
+            // Verifica se o endereço é o selecionado
+            const isChecked = endereco.id === enderecoSelecionadoId ? 'checked' : '';
+
+            // Cria os elementos de exibição
+            enderecoDiv.innerHTML = `
+              <p><strong>CEP:</strong> ${endereco.cep}</p>
+              <p><strong>Cidade:</strong> ${endereco.cidade}</p>
+              <p><strong>Logradouro:</strong> ${endereco.logradouro}</p>
+              <p><strong>Número:</strong> ${endereco.numero_endereco}</p>
+              <p><strong>Estado:</strong> ${endereco.estado}</p>
+              <p><strong>Complemento:</strong> ${endereco.complemento || 'Não informado'}</p>
+              <input type="radio" name="endereco" onclick="selecionarEndereco(${endereco.id})" ${isChecked}>
+              <hr>
+            `;
+
+            // Adiciona o endereço à lista
+            enderecosContainer.appendChild(enderecoDiv);
+          });
+        } else {
+          enderecosContainer.innerHTML = '<p>Nenhum endereço encontrado.</p>';
+        }
+      })
+  } catch (error) {
+    console.log(error)
+  }
+}
+
+
+let enderecoSelecionadoId = null;
+
+// Função para selecionar o endereço
+function selecionarEndereco(id) {
+  if (enderecoSelecionadoId === id) {
+    enderecoSelecionadoId = null;
+    console.log("Endereço desmarcado:", id);
+  } else {
+    enderecoSelecionadoId = id;
+    console.log("Endereço selecionado:", id);
+  }
+  selectsEndereços();
+}
+
+function obterEnderecoSelecionado() {
+  return enderecoSelecionadoId; 
+}
+
+
+
 // Carregar o resumo do pedido ao carregar a página
 document.addEventListener('DOMContentLoaded', loadOrderSummary);
-
-
-/* ////////////////////////////////       /////////////////////////////*/ 
-
-// document.getElementById("checkout-btn").addEventListener("click", function () {
-//   $('#checkout-btn').attr("disabled", true);
-
-//   const orderData = {
-//     quantity: document.getElementById("quantity").value,
-//     description: document.getElementById("product-description").innerHTML,
-//     price: document.getElementById("unit-price").innerHTML
-//   };
-
-//   fetch("http://localhost:8080/create_preference", {
-//     method: "POST",
-//     headers: {
-//       "Content-Type": "application/json",
-//     },
-//     body: JSON.stringify(orderData),
-//   })
-//     .then(function (response) {
-//       return response.json();
-//     })
-//     .then(function (preference) {
-//       if (preference.id) {
-//         createCheckoutButton(preference.id);
-
-//         $(".shopping-cart").fadeOut(500);
-//         setTimeout(() => {
-//           $(".container_payment").show(500).fadeIn();
-//         }, 500);
-//       } else {
-//         alert("Erro ao criar a preferência de pagamento.");
-//         $('#checkout-btn').attr("disabled", false);
-//       }
-//     })
-//     .catch(function (error) {
-//       console.error("Erro inesperado:", error);
-//       alert("Erro inesperado ao criar o pagamento.");
-//       $('#checkout-btn').attr("disabled", false);
-//     });
-// });
-
-// function createCheckoutButton(preferenceId) {
-//   // Inicializa o checkout
-//   const bricksBuilder = mercadopago.bricks();
-
-//   const renderComponent = async (bricksBuilder) => {
-//     if (window.checkoutButton) window.checkoutButton.unmount(); // Desmonta o botão anterior se já existir
-//     await bricksBuilder.create(
-//       'wallet',
-//       'button-checkout', // Classe ou ID onde o botão será exibido
-//       {
-//         initialization: {
-//           preferenceId: preferenceId
-//         },
-//         callbacks: {
-//           onError: (error) => console.error(error),
-//           onReady: () => {}
-//         }
-//       }
-//     );
-//   };
-
-//   window.checkoutButton = renderComponent(bricksBuilder);
-// }

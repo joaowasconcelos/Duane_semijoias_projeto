@@ -8,6 +8,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     // Configuração inicial da API e URL
     const ip = "http://10.0.3.94:3000/";
+
     localStorage.setItem('ip', ip);
 
     // Carrega os produtos inicialmente ao carregar a página

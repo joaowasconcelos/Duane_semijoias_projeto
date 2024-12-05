@@ -114,6 +114,7 @@ const CadastroUsuario = {
             await conn.beginTransaction();
             const { id } = req.params; // ID da pessoa
             const { Nome, Data_Nasc, Telefones } = req.body;
+            console.log(req.body)
             const cPessoa = new Pessoa(id, Nome, Data_Nasc);
             const vericaCampos = cPessoa.verificaCamposADM()
             if(!vericaCampos){
