@@ -10,6 +10,7 @@ import {
   Modal,
   Picker,
   Button,
+  Alert
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -56,6 +57,12 @@ export default function Home() {
     selecionaCate();
   }, []);
 
+  useEffect(() => {
+    if (isEdit && modalVisible) {
+      console.log("Edição ativada para a categoria:", novaCate);
+    }
+  }, [isEdit, modalVisible, novaCate]);
+
   const selecionaCate = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -82,18 +89,17 @@ export default function Home() {
   };
 
   const createCate = async () => {
-    if (!novaCate === "") {
+    if (novaCate.trim() === "") {
       alert("Preencha a nova Categoria!");
       return;
     }
+  
     try {
       const token = await AsyncStorage.getItem("userToken");
       await api
         .post(
           `/CreateCategoria`,
-          {
-            tipo: novaCate.trim(),
-          },
+          { tipo: novaCate.trim() },
           {
             headers: {
               "x-access-token": `${token}`,
@@ -102,18 +108,17 @@ export default function Home() {
         )
         .then((response) => {
           setCategories([...categories, response.data]);
-          console.log(response.data);
           alert("Categoria criada com sucesso!");
           setModalVisible(false);
         })
         .catch((error) => {
           console.error("Erro ao criar categoria", error);
+          alert("Erro ao criar categoria.");
         });
     } catch (error) {
       console.error("Erro ao criar nova categoria", error);
     }
   };
-
   const handleSearch = (query) => {
     setSearchQuery(query);
     if (query) {
@@ -167,60 +172,67 @@ export default function Home() {
   };
 
   const handleEditCat = (category) => {
-    setNovaCate(category.tipo); // Preenche o campo com o tipo da categoria
-    setId(category.id); // Armazena o ID da categoria para edição
-    setIsEdit(true); // Habilita o modo de edição
+    setNovaCate(category.tipo); // Atualiza o campo com o tipo da categoria selecionada
+    setId(category.id); // Define o ID da categoria a ser editada
+    setIsEdit(true); // Ativa o modo de edição
     setModalVisible(true); // Abre o modal
   };
+
+  
 
   const handleSave = async () => {
     if (novaCate.trim() === "") {
       alert("O campo de categoria não pode estar vazio!");
       return;
     }
-    
+  
     if (isEdit) {
-      await modificaCate(); // Edita categoria existente
+      await modificaCate();
     } else {
-      await createCate(); // Cria uma nova categoria
+      await createCate();
     }
   
-    setModalVisible(false); // Fecha o modal após salvar
     selecionaCate(); // Atualiza a lista de categorias
   };
 
   const modificaCate = async () => {
-    if (!novaCate === 0) {
-      alert("Preencha o campo para modificar a categoria");
-    }
-    try {
-      const token = await AsyncStorage.getItem("userToken");
-      await api.put(
-          `/ModificaCate/${id}`,
-          {
-            tipo: novaCate.trim(),
-          },
-          {
-            headers: {
-              "x-access-token": `${token}`,
-            },
-          }
-      )
-        .then(response => {
-          alert("Dados modificados com sucesso", response.data);
-          setCategories(categories.map(cat => 
-            cat.id === id ? { ...cat, tipo: novaCate.trim() } : cat
-          )); 
-          console.log(response.data);
-        })
-        .catch(error => {
-          console.error("Erro ao modificar categoria", error);
-        })
-    } catch (error) {
-      console.log("Erro ao acessar a rota de modificação da categoria", error);
-    }
-  };
+  if (novaCate.trim() === "") {
+    alert("Preencha o campo para modificar a categoria!");
+    return;
+  }
 
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+    await api
+      .put(
+        `/ModificaCate/${id}`,
+        { tipo: novaCate.trim() },
+        {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        alert("Categoria modificada com sucesso!");
+        setCategories(
+          categories.map((cat) =>
+            cat.id === id ? { ...cat, tipo: novaCate.trim() } : cat
+          )
+        );
+        setModalVisible(false); // Fecha o modal
+      })
+      .catch((error) => {
+        console.error("Erro ao modificar categoria", error);
+        alert("Erro ao modificar categoria.");
+      });
+  } catch (error) {
+    console.error("Erro ao acessar a rota de modificação da categoria", error);
+  }
+};
+
+
+  
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
@@ -304,7 +316,7 @@ export default function Home() {
                       height: "100%",
                       marginRight: 10,
                     }}
-                    onPress={() => handleEditCat(category.id)}
+                    onPress={() => handleEditCat(category)}
                   >
                     <Text style={styles.textBtn}>Editar:</Text>
                     <FontAwesome6
@@ -371,9 +383,7 @@ export default function Home() {
                   </TouchableOpacity>
                   <TouchableOpacity
                     style={styles.btnModal}
-                    onPress={() => {
-                      handleSave
-                    }}
+                    onPress={handleSave}
                   >
                     <Text
                       style={{

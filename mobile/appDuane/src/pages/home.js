@@ -144,7 +144,7 @@ export default function Home() {
       .then(response=>{
         setDetalhesMeusDados(response.data);
         setNome(response.data[0].nome);
-        setTelefones(response.data[0].telefones);
+        setTelefones(response.data[0].numeros);
         setDataNasc(response.data[0].data_nasc);
         setSelectedUserId(response.data.id);
         console.log(response.data);
@@ -157,34 +157,47 @@ export default function Home() {
     }
   }
 
-  const modificaMeusDados = async ()=>{
-    if(!nome || !dataNasc || !telefones === 0){
-      Alert("Preencha todos os campos");
+  const modificaMeusDados = async () => {
+    if (!nome || !dataNasc || !telefones) {
+      Alert.alert("Preencha todos os campos");
+      return;
     }
+  
     try {
-      const token = AsyncStorage.getItem("userToken");
+      const token = await AsyncStorage.getItem("userToken");
       await api.put(`/ModificarPessoaADM/${selectedUserId}`, {
-        nome: nome,
-        data_Nasc: dataNasc,
-        numeros: telefones
-      },{
+        Nome: nome,
+        Data_Nasc: dataNasc,
+        Telefones: telefones,
+      }, {
         headers: {
-          'x-access-token': `${token}`
-        }
+          'x-access-token': `${token}`,
+        },
       })
-      .then(response=>{
-        alert("Dados modificados com sucesso", response.data);
+      .then(response => {
+        Alert.alert("Dados modificados com sucesso", response.data);
         console.log(response.data);
-        selecionaDetalhesMeusDados(selectedUserId);        
+        selecionaDetalhesMeusDados();        
         setModalVisible(false);
       })
-      .catch(error=>{
-        console.log("Erro ao modificar dados",error);
-      })
+      .catch(error => {
+        if (error.response) {
+          console.error("Erro na resposta do servidor:", error.response.data);
+          console.error("Status:", error.response.status);
+          console.error("Headers:", error.response.headers);
+        } else if (error.request) {
+          console.error("Nenhuma resposta do servidor:", error.request);
+        } else {
+          console.error("Erro ao configurar a requisição:", error.message);
+        }
+        Alert.alert("Erro", "Erro ao modificar dados. Tente novamente mais tarde.");
+      });
     } catch (error) {
-      console.log("Erro ao enviar os dado na rota", error);
+      console.error("Erro ao enviar os dados para a rota:", error);
     }
-  }
+  };
+  
+  
 
   if (!fontsLoaded) {
   } else {
@@ -372,18 +385,18 @@ export default function Home() {
                       <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
                       <TextInput
                         style={styles.inputModal}
-                        //value={}
-                        //onChangeText={}
+                        value={telefones}
+                        onChangeText={setTelefones}
                         placeholder="Telefones"
-                        readOnly
+                        
                       >
-                        {detalhesMeuDads.numeros ? (
+                        {/* {detalhesMeuDads.numeros ? (
                             detalhesMeuDads.numeros
                               .split(",")
                               .map((num) => <Text>{num}</Text>)
                           ) : (
                             <Text>Número não disponível</Text>
-                          )}
+                          )} */}
                       </TextInput>
                     </View>                
                     

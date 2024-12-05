@@ -477,7 +477,7 @@ export default function Home() {
                           fontSize: 20,
                         }}
                       >
-                        Salvar
+                        Fechar
                       </Text>
                     </TouchableOpacity>
                   </View>
