@@ -33,7 +33,8 @@ routerUser.post("/CreateProduto",authenticateJWT,authenticatePerfil,upload.array
 routerUser.post("/ModificaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica);//ADM
 routerUser.post("/InativaCategoria/:id",authenticateJWT,authenticatePerfil,CategoriaController.Inativar);//ADM
 routerUser.post("/PrimeiroAcesso",LoginController.PrimeiroLogin);//USUARIO
-routerUser.post("/Pagamento",Pagamento.PagamentoMP);//USUARIO
+routerUser.post("/Pagamento",authenticateJWT,Pagamento.PagamentoMP);//USUARIO
+routerUser.post("/CreateEndereco",authenticateJWT,EnderecoController.cadastro);//USUARIO
 
 
 //Delete
@@ -73,7 +74,8 @@ routerUser.get('/selecionaCupons',authenticateJWT,authenticatePerfil,CuponsContr
 routerUser.get('/selecionaCupons/:id',authenticateJWT,authenticatePerfil,CuponsController.SelecionaDetalhes)
 routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
 routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)
-routerUser.get('/MeuEnde/:id',authenticateJWT,EnderecoController.seleciona)
+routerUser.get('/MeuEnde',authenticateJWT,EnderecoController.seleciona)
+routerUser.get('/infoPedidos/:id',authenticateJWT,Pagamento.Preference)
 
 //Filtros
 routerUser.get("/SelecionaPromocao",PromocaoController.Seleciona);

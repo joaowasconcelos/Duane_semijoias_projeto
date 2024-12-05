@@ -93,7 +93,7 @@ export default class Endereco {
             const enderecoId = enderecoResult[0].insertId;
 
             const endereco_has_pessoa = await bd.query(`INSERT INTO endereco_has_pessoa (endereco_id,pessoa_id) VALUES (?,?);`, [enderecoId, this._id_pessoa])
-            console.log(endereco_has_pessoa);
+            return endereco_has_pessoa
         }
         catch (error) {
             console.log('Erro na transação:', error);
@@ -134,20 +134,37 @@ export default class Endereco {
     async SelecionaEndereco() {
         const bd = await obterConexaoDoPool();
         try {
-            const enderecoResult = await bd.query(`SELECT 
-    e.* 
-FROM 
-    pessoa p
-JOIN 
-    endereco_has_pessoa ehp ON p.id = ehp.pessoa_id
-JOIN 
-    endereco e ON ehp.endereco_id = e.id
-WHERE 
-    p.id = ?
-;`, [
-                this._id
-            ]);
+            const enderecoResult = await bd.query(`
+        SELECT 
+            e.* 
+        FROM 
+            pessoa p
+        JOIN 
+            endereco_has_pessoa ehp ON p.id = ehp.pessoa_id
+        JOIN 
+            endereco e ON ehp.endereco_id = e.id
+        WHERE 
+             p.id = ?;`, [this._id]);
             return enderecoResult
+        }
+        catch (error) {
+            console.log('Erro na transação:', error);
+            return { error: 'Falha na transação', details: error };
+        } finally {
+            bd.release();
+        }
+    }
+
+    static async SelecionaEnderecoId(id) {
+        const bd = await obterConexaoDoPool();
+        try {
+            const enderecoResult = await bd.query(`
+        SELECT 
+           *
+        FROM 
+         endereco
+        WHERE id = ?;`, [id]);
+            return enderecoResult[0]
         }
         catch (error) {
             console.log('Erro na transação:', error);

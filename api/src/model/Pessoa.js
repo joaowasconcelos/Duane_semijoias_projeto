@@ -68,11 +68,8 @@ export default class Pessoa {
     }
 
     async ModificaPessoa(conn) {
-
         try {
-
             const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ?, genero = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._genero, this._id]);
-
             return { message: pessoaResult }
 
         } catch (error) {
@@ -81,7 +78,6 @@ export default class Pessoa {
         }
     }
     async ModificaPessoaADM(conn) {
-
         try {
             const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._id]);
             return { message: pessoaResult }
@@ -131,7 +127,7 @@ export default class Pessoa {
             WHERE p.id = ?
             GROUP BY 
                 p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
-            LIMIT 0, 1000;`,[this._id]);
+            LIMIT 0, 1000;`, [this._id]);
             return pessoaResult[0]
 
         } catch (error) {
@@ -203,6 +199,35 @@ export default class Pessoa {
         }
     }
 
+    static async SelecionaUserId(id) {
+        const bd = await obterConexaoDoPool();
+        try {
+            const result = await bd.query(`
+                 SELECT 
+            p.id,
+            p.nome,
+            p.cpf,
+            l.usuario,
+            t.numero
+        FROM 
+            pessoa p 
+        JOIN 
+            login l ON l.pessoa_id = p.id 
+        JOIN
+            perfis pf ON pf.id = l.perfis_id
+        JOIN 
+            telefone_has_pessoa tp ON tp.pessoa_id = p.id 
+        JOIN 
+            telefone t ON t.id = tp.telefone_id 
+        WHERE 
+            p.id = ?;
+                `,[id])
+            return result[0]
+        } catch (error) {
+            console.log(error)
+        }
+    }
+
 
     DataConvert() {
         let [dia, mes, ano] = this._data_nasc.split('/');
@@ -226,7 +251,7 @@ export default class Pessoa {
         return true
     }
     verificaCamposADM() {
-        if (this._data_nasc.length > 10 || this._nome.length > 100) {
+        if (this._data_nasc.length > 5 || this._nome.length > 100) {
             return false
         }
         return true

@@ -2,11 +2,14 @@ import Endereco from "../model/Endereco.js"
 
 const EnderecoController = {
     cadastro: async (req, res) => {
-        //Pegando o ID da pessoa logada vindo do JWT
-        const userId = req.pessoa_id
+        console.log("aqui")
+        console.log(req.body)
+        const userId = req.id
+        console.log(userId)
+      
         try {
-            const { CEP, Cidade, Bairro, Estado, Logradouro, Numero, Complemento } = req.body
-            const cEndereco = new Endereco(null, CEP, Cidade, Bairro, Estado, Logradouro, Numero, Complemento, userId)
+            const { cep, cidade, bairro, uf, logradouro, numero } = req.body
+            const cEndereco = new Endereco(null, cep, cidade, bairro, uf, logradouro, numero,null,userId)
             const validaCampos = cEndereco.validaCampos()
             if (!validaCampos) {
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
@@ -63,7 +66,8 @@ const EnderecoController = {
     },
 
     seleciona: async (req, res) => {
-        const id = req.params.id
+        const id = req.id
+        console.log(id)
         const cEndereco = new Endereco(id)
         const endereco = await cEndereco.SelecionaEndereco()
         if (endereco.error) {
@@ -72,7 +76,7 @@ const EnderecoController = {
                 details: returnProduto.details
             });
         }
-        return res.status(201).json({ message: "Endereço selecionado com sucesso!" })
+        return res.json({endereco})
 
     }
 
