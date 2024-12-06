@@ -1,7 +1,7 @@
 import multer from "multer";
 import admin from "firebase-admin";
-import serviceAccount from "../config/firebase.js";
-//import serviceAccount from "../config/firebase.json" assert { type: 'json' };
+// import serviceAccount from "../config/firebase.js";
+import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 // Inicializa o Firebase Admin SDK
 const bucketName = "teste-firebase-b05a9.appspot.com";
