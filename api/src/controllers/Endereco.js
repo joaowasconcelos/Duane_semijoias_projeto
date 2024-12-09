@@ -71,8 +71,8 @@ const EnderecoController = {
         console.log(id)
 
         const cEndereco = new Endereco(id)
-        const sendereco = await cEndereco.SelecionaEndereco()
-        if (sendereco.error) {
+        const endereco = await cEndereco.SelecionaEndereco()
+        if (endereco.error) {
             return res.status(400).json({
                 error: "Erro ao selecionar um endereço",
                 details: returnProduto.details

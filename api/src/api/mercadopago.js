@@ -78,7 +78,6 @@ const Pagamento = {
             }).then(response => {
                 console.log(response)
                 const id = response.id
-                console.log(id)
                 return res.json({ id })
             }).catch(error => {
                 console.log(error)
@@ -90,7 +89,7 @@ const Pagamento = {
         }
     },
     Preference:async(req,res)=>{
-        console.log("aqui")
+
         console.log(req.body)
         const preferenceId = req.body
         MercadoPago.preferences.get()
