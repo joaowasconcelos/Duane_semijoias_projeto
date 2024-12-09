@@ -7,14 +7,12 @@ dotenv.config();
 const LoginController = {
     VerificaLogin: async (req, res) => {
         try {
-            console.log('oi')
             const secretKey = process.env.SECRET_KEY;
             if (!secretKey) {
                 return res.status(401).send("Chave secreta não configurada.");
             }
             const { login, senha } = req.query
             const cLogin = new Login(null, login, senha)
-            console.log(cLogin)
             const verificaCampos = cLogin.verificaCampos()
             if (!verificaCampos) {
                 return res.status(500).json({ error: "Numero máximo de caracteres " })

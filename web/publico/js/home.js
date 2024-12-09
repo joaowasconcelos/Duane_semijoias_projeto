@@ -7,8 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let cart = localStorage.getItem('cart');
 
     // Configuração inicial da API e URL
-    const ip = "http://10.0.3.94:3000/";
-
+    const ip = "http://192.168.3.9:3000/";
     localStorage.setItem('ip', ip);
 
     // Carrega os produtos inicialmente ao carregar a página
@@ -92,22 +91,18 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>`;
     }
 
-    // Função de filtragem de produtos
     document.getElementById('procurar').addEventListener('input', function () {
         const nomeParaFiltrar = this.value.toLowerCase();
         Filter(nomeParaFiltrar);
     });
 
-    // Função para aplicar o filtro nos produtos
     async function Filter(nomeParaFiltrar) {
         try {
-            // Filtra os produtos de acordo com o nome
             filteredProducts = products.filter(item => item.nome_produto.toLowerCase().includes(nomeParaFiltrar));
-            totalRows = filteredProducts.length; // Atualiza o número total de produtos após a filtragem
-            currentPage = 1;  // Reseta a página para 1 após um novo filtro
-            renderProducts(); // Chama a função de renderização para mostrar os produtos filtrados
+            totalRows = filteredProducts.length; 
+            currentPage = 1; 
+            renderProducts(); 
 
-            // Caso não haja produtos após o filtro
             if (filteredProducts.length === 0) {
                 document.getElementById('cardGrid').innerHTML = '<p>Nenhum produto encontrado.</p>';
                 $("#pageInfo").text('');
@@ -118,6 +113,37 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Erro ao buscar produtos:', error);
         }
     }
+
+    const imageIndices = [];
+    window.showPrevImage = function (productId) {
+        const product = products.find(item => item.id === productId);
+        if (product) {
+            const images = Array.isArray(product.imagens) ? product.imagens : [];
+            if (images.length > 0) {
+                if (!imageIndices[productId]) imageIndices[productId] = 0;
+                imageIndices[productId] = (imageIndices[productId] - 1 + images.length) % images.length;
+                document.getElementById(`productImage-${productId}`).src = images[imageIndices[productId]];
+            } else {
+                console.error('Produto sem imagens ou imagens não válidas:', product);
+            }
+        }
+    };
+    
+    window.showNextImage = function (productId) {
+        const product = products.find(item => item.id === productId);
+        if (product) {
+            const images = Array.isArray(product.imagens) ? product.imagens : [];
+            if (images.length > 0) {
+                if (!imageIndices[productId]) imageIndices[productId] = 0;
+                imageIndices[productId] = (imageIndices[productId] + 1) % images.length;
+                document.getElementById(`productImage-${productId}`).src = images[imageIndices[productId]];
+            } else {
+                console.error('Produto sem imagens ou imagens não válidas:', product);
+            }
+        }
+    };
+    
+    
 
     // Controle de navegação de página
     $("#prevPage").click(function () {
@@ -133,8 +159,6 @@ document.addEventListener("DOMContentLoaded", function () {
             renderProducts();
         }
     });
-
-    // Inicializa os produtos na página
     fetchProducts();
 });
 

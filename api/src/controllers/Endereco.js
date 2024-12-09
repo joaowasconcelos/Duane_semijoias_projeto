@@ -2,12 +2,8 @@ import Endereco from "../model/Endereco.js"
 
 const EnderecoController = {
     cadastro: async (req, res) => {
-        console.log("aqui")
-        console.log(req.body)
-        const userId = req.id
-        console.log(userId)
-      
         try {
+            const userId = req.id
             const { cep, cidade, bairro, uf, logradouro, numero } = req.body
             const cEndereco = new Endereco(null, cep, cidade, bairro, uf, logradouro, numero,null,userId)
             const validaCampos = cEndereco.validaCampos()
@@ -66,23 +62,18 @@ const EnderecoController = {
     },
 
     seleciona: async (req, res) => {
-
         const id = req.id
-        console.log(id)
-
         const cEndereco = new Endereco(id)
-        const sendereco = await cEndereco.SelecionaEndereco()
-        if (sendereco.error) {
+        const endereco = await cEndereco.SelecionaEndereco()
+        if (endereco.error) {
             return res.status(400).json({
                 error: "Erro ao selecionar um endereço",
                 details: returnProduto.details
             });
         }
-
         return res.json({endereco})
     }
 
 
 }
-
 export default EnderecoController;

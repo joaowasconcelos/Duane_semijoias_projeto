@@ -11,6 +11,7 @@
 
 body {
     height: 100vh;
+    width: 100vw;
     font-family: 'Arial', sans-serif;
     color: var(--text-color);
     background-color: var(--background-color);
@@ -18,251 +19,116 @@ body {
     padding: 0;
     display: flex;
     flex-direction: column;
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
 }
 
-/* Header */
-#header {
-    background-color: var(--background-color);
-    padding: 20px 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-#logoD {
-    width: 150px;
-    transition: transform var(--transition-duration) ease-in-out;
-}
-
-#logoD:hover {
-    transform: scale(1.1);
-}
-
-#boxHeader {
+/* Main Layout */
+#geral {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    width: 100vw; 
+    margin-top: 10%;
+    height: auto;
+    padding: 20px;
+    gap: 20px;
+    box-sizing: border-box;
 }
 
-#icons {
-    display: flex;
-    gap: 25px;
-}
-
-#icon {
-    color: #5d5d5d;
-    font-size: 22px;
-    transition: color var(--transition-duration);
-}
-
-#icon:hover {
-    color: var(--primary-color);
-}
-
-#logout {
-    cursor: pointer;
-}
-
-/* Main Content */
-main {
-    flex: 1;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin-top: 20px;
-}
-
-#topo h4 {
-    font-size: 36px;
-    font-weight: 600;
-    color: var(--secondary-color);
-    text-align: center;
-    margin-bottom: 15px;
-}
-
+/* Resumo do Pedido */
 #resPedido {
-    width: 50%;
+    width: 100%; /* Faz o resPedido ocupar toda a largura disponível dentro do #geral */
     background-color: var(--background-color);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
     transition: box-shadow var(--transition-duration) ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #resPedido:hover {
     box-shadow: 0 4px 16px var(--hover-box-shadow);
 }
 
-#order-summary h2 {
-    font-size: 28px;
-    color: var(--secondary-color);
-    border-bottom: 3px solid var(--primary-color);
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-}
-
-/* Order Summary - Price */
+/* Order Items */
 #order-items {
     list-style-type: none;
-    padding: 5px;
-    overflow-y: scroll;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     max-height: 450px;
+    overflow-y: visible;
 }
 
 .order-item {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    background-color: #fafafa;
-    padding: 10px;
-    margin: 5px;
+    background-color: #f9f9f9;
     border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, background-color var(--transition-duration);
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid #ddd; /* Linha de separação entre os itens */
+}
+
+.order-item:last-child {
+    border-bottom: none; /* Remove a borda do último item */
 }
 
 .order-item:hover {
-    background-color: #f5f5f5;
-    transform: translateY(-5px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Detalhes do Produto */
 .product-name {
-    font-size: 15px;
+    font-size: 16px;
+    font-weight: bold;
     color: var(--secondary-color);
-    font-weight: 600;
+    margin-left: 15px;
+    flex-grow: 1;
 }
 
 .price {
-    display: flex;
-    align-items: center;
-}
-
-.currency {
     font-size: 16px;
-    color: var(--primary-color);
-    padding: 5px;
-}
-
-.item-price {
-    font-size: 18px;
     font-weight: bold;
-    color: var(--text-color);
+    color: var(--primary-color);
 }
 
-/* Controles de quantidade */
+/* Quantity Control */
 .quantity-control {
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 10px;
 }
 
 .quantity-control button {
     background-color: var(--primary-color);
-    color: #fff;
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
     border: none;
-    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color var(--transition-duration), transform var(--transition-duration);
+    transition: background-color var(--transition-duration);
 }
 
 .quantity-control button:hover {
     background-color: var(--hover-bg-color);
-    transform: scale(1.05);
 }
 
-.quantity-control span {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Order Total */
+/* Total do Pedido */
 #order-total {
     text-align: right;
     font-size: 26px;
     font-weight: bold;
     color: var(--secondary-color);
-    margin-top: 30px;
-    padding-top: 20px;
-}
-
-/* Buy Button */
-.btn-buy {
-    width: 100%;
-    padding: 15px;
-    margin-top: 30px;
-    font-size: 18px;
-    color: #fff;
-    background-color: #28a745;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: background-color var(--transition-duration), box-shadow var(--transition-duration);
-}
-
-.btn-buy:hover {
-    background-color: #218838;
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
-}
-
-/* Footer */
-.footer {
-    position: relative;
-}
-
-#ondasFooter {
-    position: absolute;
-    height: 40px;
-    width: 100%;
-    bottom: 0;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-    #topo h4 {
-        font-size: 28px;
-    }
-
-    .order-item {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-top: -50px;
-    }
-
-    .quantity-control {
-        margin-top: 15px;
-    }
-
-    .price, .quantity-control {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .btn-buy {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    footer {
-        padding: 10px 0;
-    }
-}
-
-/* Cart List */
-#cart-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid #e0e0e0;
-    position: relative;
-}
-
-.product-image {
-    width: 100px;
-    height: 100px;
-    object-fit: cover;
-    border-radius: 8px;
+    margin-top: 20px;
+    padding-top: 15px;
 }
 
 /* Address Form */
@@ -270,20 +136,34 @@ main {
     display: flex;
     flex-direction: column;
     gap: 15px;
-}
-
-#enderecos .endereco {
+    padding: 20px;
     background-color: #f9f9f9;
-    padding: 15px;
+    width: 500px;
     border-radius: 8px;
-    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-input[type="radio"] {
-    margin-left: auto;
-    margin-right: 15px;
+.endereco {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 7px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+.endereco p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.endereco input[type="radio"] {
+    margin-top: 10px;
+    accent-color: #ff0000;
+    transform: scale(1.2);
+}
+
+/* Form Styling */
 form label {
     display: block;
     margin: 10px 0;
@@ -312,6 +192,79 @@ form button {
 
 form button:hover {
     background-color: var(--hover-bg-color);
+}
+
+/* Button Styling */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 14px; /* Tamanho ajustado */
+    padding: 10px 18px; /* Botões menores */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+    margin: 10px 0;
+    width: auto;
+    text-align: center;
+}
+
+button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Finalizar Compra Button */
+.finalizarCompra {
+    background-color: red;
+    color: white;
+    font-size: 14px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+#ocultarBtn {
+    background-color: #f44336;
+}
+
+#ocultarBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Form Hidden by Default */
+#endereco {
+    display: none; /* O formulário começa oculto */
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #geral {
+        flex-direction: column;
+    }
+
+    #resPedido {
+        width: 100%;
+    }
+
+    #enderecos {
+        width: 100%;
+    }
+
+    form input {
+        width: 100%;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
 }
 
 /* Payment Section */

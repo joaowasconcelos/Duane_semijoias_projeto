@@ -53,14 +53,7 @@ routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,Produt
 routerUser.put("/ModificarPessoaADM/:id",authenticateJWT,authenticatePerfil,CadastroADM.EditarPessoaADM)//ADM
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);//ADM
 routerUser.put("/ModificaCate/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica)
-routerUser.post(
-    '/UpdateProduto/:produtoImg',
-    authenticateJWT,         // Middleware de autenticação do JWT
-    authenticatePerfil,       // Middleware para verificar o perfil do usuário (ex: administrador)
-    upload.array('imagem', 5), // Permite o upload de até 5 imagens
-    manageImagesUpload,       // Função personalizada para gerenciar o upload de imagens (novas e antigas)
-    ProdutoController.atualizarProduto // Controlador para atualizar o produto no banco de dados
-);
+routerUser.post('/UpdateProduto/:produtoImg',authenticateJWT,authenticatePerfil,upload.array('imagem', 5),ProdutoController.atualizarProduto);
 routerUser.put("/ModificarPessoa",authenticateJWT,CadastroUsuario.EditarPessoa)//USUARIO
 routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)//USUARIO
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)//USUARIO
@@ -78,7 +71,7 @@ routerUser.get("/SelecionaProdutoFav",authenticateJWT,ProdutoFavController.Selec
 routerUser.get("/VerificaLogin",LoginController.VerificaLogin);//USUARIO
 routerUser.get("/SelecionaProduto",ProdutoController.Seleciona);
 routerUser.get('/Feedback/:idProduto',authenticateJWT,FeedbackController.SelecionarPorProduto);
-routerUser.get('/selecionaCupons',authenticateJWT,authenticatePerfil,CuponsController.Seleciona)
+routerUser.get('/selecionaCupons',authenticateJWT,CuponsController.Seleciona)
 routerUser.get('/selecionaCupons/:id',authenticateJWT,authenticatePerfil,CuponsController.SelecionaDetalhes)
 routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedidos)
 routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)

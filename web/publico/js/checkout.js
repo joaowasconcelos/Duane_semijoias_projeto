@@ -23,7 +23,7 @@ function loadOrderSummary() {
     // Criar o conteúdo com nome, preço e quantidade com botões de ajuste
     li.innerHTML = `
     <div id="cart-list">
-        <img src="${item.img}" alt="Imagem do produto" class="product-image" id="productImage-${item.id}" />
+        <img src="${item.img}" alt="Imagem do produto" class="product-image" id="productImage-${item.id}" style="width: 100px"/>
         <span class="product-name">${item.nome_produto}</span>
         <div class="price">
           <span class="currency">R$</span><span class="item-price">${(item.preco_normal)}</span>
@@ -37,27 +37,27 @@ function loadOrderSummary() {
     `;
 
 
-    // Controle de índice para exibir as imagens
-    const imageIndices = {};
+    // // Controle de índice para exibir as imagens
+    // const imageIndices = {};
 
-    // Funções para exibir imagens anteriores e próximas - no escopo global
-    window.showPrevImage = function (productId) {
-      const product = products.find(item => item.id === productId);
-      if (product) {
-        if (!imageIndices[productId]) imageIndices[productId] = 0;
-        imageIndices[productId] = (imageIndices[productId] - 1 + product.img.length) % product.img.length;
-        document.getElementById(`productImage-${productId}`).src = product.img[imageIndices[productId]];
-      }
-    };
+    // // Funções para exibir imagens anteriores e próximas - no escopo global
+    // window.showPrevImage = function (productId) {
+    //   const product = products.find(item => item.id === productId);
+    //   if (product) {
+    //     if (!imageIndices[productId]) imageIndices[productId] = 0;
+    //     imageIndices[productId] = (imageIndices[productId] - 1 + product.img.length) % product.img.length;
+    //     document.getElementById(`productImage-${productId}`).src = product.img[imageIndices[productId]];
+    //   }
+    // };
 
-    window.showNextImage = function (productId) {
-      const product = products.find(item => item.id === productId);
-      if (product) {
-        if (!imageIndices[productId]) imageIndices[productId] = 0;
-        imageIndices[productId] = (imageIndices[productId] + 1) % product.img.length;
-        document.getElementById(`productImage-${productId}`).src = product.img[imageIndices[productId]];
-      }
-    };
+    // window.showNextImage = function (productId) {
+    //   const product = products.find(item => item.id === productId);
+    //   if (product) {
+    //     if (!imageIndices[productId]) imageIndices[productId] = 0;
+    //     imageIndices[productId] = (imageIndices[productId] + 1) % product.img.length;
+    //     document.getElementById(`productImage-${productId}`).src = product.img[imageIndices[productId]];
+    //   }
+    // };
 
     orderItems.appendChild(li);
     total += Number(item.preco_normal) * Number(item.quantity);
@@ -65,6 +65,7 @@ function loadOrderSummary() {
 
   orderTotalElement.textContent = total.toFixed(2);
   selectsEndereços()
+  selectCupons()
 }
 
 // Função para aumentar a quantidade
@@ -120,6 +121,77 @@ $("#endereco").submit(function (event) {
 
 })
 
+function InvalidaCupom() {
+  localStorage.removeItem('totalComDesconto')
+  window.location.reload()
+}
+
+async function aplicaCupom(cupom) {
+  const totalComDesconto = localStorage.getItem('totalComDesconto');
+  if (totalComDesconto) {
+    showNotification("Cupom já aplicado!");
+    const buttonAplica = document.getElementById("aplica");
+    buttonAplica.disabled = true;  
+    return; 
+  }
+
+  if (cupom) {
+    const valorDesconto = cupom.valor;
+    const orderTotalElement = document.getElementById('order-total');
+    
+    const totalAtual = parseFloat(orderTotalElement.textContent);
+    console.log("totalAtual", totalAtual);
+    const novoTotal = totalAtual - valorDesconto;
+    console.log("novoTotal", novoTotal);
+    
+ 
+    orderTotalElement.textContent = novoTotal.toFixed(2);
+    localStorage.setItem('totalComDesconto', novoTotal);
+
+    // Desabilita o botão para evitar que o cupom seja aplicado novamente
+    const buttonAplica = document.getElementById("aplica");
+    buttonAplica.disabled = true;
+
+    // Limpa o campo de input do cupom (supondo que o ID do campo de input seja "cupom-input")
+    const cupomInput = document.getElementById("cupom-input");
+    if (cupomInput) {
+      cupomInput.value = '';  // Limpa o campo de input
+    }
+  }
+}
+
+async function selectCupons() {
+  const token = localStorage.getItem('token');
+  try {
+    const response = await axios.get(`${localStorage.getItem("ip")}selecionaCupons`, {
+      headers: {
+        'x-access-token': token
+      }
+    });
+    const cupons = response.data;
+    return cupons;  
+  } catch (error) {
+    console.error("Erro ao buscar cupons:", error);
+  }
+}
+
+async function VerificaCupom() {
+  const cupons = document.getElementById("cupom").value;
+  const CupomDigitado = cupons.toUpperCase()
+  const CupomCadastrados = await selectCupons();  
+  const cupomValido = CupomCadastrados.find(cupom => cupom.codigo === CupomDigitado);
+
+  if (cupomValido) {
+    console.log("Cupom Válido");
+    showNotification("Cupom Aplicado");
+   aplicaCupom(cupomValido)
+  } else {
+    console.log("Cupom Inválido");
+    showNotification("Cupom Inválido");
+    return
+  }
+}
+
 function selectsEndereços() {
   const token = localStorage.getItem('token');
   try {
@@ -131,7 +203,7 @@ function selectsEndereços() {
       .then(response => {
         const enderecos = response.data.endereco[0];
         const enderecosContainer = document.getElementById('enderecos');
-        enderecosContainer.innerHTML = ''; // Limpa os endereços exibidos
+        enderecosContainer.innerHTML = '';
 
         if (enderecos.length > 0) {
           enderecos.forEach(endereco => {
@@ -143,13 +215,13 @@ function selectsEndereços() {
 
             // Cria os elementos de exibição
             enderecoDiv.innerHTML = `
+              <input type="radio" name="endereco" onclick="selecionarEndereco(${endereco.id})" ${isChecked}>
               <p><strong>CEP:</strong> ${endereco.cep}</p>
               <p><strong>Cidade:</strong> ${endereco.cidade}</p>
               <p><strong>Logradouro:</strong> ${endereco.logradouro}</p>
               <p><strong>Número:</strong> ${endereco.numero_endereco}</p>
               <p><strong>Estado:</strong> ${endereco.estado}</p>
               <p><strong>Complemento:</strong> ${endereco.complemento || 'Não informado'}</p>
-              <input type="radio" name="endereco" onclick="selecionarEndereco(${endereco.id})" ${isChecked}>
               <hr>
             `;
 
@@ -181,10 +253,28 @@ function selecionarEndereco(id) {
 }
 
 function obterEnderecoSelecionado() {
-  return enderecoSelecionadoId; 
+  return enderecoSelecionadoId;
 }
 
+function mostrarFormulario() {
+  document.getElementById("endereco").style.display = "block";
+  const campos = document.querySelectorAll("#endereco input, #endereco button");
+  campos.forEach(campo => {
+    campo.disabled = false;
+  });
+  document.querySelector("button").disabled = true;
+  document.getElementById("ocultarBtn").style.display = "inline-block";
+}
 
+function ocultarFormulario() {
+  document.getElementById("endereco").style.display = "none";
+  const campos = document.querySelectorAll("#endereco input, #endereco button");
+  campos.forEach(campo => {
+    campo.disabled = true;
+  });
+  document.querySelector("button").disabled = false;
+  document.getElementById("ocultarBtn").style.display = "none";
+}
 
 // Carregar o resumo do pedido ao carregar a página
 document.addEventListener('DOMContentLoaded', loadOrderSummary);
