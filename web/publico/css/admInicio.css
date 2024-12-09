@@ -16,7 +16,7 @@ main {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 180px;
+    margin-top: 160px;
 }
 
 /* voltar ao inicio */
@@ -55,9 +55,8 @@ main {
     display: flex;
     flex-direction: column;
     padding-left: 25px;
-    height: 587px;
+    height: 440px;
     width: 353px;
-    margin-top: 30px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
 }
@@ -67,7 +66,8 @@ main {
     font-optical-sizing: auto;
     font-style: normal;
     padding-bottom: 25px;
-    color: #9B5377
+    color: #9B5377;
+    text-decoration: none !important;
 }
 
 #titulo {
@@ -144,9 +144,8 @@ main {
 #table {
     display: flex;
     flex-direction: column;
-    height: 587px;
+    height: 440px;
     width: 1453px;
-    margin-top: 29px;
     border-radius: 5px;
     border: 1px solid #e6c7d0;
     padding-left: 25px;
@@ -161,9 +160,11 @@ main {
     text-align: center;
 }
 
-#descricaott {
+#descricao {
     color: #9B5377;
     font-weight: bold;
+    width: 70%;
+    padding-left: 10px;
 }
 
 
@@ -181,6 +182,9 @@ table {
     font-size: 15px;
     font-family: Arial, sans-serif;
     text-align: left;
+    overflow-y: scroll;
+    max-height: 600px;
+    display: block;
 }
 
 #desc {
@@ -231,10 +235,11 @@ tbody tr th {
     font-weight: bold;
 }
 
-#link {
+a {
     color: black;
-    text-decoration: underline;
-    cursor: pointer;
+    text-decoration: underline !important;
+    font-weight: bold;
+    cursor: pointer !important;
 }
 
 thead th:last-child,
@@ -333,7 +338,6 @@ tbody th:last-child {
     box-shadow: 0 0 0 0.2rem rgba(174, 75, 103, 0.446) !important;
     border-color: rgba(255, 0, 0, 0.5) !important;
 }
-
 
 .btn-secondary {
     background-color: #AE4B67 !important;
@@ -516,7 +520,7 @@ footer {
     width: 100%;
     bottom: 0;
     display: block;
-    height: 90px;
+    height: 55px;
     /* position: absolute; */
 }
 

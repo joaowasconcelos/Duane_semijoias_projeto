@@ -1,12 +1,11 @@
-import Endereco from "../model/Endereco"
+import Endereco from "../model/Endereco.js"
 
 const EnderecoController = {
     cadastro: async (req, res) => {
-        //Pegando o ID da pessoa logada vindo do JWT
-        const userId = req.pessoa_id
         try {
-            const { CEP, Cidade, Bairro, Estado, Logradouro, Numero, Complemento } = req.body
-            const cEndereco = new Endereco(null, CEP, Cidade, Bairro, Estado, Logradouro, Numero, Complemento, userId)
+            const userId = req.id
+            const { cep, cidade, bairro, uf, logradouro, numero } = req.body
+            const cEndereco = new Endereco(null, cep, cidade, bairro, uf, logradouro, numero,null,userId)
             const validaCampos = cEndereco.validaCampos()
             if (!validaCampos) {
                 res.status(400).json({ error: "Dados inválidos fornecidos." });
@@ -60,9 +59,21 @@ const EnderecoController = {
             });
         }
         return res.status(201).json({ message: "Endereço deletado com sucesso!" });
+    },
+
+    seleciona: async (req, res) => {
+        const id = req.id
+        const cEndereco = new Endereco(id)
+        const endereco = await cEndereco.SelecionaEndereco()
+        if (endereco.error) {
+            return res.status(400).json({
+                error: "Erro ao selecionar um endereço",
+                details: returnProduto.details
+            });
+        }
+        return res.json({endereco})
     }
 
 
 }
-
 export default EnderecoController;

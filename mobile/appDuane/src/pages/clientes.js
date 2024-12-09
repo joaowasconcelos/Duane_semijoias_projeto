@@ -33,6 +33,9 @@ import api from "../services/api/api"
 export default function Home() {
   const navigation = useNavigation();
   const [modalVisible, setModalVisible] = useState(false);
+  const [clienteFiltro, setClienteFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+
 
 
   let [fontsLoaded] = useFonts({
@@ -81,6 +84,27 @@ export default function Home() {
   const pressDetails = ()=>{
     setModalVisible(true);
   }
+  const [detalhesCliente, setDetalhesClientes] = useState([]);
+  const buscaId = (id)=>{
+    const item = clientes.find((item)=>item.id === id);
+    setDetalhesClientes([item]);
+    pressDetails();
+  }
+
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = clientes.filter((item) => {
+        return (
+          item.nome.toLowerCase().includes(query.toLowerCase()) ||
+          item.usuario.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setClienteFiltro(filtro);
+    } else {
+      setClienteFiltro(clientes);
+    }
+  };
 
   if (!fontsLoaded) {
   } else {
@@ -122,13 +146,13 @@ export default function Home() {
             </View>
 
             <View style={{ width: '100%', alignItems: 'center', justifyContent: 'center', flexDirection: 'row' }}>
-              <TextInput placeholder='Pesquise por produto ou categoria' style={styles.Inputs}>
+              <TextInput onChangeText={handleSearch} value={searchQuery} placeholder='Pesquise pelo nome ou usuário' style={styles.Inputs}>
               </TextInput>
             </View>
 
             <ScrollView>
               <View style={styles.containerElements}>
-                {clientes.map(client => (
+                {(clienteFiltro.length>0 ? clienteFiltro : clientes).map(client => (
                   <View key={client.id} style={styles.btn}>
                     <View style={{ justifyContent: 'space-between', alignItems: 'center', width: '70%' }}>
                       <View style={{ justifyContent: "space-between", alignItems: 'center', flexDirection: 'row', width: '100%' }}>
@@ -162,7 +186,7 @@ export default function Home() {
                     </View>
 
                     <TouchableOpacity style={{ justifyContent: "flex-start", alignItems: 'center', height: '100%', marginTop: 40 }} 
-                    onPress={()=>pressDetails()}
+                    onPress={()=>buscaId(client.id)}
                     >
                       <Text style={styles.textBtn}>Detalhes:</Text>
                       <FontAwesome6 name="magnifying-glass" color="#ae4b67" size={26} />
@@ -170,10 +194,6 @@ export default function Home() {
 
                   </View>
                 ))}
-
-
-
-
 
               </View>
             </ScrollView>
@@ -185,7 +205,8 @@ export default function Home() {
                 setModalVisible(!modalVisible);
               }}
             >
-              <View style={styles.modalContainer}>
+              {detalhesCliente.map((detalhesClient)=>(
+                <View style={styles.modalContainer}>
                 <View style={styles.modalContent}>
                   <Text
                     style={{
@@ -194,6 +215,7 @@ export default function Home() {
                       color: "#ae4b67",
                       fontWeight: "bold",
                     }}
+                    key={detalhesClient.id}
                   >
                     Detalhes do cliente
                   </Text>
@@ -205,7 +227,7 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Nome do cliente"
                       readOnly
-                    ></TextInput>
+                    >{detalhesClient.nome}</TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Data de Nascimento:</Text>
@@ -215,7 +237,9 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="Data de nascimento"
                       readOnly
-                    ></TextInput>
+                    >
+                      {new Intl.DateTimeFormat('pt-BR', { day: '2-digit', month: '2-digit', year: 'numeric' }).format(new Date(detalhesClient.data_nasc))}
+                    </TextInput>
                   </View>
                   <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
                     <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Usuário:</Text>
@@ -225,18 +249,11 @@ export default function Home() {
                       //onChangeText={}
                       placeholder="usuário"
                       readOnly
-                    ></TextInput>
+                    >
+                      {detalhesClient.usuario}
+                    </TextInput>
                   </View>
-                  <View style={{width: '100%', justifyContent: 'center', alignItems: 'flex-start'}}>
-                    <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
-                    <TextInput
-                      style={styles.inputModal}
-                      //value={}
-                      //onChangeText={}
-                      placeholder=""
-                      readOnly
-                    ></TextInput>
-                  </View>
+                  
                   
                   
                   <View
@@ -267,6 +284,7 @@ export default function Home() {
                 </View>
 
               </View>
+              ))}
             </Modal>
 
 
@@ -385,7 +403,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     width: "95%",
-    height: "65%",
+    height: "55%",
     elevation: 5,
     // shadowColor: '#000',
     shadowOffset: {

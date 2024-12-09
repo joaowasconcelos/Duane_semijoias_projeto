@@ -38,6 +38,7 @@ export default function Home() {
   const [valor, setValor] = useState("");
   const [descricao, setDescricao] = useState("");
   const [modCupom, setModCupom] = useState("");
+  const [cupomId, setCupomId] = useState("");
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -62,65 +63,115 @@ export default function Home() {
 
   const [detalhesCupom, setDetalhesCupom] = useState([]);
   const selecionaDetalhesCup = async () => {
-    try {      
+    try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.get(`/selecionaCupons/${id}`,{
+      api.get(`/selecionaCupons/${id}`, {
         headers: {
           'x-access-token': `${token}`,
         }
       })
-      .then(response=>{
-        setDetalhesCupom(response.data);  
-        console.log(response.data);
-      })
-      .catch((error) => {
+        .then((response) => {
+          if (response.data && Array.isArray(response.data) && response.data.length > 0) {
+            const detalhes = response.data[0]; // Acessa o primeiro item do array
+            setDetalhesCupom(response.data);
+            setCodigo(detalhes.codigo || ""); // Valor padrão vazio se não existir
+            setDescricao(detalhes.descricao || "");
+            setQuantidade(detalhes.quantidade || "");
+            setValor(detalhes.valor || "");
+            setId(detalhes.id || "");
+            console.log("Cupom recuperado com sucesso:", detalhes);
+          } else {
+            console.error("Resposta inesperada da API:", response.data);
+            alert("Nenhum cupom encontrado.");
+          }
+        })
+        .catch((error) => {
           console.error("Erro ao recuperar os detalhes do cupom", error);
-        }
-      );
+          alert("Erro ao buscar os detalhes do cupom.");
+        });
     } catch (error) {
-      console.error("Erro ao buscar as clientes:", error);
+      console.error("Erro geral na função selecionaDetalhesCup:", error);
     }
   };
+  
 
   useEffect(() => {
     getToken(); // Chama a função para obter o token
     selecionaDetalhesCup();
   }, []);
 
-  const modificaCate = async ()=>{
-    if(!codigo || !descricao || !quantidade || !valor === 0){
+  const modificaCup = async () => {
+    if (!codigo || !descricao || !quantidade || valor === 0) {
       alert("Preencha todos os campos");
       return;
     }
+  
     try {
       const token = await AsyncStorage.getItem('userToken');
-      await api.put(`/ModificaCupom/${id}`,
-      {
-        "codigo": codigo,
-        "descricao": descricao,
-        "quantidade": quantidade,
-        "valor": valor
-      },
-      {
-        headers: {
-          'x-access-token': `${token}`,
+      api.put(
+        `/ModificaCupom/${id}`,
+        {
+          Codigo: codigo,
+          Descricao: descricao,
+          Quantidade: quantidade,
+          Valor: valor,
+        },
+        {
+          headers: {
+            'x-access-token': `${token}`,
+          }
         }
-      })
-      .then(response => {
-        setModCupom(response.data);
+      )
+        .then((response) => {
+          alert("Cupom Alterado com sucesso!");
+          setModCupom(id);
+          console.log("Resposta da API:", response.data);
+        })
+        .catch((error) => {
+          if (error.response) {
+            // Resposta recebida, mas com erro no status HTTP
+            console.error("Erro no servidor:", error.response.data);
+            console.error("Status:", error.response.status);
+            alert(`Erro no servidor: ${error.response.data.error || "Erro desconhecido"}`);
+          } else if (error.request) {
+            // Nenhuma resposta do servidor
+            console.error("Sem resposta do servidor:", error.request);
+            alert("Erro: Não foi possível conectar ao servidor.");
+          } else {
+            // Erro na configuração da requisição
+            console.error("Erro na requisição:", error.message);
+            alert("Erro na requisição.");
+          }
+        });
+    } catch (error) {
+      console.error("Erro geral na função modificaCup:", error);
+    }
+  };
+  
+
+
+  const inativaCupom = async (id)=>{
+    try {
+      const token = await AsyncStorage.getItem("userToken");
+      await api.get(`/DeletaCupom/${id}`,
+        {
+          id: id,
+        },
+        {
+          headers:{
+            'x-access-token': `${token}`
+          }
+        }
+      ).then(response=>{
+        setCupomId(response.data);
         console.log(response.data);
-      })
-      .catch((error) => {
-        console.error("Erro ao modificar o cupom", error);
+        alert("Cupom Inativado com sucesso!")
+      }).catch(error=>{
+        console.error("Erro ao inativar o cupom", error); 
       })
     } catch (error) {
       console.log("Erro do try", error);
     }
-  }
-  // /ModificaCategoria/:id
-
-  const inativaCupom = async ()=>{
-
   }
 
   if (!fontsLoaded) {
@@ -191,26 +242,27 @@ export default function Home() {
                       alignItems: "center",
                       width: "100%",
                     }}
+                    key={detalhesCup.id}
                   >
                     <View
                       style={{ width: "90%", justifyContent: "flex-start", marginTop: 10 }}
                     >
                       <Text style={styles.textBtn}>Código:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setCodigo} value={detalhesCup.codigo}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setCodigo} value={codigo}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Quantidade:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} value={detalhesCup.quantidade}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setQuantidade} value={quantidade}></TextInput>
                     </View>
 
                     <View
                       style={{ width: "90%", justifyContent: "flex-start" }}
                     >
                       <Text style={styles.textBtn}>Descrição:</Text>
-                      <TextInput style={styles.Inputs} onChangeText={setDescricao} value={detalhesCup.descricao}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setDescricao} value={descricao}></TextInput>
                     </View>
 
                     
@@ -221,7 +273,7 @@ export default function Home() {
                       <Text style={styles.textBtn}>
                         Valor/Porcentagem do desconto:
                       </Text>
-                      <TextInput style={styles.Inputs} onChangeText={setValor} value={detalhesCup.valor}></TextInput>
+                      <TextInput style={styles.Inputs} onChangeText={setValor} value={valor}></TextInput>
                     </View>
 
                     <View
@@ -238,7 +290,7 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={modificaCate}
+                        onPress={modificaCup}
                       >
                         <FontAwesome6 name="pen" size={40} color="#ae4b67" />
                       </TouchableOpacity>
@@ -247,7 +299,24 @@ export default function Home() {
                           justifyContent: "center",
                           alignItems: "center",
                         }}
-                        onChangeText={() => {}}
+                        onChangeText={() => {
+                          Alert.alert(
+                            "Atenção",
+                            "Você deseja excluir a cupom?",
+                            [
+                              {
+                                text: "Sim",
+                                onPress: () => inativaCupom(detalhesCup.id),
+
+                              },
+                              {
+                                text: "Não",
+                                onPress: ()=>{return},
+                                style: 'cancel',
+                              }
+                            ]
+                          )
+                        }}
                       >
                         <FontAwesome6
                           name="trash-can"

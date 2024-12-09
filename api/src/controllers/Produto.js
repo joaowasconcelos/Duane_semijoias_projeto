@@ -61,16 +61,16 @@ const ProdutoController = {
         try {
             const { id } = req.params
             const { Descricao, Status, NomeProduto, Valor, ID_categoria, Status_preco } = req.body;
-            const cProduto = new Produto(id, Descricao, Status, NomeProduto, ID_categoria)
-            const vericaCampos = cProduto.verificaCampos()
+            const cProduto2 = new Produto(id, Descricao, Status, NomeProduto, ID_categoria)
+            const vericaCampos = cProduto2.verificaCampos()
             if (!vericaCampos) {
                 return res.status(400).json({ error: "Numero máximo de caracteres " })
             }
-            const validaCampos = cProduto.validaCampos()
+            const validaCampos = cProduto2.validaCampos()
             if (!validaCampos) {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
-            const editaProduto = await cProduto.ModificaProduto()
+            const editaProduto = await cProduto2.ModificaProduto()
 
             if (editaProduto.error) {
                 return res.status(400).json({ error: "Erro ao editar produto!" });
@@ -116,7 +116,7 @@ const ProdutoController = {
             if (id === 0 || !id || id === '') {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
-            const cProduto = new Produto(id,null,0)
+            const cProduto = new Produto(id, null, 0)
             const InativaProduto = await cProduto.InativaProduto()
             return res.status(200).json({ message: "Produto deletado com sucesso!" })
         } catch (error) {
@@ -165,6 +165,75 @@ const ProdutoController = {
             return res.json(selectProduto)
         } catch (error) {
             return res.status(500).json({ error: "Erro ao vizualizar produto!" })
+        }
+    },
+    atualizarProduto: async (req, res) => {
+        const {produtoImg} = req.params
+        const imageUrls = req.imageUrls
+        const { Descricao, Status, NomeProduto, Valor, ID_categoria, Status_preco } = req.body;
+       
+        try {
+            // 1. Buscar o produto no banco
+            const cProduto = new Produto_img(produtoImg)
+            const produto = await cProduto.buscarBanco(); 
+            console.log(produto)
+            if (!produto) {
+                return res.status(404).json({ mensagem: 'Produto não encontrado.' });
+            }
+ console.log("TESTE SDA")
+
+ console.log(imageUrls)
+ console.log(produto)
+            const imagensParaAdicionar = imageUrls.filter(
+                (novaImg) => !produto.includes(novaImg)
+            );
+            console.log("Imagens para adicionar",imagensParaAdicionar)
+            const imagensParaRemover = produto.filter(
+                (imagemAntiga) => !imageUrls.includes(imagemAntiga)
+            );
+            console.log("Imagens para remover ",imagensParaRemover)
+
+            Produto_img.adicionar(imagensParaAdicionar,produtoImg)
+            Produto_img.excluir(imagensParaRemover)
+
+
+            const cProduto2 = new Produto(id, Descricao, Status, NomeProduto, ID_categoria)
+            const vericaCampos = cProduto2.verificaCampos()
+            if (!vericaCampos) {
+                return res.status(400).json({ error: "Numero máximo de caracteres " })
+            }
+            const validaCampos = cProduto2.validaCampos()
+            if (!validaCampos) {
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const editaProduto = await cProduto2.ModificaProduto()
+
+            if (editaProduto.error) {
+                return res.status(400).json({ error: "Erro ao editar produto!" });
+            }
+            const cPreco = new Preco(null, Valor, Status_preco, id);
+            const verificaCamposPreco = cPreco.verificaCampos()
+            if (!verificaCamposPreco) {
+                return res.status(400).json({ error: "Numero máximo de caracteres " })
+            }
+            const validaCamposPreco = cPreco.validaCampos()
+            if (!validaCamposPreco) {
+                return res.status(400).json({ error: "Dados inválidos fornecidos." });
+            }
+            const editaPreco = await cPreco.CadastraPreco()
+
+            if (insertPreco.error) {
+                return res.status(400).json({ message: "Erro ao cadastrar Produto!" });
+            }
+
+
+            return res.status(200).json({
+                mensagem: 'Produto atualizado com sucesso!',
+                imageUrls,
+            });
+        } catch (error) {
+            console.error('Erro ao atualizar produto:', error);
+            return res.status(500).json({ mensagem: 'Erro ao atualizar produto.' });
         }
     }
 }

@@ -1,306 +1,291 @@
 /* Global Styles */
+:root {
+    --primary-color: #AE4B67;
+    --secondary-color: #4B2D33;
+    --background-color: #ffffff;
+    --text-color: #333;
+    --hover-bg-color: #8b3a52;
+    --hover-box-shadow: rgba(0, 0, 0, 0.2);
+    --transition-duration: 0.3s;
+}
+
 body {
     height: 100vh;
+    width: 100vw;
     font-family: 'Arial', sans-serif;
-    color: #333;
-    background-color: #ffffff;
+    color: var(--text-color);
+    background-color: var(--background-color);
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-
+    justify-content: center; /* Centraliza o conteúdo verticalmente */
+    align-items: center; /* Centraliza o conteúdo horizontalmente */
 }
 
-/* Header */
-#header {
-    background-color: #ffffff;
-    padding: 20px 40px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-}
-
-#logoD {
-    width: 150px;
-    transition: transform 0.3s ease-in-out;
-}
-
-#logoD:hover {
-    transform: scale(1.1);
-}
-
-#boxHeader {
+/* Main Layout */
+#geral {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-around;
     align-items: center;
+    width: 100vw; 
+    margin-top: 10%;
+    height: auto;
+    padding: 20px;
+    gap: 20px;
+    box-sizing: border-box;
 }
 
-#icons {
-    display: flex;
-    gap: 25px;
-}
-
-#icon {
-    color: #5d5d5d;
-    font-size: 22px;
-    transition: color 0.3s;
-}
-
-#icon:hover {
-    color: #AE4B67;
-}
-
-#logout {
-    cursor: pointer;
-}
-
-/* Main Content */
-main {
-    flex: 1;
-    padding: 40px 20px;
-    max-width: 1200px;
-    margin-top: 20px;
-   
-}
-
-#topo h4 {
-    font-size: 36px;
-    font-weight: 600;
-    color: #4B2D33;
-    text-align: center;
-    margin-bottom:15px;
-    margin-left: 300px;
-    margin-top: -40px;
-}
-
+/* Resumo do Pedido */
 #resPedido {
-    width: 50%;
-    justify-content: space-between;
-    background-color: #ffffff;
+    width: 100%; /* Faz o resPedido ocupar toda a largura disponível dentro do #geral */
+    background-color: var(--background-color);
     padding: 25px;
     border-radius: 12px;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
-    transition: box-shadow 0.3s ease;
-    height: 60%;
+    transition: box-shadow var(--transition-duration) ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 #resPedido:hover {
-    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.2);
+    box-shadow: 0 4px 16px var(--hover-box-shadow);
 }
 
-
-#order-summary h2 {
-    font-size: 28px;
-    color: #4B2D33;
-    border-bottom: 3px solid #AE4B67;
-    padding-bottom: 8px;
-    margin-bottom: 10px;
-   
-}
-
-/* Order Summary - Price */
+/* Order Items */
 #order-items {
     list-style-type: none;
-    padding: 5px;
-    overflow-y: scroll;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
     max-height: 450px;
-    display: block;
+    overflow-y: visible;
 }
-/* dentro*/
+
 .order-item {
     display: flex;
     justify-content: space-between;
-    align-items: last baseline;
-    background-color: #fafafa;
-    padding: 5px;
-    margin: 5px 5px 5px 12px;
-    border-radius: 8px;
-    border: 1px solid #e0e0e0;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-    transition: transform 0.2s ease, background-color 0.3s;
-    display: flex;
     align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid #ddd; /* Linha de separação entre os itens */
+}
+
+.order-item:last-child {
+    border-bottom: none; /* Remove a borda do último item */
 }
 
 .order-item:hover {
-    background-color: #f5f5f5;
-    transform: translateY(-5px);
-    display: flex;
-    flex-direction: row;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
 }
 
+/* Detalhes do Produto */
 .product-name {
-    display: flex;
-    font-size: 15px;
-    width: 90px;
-    color: #4B2D33;
-    font-weight: 600;
-    margin-left: 5px;
-}
-
-/* Ajuste do preço */
-.price {
-    display: flex;
-    align-items: center;
-    margin-right: 20px;
-}
-
-.currency {
     font-size: 16px;
-    color: #AE4B67;
-   padding: 5px;
-}
-
-.item-price {
-    font-size: 18px;
     font-weight: bold;
-    color: #333;
+    color: var(--secondary-color);
+    margin-left: 15px;
+    flex-grow: 1;
 }
 
-/* Controles de quantidade */
+.price {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Quantity Control */
 .quantity-control {
     display: flex;
     align-items: center;
-    gap: 15px;
-    margin-right: 30px;
+    gap: 10px;
 }
 
 .quantity-control button {
-    background-color: #AE4B67;
-    color: #fff;
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
     border: none;
-    padding: 8px 16px;
     border-radius: 5px;
     cursor: pointer;
-    font-size: 16px;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+    transition: background-color var(--transition-duration);
 }
 
 .quantity-control button:hover {
-    background-color: #8b3a52;
-    transform: scale(1.05);
+    background-color: var(--hover-bg-color);
 }
 
-.quantity-control span {
-    font-size: 16px;
-    font-weight: bold;
-}
-
-/* Order Total */
+/* Total do Pedido */
 #order-total {
     text-align: right;
     font-size: 26px;
     font-weight: bold;
-    color: #4B2D33;
-    margin-top: 30px;
-    padding-top: 20px;
+    color: var(--secondary-color);
+    margin-top: 20px;
+    padding-top: 15px;
 }
 
-/* Buy Button */
-.btn-buy {
+/* Address Form */
+#enderecos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.endereco {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 7px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.endereco p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.endereco input[type="radio"] {
+    margin-top: 10px;
+    accent-color: #ff0000;
+    transform: scale(1.2);
+}
+
+/* Form Styling */
+form label {
+    display: block;
+    margin: 10px 0;
+}
+
+form input {
     width: 100%;
-    padding: 15px;
-    margin-top: 30px;
-    font-size: 18px;
-    color: #fff;
-    background-color: #28a745;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+form button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    padding: 12px;
     border: none;
     border-radius: 8px;
     cursor: pointer;
-    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+    margin-top: 15px;
+    transition: background-color var(--transition-duration);
 }
 
-.btn-buy:hover {
-    background-color: #218838;
-    box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+form button:hover {
+    background-color: var(--hover-bg-color);
 }
 
-.footer{
-position: relative;
-
-}
-
-#ondasFooter {
-    position: absolute;
-    height: 40px;
-    width: 100%;
-    bottom: 0;
-}
-
-/* Mobile Styles */
-@media (max-width: 768px) {
-    #topo h4 {
-        font-size: 28px;
-    }
-
-    .order-item {
-        flex-direction: column;
-        align-items: flex-start;
-        margin-top: -50px;
-    }
-
-    .quantity-control {
-        margin-top: 15px;
-    }
-
-    .price, .quantity-control {
-        width: 100%;
-        justify-content: space-between;
-    }
-
-    .btn-buy {
-        font-size: 16px;
-        padding: 12px;
-    }
-
-    footer {
-        padding: 10px 0;
-    }
-}
-
-#cart-list {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    align-items: center;
-    width: 100%;
-    border-bottom: 1px solid #e0e0e0;
-    position: relative;
-}
-
-
-.product-image {
-    width: 100px;
-    /* A imagem ocupará 100% da largura do contêiner */
-    height: 100px;
-    /* Altura fixa para as imagens */
-    object-fit: cover;
-    /* Ajusta a imagem sem distorcer, cortando se necessário */
+/* Button Styling */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 14px; /* Tamanho ajustado */
+    padding: 10px 18px; /* Botões menores */
+    border: none;
     border-radius: 8px;
-    /*arredonda os cantos da imagem */
-}
-
-#Pbaixo {
-    margin-top: 280px;
-    margin-left: -150px;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+    margin: 10px 0;
+    width: auto;
     text-align: center;
 }
 
+button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Finalizar Compra Button */
+.finalizarCompra {
+    background-color: red;
+    color: white;
+    font-size: 14px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+#ocultarBtn {
+    background-color: #f44336;
+}
+
+#ocultarBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Form Hidden by Default */
+#endereco {
+    display: none; /* O formulário começa oculto */
+}
+
+/* Responsive Layout */
+@media (max-width: 768px) {
+    #geral {
+        flex-direction: column;
+    }
+
+    #resPedido {
+        width: 100%;
+    }
+
+    #enderecos {
+        width: 100%;
+    }
+
+    form input {
+        width: 100%;
+    }
+
+    form button {
+        width: 100%;
+    }
+
+    button {
+        width: 100%;
+    }
+}
+
+/* Payment Section */
 #pagamento {
     display: flex;
-    flex-direction: row;
-    gap: 20px;
+    justify-content: space-between;
+    margin-top: 20px;
 }
 
 #PagePagamento {
-    background-color: #AE4B67;
-    /* color: #4B2D33; */
-    border: none;
+    background-color: var(--primary-color);
     border-radius: 10px;
     font-size: 15px;
-    width: 50%;
+    width: 48%;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
 }
 
 #PagePagamento:hover {
-    background-color: #8b3a52;
-    color: #f5f5f5;
-    transform: scale(1.05);
+    background-color: var(--hover-bg-color);
 }

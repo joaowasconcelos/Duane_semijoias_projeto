@@ -111,9 +111,7 @@
     <script src="../js/cart.js"></script>
     <script>
         document.addEventListener("DOMContentLoaded", function () {
-            // Carrega o header e então inicia o código do carrinho
             $('#header').load("./partials/header.html", function () {
-                // Certifique-se de que o botão foi carregado corretamente
                 const btn = document.querySelector('[data-bs-toggle="offcanvas"]');
                 if (btn) {
                     // Adiciona o evento de clique ao botão

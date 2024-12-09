@@ -63,7 +63,8 @@ export default class Cupons {
             const cupomResult = await bd.query(`  SELECT 
 		c.id,
 		c.codigo,
-		c.status
+		c.status, 
+        c.valor
         FROM 
             cupons c
         WHERE 

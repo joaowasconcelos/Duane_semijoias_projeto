@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let cart = localStorage.getItem('cart');
 
     // Configuração inicial da API e URL
-    const ip = "http://192.168.3.9:gir a3000/";
+    const ip = "http://192.168.3.9:3000/";
     localStorage.setItem('ip', ip);
 
     // Carrega os produtos inicialmente ao carregar a página
@@ -60,8 +60,12 @@ document.addEventListener("DOMContentLoaded", function () {
             <div class="card h-100">
                 <div class="card-img-top">
                     <img src="${element.imagens[0]}" alt="Imagem do produto" class="product-image" id="productImage-${element.id}" />
-                    <button onclick="showPrevImage(${element.id})">Anterior</button>
-                    <button onclick="showNextImage(${element.id})">Próximo</button>
+                    <button onclick="showPrevImage(${element.id})"><svg id="icon" class="icons" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-left-circle-fill" viewBox="0 0 16 16">
+                        <path d="M8 0a8 8 0 1 0 0 16A8 8 0 0 0 8 0m3.5 7.5a.5.5 0 0 1 0 1H5.707l2.147 2.146a.5.5 0 0 1-.708.708l-3-3a.5.5 0 0 1 0-.708l3-3a.5.5 0 1 1 .708.708L5.707 7.5z"/>
+                      </svg></a></button>
+                    <button onclick="showNextImage(${element.id})"><svg id="icon" xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-arrow-right-circle-fill" viewBox="0 0 16 16">
+  <path d="M8 0a8 8 0 1 1 0 16A8 8 0 0 1 8 0M4.5 7.5a.5.5 0 0 0 0 1h5.793l-2.147 2.146a.5.5 0 0 0 .708.708l3-3a.5.5 0 0 0 0-.708l-3-3a.5.5 0 1 0-.708.708L10.293 7.5z"/>
+</svg></button>
                 </div>
                 <div class="card-body">
                     <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>
@@ -87,22 +91,18 @@ document.addEventListener("DOMContentLoaded", function () {
             </div>`;
     }
 
-    // Função de filtragem de produtos
     document.getElementById('procurar').addEventListener('input', function () {
         const nomeParaFiltrar = this.value.toLowerCase();
         Filter(nomeParaFiltrar);
     });
 
-    // Função para aplicar o filtro nos produtos
     async function Filter(nomeParaFiltrar) {
         try {
-            // Filtra os produtos de acordo com o nome
             filteredProducts = products.filter(item => item.nome_produto.toLowerCase().includes(nomeParaFiltrar));
-            totalRows = filteredProducts.length; // Atualiza o número total de produtos após a filtragem
-            currentPage = 1;  // Reseta a página para 1 após um novo filtro
-            renderProducts(); // Chama a função de renderização para mostrar os produtos filtrados
+            totalRows = filteredProducts.length; 
+            currentPage = 1; 
+            renderProducts(); 
 
-            // Caso não haja produtos após o filtro
             if (filteredProducts.length === 0) {
                 document.getElementById('cardGrid').innerHTML = '<p>Nenhum produto encontrado.</p>';
                 $("#pageInfo").text('');
@@ -113,6 +113,37 @@ document.addEventListener("DOMContentLoaded", function () {
             console.error('Erro ao buscar produtos:', error);
         }
     }
+
+    const imageIndices = [];
+    window.showPrevImage = function (productId) {
+        const product = products.find(item => item.id === productId);
+        if (product) {
+            const images = Array.isArray(product.imagens) ? product.imagens : [];
+            if (images.length > 0) {
+                if (!imageIndices[productId]) imageIndices[productId] = 0;
+                imageIndices[productId] = (imageIndices[productId] - 1 + images.length) % images.length;
+                document.getElementById(`productImage-${productId}`).src = images[imageIndices[productId]];
+            } else {
+                console.error('Produto sem imagens ou imagens não válidas:', product);
+            }
+        }
+    };
+    
+    window.showNextImage = function (productId) {
+        const product = products.find(item => item.id === productId);
+        if (product) {
+            const images = Array.isArray(product.imagens) ? product.imagens : [];
+            if (images.length > 0) {
+                if (!imageIndices[productId]) imageIndices[productId] = 0;
+                imageIndices[productId] = (imageIndices[productId] + 1) % images.length;
+                document.getElementById(`productImage-${productId}`).src = images[imageIndices[productId]];
+            } else {
+                console.error('Produto sem imagens ou imagens não válidas:', product);
+            }
+        }
+    };
+    
+    
 
     // Controle de navegação de página
     $("#prevPage").click(function () {
@@ -128,8 +159,6 @@ document.addEventListener("DOMContentLoaded", function () {
             renderProducts();
         }
     });
-
-    // Inicializa os produtos na página
     fetchProducts();
 });
 

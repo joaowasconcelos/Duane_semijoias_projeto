@@ -173,17 +173,16 @@ main {
     flex-direction: row;
     margin-top: 190px;
     width: 100%;
-    align-items: center;
+    height: 60px;
 }
 
 /* voltar ao inicio */
 
 #voltar {
-    margin-left:75%;
+    margin-left:90%;
     display: flex;
     flex-direction: row;
     gap: 5px;
-    align-items: center;
 }
 
 #back {

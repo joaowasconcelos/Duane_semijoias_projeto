@@ -21,17 +21,20 @@ footer {
     width: 100%;
     bottom: 0;
     display: block;
-    height: 90px;
+    height: 55px;
+    position: absolute;
 }
 
 /* Tabela */
 table {
-    width: 100%; 
+    width: 100%;
     border-collapse: collapse;
     font-size: 15px;
     font-family: 'Roboto Mono', monospace;
     text-align: left;
-    overflow-y: auto;
+    overflow-y: scroll;
+    max-height: 400px;
+    display: block;
 }
 
 thead {
@@ -61,13 +64,15 @@ tbody tr:hover {
     background-color: #f0e2e5;
 }
 
-tbody td, tbody th {
+tbody td,
+tbody th {
     padding: 12px;
     border-right: 1px solid #FAADD1;
     color: #333;
 }
 
-tbody td:last-child, tbody th:last-child {
+tbody td:last-child,
+tbody th:last-child {
     border-right: none;
 }
 
@@ -81,7 +86,8 @@ tbody tr th {
     width: 120px;
 }
 
-#qtdeCat, #preco {
+#qtdeCat,
+#preco {
     width: 130px;
     text-align: center;
 }
@@ -94,7 +100,8 @@ tbody tr th {
 }
 
 /* Estilos para as fontes */
-#dados, #titulo {
+#dados,
+#titulo {
     font-family: 'Open Sans', sans-serif;
     font-size: 15px;
     font-weight: bold;
@@ -114,7 +121,7 @@ tbody tr th {
     display: flex;
     flex-direction: row;
     justify-content: space-between;
-    margin-top: 180px;
+    margin-top: 150px;
 }
 
 #voltar {
@@ -153,7 +160,6 @@ tbody tr th {
     font-size: 20px;
     font-weight: bold;
     color: #633636;
-    padding-top: 10px;
     margin-right: 25px;
 }
 
@@ -208,30 +214,8 @@ tbody tr th {
     border: 1px solid #e6c7d0;
 }
 
-/* Bem-vinda + Nome */
-#bemVinda {
-    display: flex;
-    flex-direction: row;
-    gap: 15px;
+.email {
+    width: 100%;
 }
 
-#bemVindaText {
-    padding-top: 15px;
-    font-weight: bold;
-    font-size: 19px;
-}
-
-/* Responsividade */
-@media (max-width: 768px) {
-    #pesquisa {
-        width: 100%; /* Ajuste de largura para dispositivos menores */
-    }
-
-    #titulo2 {
-        font-size: 18px; /* Tamanho do título para dispositivos menores */
-    }
-
-    table {
-        font-size: 14px; /* Tamanho da fonte da tabela para dispositivos menores */
-    }
-}
+/* btn */

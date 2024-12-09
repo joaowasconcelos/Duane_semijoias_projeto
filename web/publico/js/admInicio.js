@@ -85,8 +85,8 @@ function criarTabela2() {
         <tr>
             <td id="codigot">Código</td>
             <td id="dtComprat">Data de compra</td>
-            <td id="descricaott">Descrição</td>
-            <td id="statust">Status</td>
+            <td id="descricao">Descrição</td>
+            <!-- <td id="statust">Status</td> -->
         </tr>
     </thead>`
 }
@@ -99,7 +99,7 @@ function carregaDadosTabelaPedidos(responsePed) {
             <td id="codigo">${this['id']}</td>
             <td id="dtCompra" >${this['data_formatada']}</td>
             <td><a class="link" data-id="${this['id']}" data-toggle="modal" data-target=".bd-example-modal-sm" onclick="pegaId('${this['id']}')">Ver mais detalhes...</a></td>
-            <td id="status">${this['status']}</td>
+            <!--  <td id="status">${this['status']}</td> -->
         </tr>
         </tbody>`
     });
@@ -123,10 +123,10 @@ function changeSubtitle(link) {
 
     btnSave.setAttribute('data-id', id);
 
-    console.log(elemento)
-    console.log(td);
-    console.log(form.method)
-    console.log(id)
+    //console.log(elemento)
+    //console.log(td);
+    //console.log(form.method)
+    //console.log(id)
 
     return false;
 }
@@ -135,7 +135,7 @@ const cpf = document.getElementById('cpf');
 
 async function pegaId(id) {
 
-    console.log('ID:', id);
+    //console.log('ID:', id);
     const token = localStorage.getItem('token');
 
     try {

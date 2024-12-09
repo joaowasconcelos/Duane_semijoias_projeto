@@ -10,6 +10,7 @@ import {
   Modal,
   Picker,
   Button,
+  Alert
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView } from "react-native-safe-area-context";
@@ -28,6 +29,10 @@ export default function Home() {
   const [modalVisible, setModalVisible] = useState(false);
   const [novaCate, setNovaCate] = useState("");
   const [id, setId] = useState("");
+  const [modCat, setModCat] = useState("");
+  const [cateFiltro, setCateFiltro] = useState([]);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [isEdit, setIsEdit] = useState(false);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -52,98 +57,182 @@ export default function Home() {
     selecionaCate();
   }, []);
 
+  useEffect(() => {
+    if (isEdit && modalVisible) {
+      console.log("Edição ativada para a categoria:", novaCate);
+    }
+  }, [isEdit, modalVisible, novaCate]);
+
   const selecionaCate = async () => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.get(
-        `/SelecionaCategoria`,
-        {
+      await api
+        .get(`/SelecionaCategoria`, {
           headers: {
-            'x-access-token': `${token}`,
-          }
-        }
-      )
-      .then(response => {
-        setCategories(response.data);
-        console.log(response.data);
-      })
-      .catch(error => {
-        console.error("Erro ao selecionar categorias", error);
-      })
+            "x-access-token": `${token}`,
+          },
+        })
+        .then((response) => {
+          setCategories(response.data);
+          setCateFiltro(response.data);
+          setNovaCate(response.data[0].tipo);
+          setId(response.data.id);
+          console.log(response.data);
+        })
+        .catch((error) => {
+          console.error("Erro ao selecionar categorias", error);
+        });
       // Atualiza o estado com as categorias recebidas
     } catch (error) {
       console.error("Erro ao buscar as categorias:", error);
     }
   };
 
-  const createCate = async () =>{
-    if(!novaCate === ""){
+  const createCate = async () => {
+    if (novaCate.trim() === "") {
       alert("Preencha a nova Categoria!");
       return;
     }
+  
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.post(
-        `/CreateCategoria`,
-        {
-          tipo: novaCate
-        },
-        {
-          headers: {
-            'x-access-token': `${token}`,
+      await api
+        .post(
+          `/CreateCategoria`,
+          { tipo: novaCate.trim() },
+          {
+            headers: {
+              "x-access-token": `${token}`,
+            },
           }
-        }
-      )
-      .then(response => {
-        setNovaCate(response.data);
-        console.log(response.data);
-        alert("Categoria criada com sucesso!");
-        setModalVisible(false);
-      })
-      .catch(error => {
-        console.error("Erro ao criar categoria", error);
-      })
+        )
+        .then((response) => {
+          setCategories([...categories, response.data]);
+          alert("Categoria criada com sucesso!");
+          setModalVisible(false);
+        })
+        .catch((error) => {
+          console.error("Erro ao criar categoria", error);
+          alert("Erro ao criar categoria.");
+        });
     } catch (error) {
       console.error("Erro ao criar nova categoria", error);
     }
-  }
+  };
+  const handleSearch = (query) => {
+    setSearchQuery(query);
+    if (query) {
+      const filtro = categories.filter((item) => {
+        return (
+          item.tipo.toLowerCase().includes(query.toLowerCase())
+        );
+      });
+      setCateFiltro(filtro);
+    } else {
+      setCateFiltro(categories);
+    }
+  };
 
   if (!fontsLoaded) {
     return null; // ou um carregador
   }
 
   const handleAddCat = () => {
-    // setCategories();
+    setNovaCate(""); // limpa o input para a nova categoria
+    setIsEdit(false);
     setModalVisible(true);
   };
 
-  const InativaCategoria = async (id) =>{
+  const InativaCategoria = async (id) => {
     try {
       const token = await AsyncStorage.getItem("userToken");
-      await api.post(`/InativaCategoria/${id}`,
-        {
-          id: id, 
-        },
-        {
-        headers: {
-          'x-access-token': `${token}`,
-        }
-      })
-      .then(response=>{
-        setId(response.data)
-        console.log(response.data);
-        alert("Categoria inativada com sucesso!");
-      })
-      .catch(error => {
-        console.error("Erro ao inativar categoria", error);
-      })
+      await api
+        .post(
+          `/InativaCategoria/${id}`,
+          {
+            id: id,
+          },
+          {
+            headers: {
+              "x-access-token": `${token}`,
+            },
+          }
+        )
+        .then((response) => {
+          setId(response.data);
+          console.log(response.data);
+          alert("Categoria inativada com sucesso!");
+        })
+        .catch((error) => {
+          console.error("Erro ao inativar categoria", error);
+        });
     } catch (error) {
       console.log("Erro ao inativar categoria", error);
     }
-  }
+  };
+
+  const handleEditCat = (category) => {
+    setNovaCate(category.tipo); // Atualiza o campo com o tipo da categoria selecionada
+    setId(category.id); // Define o ID da categoria a ser editada
+    setIsEdit(true); // Ativa o modo de edição
+    setModalVisible(true); // Abre o modal
+  };
 
   
 
+  const handleSave = async () => {
+    if (novaCate.trim() === "") {
+      alert("O campo de categoria não pode estar vazio!");
+      return;
+    }
+  
+    if (isEdit) {
+      await modificaCate();
+    } else {
+      await createCate();
+    }
+  
+    selecionaCate(); // Atualiza a lista de categorias
+  };
+
+  const modificaCate = async () => {
+  if (novaCate.trim() === "") {
+    alert("Preencha o campo para modificar a categoria!");
+    return;
+  }
+
+  try {
+    const token = await AsyncStorage.getItem("userToken");
+    await api
+      .put(
+        `/ModificaCate/${id}`,
+        { tipo: novaCate.trim() },
+        {
+          headers: {
+            "x-access-token": `${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        alert("Categoria modificada com sucesso!");
+        setCategories(
+          categories.map((cat) =>
+            cat.id === id ? { ...cat, tipo: novaCate.trim() } : cat
+          )
+        );
+        setModalVisible(false); // Fecha o modal
+      })
+      .catch((error) => {
+        console.error("Erro ao modificar categoria", error);
+        alert("Erro ao modificar categoria.");
+      });
+  } catch (error) {
+    console.error("Erro ao acessar a rota de modificação da categoria", error);
+  }
+};
+
+
+  
   return (
     <SafeAreaView style={styles.androidSafeArea}>
       <View style={styles.container}>
@@ -174,6 +263,8 @@ export default function Home() {
             <TextInput
               placeholder="Pesquise uma categoria"
               style={styles.Inputs}
+              onChangeText={handleSearch}
+              value={searchQuery}
             />
             <TouchableOpacity
               style={{ margin: 5 }}
@@ -185,21 +276,54 @@ export default function Home() {
 
           <ScrollView>
             <View style={styles.containerElements}>
-              {categories.map(category => (
+              {(cateFiltro.length>0 ? cateFiltro : categories).map((category) => (
                 <View key={category.id} style={styles.contentElements}>
                   <View style={{ marginLeft: 10, marginBottom: 7 }}>
                     <Text style={styles.textBtn}>Categoria:</Text>
-                    <Text style={{ fontSize: 17, fontWeight: 'bold' }}>{category.tipo}</Text>
+                    <Text style={{ fontSize: 17, fontWeight: "bold" }}>
+                      {category.tipo}
+                    </Text>
                   </View>
 
-                  <TouchableOpacity style={{ justifyContent: 'center', alignItems: 'center' }} onPress={()=>InativaCategoria(category.id)}>
+                  <TouchableOpacity
+                    style={{ justifyContent: "center", alignItems: "center" }}
+                    onPress={() => {
+                      Alert.alert(
+                        "Atenção",
+                        "Deseja excluir a categoria?",
+                        [
+                          {
+                            text: "Sim",
+                            onPress: () => InativaCategoria(category.id)
+                          },
+                          {
+                            text: "Não",
+                            onPres: ()=>{return},
+                            style: 'cancel',
+                          }
+                        ]
+                      )
+                    }}
+                  >
                     <Text style={styles.textBtn}>Excluir:</Text>
                     <FontAwesome6 name="trash-can" size={28} color="#AE4B67" />
                   </TouchableOpacity>
 
-                  <TouchableOpacity style={{ justifyContent: "center", alignItems: "center", height: "100%", marginRight: 10 }}>
+                  <TouchableOpacity
+                    style={{
+                      justifyContent: "center",
+                      alignItems: "center",
+                      height: "100%",
+                      marginRight: 10,
+                    }}
+                    onPress={() => handleEditCat(category)}
+                  >
                     <Text style={styles.textBtn}>Editar:</Text>
-                    <FontAwesome6 name="pen-to-square" color="#ae4b67" size={26} />
+                    <FontAwesome6
+                      name="pen-to-square"
+                      color="#ae4b67"
+                      size={26}
+                    />
                   </TouchableOpacity>
                 </View>
               ))}
@@ -224,7 +348,7 @@ export default function Home() {
                     fontWeight: "bold",
                   }}
                 >
-                  Cadastre a nova categoria
+                  {isEdit ? "Editar Categoria" : "Cadastrar Nova Categoria"}
                 </Text>
                 <TextInput
                   style={styles.inputModal}
@@ -241,16 +365,35 @@ export default function Home() {
                     marginBottom: 5,
                   }}
                 >
-                  <TouchableOpacity style={styles.btnModal} onPress={()=> {
-                    setModalVisible(false);
-                  }}>
-                    <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Cancelar</Text>
+                  <TouchableOpacity
+                    style={styles.btnModal}
+                    onPress={() => {
+                      setModalVisible(false);
+                    }}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#FFF",
+                        fontSize: 20,
+                      }}
+                    >
+                      Cancelar
+                    </Text>
                   </TouchableOpacity>
-                  <TouchableOpacity style={styles.btnModal} onPress={()=>{
-                    createCate();
-                    
-                  }}>
-                    <Text style={{fontFamily: 'EBGaramond_800ExtraBold', color: '#FFF', fontSize: 20}}>Salvar</Text>
+                  <TouchableOpacity
+                    style={styles.btnModal}
+                    onPress={handleSave}
+                  >
+                    <Text
+                      style={{
+                        fontFamily: "EBGaramond_800ExtraBold",
+                        color: "#FFF",
+                        fontSize: 20,
+                      }}
+                    >
+                      Salvar
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
@@ -386,7 +529,7 @@ const styles = StyleSheet.create({
     width: "95%",
     height: "40%",
     elevation: 5,
-    shadowColor: '#000',
+    shadowColor: "#000",
     shadowOffset: {
       width: 0,
       height: 5,
@@ -396,7 +539,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-evenly",
     alignItems: "center",
     borderWidth: 2,
-    borderColor: '#CF90A2'
+    borderColor: "#CF90A2",
   },
   inputModal: {
     borderWidth: 2,
