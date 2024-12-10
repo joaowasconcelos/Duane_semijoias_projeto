@@ -218,4 +218,23 @@ tbody tr th {
     width: 100%;
 }
 
-/* btn */
+/* modal */
+
+label {
+    width: 100%;
+}
+
+.modal-content input[type="text"] {
+    width: 100%;
+    padding:4px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    background-color: #f9f9f9;
+    color: #666;
+}
+
+.modal-content input[type="text"]:disabled {
+    background-color: #e9ecef;
+    color: #000000;
+}
