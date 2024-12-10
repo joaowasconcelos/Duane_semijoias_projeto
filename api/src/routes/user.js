@@ -53,7 +53,7 @@ routerUser.put("/ModificarProduto/:id",authenticateJWT,authenticatePerfil,Produt
 routerUser.put("/ModificarPessoaADM/:id",authenticateJWT,authenticatePerfil,CadastroADM.EditarPessoaADM)//ADM
 routerUser.put("/ModificaCupom/:id",authenticateJWT,authenticatePerfil,CuponsController.Edita);//ADM
 routerUser.put("/ModificaCate/:id",authenticateJWT,authenticatePerfil,CategoriaController.Modifica)
-routerUser.post('/UpdateProduto/:produtoImg',authenticateJWT,authenticatePerfil,upload.array('imagem', 5),ProdutoController.atualizarProduto);
+routerUser.post('/UpdateProduto/:produtoImg',authenticateJWT,authenticatePerfil,upload.array('imagem', 5),manageImagesUpload,ProdutoController.atualizarProduto);
 routerUser.put("/ModificarPessoa",authenticateJWT,CadastroUsuario.EditarPessoa)//USUARIO
 routerUser.put("/InativarConta",authenticateJWT,LoginController.Inativar)//USUARIO
 routerUser.put("/AtivarConta",authenticateJWT,LoginController.Ativar)//USUARIO

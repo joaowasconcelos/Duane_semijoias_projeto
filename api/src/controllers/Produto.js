@@ -169,7 +169,9 @@ const ProdutoController = {
     },
     atualizarProduto: async (req, res) => {
         const {produtoImg} = req.params
-        const imageUrls = req.imageUrls
+        const imageUrls = req.files
+        console.log('oi')
+        
         const { Descricao, Status, NomeProduto, Valor, ID_categoria, Status_preco } = req.body;
        
         try {
@@ -197,7 +199,7 @@ const ProdutoController = {
             Produto_img.excluir(imagensParaRemover)
 
 
-            const cProduto2 = new Produto(id, Descricao, Status, NomeProduto, ID_categoria)
+            const cProduto2 = new Produto(produtoImg, Descricao, Status, NomeProduto, ID_categoria)
             const vericaCampos = cProduto2.verificaCampos()
             if (!vericaCampos) {
                 return res.status(400).json({ error: "Numero máximo de caracteres " })
@@ -211,7 +213,7 @@ const ProdutoController = {
             if (editaProduto.error) {
                 return res.status(400).json({ error: "Erro ao editar produto!" });
             }
-            const cPreco = new Preco(null, Valor, Status_preco, id);
+            const cPreco = new Preco(null, Valor, Status_preco,produtoImg);
             const verificaCamposPreco = cPreco.verificaCampos()
             if (!verificaCamposPreco) {
                 return res.status(400).json({ error: "Numero máximo de caracteres " })
@@ -222,14 +224,13 @@ const ProdutoController = {
             }
             const editaPreco = await cPreco.CadastraPreco()
 
-            if (insertPreco.error) {
+            if (editaPreco.error) {
                 return res.status(400).json({ message: "Erro ao cadastrar Produto!" });
             }
 
 
             return res.status(200).json({
-                mensagem: 'Produto atualizado com sucesso!',
-                imageUrls,
+                mensagem: 'Produto atualizado com sucesso!'
             });
         } catch (error) {
             console.error('Erro ao atualizar produto:', error);
