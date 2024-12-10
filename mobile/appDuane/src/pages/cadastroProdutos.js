@@ -128,7 +128,7 @@ export default function Home() {
 
   const escolherImagens = async () => {
     const resultado = await ImagePicker.launchImageLibraryAsync({
-      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      mediaTypes: ImagePicker.MediaType.Images,
       allowsEditing: true,
       aspect: [150, 200],
       quality: 1,

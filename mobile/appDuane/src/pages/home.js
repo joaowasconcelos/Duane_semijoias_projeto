@@ -43,6 +43,7 @@ export default function Home() {
   const [dataNasc, setDataNasc] = useState("");
   const [telefones, setTelefones] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [idTelefone, setIdTelefone] = useState([]);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -130,6 +131,7 @@ export default function Home() {
     selecionaDetalhesMeusDados();
   }, []); // O array vazio [] garante que o useEffect rode apenas uma vez quando o componente for montado
 
+  let Telefones = []
 
   const selecionaDetalhesMeusDados = async ()=>{
     try {
@@ -146,7 +148,16 @@ export default function Home() {
         setNome(response.data[0].nome);
         setTelefones(response.data[0].numeros);
         setDataNasc(response.data[0].data_nasc);
-        setSelectedUserId(response.data.id);
+        setIdTelefone(response.data[0].id_telefone);
+        setSelectedUserId(response.data[0].id);
+        
+
+        Telefones = response.data[0].numeros.map((numero, index) => ({
+          numero: numero,
+          id_telefone: response.data[0].id_telefone[index] // Supondo que id_telefone seja um array
+        }));
+
+        console.log("Telefone armazenado corretamente", Telefones);
         console.log(response.data);
       })
       .catch(error=>{
@@ -168,7 +179,7 @@ export default function Home() {
       await api.put(`/ModificarPessoaADM/${selectedUserId}`, {
         Nome: nome,
         Data_Nasc: dataNasc,
-        Telefones: telefones,
+        Telefones: Telefones,
       }, {
         headers: {
           'x-access-token': `${token}`,
