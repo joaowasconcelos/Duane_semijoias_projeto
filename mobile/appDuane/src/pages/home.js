@@ -43,6 +43,7 @@ export default function Home() {
   const [dataNasc, setDataNasc] = useState("");
   const [telefones, setTelefones] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [idTelefone, setIdTelefone] = useState([]);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -146,7 +147,8 @@ export default function Home() {
         setNome(response.data[0].nome);
         setTelefones(response.data[0].numeros);
         setDataNasc(response.data[0].data_nasc);
-        setSelectedUserId(response.data.id);
+        setIdTelefone(response.data[0].id_telefone);
+        setSelectedUserId(response.data[0].id);
         console.log(response.data);
       })
       .catch(error=>{
@@ -169,6 +171,7 @@ export default function Home() {
         Nome: nome,
         Data_Nasc: dataNasc,
         Telefones: telefones,
+        Id_Telefone: idTelefone
       }, {
         headers: {
           'x-access-token': `${token}`,

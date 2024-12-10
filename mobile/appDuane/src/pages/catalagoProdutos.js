@@ -10,14 +10,14 @@ import {
   ScrollView,
   TextInput,
   Modal,
-  Alert
+  Alert,
 } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import { SafeAreaView, SafeAreaProvider } from "react-native-safe-area-context";
 import FontAwesome6 from "react-native-vector-icons/FontAwesome6";
 import AsyncStorage from "@react-native-async-storage/async-storage";
-import { Picker } from '@react-native-picker/picker';
-
+import { Picker } from "@react-native-picker/picker";
+import * as ImagePicker from "expo-image-picker";
 import AppLoading from "expo-app-loading";
 import {
   useFonts,
@@ -46,6 +46,7 @@ export default function Home() {
   const [statusPreco, setStatusPreco] = useState("");
   const [prodFiltro, setProdFiltro] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
+  const [imagens, setImagens] = useState([]);
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -97,20 +98,27 @@ export default function Home() {
     }
   };
 
-  
   const [detalhesProduto, setDetalhesProduto] = useState([]);
   const buscaId = (id) => {
-    const item = prod.find((item) => item.id === id);
-    console.log("qwerty: ", item);
-    setDetalhesProduto([item]);
-    pressBtnDetalhes();
-    console.log("set aqui", detalhesProduto);
+    const item = prod.find((produto) => produto.id === id);
+
+    if (item) {
+      setId(item.id);
+      setNomeProduto(item.nome_produto);
+      setDescricao(item.descricao);
+      setValor(item.preco_normal);
+      setSelectedCategory(item.id_categoria); // Ajuste com o campo correto para a categoria
+      setDetalhesProduto([item]);
+      setModalVisible(true);
+    } else {
+      alert("Produto não encontrado.");
+    }
   };
 
-  useEffect(()=>{
+  useEffect(() => {
     setSelectedCategory(detalhesProduto.tipo);
     // console.log("categoria selecionada", detalhesProduto[0].tipo);
-  },[detalhesProduto]);
+  }, [detalhesProduto]);
 
   const InativaProduto = async (id) => {
     try {
@@ -140,9 +148,25 @@ export default function Home() {
     }
   };
 
+  const escolherImagens = async () => {
+    const resultado = await ImagePicker.launchImageLibraryAsync({
+      mediaTypes: ImagePicker.MediaTypeOptions.Images,
+      allowsEditing: true,
+      aspect: [150, 200],
+      quality: 1,
+      // Limite o número de imagens aqui se necessário
+    });
+
+    if (!resultado.canceled) {
+      const novasImagens = resultado.assets.map((asset) => asset.uri);
+      setImagens((prevImagens) => [...prevImagens, ...novasImagens]);
+    }
+  };
+
   const modificaProd = async () => {
-    if (!descricao || !nomeProduto || !valor === 0) {
+    if (!descricao || !nomeProduto || !valor) {
       alert("Preencha todos os campos!");
+      return;
     }
     try {
       const token = await AsyncStorage.getItem("userToken");
@@ -154,27 +178,24 @@ export default function Home() {
             NomeProduto: nomeProduto,
             Valor: valor,
             Status: status,
-            ID_Categoria: idCate,
+            ID_Categoria: selectedCategory,
           },
           {
-            headers: {
-              "x-access-token": `${token}`,
-            },
+            headers: { "x-access-token": `${token}` },
           }
         )
         .then((response) => {
-          setDescricao(response.data);
-          setNomeProduto(response.data);
-          setValor(response.data);
-          console.log(response.data);
+          console.log("Produto modificado:", response.data);
+          alert("Produto alterado com sucesso!");
           setModalVisible(false);
-          Alert("Produto Alterado com sucesso")
+          selecionaProduto(); // Atualiza a lista de produtos
         })
         .catch((error) => {
           console.error("Erro ao modificar produto", error);
+          alert("Erro ao alterar o produto. Tente novamente.");
         });
     } catch (error) {
-      console.log("Erro ao acessar a rota de modificar produto", error);
+      console.error("Erro ao acessar a rota de modificar produto:", error);
     }
   };
 
@@ -371,15 +392,17 @@ export default function Home() {
                             [
                               {
                                 text: "Sim",
-                                onPress:() => InativaProduto(produto.id)
+                                onPress: () => InativaProduto(produto.id),
                               },
                               {
                                 text: "Não",
-                                onPress: () => { return },
-                                style: 'cancel',
-                              }
+                                onPress: () => {
+                                  return;
+                                },
+                                style: "cancel",
+                              },
                             ]
-                          )
+                          );
                         }}
                       >
                         <Text style={styles.textBtn}>Excluir:</Text>
@@ -440,11 +463,11 @@ export default function Home() {
                           borderWidth: 1,
                           borderColor: "#9B5377",
                           fontWeight: "bold",
-                          width: '100%'
+                          width: "100%",
                         }}
                       >
                         <Picker
-                          selectedValue={"Brincos"}
+                          selectedValue={selectedCategory}
                           onValueChange={(itemValue) =>
                             setSelectedCategory(itemValue)
                           }
@@ -454,8 +477,7 @@ export default function Home() {
                             <Picker.Item
                               key={category.id}
                               label={category.tipo}
-                              value={category.tipo}
-                              
+                              value={selectedCategory} // Garante que seja o ID da categoria
                             />
                           ))}
                         </Picker>
@@ -482,8 +504,7 @@ export default function Home() {
                         value={nomeProduto}
                         onChangeText={setNomeProduto}
                         placeholder="Produto"
-                      >                        
-                      </TextInput>
+                      ></TextInput>
                     </View>
                     <View
                       style={{
@@ -501,8 +522,12 @@ export default function Home() {
                       >
                         Preço Normal:
                       </Text>
-                      <TextInput style={styles.inputModal} value={valor} onChangeText={setValor} placeholder="Valor">
-                      </TextInput>
+                      <TextInput
+                        style={styles.inputModal}
+                        value={valor}
+                        onChangeText={setValor}
+                        placeholder="Valor"
+                      ></TextInput>
                     </View>
 
                     <View
@@ -526,8 +551,7 @@ export default function Home() {
                         value={descricao}
                         onChangeText={setDescricao}
                         placeholder="Descrição"
-                      >
-                      </TextInput>
+                      ></TextInput>
                     </View>
                     <View
                       style={{
@@ -545,7 +569,36 @@ export default function Home() {
                       >
                         Imagens:
                       </Text>
-                      <Image
+                      <TouchableOpacity onPress={escolherImagens}>
+                        <FontAwesome6
+                          name="circle-plus"
+                          color="#ae4b67"
+                          size={36}
+                        />
+                      </TouchableOpacity>
+                      <View
+                        style={{
+                          flexDirection: "row",
+                          flexWrap: "wrap",
+                          marginTop: 5,
+                        }}
+                      >
+                        {imagens.map((imagem, index) => (
+                          <Image
+                            key={index}
+                            source={{ uri: imagem }}
+                            style={{
+                              width: 50,
+                              height: 50,
+                              margin: 3,
+                              borderWidth: 1,
+                              borderColor: "#Faaad1",
+                              borderRadius: 10,
+                            }}
+                          />
+                        ))}
+                      </View>
+                      {/* <Image
                         source={{ uri: detalhesProd.imagens[0] }}
                         style={{
                           width: 70,
@@ -553,7 +606,7 @@ export default function Home() {
                           borderRadius: 5,
                           margin: 5,
                         }}
-                      />
+                      /> */}
                     </View>
                     <View
                       style={{
