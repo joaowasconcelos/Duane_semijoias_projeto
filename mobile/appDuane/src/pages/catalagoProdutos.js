@@ -47,6 +47,8 @@ export default function Home() {
   const [prodFiltro, setProdFiltro] = useState([]);
   const [searchQuery, setSearchQuery] = useState("");
   const [imagens, setImagens] = useState([]);
+  const [imagensExistentes, setImagensExistentes] = useState([]);
+  const [novasImagens, setNovasImagens] = useState([]);
 
   const navegaCadastroProduto = () => {
     navigation.navigate("CadastroProdutos");
@@ -148,6 +150,25 @@ export default function Home() {
     }
   };
 
+  // Remover uma imagem existente
+  const removeExistingImage = (id) => {
+    Alert.alert("Remover Imagem", "Tem certeza de que deseja remover esta imagem?", [
+      { text: "Cancelar", style: "cancel" },
+      {
+        text: "Remover",
+        style: "destructive",
+        onPress: () => {
+          setImagensExistentes((prev) => prev.filter((image) => image.id !== id));
+        },
+      },
+    ]);
+  };
+
+   // Remover uma nova imagem
+   const removeNewImage = (index) => {
+    setNovasImagens((prev) => prev.filter((_, i) => i !== index));
+  };
+
   const escolherImagens = async () => {
     const resultado = await ImagePicker.launchImageLibraryAsync({
       mediaTypes: ImagePicker.MediaTypeOptions.Images,
@@ -172,7 +193,7 @@ export default function Home() {
       const token = await AsyncStorage.getItem("userToken");
       await api
         .put(
-          `/ModificarProduto/${id}`,
+          `/UpdateProduto/${id}`,
           {
             Descricao: descricao,
             NomeProduto: nomeProduto,
@@ -588,8 +609,8 @@ export default function Home() {
                             key={index}
                             source={{ uri: imagem }}
                             style={{
-                              width: 50,
-                              height: 50,
+                              width: 70,
+                              height: 70,
                               margin: 3,
                               borderWidth: 1,
                               borderColor: "#Faaad1",
@@ -598,15 +619,21 @@ export default function Home() {
                           />
                         ))}
                       </View>
-                      {/* <Image
-                        source={{ uri: detalhesProd.imagens[0] }}
-                        style={{
-                          width: 70,
-                          height: 70,
-                          borderRadius: 5,
-                          margin: 5,
-                        }}
-                      /> */}
+                      <View style={{flexDirection: "row",
+                          flexWrap: "wrap",
+                          marginTop: 5,}}>
+                        <Image
+                          source={{ uri: detalhesProd.imagens[0] }}
+                          style={{
+                            width: 70,
+                            height: 70,
+                            margin: 3,
+                            borderWidth: 1,
+                            borderColor: "#Faaad1",
+                            borderRadius: 10,
+                          }}
+                        />
+                      </View>
                     </View>
                     <View
                       style={{
@@ -763,7 +790,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     width: "95%",
-    height: "90%",
+    height: "95%",
     elevation: 5,
     // shadowColor: '#000',
     shadowOffset: {
