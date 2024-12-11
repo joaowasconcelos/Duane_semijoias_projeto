@@ -119,7 +119,18 @@
                                     <label class="picture" for="imagem">Fotos do produto: *</label>
                                     <div id="imagens-container"></div>
 
+                                    <label class="picture" for="foto">Atualizar imagens do produto:</label>
+                                    <input type="file" id="fileInput" name="images" multiple accept="image/*">
+                                    <p id="errorMessage" style="color: red; display: none;">Você deve selecionar de 1 a
+                                        5 imagens.</p>
                                 </div>
+
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+                                <button type="submit" class="btn btn-primary save-changes">Salvar</button>
 
                             </div>
 
@@ -127,12 +138,7 @@
 
                     </div>
 
-                    <div class="modal-footer">
 
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
-                        <button type="button" class="btn btn-primary" onclick="salvar()" id="save">Salvar alterações</button>
-
-                    </div>
                 </div>
             </div>
         </div>
