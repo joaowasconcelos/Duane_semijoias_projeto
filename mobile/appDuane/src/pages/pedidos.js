@@ -79,7 +79,7 @@ export default function Home() {
   useEffect(() => {
     getToken(); // Chama a função para obter o token
     selecionaPedid();
-    detalhesDoPedido();
+    // detalhesDoPedido();
   }, []);
 
   useEffect(() => {
@@ -297,7 +297,7 @@ export default function Home() {
                           color: "#E5969C",
                         }}
                       >
-                        Código:
+                        Nome do Cliente:
                       </Text>
                       <TextInput
                         style={styles.inputModal}
@@ -332,7 +332,7 @@ export default function Home() {
                         placeholder="Data do pedido"
                         readOnly
                       >
-                        {detalhesPedid.data}
+                        {detalhesPedid.data_formatada}
                       </TextInput>
                     </View>
                     <View
@@ -349,7 +349,7 @@ export default function Home() {
                           color: "#E5969C",
                         }}
                       >
-                        Status:
+                        Valor Total:
                       </Text>
                       <TextInput
                         style={styles.inputModal}
@@ -357,7 +357,7 @@ export default function Home() {
                         //onChangeText={}
                         placeholder="Status"
                         readOnly
-                      ></TextInput>
+                      >{detalhesPedid.valor_total}</TextInput>
                     </View>
                     <View
                       style={{
@@ -376,12 +376,13 @@ export default function Home() {
                         Produtos:
                       </Text>
                       <TextInput
-                        style={styles.inputModal}
+                        style={styles.inputModalProdutos}
                         //value={}
                         //onChangeText={}
                         placeholder=""
                         readOnly
-                      ></TextInput>
+                        multiline
+                      >{detalhesPedid.itens}</TextInput>
                     </View>
 
                     <View
@@ -526,7 +527,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     padding: 10,
     width: "95%",
-    height: "65%",
+    height: "75%",
     elevation: 5,
     // shadowColor: '#000',
     shadowOffset: {
@@ -563,4 +564,18 @@ const styles = StyleSheet.create({
     borderColor: "#9B5377",
     borderWidth: 1,
   },
+  inputModalProdutos:{
+    borderWidth: 2,
+    borderColor: "#CF90A2",
+    borderRadius: 10,
+    padding: 5,
+    marginBottom: 20,
+    width: "100%",
+    backgroundColor: "#FFF6f2",
+    color: "#ae4b67",
+    fontSize: 18,
+    fontWeight: "bold",
+    height: 150,
+    textAlign: 'center',
+  }
 });
