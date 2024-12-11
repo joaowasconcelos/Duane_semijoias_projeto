@@ -41,8 +41,11 @@ export default function Home() {
   const [detalhesMeusDados, setDetalhesMeusDados] = useState([]);
   const [nome, setNome] = useState("");
   const [dataNasc, setDataNasc] = useState("");
-  const [telefones, setTelefones] = useState("");
+  const [telefones1, setTelefones1] = useState("");
+  const [telefones2, setTelefones2] = useState("");
   const [selectedUserId, setSelectedUserId] = useState(null);
+  const [idTelefone1, setIdTelefone1] = useState([]);
+  const [idTelefone2, setIdTelefone2] = useState([]);
 
   let [fontsLoaded] = useFonts({
     EBGaramond_400Regular,
@@ -144,9 +147,12 @@ export default function Home() {
       .then(response=>{
         setDetalhesMeusDados(response.data);
         setNome(response.data[0].nome);
-        setTelefones(response.data[0].numeros);
+        setTelefones1(response.data[0].telefone_1);
+        setTelefones2(response.data[0].telefone_2);
         setDataNasc(response.data[0].data_nasc);
-        setSelectedUserId(response.data.id);
+        setIdTelefone1(response.data[0].telefone_id_1);
+        setIdTelefone2(response.data[0].telefone_id_2);
+        setSelectedUserId(response.data[0].id);
         console.log(response.data);
       })
       .catch(error=>{
@@ -158,27 +164,35 @@ export default function Home() {
   }
 
   const modificaMeusDados = async () => {
-    if (!nome || !dataNasc || !telefones) {
+    if (!nome || !dataNasc || !telefones1) {
       Alert.alert("Preencha todos os campos");
       return;
     }
+
+    const Telefones = [
+      {telefone: telefones1, id: idTelefone1},
+      {telefone: telefones2, id: idTelefone2}
+    ];
+
+    
   
     try {
       const token = await AsyncStorage.getItem("userToken");
       await api.put(`/ModificarPessoaADM/${selectedUserId}`, {
         Nome: nome,
         Data_Nasc: dataNasc,
-        Telefones: telefones,
+        Telefones: Telefones,
       }, {
         headers: {
           'x-access-token': `${token}`,
         },
       })
-      .then(response => {
-        Alert.alert("Dados modificados com sucesso", response.data);
-        console.log(response.data);
-        selecionaDetalhesMeusDados();        
+      .then(response => { 
+        console.log("Dados atualizados",response.data);
+        Alert.alert("Dados alterados com sucesso!");
         setModalVisible(false);
+        selecionaDetalhesMeusDados();
+        
       })
       .catch(error => {
         if (error.response) {
@@ -385,19 +399,20 @@ export default function Home() {
                       <Text style={{fontSize: 18, fontFamily: 'EBGaramond_800ExtraBold', color: '#E5969C'}}>Telefones:</Text>
                       <TextInput
                         style={styles.inputModal}
-                        value={telefones}
-                        onChangeText={setTelefones}
+                        value={telefones1}
+                        onChangeText={setTelefones1}
                         placeholder="Telefones"
                         
-                      >
-                        {/* {detalhesMeuDads.numeros ? (
-                            detalhesMeuDads.numeros
-                              .split(",")
-                              .map((num) => <Text>{num}</Text>)
-                          ) : (
-                            <Text>Número não disponível</Text>
-                          )} */}
-                      </TextInput>
+                      />
+                      <TextInput
+                        style={styles.inputModal}
+                        value={telefones2}
+                        onChangeText={setTelefones2}
+                        placeholder="Telefones"
+                        
+                      />
+                        
+                      
                     </View>                
                     
                     <View

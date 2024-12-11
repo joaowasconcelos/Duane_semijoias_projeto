@@ -1,6 +1,7 @@
 import multer from "multer";
 import admin from "firebase-admin";
 import serviceAccount from "../config/firebase.js";
+import obterConexaoDoPool from "../config/mysql.js"
 // import serviceAccount from "../config/firebase.json" assert { type: 'json' };
 
 // Inicializa o Firebase Admin SDK
@@ -234,6 +235,7 @@ export const manageImagesUpload = async (req, res, next) => {
             );
         }
 
+        console.log("OIIIIIIIIIIII")
         // Atualiza a requisição com as imagens válidas (novas e antigas)
         req.imageUrls = imagensQueFicaram;
 

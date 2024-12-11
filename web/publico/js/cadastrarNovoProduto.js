@@ -52,17 +52,17 @@ $('#produto-form').on('submit', async function (event) {
             headers: {
                 'x-access-token': token,
             }
-        }).then(response =>{
+        }).then(response => {
             console.log(response)
             showNotification(response.data.message)
             setTimeout(() => {
                 window.location.reload(true)
             }, 3000);
             return
-        }).catch(error =>{
+        }).catch(error => {
             console.log(error)
         });
-        
+
     } catch (error) {
         console.error('Erro ao criar o produto:', error);
         showNotification("Ocorreu um erro ao criar o produto. Tente novamente.");
@@ -92,3 +92,19 @@ function criaDrop(data) {
 }
 
 dados();
+
+//selecionar no maximo 5 imagens
+const fileInput = document.getElementById('imagem');
+const errorMessage = document.getElementById('errorMessage');
+
+fileInput.addEventListener('change', () => {
+    const fileCount = fileInput.files.length;
+
+    // Verifica se não há arquivos ou se há mais de 5 arquivos
+    if (fileCount === 0 || fileCount > 5) {
+        errorMessage.style.display = 'block';
+        fileInput.value = ''; // Limpa os arquivos selecionados
+    } else {
+        errorMessage.style.display = 'none';
+    }
+});

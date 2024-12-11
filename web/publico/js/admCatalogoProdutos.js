@@ -129,6 +129,7 @@ async function dadosPedido(id) {
             divDados.innerHTML = "";
 
             imagem.forEach((url) => {
+                console.log(url)
                 const imgElement = document.createElement('img');
                 imgElement.src = url;
                 imgElement.style.marginRight = "10px";
@@ -140,6 +141,7 @@ async function dadosPedido(id) {
 
                 divDados.appendChild(imgElement);
             });
+            console.log(imagem)
 
 
         } else {
@@ -199,47 +201,56 @@ document.getElementById('pesquisa').addEventListener('input', function () {
     });
 });
 
-// async function salvar() {
-//     const token = localStorage.getItem('token');
-//     const ID = document.getElementById("tipo").getAttribute('data-id');;
+//selecionar no maximo 5 imagens
 
-//     console.log("Id do produto:", ID)
+const fileInput = document.getElementById('fileInput');
+const errorMessage = document.getElementById('errorMessage');
 
-//     // const tipo = document.getElementById('categoria').select;
-//     // const item = document.getElementById('item').value;
-//     // const descricao = document.getElementById('descricao').value;
-//     // const valor = document.getElementById('valor').value;
+fileInput.addEventListener('change', () => {
+    const fileCount = fileInput.files.length;
 
-//     // try {
-//     //     await axios.post(`${localStorage.getItem("ip")}ModificarProduto/${id}`,
-//     //     {
-//     //         tipo: tipo,
-//     //         item: item,
-//     //         descricao: descricao,
-//     //         valor: valor
-//     //     },
-//     //     {
-//     //         headers: {
-//     //             'x-access-token': token
-//     //         }
-//     //     }). then (response => {
-//     //         showNotification(response.data.message)
+    if (fileCount === 0 || fileCount > 5) {
+        errorMessage.style.display = 'block'; // Mensagem de erro
+        fileInput.value = ''; // Limpa os arquivos
+    } else {
+        errorMessage.style.display = 'none';
+    }
+});
 
-//     //         setTimeout(() => {
-//     //             window.location.reload(true);
-//     //         }, 4000)
-//     //     }).catch(error => {
-//     //             showNotification(error.response.data.error)
-//     //         })
-//     // } catch (error) {
-//     //     console.error('Erro ao atualizar produto:', error);
-//     //     showNotification("Ocorreu um erro ao editar produto. Tente novamente.");
-//     // }
-// }
+//salvar 
 
+$('#produto-form').on('submit', async function (event) {
+    event.preventDefault()
+    const token = localStorage.getItem('token');
+    const formData = new FormData(this);
+    console.log(formData)
+    const id = document.getElementById("id").value;
 
+    //console.log(id);
+    console.log(formData)
+    //console.log(localStorage.getItem("ip"))
+    //console.log(token)
 
-//pesquisa
+    try {
+        await axios.post(`${localStorage.getItem("ip")}UpdateProduto/${id}`, formData, {
+            headers: {
+                'x-access-token': token,
+            }
+        }).then(response => {
+            console.log(response)
+            showNotification(response.data.message)
+            setTimeout(() => {
+                window.location.reload(true)
+            }, 3000);
+            return
+        }).catch(error => {
+            console.log(error)
+        });
 
+    } catch (error) {
+        console.error('Erro ao atualizar o produto:', error);
+        showNotification("Ocorreu um erro ao atualizar o produto. Tente novamente.");
+    }
+})
 
-
+//"https://storage.googleapis.com/teste-firebase-b05a9.appspot.com/17332709071339949?GoogleAccessId=firebase-adminsdk-y1fy3%40teste-firebase-b05a9.iam.gserviceaccount.com&Expires=16730334000&Signature=igENRWQoW0WjDYt%2FQb12Q0iqLuhwERiXLS16cJtyb8KVK5UWVeZZ9eQu7Y8wVnEOm9WP4qvvIu9zQcB3GbJUCopqSwQ34oVhN65GcGrNVWaWqZ3Qdw7hOP1vzbv7loh37pwLFwbZdHRaOeYKwZaQpm0Vj%2BIiN%2FgSoZUumEr13rq5N4g3quaLGjcbPftgKl347dW5AavB5hSEZDeHznVzmSn0XPjezaIY0R8kP7jJx5pkrASKNqwoTiqAoo9DpZ%2BicyxyNSHP9mDfOwnv8bO85Gf%2BWg1SJ7buvGbwJCCrRZMKWrm789KVqkY4MPY5KVi3%2BcOfZwtf%2B16NEwZVLxRWMg%3D%3D"

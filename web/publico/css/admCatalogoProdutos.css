@@ -238,14 +238,7 @@ footer {
 
 /* modal detalhes */
 
-.modal-body {
-    display: flex;
-    flex-direction: column;
-}
 
-.inputModal {
-    width: 100%;
-}
 
 label {
     width: 100%;
@@ -298,10 +291,6 @@ label {
 
 }
 
-button {
-    margin-top: 30px !important;
-}
-
 .btn-primary {
     margin: auto;
     background-color: #AE4B67 !important;
@@ -327,3 +316,4 @@ img {
     margin-right: 10px;
     cursor: pointer;
 }
+
