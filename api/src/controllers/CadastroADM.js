@@ -112,9 +112,13 @@ const CadastroUsuario = {
         const conn = await obterConexaoDoPool();
         try {
             await conn.beginTransaction();
+            console.log(req.params)
+            console.log(req.body)
+            console.log(req.body.Telefones)
+    
             const { id } = req.params; // ID da pessoa
             const { Nome, Data_Nasc, Telefones } = req.body;
-            console.log(req.body)
+          
             const cPessoa = new Pessoa(id, Nome, Data_Nasc);
             const vericaCampos = cPessoa.verificaCamposADM()
             if(!vericaCampos){
@@ -131,8 +135,11 @@ const CadastroUsuario = {
             }
             cPessoa.Data_nasc = conversaoData;
             const modificaPessoa = await cPessoa.ModificaPessoaADM(conn);
+            console.log("passou aqio")
+            console.log(Telefones)
             for (const item of Telefones) {
-                const cTelefone = new Telefone(item.id, item.Numero);
+                const cTelefone = new Telefone(item.id, item.telefone);
+                console.log(cTelefone)
                 const verificaTele = cTelefone.verificaCampos()
                 const validaTele = cTelefone.validaCampos()
                 if(!verificaTele){

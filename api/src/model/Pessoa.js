@@ -79,7 +79,9 @@ export default class Pessoa {
     }
     async ModificaPessoaADM(conn) {
         try {
+            console.log(this._nome, this._data_nasc, this._id)
             const pessoaResult = await conn.query(`UPDATE pessoa SET nome = ?, data_nasc = ? WHERE id = ?;`, [this._nome, this._data_nasc, this._id]);
+            console.log(pessoaResult)
             return { message: pessoaResult }
 
         } catch (error) {
@@ -106,28 +108,42 @@ export default class Pessoa {
         const bd = await obterConexaoDoPool();
         try {
             const pessoaResult = await bd.query(`
-            SELECT 
-                p.id,
-                p.nome,
-                DATE_FORMAT(data_nasc, '%d/%m/%Y') AS data_nasc ,
-                p.cpf,
-                l.usuario,
-                pf.tipo,
-                GROUP_CONCAT(t.numero) AS numeros 
-            FROM 
-                pessoa p 
-            JOIN 
-                login l ON l.pessoa_id = p.id 
-            JOIN 
-                perfis pf ON pf.id = l.perfis_id
-            JOIN 
-                telefone_has_pessoa tp ON tp.pessoa_id = p.id 
-            JOIN 
-                telefone t ON t.id = tp.telefone_id 
-            WHERE p.id = ?
-            GROUP BY 
-                p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
-            LIMIT 0, 1000;`, [this._id]);
+          SELECT 
+	p.id,
+    p.nome,
+    DATE_FORMAT(p.data_nasc, '%d/%m/%Y') AS data_nasc,
+    p.cpf,
+    l.usuario,
+    pf.tipo,
+	MAX(CASE WHEN t.row_num = 1 THEN t.id ELSE NULL END) AS telefone_id_1,
+    MAX(CASE WHEN t.row_num = 1 THEN t.numero ELSE NULL END) AS telefone_1,
+	MAX(CASE WHEN t.row_num = 2 THEN t.id ELSE NULL END) AS telefone_id_2,
+    MAX(CASE WHEN t.row_num = 2 THEN t.numero ELSE NULL END) AS telefone_2
+FROM 
+    pessoa p
+JOIN 
+    telefone_has_pessoa tp ON tp.pessoa_id = p.id
+JOIN 
+    login l ON l.pessoa_id = p.id 
+JOIN 
+    perfis pf ON pf.id = l.perfis_id
+LEFT JOIN (
+    SELECT 
+        t.id, 
+        t.numero, 
+        ROW_NUMBER() OVER (PARTITION BY tp.pessoa_id ORDER BY t.id) AS row_num
+    FROM 
+        telefone t
+    JOIN 
+        telefone_has_pessoa tp ON tp.telefone_id = t.id
+) t ON t.id = tp.telefone_id
+WHERE 
+    p.id = ?
+GROUP BY 
+   p.id, p.nome, p.data_nasc, p.cpf, l.usuario, pf.tipo
+ORDER BY 
+    p.id
+LIMIT 0, 1000;`, [this._id]);
             return pessoaResult[0]
 
         } catch (error) {
@@ -221,7 +237,7 @@ export default class Pessoa {
             telefone t ON t.id = tp.telefone_id 
         WHERE 
             p.id = ?;
-                `,[id])
+                `, [id])
             return result[0]
         } catch (error) {
             console.log(error)
@@ -232,7 +248,8 @@ export default class Pessoa {
     DataConvert() {
         let [dia, mes, ano] = this._data_nasc.split('/');
         let dataFormatada = `${ano}-${mes}-${dia}`;
-        this.Data_nasc = new Date(dataFormatada);
+        // this.Data_nasc = new Date(dataFormatada);
+        this.Data_nasc = dataFormatada
         return this.Data_nasc
     }
 
@@ -251,7 +268,7 @@ export default class Pessoa {
         return true
     }
     verificaCamposADM() {
-        if (this._data_nasc.length > 5 || this._nome.length > 100) {
+        if (this._data_nasc.length > 20 || this._nome.length > 100) {
             return false
         }
         return true

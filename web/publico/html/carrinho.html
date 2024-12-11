@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="../css/carrinho.css">
   <link rel="stylesheet" href="../css/notificacao.css">
   <script src="../js/notificacao.js"></script>
-    <script src="../js/verificaToken.js"></script>
+  <script src="../js/verificaToken.js"></script>
   <link rel="stylesheet" href="../css/partials/header.css">
   <script src="https://sdk.mercadopago.com/js/v2"></script>
 </head>
@@ -38,10 +38,6 @@
   </header>
 
   <main>
-    <div id="topo">
-      <h4>Finalizar Compra</h4>
-    </div>
-
     <div id="geral">
       <div id="resPedido">
         <section id="order-summary">
@@ -56,32 +52,34 @@
 
       </div>
 
-  
+
 
       <div class="container">
         <div id="enderecos">
           <!-- Os endereços serão listados aqui dinamicamente -->
         </div>
-    
+
         <button onclick="mostrarFormulario()">Cadastrar Endereço</button>
         <button onclick="ocultarFormulario()" style="display: none;" id="ocultarBtn">Ocultar Formulário</button>
-    
-    
+
+
         <form id="endereco">
-            <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);"
-              required disabled placeholder="CEP:"/></label><br/>
-            <input name="rua" type="text" id="rua" size="60" required disabled placeholder="Logradouro:" /></label><br />
-            <input name="bairro" type="text" id="bairro" size="40" required disabled placeholder="Bairro:" /></label><br />
-            <input name="cidade" type="text" id="cidade" size="40" required disabled placeholder="Cidade:"/></label><br />
-            <input name="uf" type="text" id="uf" size="2" required disabled placeholder="Estado:"/></label><br />
-            <input name="numero" type="text" id="numero" size="8" required disabled placeholder="Numero:"/></label><br />
-          <button type="submit" disabled>Cadastrar Endereço</button>
+          <input name="cep" type="text" id="cep" value="" size="10" maxlength="9" onblur="pesquisacep(this.value);"
+            required disabled placeholder="CEP:" /></label><br />
+          <input name="rua" type="text" id="rua" size="60" required disabled placeholder="Logradouro:" /></label><br />
+          <input name="bairro" type="text" id="bairro" size="40" required disabled
+            placeholder="Bairro:" /></label><br />
+          <input name="cidade" type="text" id="cidade" size="40" required disabled
+            placeholder="Cidade:" /></label><br />
+          <input name="uf" type="text" id="uf" size="2" required disabled placeholder="Estado:" /></label><br />
+          <input name="numero" type="text" id="numero" size="8" required disabled placeholder="Numero:" /></label><br />
+          <button class="cadastraEndereco" type="submit" disabled>Cadastrar Endereço</button>
         </form>
 
         <div><button class="finalizarCompra" onclick="verificaProducts()">Finalizar Compra</button></div>
-  
+
       </div>
-     
+
     </div>
     <label>Adicionar Cupom</label>
     <input type="text" placeholder="Adiicione um Cupom" id="cupom">
@@ -91,7 +89,7 @@
 
     <div id="wallet_container"></div>
 
-  
+
 
   </main>
 
@@ -119,13 +117,13 @@
       try {
         const totalComDesconto = parseFloat(localStorage.getItem('totalComDesconto'))
         const idEndereço = obterEnderecoSelecionado()
-        if(idEndereço === null){
-          alert("Selecione ou cadastre um endereço")
+        if (idEndereço === null) {
+          showNotification("Selecione ou cadastre um endereço")
           return
         }
         const token = localStorage.getItem('token');
         await axios.post(`${localStorage.getItem("ip")}Pagamento`,
-          { cart, idEndereço,totalComDesconto },
+          { cart, idEndereço, totalComDesconto },
           {
             headers: {
               'x-access-token': token,

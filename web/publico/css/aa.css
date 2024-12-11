@@ -1,0 +1,483 @@
+/* Global Styles */
+:root {
+    --primary-color: #AE4B67;
+    --secondary-color: #4B2D33;
+    --background-color: #ffffff;
+    --text-color: #333;
+    --hover-bg-color: #8b3a52;
+    --hover-box-shadow: rgba(0, 0, 0, 0.2);
+    --transition-duration: 0.3s;
+}
+body {
+    min-height: 100vh; /* Garante que o body ocupe toda a altura da tela */
+    width: 100%;
+    font-family: 'Arial', sans-serif;
+    color: var(--text-color);
+    background-color: var(--background-color);
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start; /* Alinha o conteúdo ao topo */
+    align-items: center; /* Centraliza horizontalmente */
+    overflow-x: hidden; /* Impede rolagem horizontal desnecessária */
+}
+
+/* Main Layout */
+#geral {
+    display: flex;
+    justify-content: space-between; /* Espaça os itens de forma flexível */
+    align-items: center;
+    height: 100vh; /* Alinha os itens ao topo */
+    width: 100vw;
+    max-width: 1200px; /* Limita a largura máxima do conteúdo para telas grandes */
+    margin-top: 5%; /* Menor margem superior */
+    padding: 20px;
+    gap: 20px;
+    box-sizing: border-box;
+    flex-wrap: wrap; /* Permite que os itens "quebrem" em telas pequenas */
+}
+
+/* Resumo do Pedido e Endereços (do lado um do outro em telas grandes) */
+#resPedido, #enderecos {
+    width: 48%; /* Ocupa 48% da largura disponível em telas grandes */
+    min-width: 300px; /* Garante que cada bloco tenha uma largura mínima em telas muito pequenas */
+    background-color: var(--background-color);
+    padding: 25px;
+    border-radius: 12px;
+    transition: box-shadow var(--transition-duration) ease;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+#resPedido:hover, #enderecos:hover {
+    box-shadow: 0 4px 16px var(--hover-box-shadow);
+}
+
+/* Ajustes para quando a tela for menor que 768px (dispositivos móveis) */
+@media (max-width: 768px) {
+    #geral {
+        flex-direction: column; /* Coloca os itens em uma coluna em dispositivos menores */
+        justify-content: center; /* Centraliza verticalmente em telas menores */
+        align-items: center; /* Centraliza os itens horizontalmente */
+        margin-top: 20px; /* Diminui a margem superior em dispositivos móveis */
+    }
+
+    #resPedido, #enderecos {
+        width: 100%; /* Faz os itens ocuparem toda a largura disponível em telas menores */
+        min-width: 0; /* Remove a largura mínima para permitir o uso total da tela */
+    }
+
+    /* Ajuste do padding para pequenos dispositivos */
+    body {
+        padding: 10px;
+    }
+}
+
+/* Ajustes para telas muito pequenas (dispositivos móveis pequenos) */
+@media (max-width: 480px) {
+    #resPedido, #enderecos {
+        width: 100%; /* Garante que ambos ocupem toda a largura disponível em telas pequenas */
+    }
+}
+
+
+#resPedido:hover {
+    box-shadow: 0 4px 16px var(--hover-box-shadow);
+}
+
+/* Order Items */
+#order-items {
+    list-style-type: none;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    max-height: 450px;
+    overflow-y: visible;
+}
+
+.order-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    padding: 12px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    border-bottom: 1px solid #ddd; /* Linha de separação entre os itens */
+}
+
+.order-item:last-child {
+    border-bottom: none; /* Remove a borda do último item */
+}
+
+.order-item:hover {
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* Detalhes do Produto */
+.product-name {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-left: 15px;
+    flex-grow: 1;
+}
+
+.price {
+    font-size: 16px;
+    font-weight: bold;
+    color: var(--primary-color);
+}
+
+/* Quantity Control */
+.quantity-control {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.quantity-control button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 14px;
+    padding: 5px 10px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+}
+
+.quantity-control button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Total do Pedido */
+#order-total {
+    text-align: right;
+    font-size: 26px;
+    font-weight: bold;
+    color: var(--secondary-color);
+    margin-top: 20px;
+    padding-top: 15px;
+}
+
+/* Address Form */
+#enderecos {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+    padding: 20px;
+    background-color: #f9f9f9;
+    width: 500px;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.endereco {
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    padding: 7px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.endereco p {
+    margin: 10px 0;
+    font-size: 14px;
+    color: #333;
+}
+
+.endereco input[type="radio"] {
+    margin-top: 10px;
+    accent-color: #ff0000;
+    transform: scale(1.2);
+}
+
+/* Form Styling */
+form label {
+    display: block;
+    margin: 10px 0;
+}
+
+form input {
+    width: 100%;
+    padding: 10px;
+    margin-top: 5px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+}
+
+form button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 16px;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin-top: 15px;
+    transition: background-color var(--transition-duration);
+}
+
+form button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Button Styling */
+button {
+    background-color: var(--primary-color);
+    color: white;
+    font-size: 14px; /* Tamanho ajustado */
+    padding: 10px 18px; /* Botões menores */
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+    margin: 10px 0;
+    width: auto;
+    text-align: center;
+}
+
+button:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Finalizar Compra Button */
+.finalizarCompra {
+    background-color: red;
+    color: white;
+    font-size: 14px;
+    padding: 10px 18px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    margin: 10px 0;
+    width: 100%;
+    text-align: center;
+}
+
+#ocultarBtn {
+    background-color: #f44336;
+}
+
+#ocultarBtn:hover {
+    background-color: #d32f2f;
+}
+
+/* Form Hidden by Default */
+#endereco {
+    display: none; /* O formulário começa oculto */
+}
+
+/* Responsive Layout for Large Screens (Tablets and smaller) */
+@media (max-width: 1024px) {
+    #geral {
+        flex-direction: column; /* Muda para coluna para tablets */
+        justify-content: flex-start;
+        align-items: center;
+    }
+
+    #resPedido {
+        width: 90%; /* Ajuste da largura do bloco do pedido */
+        margin-bottom: 20px;
+    }
+
+    #enderecos {
+        width: 90%; /* Faz com que o formulário de endereços ocupe 90% da tela */
+    }
+
+    form button,
+    button,
+    .finalizarCompra {
+        width: 100%; /* Ajusta os botões para 100% de largura em telas menores */
+    }
+
+    /* Ajuste de padding para telas médias */
+    body {
+        padding: 10px;
+    }
+}
+
+/* Ajuste para telas menores que 768px (por exemplo, celulares) */
+@media (max-width: 768px) {
+    #geral {
+        flex-direction: column; /* Coloca todos os itens em coluna */
+        align-items: center; /* Alinha os itens ao centro */
+    }
+
+    #resPedido,
+    #enderecos {
+        width: 100%; /* A largura de resPedido e endereços vai ocupar toda a tela */
+    }
+
+    /* Ajuste no layout dos itens do pedido para telas pequenas */
+    #order-items {
+        max-height: none; /* Deixa os itens roláveis em telas pequenas */
+    }
+
+    /* Ajustes para campos e botões */
+    form input,
+    form button,
+    button {
+        width: 100%; /* Garante que todos os botões e inputs ocupem 100% da largura */
+    }
+
+    /* Ajusta o padding da página para telas menores */
+    body {
+        padding: 5%;
+    }
+
+    /* Reduz o tamanho das fontes para otimizar o espaço em telas pequenas */
+    .product-name,
+    .price {
+        font-size: 14px;
+    }
+
+    .order-item {
+        flex-direction: column; /* Coloca os itens de pedido em coluna */
+        align-items: flex-start; /* Alinha os itens de forma mais compacta */
+    }
+
+    .quantity-control button {
+        font-size: 12px;
+        padding: 4px 8px;
+    }
+}
+
+/* Ajuste para telas ainda menores (ex: dispositivos móveis muito pequenos) */
+@media (max-width: 480px) {
+    /* Ajustes finos de fontes e tamanhos */
+    .product-name,
+    .price {
+        font-size: 13px; /* Tamanho de fonte reduzido para visibilidade */
+    }
+
+    .quantity-control button {
+        font-size: 11px; /* Botões menores em dispositivos muito pequenos */
+        padding: 4px 8px;
+    }
+
+    .order-item {
+        padding: 8px; /* Menos padding em dispositivos muito pequenos */
+    }
+
+    #order-total {
+        font-size: 18px; /* Ajuste no tamanho da fonte total */
+    }
+
+    /* Ajuste no formulário de endereço */
+    #enderecos {
+        width: 100%; /* Garante que o formulário ocupe toda a largura da tela */
+    }
+
+    /* Ajuste de padding e margem para otimizar espaço */
+    body {
+        padding: 10px;
+        font-size: 12px; /* Fonte menor para se ajustar em dispositivos pequenos */
+    }
+
+    /* Alterações de espaçamento nas listas */
+    .order-item {
+        padding: 8px;
+    }
+
+    /* Ajuste para o botão de finalizar compra */
+    .finalizarCompra {
+        font-size: 13px;
+        padding: 10px 15px; /* Botão mais compacto */
+    }
+}
+
+/* Payment Section - Ajustes de responsividade */
+#pagamento {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    flex-wrap: wrap; /* Permite que o conteúdo "quebre" para uma nova linha em telas pequenas */
+}
+
+#PagePagamento {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    font-size: 15px;
+    width: 48%; /* Largura de 48% para 2 colunas */
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+}
+
+#PagePagamento:hover {
+    background-color: var(--hover-bg-color);
+}
+
+/* Ajuste para telas menores (telas pequenas e dispositivos móveis) */
+@media (max-width: 768px) {
+    #pagamento {
+        flex-direction: column; /* Organiza os botões de pagamento em uma coluna */
+        align-items: center;
+    }
+
+    #PagePagamento {
+        width: 100%; /* Botão de pagamento ocupa toda a largura em telas pequenas */
+        margin-bottom: 10px;
+    }
+}
+
+/* Final adjustments for specific screen widths */
+@media (max-width: 320px) {
+    /* Ajuste de texto e botões em telas muito pequenas */
+    .product-name {
+        font-size: 12px; /* Fonte menor */
+    }
+
+    .order-item {
+        padding: 6px; /* Menos padding para economizar espaço */
+    }
+
+    .finalizarCompra {
+        font-size: 12px;
+        padding: 8px 12px; /* Botão menor */
+    }
+
+    /* Formulário mais compacto em telas muito pequenas */
+    form input,
+    form button {
+        padding: 8px;
+        font-size: 14px; /* Fonte menor para economizar espaço */
+    }
+}
+
+/* Payment Section */
+#pagamento {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+#PagePagamento {
+    background-color: var(--primary-color);
+    border-radius: 10px;
+    font-size: 15px;
+    width: 48%;
+    padding: 10px;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+    transition: background-color var(--transition-duration);
+}
+
+#PagePagamento:hover {
+    background-color: var(--hover-bg-color);
+}
+footer{
+    width: 100%;
+    
+}

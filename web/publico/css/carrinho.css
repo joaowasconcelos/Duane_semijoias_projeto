@@ -1,105 +1,105 @@
-/* Global Styles */
-:root {
-    --primary-color: #AE4B67;
-    --secondary-color: #4B2D33;
-    --background-color: #ffffff;
-    --text-color: #333;
-    --hover-bg-color: #8b3a52;
-    --hover-box-shadow: rgba(0, 0, 0, 0.2);
-    --transition-duration: 0.3s;
-}
+/* carrinho.css */
 
 body {
-    height: 100vh;
-    width: 100vw;
-    font-family: 'Arial', sans-serif;
-    color: var(--text-color);
-    background-color: var(--background-color);
+    font-family: Arial, sans-serif;
     margin: 0;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center; /* Centraliza o conteúdo verticalmente */
-    align-items: center; /* Centraliza o conteúdo horizontalmente */
+    background-color: #f9f9f9;
+    color: #333;
 }
 
-/* Main Layout */
-#geral {
+/* header {
+    background-color: #ffdde1;
+    position: relative;
+    padding: 15px 0;
+  } */
+
+#conteudoHeader {
     display: flex;
-    justify-content: space-around;
+    justify-content: space-between;
     align-items: center;
-    width: 100vw; 
-    margin-top: 10%;
-    height: auto;
-    padding: 20px;
+    padding: 0 20px;
+}
+
+/* #logo img {
+    max-width: 200px;
+  } */
+
+#boxHeader {
+    display: flex;
     gap: 20px;
-    box-sizing: border-box;
+}
+
+#boxHeader a,
+#boxHeader span {
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/*   
+  nav hr {
+    border: 1px solid #fff;
+    margin: 10px 0;
+  } */
+
+main {
+    padding: 20px;
+    max-width: 1200px;
+    margin: auto;
+}
+
+h4,
+h2 {
+    color: #444;
+    margin-bottom: 15px;
+    text-align: center;
 }
 
 /* Resumo do Pedido */
-#resPedido {
-    width: 100%; /* Faz o resPedido ocupar toda a largura disponível dentro do #geral */
-    background-color: var(--background-color);
-    padding: 25px;
-    border-radius: 12px;
-    transition: box-shadow var(--transition-duration) ease;
-    display: flex;
-    flex-direction: column;
-    gap: 20px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+#order-summary {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 30px;
+    margin-top: 30px;
 }
 
-#resPedido:hover {
-    box-shadow: 0 4px 16px var(--hover-box-shadow);
-}
-
-/* Order Items */
 #order-items {
-    list-style-type: none;
+    list-style: none;
     padding: 0;
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    max-height: 450px;
-    overflow-y: visible;
+    margin: 0;
 }
 
 .order-item {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    background-color: #f9f9f9;
-    border-radius: 8px;
-    padding: 12px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
-    border-bottom: 1px solid #ddd; /* Linha de separação entre os itens */
+    justify-content: space-between;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
 }
 
 .order-item:last-child {
-    border-bottom: none; /* Remove a borda do último item */
+    border-bottom: none;
 }
 
-.order-item:hover {
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+.product-image {
+    max-width: 80px;
+    border-radius: 8px;
+    margin-right: 10px;
 }
 
-/* Detalhes do Produto */
 .product-name {
     font-size: 16px;
     font-weight: bold;
-    color: var(--secondary-color);
-    margin-left: 15px;
-    flex-grow: 1;
 }
 
 .price {
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bold;
-    color: var(--primary-color);
 }
 
-/* Quantity Control */
 .quantity-control {
     display: flex;
     align-items: center;
@@ -107,185 +107,123 @@ body {
 }
 
 .quantity-control button {
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 14px;
-    padding: 5px 10px;
+    background-color: #ff9a9e;
+    color: #fff;
     border: none;
-    border-radius: 5px;
+    border-radius: 4px;
+    padding: 5px 10px;
     cursor: pointer;
-    transition: background-color var(--transition-duration);
+    font-size: 14px;
+    transition: background-color 0.3s;
 }
 
 .quantity-control button:hover {
-    background-color: var(--hover-bg-color);
+    background-color: #ff6f7d;
 }
 
-/* Total do Pedido */
-#order-total {
-    text-align: right;
-    font-size: 26px;
-    font-weight: bold;
-    color: var(--secondary-color);
-    margin-top: 20px;
-    padding-top: 15px;
-}
-
-/* Address Form */
-#enderecos {
-    display: flex;
-    flex-direction: column;
-    gap: 15px;
-    padding: 20px;
-    background-color: #f9f9f9;
-    width: 500px;
+/* Área de Endereço */
+.container {
+    background-color: #fff;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    margin-bottom: 20px;
+}
+
+#enderecos {
+    margin-bottom: 15px;
 }
 
 .endereco {
-    background-color: #ffffff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    padding: 7px;
-    transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.endereco p {
-    margin: 10px 0;
-    font-size: 14px;
-    color: #333;
-}
-
-.endereco input[type="radio"] {
-    margin-top: 10px;
-    accent-color: #ff0000;
-    transform: scale(1.2);
-}
-
-/* Form Styling */
-form label {
-    display: block;
-    margin: 10px 0;
-}
-
-form input {
-    width: 100%;
+    background-color: #f4f4f4;
     padding: 10px;
-    margin-top: 5px;
-    font-size: 16px;
-    border-radius: 5px;
+    border-radius: 6px;
+    margin-bottom: 10px;
     border: 1px solid #ddd;
 }
 
-form button {
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 16px;
-    padding: 12px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin-top: 15px;
-    transition: background-color var(--transition-duration);
-}
-
-form button:hover {
-    background-color: var(--hover-bg-color);
-}
-
-/* Button Styling */
 button {
-    background-color: var(--primary-color);
-    color: white;
-    font-size: 14px; /* Tamanho ajustado */
-    padding: 10px 18px; /* Botões menores */
+    background-color: #ff9a9e;
+    color: #fff;
     border: none;
-    border-radius: 8px;
+    border-radius: 4px;
+    padding: 10px 20px;
+    font-size: 16px;
     cursor: pointer;
-    transition: background-color var(--transition-duration);
-    margin: 10px 0;
-    width: auto;
-    text-align: center;
+    transition: background-color 0.3s;
 }
+
+.container .finalizarCompra{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin-top: 15px;
+}
+
+
 
 button:hover {
-    background-color: var(--hover-bg-color);
+    background-color: #ff6f7d;
 }
 
-/* Finalizar Compra Button */
-.finalizarCompra {
-    background-color: red;
-    color: white;
-    font-size: 14px;
-    padding: 10px 18px;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    margin: 10px 0;
-    width: 100%;
-    text-align: center;
-}
-
-#ocultarBtn {
-    background-color: #f44336;
-}
-
-#ocultarBtn:hover {
-    background-color: #d32f2f;
-}
-
-/* Form Hidden by Default */
-#endereco {
-    display: none; /* O formulário começa oculto */
-}
-
-/* Responsive Layout */
-@media (max-width: 768px) {
-    #geral {
-        flex-direction: column;
-    }
-
-    #resPedido {
-        width: 100%;
-    }
-
-    #enderecos {
-        width: 100%;
-    }
-
-    form input {
-        width: 100%;
-    }
-
-    form button {
-        width: 100%;
-    }
-
-    button {
-        width: 100%;
-    }
-}
-
-/* Payment Section */
-#pagamento {
-    display: flex;
-    justify-content: space-between;
+/* Formulário de Cadastro */
+form#endereco {
+    display: none;
+    flex-direction: column;
+    gap: 10px;
     margin-top: 20px;
 }
 
-#PagePagamento {
-    background-color: var(--primary-color);
-    border-radius: 10px;
-    font-size: 15px;
-    width: 48%;
+form#endereco input {
+    width: calc(100% - 20px);
     padding: 10px;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
-    transition: background-color var(--transition-duration);
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
-#PagePagamento:hover {
-    background-color: var(--hover-bg-color);
+form #endereco button {
+    align-self: flex-end;
+}
+
+/* Botões Adicionais */
+#aplica,
+#ocultarBtn {
+    margin-top: 10px;
+}
+
+
+footer {
+    width: 100%;
+}
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    left: 0;
+    padding: 0;
+}
+
+/* Responsividade */
+@media (max-width: 768px) {
+    #conteudoHeader {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .order-item {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .product-image {
+        margin-bottom: 10px;
+    }
+
+    form #endereco input {
+        width: 100%;
+    }
 }

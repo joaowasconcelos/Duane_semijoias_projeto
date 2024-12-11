@@ -18,6 +18,7 @@ import { logout } from "../middleware/authenticateJWT.js";
 import { upload,handleImageUpload,manageImagesUpload} from "../middleware/imagens.js";
 import Pagamento from "../api/mercadopago.js";
 import EnderecoController from "../controllers/Endereco.js";
+import Correio from "../api/correios.js";
 
 
 //Insert
@@ -77,6 +78,7 @@ routerUser.get('/MeusPedidos',authenticateJWT,PedidoController.selecionaMeusPedi
 routerUser.get('/MeuPedido/:id',authenticateJWT,authenticatePerfil,PedidoController.SelecionaDetalhes)
 routerUser.get('/MeuEnde',authenticateJWT,EnderecoController.seleciona)
 routerUser.get('/infoPedidos/:id',authenticateJWT,Pagamento.Preference)
+routerUser.get('/CalculaFrete/:cep',authenticateJWT,Correio.calculaFrete)
 
 
 //Filtros

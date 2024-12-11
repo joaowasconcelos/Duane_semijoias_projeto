@@ -51,6 +51,8 @@ export default class Telefone {
     }
 
     async ModificaTelefone(conn) {
+        console.log("aqui telefine", this._numero, this._id)
+        
         try {
             const telefoneResult = await conn.query(`UPDATE telefone SET numero = ? WHERE id = ?`, [this._numero, this._id]);
             return telefoneResult;
@@ -91,7 +93,7 @@ export default class Telefone {
     async SelecionaTelefone() {
         try {
             const telefoneResult = await bd.query(`select * from telefone`)
-    
+            
         } catch (error) {
             console.log('Erro na transação:', error);
             return { error: 'Falha na transação', details: error };

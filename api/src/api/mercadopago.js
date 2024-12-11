@@ -1,4 +1,5 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
+
 import Pessoa from '../model/Pessoa.js';
 import Endereco from '../model/Endereco.js';
 
@@ -87,7 +88,6 @@ const Pagamento = {
             }).then(response => {
                 console.log(response)
                 const id = response.id
-                console.log(id)
                 return res.json({ id })
             }).catch(error => {
                 console.log(error)
@@ -98,18 +98,23 @@ const Pagamento = {
             console.log(error)
         }
     },
-    Preference: async (req, res) => {
-        const preferenceId = req.body
-        MercadoPago.preferences.get()
-            .then(response => {
-                console.log(response)
-                const items = response.items;
-                console.log('Itens do pedido:', items);
+    Preference:async(req,res)=>{
+        const client = new MercadoPagoConfig({ accessToken: 'TEST-7981712700966503-110517-76cca7be1211cfd770080acca36b1571-1948077339' });
+        const preference = new Preference(client);
 
-                // Processa e insere no banco de dados ou exibe os itens
-                items.forEach(item => {
-                    console.log(`Item: ${item.title}, Quantidade: ${item.quantity}, Preço: ${item.unit_price}`);
-                });
+        const preferenceId = req.params.id
+        console.log(preference)
+        console.log(preferenceId)
+
+        preference.get({preferenceId})
+            .then(response => {
+                // const items = response.items;
+                // console.log('Itens do pedido:', items);
+
+                // // Processa e insere no banco de dados ou exibe os itens
+                // items.forEach(item => {
+                //     console.log(`Item: ${item.title}, Quantidade: ${item.quantity}, Preço: ${item.unit_price}`);
+                // });
             }).catch(error => {
                 console.log(error)
             })

@@ -131,20 +131,20 @@ async function aplicaCupom(cupom) {
   if (totalComDesconto) {
     showNotification("Cupom já aplicado!");
     const buttonAplica = document.getElementById("aplica");
-    buttonAplica.disabled = true;  
-    return; 
+    buttonAplica.disabled = true;
+    return;
   }
 
   if (cupom) {
     const valorDesconto = cupom.valor;
     const orderTotalElement = document.getElementById('order-total');
-    
+
     const totalAtual = parseFloat(orderTotalElement.textContent);
     console.log("totalAtual", totalAtual);
     const novoTotal = totalAtual - valorDesconto;
     console.log("novoTotal", novoTotal);
-    
- 
+
+
     orderTotalElement.textContent = novoTotal.toFixed(2);
     localStorage.setItem('totalComDesconto', novoTotal);
 
@@ -169,7 +169,7 @@ async function selectCupons() {
       }
     });
     const cupons = response.data;
-    return cupons;  
+    return cupons;
   } catch (error) {
     console.error("Erro ao buscar cupons:", error);
   }
@@ -178,13 +178,13 @@ async function selectCupons() {
 async function VerificaCupom() {
   const cupons = document.getElementById("cupom").value;
   const CupomDigitado = cupons.toUpperCase()
-  const CupomCadastrados = await selectCupons();  
+  const CupomCadastrados = await selectCupons();
   const cupomValido = CupomCadastrados.find(cupom => cupom.codigo === CupomDigitado);
 
   if (cupomValido) {
     console.log("Cupom Válido");
     showNotification("Cupom Aplicado");
-   aplicaCupom(cupomValido)
+    aplicaCupom(cupomValido)
   } else {
     console.log("Cupom Inválido");
     showNotification("Cupom Inválido");
@@ -202,11 +202,15 @@ function selectsEndereços() {
     })
       .then(response => {
         const enderecos = response.data.endereco[0];
+        console.log(response.data.endereco[0]);
+
         const enderecosContainer = document.getElementById('enderecos');
         enderecosContainer.innerHTML = '';
 
         if (enderecos.length > 0) {
           enderecos.forEach(endereco => {
+            console.log('qw', endereco.cep);
+
             const enderecoDiv = document.createElement('div');
             enderecoDiv.classList.add('endereco');
 
@@ -215,8 +219,9 @@ function selectsEndereços() {
 
             // Cria os elementos de exibição
             enderecoDiv.innerHTML = `
-              <input type="radio" name="endereco" onclick="selecionarEndereco(${endereco.id})" ${isChecked}>
-              <p><strong>CEP:</strong> ${endereco.cep}</p>
+              <input type="radio" name="endereco" onclick="selecionarEndereco(${endereco.id}, '${endereco.cep}')"
+    ${isChecked} data-cep="${endereco.cep}">
+              <p><strong id="${endereco.cep}">CEP:</strong> ${endereco.cep}</p>
               <p><strong>Cidade:</strong> ${endereco.cidade}</p>
               <p><strong>Logradouro:</strong> ${endereco.logradouro}</p>
               <p><strong>Número:</strong> ${endereco.numero_endereco}</p>
@@ -241,19 +246,37 @@ function selectsEndereços() {
 let enderecoSelecionadoId = null;
 
 // Função para selecionar o endereço
-function selecionarEndereco(id) {
+function selecionarEndereco(id,cep) {
   if (enderecoSelecionadoId === id) {
     enderecoSelecionadoId = null;
     console.log("Endereço desmarcado:", id);
   } else {
     enderecoSelecionadoId = id;
-    console.log("Endereço selecionado:", id);
+    calculaFrete(cep)
   }
-  selectsEndereços();
+  selectsEndereços(cep);
 }
 
 function obterEnderecoSelecionado() {
   return enderecoSelecionadoId;
+}
+
+function calculaFrete(IdCep) {
+  console.log("cep selecionado:", IdCep)
+  const token = localStorage.getItem('token');
+  try {
+    axios.get(`${localStorage.getItem("ip")}CalculaFrete/${IdCep}`, {
+      headers: {
+        'x-access-token': token
+      }
+    }).then(response => {
+      console.log(response)
+    }).catch(error => {
+      console.log(error)
+    })
+  } catch (error) {
+    console.log(error)
+  }
 }
 
 function mostrarFormulario() {
@@ -278,3 +301,36 @@ function ocultarFormulario() {
 
 // Carregar o resumo do pedido ao carregar a página
 document.addEventListener('DOMContentLoaded', loadOrderSummary);
+
+async function logout() {
+  const token = localStorage.getItem('token');
+  if (!token) {
+    window.location.href = 'home.html';
+    return;
+  }
+  try {
+    await axios.get(`${localStorage.getItem("ip")}logout`, {
+      headers: {
+        'x-access-token': `${token}`
+      }
+    }).then(response => {
+      console.log("aqui", response)
+      if (response.data.message === "Token inválido") {
+        console.log("aqui");
+
+        localStorage.removeItem('token');
+        localStorage.removeItem('userProfile');
+        localStorage.removeItem('cart');
+        window.location.href = 'home.html';
+      }
+    }).catch(error => {
+      console.log(error)
+    });
+
+  } catch (error) {
+    console.log("aqui error");
+
+    console.error('Erro ao verificar o token:', error);
+    window.location.href = 'home.html';
+  }
+}
