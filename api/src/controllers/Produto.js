@@ -169,8 +169,7 @@ const ProdutoController = {
     },
     atualizarProduto: async (req, res) => {
         const {produtoImg} = req.params
-        const imageUrls = req.files
-        console.log('oi')
+        const imageUrls = req.imageUrls
         
         const { Descricao, Status, NomeProduto, Valor, ID_categoria, Status_preco } = req.body;
        
@@ -197,6 +196,10 @@ const ProdutoController = {
 
             Produto_img.adicionar(imagensParaAdicionar,produtoImg)
             Produto_img.excluir(imagensParaRemover)
+
+            console.log("OIIIIIIIIIIIII PORRA")
+            console.log(imagensParaRemover)
+            console.log(imagensParaAdicionar)
 
 
             const cProduto2 = new Produto(produtoImg, Descricao, Status, NomeProduto, ID_categoria)
