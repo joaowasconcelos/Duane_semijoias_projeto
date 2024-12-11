@@ -51,19 +51,19 @@
                     <div id="dados">
 
                         <label for="tipo">Categoria: *</label>
-                        <select class="form-control form-control-sm" id="categoria" name="categoria">
+                        <select class="form-control form-control-sm" id="categoria" name="categoria" required>
                             <option></option>
                         </select>
 
                         <label for="nome_produto">Produto: *</label>
-                        <input class="input" type="text" name="produto" id="produto">
+                        <input class="input" type="text" name="produto" id="produto" required>
 
                         <label for="descricao">Descrição: *</label>
-                        <input class="input" type="text" name="descricao" id="descricao">
+                        <input class="input" type="text" name="descricao" id="descricao" required>
 
                         <label for="preco">Preço: *</label>
                         <input class="input" type="text" id="preco" name="preco" onInput="mascaraMoeda(event);"
-                            onkeydown="return somenteNumeros(event)">
+                            onkeydown="return somenteNumeros(event)" required>
 
                     </div>
 
@@ -71,7 +71,8 @@
                         <label class="picture" for="imagem">Foto do produto: *</label>
                         <p>Obrigatório carregar ao menos 1 foto do produto*</p>
                         <p>Adicione no máximo 5 fotos*</p>
-                        <input class="escolha" type="file" name="imagem" id="imagem" multiple accept="imagem/">
+                        <input class="escolha" type="file" name="imagem" id="imagem" multiple accept="imagem/*" required>
+                        <p id="errorMessage" style="color: red; display: none;">Você deve selecionar de 1 a 5 imagens.</p>
                         <span class="picture__image"></span>
                     </div>
 

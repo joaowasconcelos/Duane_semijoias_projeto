@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let cart = localStorage.getItem('cart');
 
     // Configuração inicial da API e URL
-    const ip = "http://192.168.3.9:3000/";
+    const ip = "http://10.0.3.77:3000/";
     localStorage.setItem('ip', ip);
 
     // Carrega os produtos inicialmente ao carregar a página

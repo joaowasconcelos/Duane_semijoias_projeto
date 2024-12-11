@@ -6,7 +6,7 @@ async function dados() {
         // Fazendo a requisição com axios.get
         await axios.get(`${localStorage.getItem("ip")}SelecionaUsuarios`)
             .then(response => {
-                //console.log(response);
+                console.log(response);
                 criarTabela();
                 carregaDadosCli(response);
 
@@ -77,35 +77,50 @@ document.getElementById('pesquisa').addEventListener('input', function () {
     });
 });
 
+function formatarData(dataISO) {
+    const data = new Date(dataISO); // Cria um objeto Date a partir da string ISO
+    const dia = String(data.getDate()).padStart(2, '0'); // Pega o dia e adiciona zero à esquerda se necessário
+    const mes = String(data.getMonth() + 1).padStart(2, '0'); // Meses começam do 0
+    const ano = data.getFullYear();
+    return `${dia}/${mes}/${ano}`;
+}
+
 //modal
 
 async function dadosCli(id) {
-    console.log("ID:", id);
-
     try {
-        const dadosC = await dados();
-        console.log(dadosC);
-        
-        const cliente = dadosC.filter(cliente => cliente.id === id)
-        console.log(cliente);
-        
-        // cliente.innerHTML = ""
+        await axios.get(`${localStorage.getItem("ip")}SelecionaUsuarios`)
+            .then(response => {
+                //console.log(response.data);
+                const cliente = response.data;
+                console.log(cliente)
 
-        // if (cliente.length > 0) {
-        //     const cliente = cliente[0];
-        //     console.log("Cliente selecionado:", cliente)
+                if (cliente.length > 0) {
+                    const clienteSelecionado = cliente.find(c => c.id === id);
+                
+                    if (clienteSelecionado) {
 
-        // } else {
-        //     console.warn("Cliente com o ID fornecido não foi encontrado.");
+                        const dataNasc = clienteSelecionado.data_nasc;
 
-        // }
+                        document.getElementById('id').value = clienteSelecionado.id;
+                        document.getElementById('nome').value = clienteSelecionado.nome;
+                        document.getElementById('email').value = clienteSelecionado.usuario;
+                        document.getElementById('data_nasc').value = formatarData(dataNasc);
+                    } else {
+                        console.log('Cliente não encontrado.');
+                    }
+                }
+                
+
+            }).catch(error => {
+                console.log(error);
+            })
+
+
 
 
     } catch (error) {
         console.error('Erro ao buscar cliente:', error);
         showNotification("Ocorreu um erro ao buscar o cliente. Tente novamente.");
     }
-
-    
-
-};
+}
