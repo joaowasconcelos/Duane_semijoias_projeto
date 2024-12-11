@@ -75,7 +75,6 @@ const PedidoController = {
     },
     Seleciona: async (req, res) => {
         try {
-
             const selecionaPedido = await Pedido.SelecionaPedido()
             return res.json(selecionaPedido);
         } catch (error) {

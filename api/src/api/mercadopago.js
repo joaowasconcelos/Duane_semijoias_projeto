@@ -1,4 +1,5 @@
 import { MercadoPagoConfig, Preference } from 'mercadopago';
+
 import Pessoa from '../model/Pessoa.js';
 import Endereco from '../model/Endereco.js';
 
@@ -8,6 +9,7 @@ const Pagamento = {
         const id = req.id
         const infoEndereco = await Endereco.SelecionaEnderecoId(idEndereco)
         const infoPessoa = await Pessoa.SelecionaUserId(id)
+        const totalComDesconto = req.body.totalComDesconto
 
         const infoPessoaAtual = infoPessoa.map(item => ({
             id: item.id,
@@ -31,6 +33,14 @@ const Pagamento = {
             unit_price: parseFloat(item.preco_normal),
             quantity: item.quantity
         }));
+
+        const totalOriginal = cartAtual.reduce((total, item) => total + item.unit_price * item.quantity, 0);
+        console.log("Total Original:", totalOriginal);
+
+        // Garantindo que o valor do total com desconto seja válido
+        const totalComDescontoAplicado = totalComDesconto || totalOriginal;
+        console.log("Total com Desconto Aplicado:", totalComDescontoAplicado);
+
 
         try {
             const client = new MercadoPagoConfig({ accessToken: 'TEST-7981712700966503-110517-76cca7be1211cfd770080acca36b1571-1948077339' });
@@ -72,8 +82,8 @@ const Pagamento = {
                             country_name: "Brasil"
                         }
                     },
-                    // "total_amount": 1199,
-                    // "last_updated": null,
+                    total_amount: totalComDescontoAplicado,
+
                 }
             }).then(response => {
                 console.log(response)
@@ -89,22 +99,25 @@ const Pagamento = {
         }
     },
     Preference:async(req,res)=>{
+        const client = new MercadoPagoConfig({ accessToken: 'TEST-7981712700966503-110517-76cca7be1211cfd770080acca36b1571-1948077339' });
+        const preference = new Preference(client);
 
-        console.log(req.body)
-        const preferenceId = req.body
-        MercadoPago.preferences.get()
-        .then(response =>{
-            console.log(response)
-            const items = response.items;
-            console.log('Itens do pedido:', items);
+        const preferenceId = req.params.id
+        console.log(preference)
+        console.log(preferenceId)
 
-            // Processa e insere no banco de dados ou exibe os itens
-            items.forEach(item => {
-                console.log(`Item: ${item.title}, Quantidade: ${item.quantity}, Preço: ${item.unit_price}`);
-            });
-        }).catch(error =>{
-            console.log(error)
-        })
+        preference.get({preferenceId})
+            .then(response => {
+                // const items = response.items;
+                // console.log('Itens do pedido:', items);
+
+                // // Processa e insere no banco de dados ou exibe os itens
+                // items.forEach(item => {
+                //     console.log(`Item: ${item.title}, Quantidade: ${item.quantity}, Preço: ${item.unit_price}`);
+                // });
+            }).catch(error => {
+                console.log(error)
+            })
     }
 }
 export default Pagamento

@@ -1,10 +1,6 @@
 $(document).ready(function () {
     var url = window.location.href;
-
-    // Usar URLSearchParams para pegar os parâmetros da query string
     var params = new URLSearchParams(url.split('?')[1]);
-
-    // Criar um objeto para armazenar os parâmetros
     const queryParams = {};
 
     // Adicionar os parâmetros ao objeto
@@ -28,10 +24,11 @@ $(document).ready(function () {
 
 function consultarDetalhesPagamento(preferenceId) {
     const token = localStorage.getItem('token');
+    console.log(preferenceId)
     console.log("aqui11")
     console.log(token)
     try {
-        axios.get(`/infoPedidos/${preferenceId}`, {
+        axios.get(`${localStorage.getItem("ip")}infoPedidos/${preferenceId}`, {
             headers: {
                 'x-access-token': token,
             }

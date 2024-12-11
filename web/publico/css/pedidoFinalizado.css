@@ -1,0 +1,12 @@
+footer {
+    width: 100%;
+}
+
+#ondasFooter {
+    width: 100%;
+    bottom: 0;
+    display: block;
+    height: 90px;
+    left: 0;
+    padding: 0;
+}

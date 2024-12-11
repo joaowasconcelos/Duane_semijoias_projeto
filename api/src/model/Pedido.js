@@ -107,7 +107,7 @@ export default class Pedido {
     static async SelecionaPedido() {
         const bd = await obterConexaoDoPool();
         try {
-            const pedidoResult = await bd.query(`SELECT id,status, DATE_FORMAT(data_cad, '%d/%m/%Y') AS data_formatada FROM pedidos order by id desc;`);
+            const pedidoResult = await bd.query(`SELECT id,status, DATE_FORMAT(data_cad, '%d/%m/%Y') AS data_formatada FROM pedidos WHERE status = 0 order by id desc ;`);
             return pedidoResult[0]
         } catch (error) {
             console.log('Erro na transação:', error);
