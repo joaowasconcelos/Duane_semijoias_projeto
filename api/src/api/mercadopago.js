@@ -9,7 +9,7 @@ const Pagamento = {
         const id = req.id
         const infoEndereco = await Endereco.SelecionaEnderecoId(idEndereco)
         const infoPessoa = await Pessoa.SelecionaUserId(id)
-        const totalComDesconto = req.body.totalComDesconto
+        // const totalComDesconto = req.body.totalComDesconto
 
         const infoPessoaAtual = infoPessoa.map(item => ({
             id: item.id,
@@ -34,12 +34,12 @@ const Pagamento = {
             quantity: item.quantity
         }));
 
-        const totalOriginal = cartAtual.reduce((total, item) => total + item.unit_price * item.quantity, 0);
-        console.log("Total Original:", totalOriginal);
+        // const totalOriginal = cartAtual.reduce((total, item) => total + item.unit_price * item.quantity, 0);
+        // console.log("Total Original:", totalOriginal);
 
-        // Garantindo que o valor do total com desconto seja válido
-        const totalComDescontoAplicado = totalComDesconto || totalOriginal;
-        console.log("Total com Desconto Aplicado:", totalComDescontoAplicado);
+        // // Garantindo que o valor do total com desconto seja válido
+        // const totalComDescontoAplicado = totalComDesconto || totalOriginal;
+        // console.log("Total com Desconto Aplicado:", totalComDescontoAplicado);
 
 
         try {
@@ -81,8 +81,7 @@ const Pagamento = {
                             state_name: infoEndereco[0].estado,
                             country_name: "Brasil"
                         }
-                    },
-                    total_amount: totalComDescontoAplicado,
+                    }
 
                 }
             }).then(response => {
@@ -98,26 +97,26 @@ const Pagamento = {
             console.log(error)
         }
     },
-    Preference:async(req,res)=>{
-        const client = new MercadoPagoConfig({ accessToken: 'TEST-7981712700966503-110517-76cca7be1211cfd770080acca36b1571-1948077339' });
-        const preference = new Preference(client);
+    // Preference:async(req,res)=>{
+    //     const client = new MercadoPagoConfig({ accessToken: 'TEST-7981712700966503-110517-76cca7be1211cfd770080acca36b1571-1948077339' });
+    //     const preference = new Preference(client);
 
-        const preferenceId = req.params.id
-        console.log(preference)
-        console.log(preferenceId)
+    //     const preferenceId = req.params.id
+    //     console.log(preference)
+    //     console.log(preferenceId)
 
-        preference.get({preferenceId})
-            .then(response => {
-                // const items = response.items;
-                // console.log('Itens do pedido:', items);
+    //     preference.get({preferenceId})
+    //         .then(response => {
+    //             // const items = response.items;
+    //             // console.log('Itens do pedido:', items);
 
-                // // Processa e insere no banco de dados ou exibe os itens
-                // items.forEach(item => {
-                //     console.log(`Item: ${item.title}, Quantidade: ${item.quantity}, Preço: ${item.unit_price}`);
-                // });
-            }).catch(error => {
-                console.log(error)
-            })
-    }
+    //             // // Processa e insere no banco de dados ou exibe os itens
+    //             // items.forEach(item => {
+    //             //     console.log(`Item: ${item.title}, Quantidade: ${item.quantity}, Preço: ${item.unit_price}`);
+    //             // });
+    //         }).catch(error => {
+    //             console.log(error)
+    //         })
+    // }
 }
 export default Pagamento

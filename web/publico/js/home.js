@@ -7,7 +7,7 @@ document.addEventListener("DOMContentLoaded", function () {
     let cart = localStorage.getItem('cart');
 
     // Configuração inicial da API e URL
-    const ip = "http://10.0.3.77:3000/";
+    const ip = "http://10.0.3.116/";
     localStorage.setItem('ip', ip);
 
     // Carrega os produtos inicialmente ao carregar a página
@@ -69,7 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 </div>
                 <div class="card-body">
                     <p class="text-title">${element.nome_produto || 'Produto sem nome'}</p>
-                    <a href="/publico/html/cardItem.html/${element.id || '#'}">Ver mais</a>
                 </div>
                 <div class="card-footer">
                     <span class="text-title">R$ ${element.preco_normal}</span>

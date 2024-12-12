@@ -9,24 +9,29 @@ import Telefone from "../model/Telefone.js";
 const CadastroUsuario = {
     //Cadastrar a pessoa (Perfil)
     CadastroPessoa: async (req, res) => {
+        console.log(req.body)
         try {
             const { Nome, Data_Nasc, CPF, Genero, Usuario, Senha, Telefones } = req.body;
             const cPessoa = new Pessoa(null, Nome, Data_Nasc, CPF, Genero);
 
             const vericaCampos = cPessoa.verificaCampos()
+            console.log(vericaCampos)
             if (!vericaCampos) {
                 return res.status(400).json({ error: "Numero máximo de caracteres " })
             }
             const validaCampos = cPessoa.validaCampos()
+            console.log(validaCampos)
             if (!validaCampos) {
                 return res.status(400).json({ error: "Dados inválidos fornecidos." });
             }
 
             const verificaCPF = cPessoa.validaCpf()
+            console.log(verificaCPF)
             if (!verificaCPF) {
                 return res.status(400).json({ error: "Erro CPF invalido" });
             }
             const conversaoData = cPessoa.DataConvert()
+            console.log(conversaoData)
 
             if (conversaoData == "Invalid Date") {
                 return res.status(400).json({ error: "Erro Data invalida" });
@@ -34,6 +39,7 @@ const CadastroUsuario = {
             cPessoa.Data_nasc = conversaoData;
 
             const verificarCPFBanco = await cPessoa.verificaCpf()
+            console.log(verificarCPFBanco)
 
             if (verificarCPFBanco) {
                 return res.status(400).json({ error: "Erro CPF ja cadastrado" });
@@ -41,6 +47,7 @@ const CadastroUsuario = {
 
             //Chamar o crud 
             const insertPessoa = await cPessoa.CadastrarPessoa();
+            console.log(insertPessoa)
             let insertTele;
             if (!insertPessoa.error) {
                 const cLogin = new Login(null, Usuario, Senha, 0, 1, 2, insertPessoa);
@@ -56,6 +63,7 @@ const CadastroUsuario = {
                 if (!verificaLog) {
                     return res.status(400).json({ error: "Erro email ja cadastrado" });
                 }
+                console.log("login")
                 const insertLogin = await cLogin.CadastrarLogin();
 
                 if (!insertLogin.error) {
@@ -75,6 +83,7 @@ const CadastroUsuario = {
                     const deletarPessoa = cPessoa.DeletarPessoa()
                     return res.status(400).json({ error: "Erro ao cadastrar Login!" });
                 }
+                console.log("auqiuiuiuiuiuiuiu")
                 return res.status(201).json({ message: "Usuário cadastrado com sucesso!" });
             } else {
                 return res.status(400).json({ error: "Erro ao cadastrar usuário!" });

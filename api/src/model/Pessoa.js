@@ -248,8 +248,8 @@ LIMIT 0, 1000;`, [this._id]);
     DataConvert() {
         let [dia, mes, ano] = this._data_nasc.split('/');
         let dataFormatada = `${ano}-${mes}-${dia}`;
-        // this.Data_nasc = new Date(dataFormatada);
-        this.Data_nasc = dataFormatada
+        this.Data_nasc = new Date(dataFormatada);
+        // this.Data_nasc = dataFormatada
         return this.Data_nasc
     }
 
