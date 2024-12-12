@@ -25,19 +25,24 @@ telefoneInput.addEventListener('input', () => {
     telefoneInput.value = valor;
 });
 
-Array.from(telefoneInputs2).forEach(telefone => {
-    telefone.addEventListener('input', () => {
-        let valor = telefone.value;
-        valor = valor.replace(/\D/g, '');
-        valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
-        valor = valor.replace(/(\d)(\d{4})$/, '$1-$2');
-        telefone.value = valor;
-    });
-});
+// const telefoneInputs2 = document.querySelectorAll('.telefone-input-2');
+
+// if(telefoneInputs2.length  == 15){
+//     Array.from(telefoneInputs2).forEach(telefone => {
+//         telefone.addEventListener('input', () => {
+//             let valor = telefone.value;
+//             valor = valor.replace(/\D/g, '');
+//             valor = valor.replace(/^(\d{2})(\d)/g, '($1) $2');
+//             valor = valor.replace(/(\d)(\d{4})$/, '$1-$2');
+//             telefone.value = valor;
+//         });
+//     });
+    
+// }
+
 
 
 //mascara CPF
-
 var corCompleta = "#99ff8f"
 var corIncompleta = "#eff70b"
 
@@ -101,7 +106,6 @@ function mascara(m, t, e, c) {
 function obterApenasNumerosCPF() {
     const input = document.getElementById('CPF');
     const apenasNumerosCPF = input.value.replace(/\D/g, ''); // Remove tudo que não for número
-    console.log(apenasNumerosCPF); // Mostra apenas os números no console
     return apenasNumerosCPF; // Retorna os números do CPF
 }
 function obterApenasNumerosTel() {
@@ -111,7 +115,6 @@ function obterApenasNumerosTel() {
         return input ? input.value.replace(/\D/g, '') : ''; // Remove tudo que não for número
     });
 
-    console.log(apenasNumerosArray); // Mostra os números de cada telefone como array no console
     return apenasNumerosArray; // Retorna o array com os números de telefone
 }
 

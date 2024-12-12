@@ -81,10 +81,11 @@
       </div>
 
     </div>
+<!--     
     <label>Adicionar Cupom</label>
     <input type="text" placeholder="Adiicione um Cupom" id="cupom">
     <button onclick="VerificaCupom()" id="aplica">Aplicar</button>
-    <button onclick="InvalidaCupom()">Remover Cupom</button>
+    <button onclick="InvalidaCupom()">Remover Cupom</button> -->
 
 
     <div id="wallet_container"></div>
@@ -115,7 +116,6 @@
     // Função para inicializar o pagamento
     async function initializePayment(cart) {
       try {
-        const totalComDesconto = parseFloat(localStorage.getItem('totalComDesconto'))
         const idEndereço = obterEnderecoSelecionado()
         if (idEndereço === null) {
           showNotification("Selecione ou cadastre um endereço")
@@ -123,7 +123,7 @@
         }
         const token = localStorage.getItem('token');
         await axios.post(`${localStorage.getItem("ip")}Pagamento`,
-          { cart, idEndereço, totalComDesconto },
+          { cart, idEndereço },
           {
             headers: {
               'x-access-token': token,
@@ -135,13 +135,6 @@
             mp.bricks().create("wallet", "wallet_container", {
               initialization: {
                 preferenceId: id,
-              },
-              configuration: {
-                back_urls: {
-                  success: "http://127.0.0.1:5501/publico/html/pedidoFinalizado.html",
-                  failure: "https://seusite.com/failure",
-                  pending: "https://seusite.com/pending"
-                }
               }
             });
 
